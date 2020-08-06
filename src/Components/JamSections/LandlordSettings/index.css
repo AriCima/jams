@@ -1,0 +1,39 @@
+.landlord-jam-settings{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start
+}
+
+.landlord-jam-settings-section{
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start
+}
+.landlord-jam-settings-section-title{
+    width: 100%;
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.landlord-jam-settings-section-title h2{
+    width: 100%;
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start
+}
+
+.form-row, .form-button-area{
+    width: 100%;
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start
+}

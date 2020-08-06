@@ -1,0 +1,33 @@
+.check-availability-wrapper{
+    width: 60%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.check-button{
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    padding: 10px;
+    background-color: green;
+}
+
+.availability-form{
+    width: 100%;
+    padding: 20px;
+    display: none;
+    height: 0px;
+}
+
+.availability-form .form-open{
+    display: block;
+}
+
+.form-row{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

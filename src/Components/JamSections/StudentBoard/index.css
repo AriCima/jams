@@ -1,0 +1,43 @@
+.student-board-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: scroll;
+    background-color: violet;
+}
+
+.student-board{
+    width: 95%;
+    height: 80%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.student-board-input-form{
+    width: 95%;
+    height: 20%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-board-input-field{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-board-button-area{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+

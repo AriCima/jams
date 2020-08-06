@@ -1,0 +1,30 @@
+.popup-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: scroll;
+}
+
+/* 
+.popup-buttons-area{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: green;
+}
+
+.popup-button{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+#cancel-button{
+    justify-content: flex-start;
+}
+
+#submit-button{
+    justify-content: flex-end;
+} */

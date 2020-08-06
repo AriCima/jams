@@ -1,0 +1,36 @@
+.booking-chart-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(61,158,247);
+    margin-bottom: 5px;
+}
+
+.booking-chart-row:nth-child(even){
+    background-color: rgba(0, 144, 248, 0.1);
+}
+.booking-chart-row:nth-child(odd){
+    background-color: rgba(0, 144, 248, 0.2);
+}
+.booking-chart-row:nth-child(even):hover{
+    background-color: rgba(0, 144, 248, 0.05);
+}
+.booking-chart-row:nth-child(odd):hover{
+    background-color: rgba(0, 144, 248, 0.05);
+}
+
+.booking-chart-row-block{
+    width: 14%;
+    margin-left: 2%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.booking-chart-block p{
+    margin-left: 2%;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+}

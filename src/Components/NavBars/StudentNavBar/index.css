@@ -1,0 +1,48 @@
+.jam-student-NavBar{
+    position: fixed;
+    top: 0;
+    left: 30%;
+    right: 0;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.jam-student-NavBar-left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.jam-student-NavBar-left:hover {
+    color: rgb(61,158,247);
+}
+
+.jam-student-NavBar-right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.jam-student-NavBar-item{
+    /* width: 15%; */
+    height: 100%;
+    background-color:rgba(255, 255, 0, 0.2);
+    margin: 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.jam-student-NavBar-chat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.jam-student-NavBar-item:hover, .jamNavBar-chat-item:hover{
+    background-color: rgb(165, 161, 157)
+
+}
