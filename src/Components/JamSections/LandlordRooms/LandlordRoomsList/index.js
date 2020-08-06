@@ -3,9 +3,9 @@ import React from 'react';
 
 // COMPONENTS
 import LandlordRoomCard from './LandlordRoomCard';
-import ButtonPlain from '../../../../../../../../UI/ButtonPlain';
-import ModalNewRoom from '../../../../../../../../UI/ModalNewRoom';
-import Calculations from '../../../../../../../../services/Calculations'
+import ButtonPlain from '../../../UI/ButtonPlain';
+import ModalNewRoom from '../../../UI/ModalNewRoom';
+import Calculations from '../../../services/Calculations'
 
 // CSS
 import './index.css';

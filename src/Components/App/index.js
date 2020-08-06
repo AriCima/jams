@@ -3,7 +3,7 @@ import React from 'react';
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // COMPONENTS
-import AppNavBar from '../NavBars/AppNavBar';
+import AppNavBar from '../NavBars/AppNavBar/AppNavBar.js';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import Dashboard from '../Dashboard';
@@ -15,13 +15,12 @@ import StudentInfoForm from '../Forms/StudentInfoForm';
 // import DataService from '../services/DataService';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 
 function App() {
     return (
-        // <>
-        //     <ErrorAlert />
+
         <BrowserRouter>
             <div className="App">
                 <div className="navBar">
@@ -38,7 +37,6 @@ function App() {
                 </div>
             </div>
         </BrowserRouter>
-        // </>
     );
 }
 

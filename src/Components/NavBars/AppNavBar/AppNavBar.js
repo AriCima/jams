@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 // CSS
 import './index.css';
 
-const NavBar = ({user, signOut, jamId}) => {
+const AppNavBar = ({user, signOut, jamId}) => {
 
     return (
 
@@ -75,4 +75,4 @@ const mapStateToProps = (state) => {
         jamId: state.jamId
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavBar);

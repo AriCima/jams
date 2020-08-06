@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import DataService from '../../../../services/DataService';
+import DataService from '../../services/DataService';
 // import CountrySelect from '../../UI/CountrySelection';
-import CustomInputField from '../../../CustomInputField';
-import CustomSelectInputField from '../../../CustomSelectInputField';
-import ButtonPlain from '../../../ButtonPlain';
+import CustomInputField from '../../UI/CustomInputField';
+import CustomSelectInputField from '../../UI/CustomSelectInputField';
+import ButtonPlain from '../../UI/ButtonPlain';
 
 // CSS
 import './index.css';

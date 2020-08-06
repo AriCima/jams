@@ -1,16 +1,16 @@
 import React from "react";
 
-import DataService from "../../../../../../../../../services/DataService";
+import DataService from "../../../../services/DataService";
 
 import { connect } from 'react-redux';
 
 
 // CSS
 import "./index.css";
-import { selectJam } from "../../../../../../../../../../redux/actions/jamId";
-import {setJamSection} from "../../../../../../../../../../redux/actions/jamSection"
+import { selectJam } from "../../../../../redux/actions/jamId";
+import {setJamSection} from "../../../../../redux/actions/jamSection";
 
-const LandlordJammerCard = (props) => {
+const StudentJammerCard = (props) => {
 
   const { user, userJams, jI, jamInfo } = props
   //console.log('props en el jammerCard = ', props)
@@ -92,4 +92,4 @@ const mapStateToProps = (state) => {
       userJams: state.userJams,
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LandlordJammerCard);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentJammerCard);

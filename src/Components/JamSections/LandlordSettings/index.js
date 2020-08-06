@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 
 // COMPONENTS
 import { connect } from 'react-redux';
-import { setJamSection } from '../../../../../../../../redux/actions/jamSection';
-import CustomInputFieldWithLabel from '../../../../../../../UI/CustomInputFieldWithLabel';
-import ButtonSubmit from '../../../../../../../UI/ButtonSubmit';
+import { setJamSection } from '../../../redux/actions/jamSection';
+import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel'
+import ButtonSubmit from '../../UI/ButtonSubmit';
 
 // CSS
 import './index.css';

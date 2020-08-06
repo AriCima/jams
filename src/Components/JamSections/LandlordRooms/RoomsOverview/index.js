@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import Calculations from '../../../../../../../../services/Calculations';
+import Calculations from '../../../services/Calculations';
 
 // CSS
 import './index.css';

@@ -3,11 +3,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 // COMPONENTS
 import { connect } from 'react-redux';
-import DataService from '../../../../../../../services/DataService';
+import DataService from '../../services/DataService';
 import StudentJammersList from './StudentJammersList';
 import StudentJammersContent from './StudentJammersContent';
-import ButtonSubmit from '../../../../../../../UI/ButtonSubmit';
-import CustomInputField from '../../../../../../../UI/CustomInputField'
+import ButtonSubmit from '../../UI/ButtonSubmit';
+import CustomInputField from '../../UI/CustomInputField'
 
 
 // CSS

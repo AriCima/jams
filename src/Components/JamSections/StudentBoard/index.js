@@ -3,10 +3,8 @@ import moment from 'moment';
 
 // COMPONENTS
 import { connect } from 'react-redux';
-import DataService from '../../../../../../../services/DataService';
+import DataService from '../../services/DataService';
 import StudentBoardContent from './StudentBoardContent';
-import ButtonSubmit from '../../../../../../../UI/ButtonSubmit';
-import CustomInputField from '../../../../../../../UI/CustomInputField'
 
 // CSS
 import './index.css';

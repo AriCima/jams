@@ -1,5 +1,5 @@
 import React from 'react';
-import Calculations from '../../../../../../../../services/Calculations';
+import Calculations from '../../../services/Calculations';
 
 import moment from 'moment';
 

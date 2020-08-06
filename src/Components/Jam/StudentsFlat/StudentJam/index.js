@@ -3,11 +3,11 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 // COMPONENTS
-import StudentNavBar from '../StudentNavBar';
-import StudentBoard from './StudentSections/StudentBoard';
-import StudentJammers from './StudentSections/StudentJammers'
-import StudentMyJam from './StudentSections/StudentMyJam';
-import StudentSettings from './StudentSections/StudentSettings';
+import StudentNavBar from '../../../NavBars/StudentNavBar';
+import StudentBoard from '../../../JamSections/StudentBoard';
+import StudentJammers from '../../../JamSections/StudentJammers'
+import StudentMyJam from '../../../JamSections/StudentMyJam';
+import StudentSettings from '../../../JamSections/StudentSettings';
 
 
 import './index.css';
