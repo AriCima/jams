@@ -1,0 +1,13 @@
+#cancelButton{
+    padding: 8px 20px;
+    background-color:rgb(217, 217, 217);
+    /* border: solid 1px rgb(217, 217, 217); */
+    font-size: 12px;
+    font-weight: 550;
+    color: black;
+}
+
+#cancelButton:hover{
+    background-color: white;
+    font-weight: 700;
+}

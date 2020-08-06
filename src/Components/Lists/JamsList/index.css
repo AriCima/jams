@@ -1,0 +1,32 @@
+.jams-list-wrapper{
+    top: 60px;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.jamCover-wrapper{
+    margin-top: 0px;
+}
+
+
+
+.jams-list-content{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.jams-list-content h4{
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+    margin: 0 20px;;
+}
+
+.jams-list-content p{
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(170, 170, 170, 1);
+    margin: 0 20px;;
+}
