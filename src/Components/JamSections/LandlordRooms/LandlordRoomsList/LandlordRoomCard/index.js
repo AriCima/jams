@@ -3,8 +3,8 @@ import React from 'react';
 // import DataService from "../../../../../../../../../services/DataService";
 
 import { connect } from 'react-redux';
-import { changeRoomId } from '../../../../../../../../../../redux/actions/roomsId';
-// import {setActiveScreen} from "../../../../../../../../../../redux/actions/roomScreen"
+import { changeRoomId } from '../../../../../redux/actions/roomsId';
+// import {setActiveScreen} from "../../../../../../redux/actions/roomScreen"
 
 // CSS
 import './index.css';

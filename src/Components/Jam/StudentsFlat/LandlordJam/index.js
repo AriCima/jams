@@ -11,23 +11,31 @@ import './index.css';
 
 const LandlordJam = ({ jamId, jamInfo, jamActiveSection }) => {
 
+    const renderSection = (section) => {
+        switch (section) {
+            case 'Rooms':
+                return <LandlordRooms jamId={jamId} />;
+            case 'Settings':
+                return <LandlordSettings jamId={jamId} />;
+            case 'rent':
+            default:
+                return <LandlordBoard jamId={jamId} />;
+        }
+    };
+
     return (
         <div className="landlord-jam-wrapper">
             <div className="landlord-jam-header">
-                {jamInfo === [] ? <></> : (
-                    <LandlordNavBar
-                        jamName={jamInfo.jamName}
-                        jamDesc={jamInfo.jamDesc}
-                        jamActiveSection={jamInfo.jamActiveSection}
-                        jamType={jamInfo.jamType}
-                    />
-                )}
+                <LandlordNavBar
+                    jamName={jamInfo.jamName}
+                    jamDesc={jamInfo.jamDesc}
+                    jamActiveSection={jamInfo.jamActiveSection}
+                    jamType={jamInfo.jamType}
+                />
             </div>
 
             <div className="landlord-jam-container">
-                { jamActiveSection === 'Board' && <LandlordBoard jamId={jamId} /> }
-                { jamActiveSection === 'Rooms' && <LandlordRooms jamId={jamId} /> }
-                { jamActiveSection === 'Settings' && <LandlordSettings jamId={jamId} /> }
+                {renderSection(jamActiveSection)}
             </div>
         </div>
     );

@@ -11,11 +11,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // SERVICES
-import DataService from '../../../../services/DataService';
-import Calculations from '../../../../services/Calculations';
+import DataService from '../../services/DataService';
+import Calculations from '../../services/Calculations';
 
 // REDUX
-import { launchAlert } from '../../../../../redux/actions/alertsActions';
+import { launchAlert } from '../../../redux/actions/alertsActions';
 
 const PreBookingForm = ({
     jamId, roomId, roomNr, bookingsSummary, launchAlert,

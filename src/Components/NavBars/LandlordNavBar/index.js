@@ -3,9 +3,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import Calculations from '../../../../../services/Calculations';
-import { setJamSection } from '../../../../../../redux/actions/jamSection';
-import { changeRoomId } from     "../../../../../../redux/actions/roomsId";
+import Calculations from '../../services/Calculations';
+import { setJamSection } from '../../../redux/actions/jamSection';
+import { changeRoomId } from     "../../../redux/actions/roomsId";
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,7 +20,6 @@ const LandlordNavBar = ({ setJamSection, changeRoomId, jamName, jamType}) => {
     const [jamSections, setJamSections] = useState([]);
 
     const onSelectJamSection = (section) => {
-        console.log('jamSelection navBar: ', section);
         setJamSection(section);
         changeRoomId('overview');
     };

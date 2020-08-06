@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 // COMPONENTS
 import { connect } from 'react-redux';
-import DataService from '../../../../../../../services/DataService';
+import DataService from '../../services/DataService';
 import LandlordBoardContent from './LandlordBoardContent';
-import ButtonSubmit from '../../../../../../../UI/ButtonSubmit';
-import CustomInputField from '../../../../../../../UI/CustomInputField'
+import ButtonSubmit from '../../UI/ButtonSubmit';
+import CustomInputField from '../../UI/CustomInputField'
 
 // CSS
 import './index.css';
