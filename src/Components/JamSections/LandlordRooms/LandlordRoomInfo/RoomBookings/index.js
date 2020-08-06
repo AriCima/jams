@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
-import Calculations from '../../../../../../../../../services/Calculations';
+import Calculations from '../../../../services/Calculations';
 import BookingsList from './BookingsList';
 import BookingCard from './BookingsList/BookingCard';
 // CSS

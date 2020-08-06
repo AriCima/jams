@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 
 // COMPONENTS
 import { connect } from 'react-redux';
-import DataService from '../../../../../../../services/DataService';
-import Calculations from '../../../../../../../services/Calculations';
+import DataService from '../../services/DataService';
+import Calculations from '../../services/Calculations';
 
 import LandlordRoomsList from './LandlordRoomsList';
 import LandlordRoomInfo from './LandlordRoomInfo';
@@ -13,8 +13,8 @@ import RoomsOverview from './RoomsOverview';
 
 // CSS
 import './index.css';
-import { changeRoomId } from '../../../../../../../../redux/actions/roomsId';
-// import { setRoomId } from '../../../../../../../../redux/actions/roomsId';
+import { changeRoomId } from '../../../redux/actions/roomsId';
+// import { setRoomId } from '../../../redux/actions/roomsId';
 
 const LandlordRooms = ({ jamId, roomId }) => {
     const [roomInfo, setRoomInfo] = useState({});

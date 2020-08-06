@@ -3,8 +3,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import Calculations from '../../../../../services/Calculations';
-import { setJamSection } from '../../../../../../redux/actions/jamSection';
+import Calculations from '../../services/Calculations';
+import { setJamSection } from '../../../redux/actions/jamSection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments } from '@fortawesome/free-solid-svg-icons'
 

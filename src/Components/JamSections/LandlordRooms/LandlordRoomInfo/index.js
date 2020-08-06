@@ -3,12 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import ButtonPlain from '../../../../../../../../UI/ButtonPlain';
+import ButtonPlain from '../../../UI/ButtonPlain';
 import CurrentTenant from './CurrentTenant';
 import RoomBookings from './RoomBookings';
-import BookingsGraphic from '../../../../../../../../Bookings/BkgsGraphic';
-import Calculations from '../../../../../../../../services/Calculations';
-import PrebBookingForm from '../../../../../../../../UI/Forms/StudentsFlat/PreBookingForm';
+import BookingsGraphic from '../../../Bookings/BkgsGraphic';
+import Calculations from '../../../services/Calculations';
+import PrebBookingForm from '../../../Forms/PreBookingForm';
 
 // CSS
 import './index.css';
