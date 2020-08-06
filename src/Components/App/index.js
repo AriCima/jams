@@ -3,7 +3,7 @@ import React from 'react';
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // COMPONENTS
-import AppNavBar from '../NavBars/AppNavBar';
+import AppNavBar from '../NavBars/AppNavBar/AppNavBar.js';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import Dashboard from '../Dashboard';
