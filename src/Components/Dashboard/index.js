@@ -15,7 +15,7 @@ import Jam from '../Jam';
 // CSS
 import './index.css'; 
 
-const Dashboard = ({ auth, userJams, getJamInfo, jamId, jamInfo }) => {
+const Dashboard = ({ auth, getJamInfo, jamId, jamInfo }) => {
 
     const [ jamsList, setJamsList ] = useState([]);
     const [ ownStudentsFlats, setOwnStudentsFlats] = useState([]);
@@ -43,14 +43,13 @@ const Dashboard = ({ auth, userJams, getJamInfo, jamId, jamInfo }) => {
                 <div className="login-board">
                     <Login />
                 </div>
-
             ):(
                 <>
                 <aside className="jams-list">
                     {jamsList ?  <JamsList userJams={jamsList}/> : <div><p>no jams yet</p></div>}
                 </aside>
                 <div className="jam-screen">
-                    <Jam jamId={jamId} jamInfo={jamInfo} />
+                    {jamId ? <Jam jamId={jamId} jamInfo={jamInfo} /> : <div><p>select a Jam</p></div>}
                 </div>
                 </>
             )

@@ -20,7 +20,6 @@ const LandlordNavBar = ({ setJamSection, changeRoomId, jamName, jamType}) => {
     const [jamSections, setJamSections] = useState([]);
 
     const onSelectJamSection = (section) => {
-        console.log('jamSelection navBar: ', section);
         setJamSection(section);
         changeRoomId('overview');
     };
