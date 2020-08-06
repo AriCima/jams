@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from 'react-redux';
+import Login from '../Auth/Login'
 import { getUserJams } from '../../redux/actions/jamsActions';
 import { getJamInfo } from '../../redux/actions/jamInfo';
 
@@ -18,18 +19,19 @@ const Dashboard = ({ auth, userJams, getJamInfo, jamId, jamInfo }) => {
 
     const [ jamsList, setJamsList ] = useState([]);
     const [ ownStudentsFlats, setOwnStudentsFlats] = useState([]);
+    const [ userId, setUserId ] = useState('');
 
     useEffect(() => {
         const userId = auth.uid;
-        DataService.getUserJams(userId)
+        if (userId) {
+            setUserId(userId)
+            DataService.getUserJams(userId)
             .then(result => {
                 setJamsList(result);
-                const x = Calculations.getOnwStudentsFlats(result, userId);
-                setOwnStudentsFlats(x);
             })
             .catch(err => console.log(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth.uid, userJams]);
+        }
+    }, [auth.uid]);
 
     useEffect(() => {
         jamId && getJamInfo(jamId)
@@ -37,22 +39,24 @@ const Dashboard = ({ auth, userJams, getJamInfo, jamId, jamInfo }) => {
 
     return (
         <div className="dashboard">
-            <aside className="jams-list">
+            { !userId ? (
+                <div className="login-board">
+                    <Login />
+                </div>
 
-                {jamsList && 
-                    <JamsList userJams={jamsList}/>
-                }
-            </aside>
-
-            <div className="jam-screen">
-                {/* { jamId === null ?
-                    <JamsOverview ownStudentsFlats={ownStudentsFlats} />
-                    :
+            ):(
+                <>
+                <aside className="jams-list">
+                    {jamsList ?  <JamsList userJams={jamsList}/> : <div><p>no jams yet</p></div>}
+                </aside>
+                <div className="jam-screen">
                     <Jam jamId={jamId} jamInfo={jamInfo} />
-                } */}
-                <Jam jamId={jamId} jamInfo={jamInfo} />
-            </div>
+                </div>
+                </>
+            )
 
+            }
+            
         </div>
     );
 }

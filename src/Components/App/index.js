@@ -15,13 +15,12 @@ import StudentInfoForm from '../Forms/StudentInfoForm';
 // import DataService from '../services/DataService';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 
 function App() {
     return (
-        // <>
-        //     <ErrorAlert />
+
         <BrowserRouter>
             <div className="App">
                 <div className="navBar">
@@ -38,7 +37,6 @@ function App() {
                 </div>
             </div>
         </BrowserRouter>
-        // </>
     );
 }
 
