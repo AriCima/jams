@@ -1,5 +1,8 @@
+@import '../../variables.scss';
+
 .App{
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -28,6 +31,21 @@
   justify-content: flex-start;
   align-items: center;
   z-index: 0;
+}
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 0px;
+  height: 40px;
+  background-color: $prim;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 1;
+  border-top: 1px solid $sec
 }
 
 

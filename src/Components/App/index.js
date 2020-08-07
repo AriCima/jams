@@ -9,10 +9,8 @@ import Register from '../Auth/Register';
 import Dashboard from '../Dashboard';
 import PreBookingForm from '../Forms/PreBookingForm';
 import StudentInfoForm from '../Forms/StudentInfoForm';
+import Footer from '../Footer';
 
-
-// SERVICES
-// import DataService from '../services/DataService';
 
 // CSS
 import './index.scss';
@@ -23,9 +21,7 @@ function App() {
 
         <BrowserRouter>
             <div className="App">
-                <div className="navBar">
-                    <AppNavBar />
-                </div>
+                <div className="navBar"><AppNavBar /></div>
                 <div className="app-body">
                     <Switch>
                         <Route exact path="/" component={Dashboard} />
@@ -35,6 +31,7 @@ function App() {
                         <Route path="/jam_reg/:bookingCode" exact render={(props) => <StudentInfoForm propsFn={props.history} bookingCode={props.match.params.bookingCode} />} />
                     </Switch>
                 </div>
+                <div className="footer"><Footer /></div>
             </div>
         </BrowserRouter>
     );

@@ -4,7 +4,7 @@ import React from "react";
 import JamCover from './JamCover'
 
 // CSS
-import "./index.css";
+import "./index.scss";
 
 const JamsList = (props) => {
 
