@@ -13,7 +13,7 @@ import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
 
 // CSS
-import './index.css'; 
+import './index.scss'; 
 
 const Dashboard = ({ auth, getJamInfo, jamId, jamInfo }) => {
 

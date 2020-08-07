@@ -7,7 +7,7 @@ import LandlordBoard from '../../../JamSections/LandlordBoard';
 import LandlordRooms from '../../../JamSections/LandlordRooms';
 import LandlordSettings from '../../../JamSections/LandlordSettings';
 
-import './index.css';
+import './index.scss';
 
 const LandlordJam = ({ jamId, jamInfo, jamActiveSection }) => {
 

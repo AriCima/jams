@@ -18,7 +18,7 @@ const StudentBoard = (props) => {
     const [messageText, setMessageText ] = useState([]);
    
     useEffect(() => {
-        DataService.getJamSectionInfo(jamId, 'board')
+        DataService.getBoardInfo(jamId, 'board')
         .then((res) => {
             setSectionInfo(res)
         })

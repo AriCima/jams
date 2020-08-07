@@ -6,9 +6,11 @@ import DataService from '../../services/DataService';
 import LandlordBoardContent from './LandlordBoardContent';
 import ButtonSubmit from '../../UI/ButtonSubmit';
 import CustomInputField from '../../UI/CustomInputField'
+import CustomTextArea from '../../UI/CustomTextArea';
+
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const LandlordBoard = (props) => {
 
@@ -19,7 +21,7 @@ const LandlordBoard = (props) => {
     const [messageText, setMessageText ] = useState('');
    
     useEffect(() => {
-        DataService.getJamSectionInfo(jamId, 'board')
+        DataService.getBoardInfo(jamId, 'board')
         .then((res) => {
             setSectionInfo(res)
         })
@@ -40,7 +42,6 @@ const LandlordBoard = (props) => {
         event.persist();
         // setaccInfo(boardMessage.text => ({...boardMessage, [event.target.id]: event.target.value}));
         setMessageText(event.target.value)
-    
     }
 
     const onSubmit = (message) => {
@@ -73,20 +74,20 @@ const LandlordBoard = (props) => {
             <form className="landlord-board-input-form" onSubmit={onSubmit}>
                
                <div className="landlord-board-input-field">
-                    <CustomInputField
-                        width='500px'
-                        label='input custom test'
-                        placeholder='input info'
+                    <CustomTextArea
+                        width='100%'
+                        cols=''
+                        rows='3'
+                        placeholder='Type your message ...'
                         type="text"
-                        value={messageText}
-                        id='text' 
-                        changeControl = {handleInputChange}
+                        id='inputTest'
+                        changeControl={handleInputChange}
                     />
                 </div>
 
-            <div className="landlord-board-button-area">
-                <ButtonSubmit/>
-            </div>
+                <div className="landlord-board-button-area">
+                    <ButtonSubmit/>
+                </div>
 
             </form>
         

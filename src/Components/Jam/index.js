@@ -13,13 +13,13 @@ const Jam = ({ jamId, jamInfo, auth } ) => {
     const isAdmin = jamInfo.adminId && jamInfo.adminId === auth.uid;
 
     return (
-        <div className="jam-wrapper">
-            { isAdmin ?
-                <LandlordJam jamId={jamId} jamInfo={jamInfo} />
-                :
-                <StudentJam jamId={jamId} />
-            }
-        </div>
+        <>
+          { isAdmin ?
+            <LandlordJam jamId={jamId} jamInfo={jamInfo} />
+            :
+            <StudentJam jamId={jamId} />
+          }
+        </>
     );
 };
 

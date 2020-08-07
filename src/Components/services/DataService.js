@@ -183,7 +183,7 @@ export default class DataService {
         });
     }
 
-    static getJamSectionInfo(jamId, section) {
+    static getBoardInfo(jamId, section) {
         return new Promise((resolve, reject) => {
             // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore().collection('jams').doc(jamId).collection(section)
