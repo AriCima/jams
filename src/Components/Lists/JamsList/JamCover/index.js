@@ -4,7 +4,7 @@ import { selectJam } from '../../../../redux/actions/jamId';
 
 
 // CSS
-import "./index.css";
+import "./index.scss";
 
  const JamCover = (props) => {
 
@@ -16,7 +16,7 @@ import "./index.css";
 
   return (
 
-    <button className="jamsList-jam-container" onClick={()=> onSelectJam(jamId)}>
+    <button className="jamsList-jamCover-container" onClick={()=> onSelectJam(jamId)}>
       
       <div className="jams-list-container-line">
         { jamType === 'chat' ?

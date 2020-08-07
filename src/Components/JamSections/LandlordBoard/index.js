@@ -78,7 +78,7 @@ const LandlordBoard = (props) => {
                         width='100%'
                         cols=''
                         rows='3'
-                        placeholder='Type your message ...'
+                        placeholder='Type your message . . .'
                         type="text"
                         id='inputTest'
                         changeControl={handleInputChange}
