@@ -7,26 +7,41 @@ import { changeRoomId } from '../../../../../redux/actions/roomsId';
 // import {setActiveScreen} from "../../../../../../redux/actions/roomScreen"
 
 // CSS
-import './index.css';
+import './index.scss';
 
-const LandlordRoomCard = ({ changeRoomId, rI }) => {
-    const roomId = rI.id;
+const LandlordRoomCard = ({ changeRoomId, rI, roomId }) => {
 
     const onShowRoomInfo = (roomId) => {
     // props.setActiveScreen('roomInfo');
         changeRoomId(roomId);
     };
-
+    const isVacant = rI.bookings.currentBooking.jammerName === undefined;
+    
     return (
-
-        <button
-            className="landlord-room-card-container"
+        <div
+            className={`landlord-room-card-container ${roomId === rI.roomId && 'roomActive'}`}
             onClick={() => onShowRoomInfo(rI.roomId)}
         >
             <div className="landlord-room-card-roomNr">
                 <p>{rI.roomNr}</p>
             </div>
-            <div className="landlord-room-card-info">
+
+            {isVacant ? (
+                <div className="landlord-room-card-info">
+                    <p>currently vacant</p>
+                </div>
+            ) : (
+                <div className="landlord-room-card-info">
+                    <div className="landlord-room-card-upperline">
+                        <p>{rI.bookings.currentBooking.jammerName}</p>
+                    </div>
+                    <div className="landlord-room-card-lowerline">
+                        <p>{rI.bookings.currentBooking.jammerCountry}</p>
+                    </div>
+                </div>
+
+            )}
+            {/* <div className="landlord-room-card-info">
                 <div className="landlord-room-card-upperline">
                     {rI.bookings.currentBooking.jammerName
                         ? <p>{rI.bookings.currentBooking.jammerName}</p>
@@ -35,8 +50,8 @@ const LandlordRoomCard = ({ changeRoomId, rI }) => {
                 <div className="landlord-room-card-lowerline">
                     <p>{rI.bookings.currentBooking.jammerCountry}</p>
                 </div>
-            </div>
-        </button>
+            </div> */}
+        </div>
     );
 };
 
@@ -52,5 +67,6 @@ const mapStateToProps = (state) => ({
     user: state.firebase.auth,
     jamId: state.jamId,
     userJams: state.userJams,
+    roomId: state.roomId,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LandlordRoomCard);

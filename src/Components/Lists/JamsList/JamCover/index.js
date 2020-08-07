@@ -16,7 +16,7 @@ import "./index.scss";
 
   return (
 
-    <button className="jamsList-jamCover-container" onClick={()=> onSelectJam(jamId)}>
+    <div className="jamsList-jamCover-container" onClick={()=> onSelectJam(jamId)}>
       
       <div className="jams-list-container-line">
         { jamType === 'chat' ?
@@ -35,7 +35,7 @@ import "./index.scss";
         <p>{jamDesc}</p>
       </div>
 
-    </button>
+    </div>
   )
   
 }

@@ -12,7 +12,7 @@ import RoomsOverview from './RoomsOverview';
 // import CheckAvailability from '../../../../../../../Common/CheckAvailability';
 
 // CSS
-import './index.css';
+import './index.scss';
 import { changeRoomId } from '../../../redux/actions/roomsId';
 // import { setRoomId } from '../../../redux/actions/roomsId';
 
@@ -67,6 +67,17 @@ const LandlordRooms = ({ jamId, roomId }) => {
         <div className="landlord-rooms">
 
             {/* <CheckAvailability jamId={jamId} /> */}
+            <div className="landlord-rooms-list">
+                {jamRoomsInfo.length > 0 ? 
+                    (
+                        <LandlordRoomsList
+                            jamId={jamId}
+                            jamRoomsInfo={jamRoomsInfo}
+                            roomsBookings={jamOrderedBookings}
+                        />
+                    )
+                    : <p>Loading</p>}
+            </div>
 
             <div className="landlord-room-info">
                 {roomId === 'overview' && jamOrderedBookings.length !== 0
@@ -79,17 +90,7 @@ const LandlordRooms = ({ jamId, roomId }) => {
                         ? <LandlordRoomInfo roomInfo={roomInfo} />
                         : <p>LOADING</p>}
             </div>
-            <div className="landlord-rooms-list">
-                {jamRoomsInfo.length
-                    ? (
-                        <LandlordRoomsList
-                            jamId={jamId}
-                            jamRoomsInfo={jamRoomsInfo}
-                            roomsBookings={jamOrderedBookings}
-                        />
-                    )
-                    : <p>Loading</p>}
-            </div>
+           
 
 
         </div>

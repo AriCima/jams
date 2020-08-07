@@ -16,7 +16,7 @@ import { signOut } from '../../../redux/actions/authActions';
 import { connect } from 'react-redux';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const AppNavBar = ({user, signOut, jamId}) => {
 

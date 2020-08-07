@@ -1,0 +1,36 @@
+@import '../../../variables.scss';
+
+.navBar-icons{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: $prim;   
+    .navBar-item{
+        margin: 0 5px;
+        font-size: 18px;
+        color: white;
+        .navBar-menu-style{
+            color:white;
+            padding: 0;
+            font-size: 18px;
+            transition: 0.066s;
+            fill: red;
+            &:hover{
+                color: rgb(61,158,247);
+            }
+        }
+    }
+}
+
+.signOut-icon-style{
+    color:white;
+    padding: 0;
+    margin: 0 10px;
+    font-size: 18px;
+    transition: 0.066s;
+}
+.signOut-icon-style:hover{
+    color: rgb(61,158,247);
+}

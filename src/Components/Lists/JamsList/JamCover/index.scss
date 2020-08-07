@@ -32,11 +32,11 @@
             margin: 0 20px;;
         }
     }
+    &:hover{
+        background-color: rgba(245,245,245, 1) ;
+    }
 }
 
-.jamsList-jam-container:hover{
-    background-color: rgba(61,158,247, 0.6) ;
-}
 
 // .jams-list-content{
 //     width: 100%;
