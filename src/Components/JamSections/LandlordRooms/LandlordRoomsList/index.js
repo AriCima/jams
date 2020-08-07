@@ -8,7 +8,7 @@ import ModalNewRoom from '../../../UI/ModalNewRoom';
 import Calculations from '../../../services/Calculations'
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const LandlordRoomsList = ({ jamId, roomsBookings }) => {
 
@@ -34,17 +34,14 @@ const LandlordRoomsList = ({ jamId, roomsBookings }) => {
     return (
 
         <>
-            { roomsBookings ? renderRoomsList() : <p>Loading</p>}
-            <div className="rooms-list-addRoom-area">
-            {/* <ButtonPlain 
-                onClick={onNewRoom}
-                text='new room'
-                clickHandle={onNewRoom}
-            /> */}
-            <ModalNewRoom 
-                jamId={jamId}
-            />
+            <div className="rooms-list">
+                { roomsBookings ? renderRoomsList() : <p>Loading</p>}
             </div>
+            {/* <div className="rooms-list-addRoom-area">
+                <ModalNewRoom 
+                    jamId={jamId}
+                />
+            </div> */}
         </>
 
     );   

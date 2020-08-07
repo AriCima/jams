@@ -12,7 +12,7 @@ import './index.scss';
 const Footer = () => {
     
     return ( 
-        <div className="jamAFooter">
+        <div className="jamFooter">
             <p>This is the coolest footer ever existed</p>
         </div>
     );

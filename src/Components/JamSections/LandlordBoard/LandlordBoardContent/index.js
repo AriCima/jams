@@ -4,36 +4,57 @@ import Calculations from '../../../services/Calculations';
 import moment from 'moment';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const BoardContent = (props) => {
 
     const { boardContent } = props;
+    console.log('boardContent: ', boardContent);
 
     const messageTime = Calculations.getMessageDate(boardContent.createdAt)
 
+    const renderMessage = (messageType) => { 
+        switch (messageType){
+            case 'publi':
+                return (
+                    <div className="board-publi-item">
+                        <div className="publi-img">
+                        </div>
+                        <div className="publi-info">
+                            <div className="publi-title">
+
+                            </div>
+                            <div className="publi-text">
+                            
+                            </div>
+                            <div className="publi-time">
+                            
+                            </div>
+                        </div>
+                    </div>
+                )
+            default:
+                return (
+                    <div className="board-message-item">
+                        <div className="board-message">
+                            <p>{boardContent.messageText}</p>
+                        </div>
+                        <div className="board-message-info">
+                            <div className="board-message-time">
+                                <p>Ariel - {messageTime}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+                //console.log('no navbar item matched')
+        };
+
+    }
+
     return (
-
-        <div className="board-content-item">
-
-            <div className="board-message-info">
-                
-                <div className="board-message-sender">
-                    <h6>Ariel</h6>
-                </div>
-
-                <div className="board-message-time">
-                    <p>{messageTime}</p>
-                </div>
-
-            </div>
-
-            <div className="board-message">
-                <p>{boardContent.messageText}</p>
-            </div>
-
-        </div>
-
+        <>
+            {renderMessage(boardContent.messageType)}
+        </>
     );   
 };
 export default BoardContent;
