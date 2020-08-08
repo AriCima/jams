@@ -3,7 +3,7 @@ import React from 'react';
 // CSS
 import './index.css';
 
-const ButtonContactJammer = (onContactJammer, jammerName) => {
+const ButtonContactTenant = (onContactJammer, jammerName) => {
 
   const handleClick = (event) => {
     onContactJammer(event)
@@ -22,7 +22,7 @@ const ButtonContactJammer = (onContactJammer, jammerName) => {
 }
 
 
-export default ButtonContactJammer;
+export default ButtonContactTenant;
 
 
 // IMPLEMENTATION

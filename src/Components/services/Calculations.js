@@ -64,7 +64,7 @@ export default class Calculations {
               sections = ['Board', 'Jammers', 'MyJam', 'Settings']
               break;
             case 'studentsFlat':
-                sections = ['Board', 'Rooms', 'Settings']
+                sections = ['Overview','Board', 'Tenants', 'Rooms', 'Settings']
                 break;
             case 'chat': 
                 sections = ['Chat']

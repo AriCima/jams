@@ -11,18 +11,12 @@ const StudentInfoForm = ({ bookingCode }) => {
     const [bookingInfo, setBookingInfo] = useState({});
 
     useEffect(() => {
-        DataService.getPreBookingInfo(bookingCode)
+
+        bookingCode && DataService.getPreBookingInfo(bookingCode)
             .then(result => {
-                console.log('result: ', result);
                 setBookingInfo(result);
             });
     }, []);
-
-
-    // useEffect(() => {
-    //     setbookingInfo(props.bookingInfo);
-    // }, [props.bookingInfo]);
-
 
     const handleInputChange = (event) => {
         event.persist();
