@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import { connect } from 'react-redux';
 // import { selectJam } from '../../../../redux/actions/jamId';
-import { setJamId } from '../../../../redux/actions/navigateActions';
+import { setJamId, setSection, setSubSection } from '../../../../redux/actions/navigateActions';
 
 
 // CSS
@@ -12,9 +12,9 @@ import "./index.scss";
   // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
 
   const onSelectJam = (jamId) => {
-    // props.selectJam(jamId);
-    console.log(jamId)
-    setJamId(jamId)
+    setJamId(jamId);
+    setSection('overview');
+    setSubSection('');
   };
 
   return (

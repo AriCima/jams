@@ -10,9 +10,12 @@ import LandlordSettings from '../../../JamSections/LandlordSettings';
 
 import './index.scss';
 
-const LandlordJam = ({ jamId, jamInfo, jamActiveSection }) => {
+const LandlordJam = ({ jamId, jamInfo, section }) => {
+    console.log('jamInfo: ', jamInfo);
 
+    const { jamName, jamDesc, jamType } = jamInfo;
     const renderSection = (section) => {
+        console.log('section: ', section);
         switch (section) {
             case 'Board':
                 return <LandlordBoard jamId={jamId} />;
@@ -32,15 +35,15 @@ const LandlordJam = ({ jamId, jamInfo, jamActiveSection }) => {
         <div className="landlord-jam-wrapper">
             <div className="landlord-jam-header">
                 <LandlordNavBar
-                    jamName={jamInfo.jamName}
-                    jamDesc={jamInfo.jamDesc}
-                    jamActiveSection={jamInfo.jamActiveSection}
-                    jamType={jamInfo.jamType}
+                    jamName={jamName}
+                    jamDesc={jamDesc}
+                    jamSection={section}
+                    jamType={jamType}
                 />
             </div>
 
             <div className="landlord-jam-container">
-                {renderSection(jamActiveSection)}
+                {renderSection(section)}
             </div>
         </div>
     );
@@ -48,11 +51,13 @@ const LandlordJam = ({ jamId, jamInfo, jamActiveSection }) => {
 
 
 const mapStateToProps = state => {
+    const section = state.nav.section;
     return {
-        jamInfo: state.jamInfo,
-        auth: state.firebase.auth,
-        jamActiveSection: state.jamSection,
-        jammerId: state.jammerId,
+        section,
+        // jamInfo: state.jamInfo,
+        // auth: state.firebase.auth,
+        // jamActiveSection: state.jamSection,
+        // jammerId: state.jammerId,
     };
 };
 

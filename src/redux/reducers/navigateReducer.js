@@ -11,7 +11,6 @@ subSection: ''
 };
 
 const updateVal = (state, action) => {
-console.log('reducer : ', state,  ' / ', action)
 return { ...state, ...action.payload };
 };
 

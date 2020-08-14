@@ -165,13 +165,11 @@ export default class DataService {
     }
 
     static getJamInfoById(jamId) {
-        // //console.log('jamID en DS =', jamId)
+        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
-            // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore().collection('jams').doc(jamId)
                 .get()
                 .then((result) => {
-                    // //console.log('el result del Bis = ', result);
                     resolve(result.data());
                 })
 
