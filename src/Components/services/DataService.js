@@ -409,7 +409,6 @@ export default class DataService {
                 .get()
                 .then((doc) => {
                     if (doc.exists) {
-                        console.log('Document data:', doc.data());
                         resolve(doc.data());
                     } else {
                     // doc.data() will be undefined in this case

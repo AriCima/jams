@@ -93,13 +93,11 @@ const LandlordRooms = ({ jamId, subSection }) => {
     );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    changeRoomId: (roomId) => dispatch(changeRoomId(roomId)),
-});
+
 
 const mapStateToProps = (state) => {
     const { subSection } = state.nav;
     return { subSection }
     
 };
-export default connect(mapStateToProps, mapDispatchToProps)(LandlordRooms);
+export default connect(mapStateToProps, null)(LandlordRooms);

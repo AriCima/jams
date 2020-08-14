@@ -20,13 +20,13 @@ import navReducers from './navigateReducer';
 const rootReducer = combineReducers({
     alert: alertsReducer,
     auth: authReducer,
+    nav: navReducers,
     userJams: userJamsReducer,
     jamId: jamIdReducer,
     jamInfo: jamInfoReducer,
     jamSection: jamSectionReducer,
     jammerId: jammerIdReducer,
     roomId: roomIdReducer,
-    nav: navReducers,
     // activeScreen: roomScreenReducer,
     roomBookings: roomBookingsReducer,
     // el firestoreReducer automáticamente sincronizará la propiedad "firestore"

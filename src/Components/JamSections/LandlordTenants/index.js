@@ -5,34 +5,46 @@ import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import LandlordTenantsList from './LandlordTenantsList';
 import LandlordTenantInfo from './LandlordTenantInfo';
-import { getJammerInfo } from '../../../redux/actions/jammersActions';
-import { setJammerId } from '../../../redux/actions/jammersActions';
+import { setSubSection } from '../../../redux/actions/navigateActions';
 
 
 import './index.scss';
 
-const LandlordTenants = ({ jamId, jammerId }) => {
+const LandlordTenants = ({ jamId, subSection, setSubSection }) => {
     const [jammers, setJammers] = useState([]);
-    const [ tenantId, setTenantId] = useState(jammerId);
+    const [showJammersList, setShowJammersList] = useState(false);
+    const [jammerInfo, setJammerInfo] = useState({});
     
     useEffect(() => {
-        DataService.getJammers(jamId)
-        .then((res) => {
-            setJammers(res)
-        })
-    }, [])
+        getJammersList(jamId)
+    }, []);
+
+    const getJammersList = async (jamId) => {
+        const res = await DataService.getJammers(jamId);
+        res.length > 0 && setShowJammersList(true);
+        setJammers(res);
+        const defaultTenant = res[0].id;
+        setSubSection(defaultTenant)
+    };
 
     useEffect(() => {
-        setTenantId(jammerId)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [jammerId]);
+        if (subSection !== '') {
+            getJammerInfo(jamId, subSection);
+        }
+    }, [subSection]);
+
+    const getJammerInfo = async (jamId) => {
+        const res = await DataService.getJammerInfo(jamId, subSection);
+        setJammerInfo(res);
+    };
+
 
 
     return (
         <div className="landlord-tenants">
             
             <div className="landlord-tenant-list">
-                {jammers !==[] ? 
+                {showJammersList ? 
                     <LandlordTenantsList
                         jammers={jammers} 
                     /> 
@@ -42,34 +54,31 @@ const LandlordTenants = ({ jamId, jammerId }) => {
             </div>
 
             <div className="landlord-tenants-info">
-                {jamId && 
-                    <LandlordTenantInfo 
-                        tenantId={tenantId} 
-                        jamId={jamId} 
-                    />
-                }
+
+                <LandlordTenantInfo 
+                    subSection={subSection} 
+                    jamId={jamId} 
+                />
+
             </div>
         </div>
 
     );
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // nombre de la función que paso como prop: (arg) => 
-        // dispatch(nombre del action cre ator(argumento))
-        setJammerId: (tenantId) => dispatch (setJammerId(tenantId)),
-        getJammerInfo: (jamId, jammerId) => dispatch(getJammerInfo(jamId, jammerId))
-    }
-}
 
+// const mapStateToProps = (state) => {
+//     return {
+//         user: state.firebase.auth,
+//         jamId: state.jamId,
+//         jamActiveSection: state.jamSection,
+//         jammerId: state.jammerId
+//     }
+// }
 
 const mapStateToProps = (state) => {
-    return {
-        user: state.firebase.auth,
-        jamId: state.jamId,
-        jamActiveSection: state.jamSection,
-        jammerId: state.jammerId
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(LandlordTenants);
+    const { subSection } = state.nav;
+    return { subSection }
+    
+};
+export default connect(mapStateToProps, { setSubSection })(LandlordTenants);
