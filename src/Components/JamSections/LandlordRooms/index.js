@@ -16,33 +16,41 @@ import './index.scss';
 import { changeRoomId } from '../../../redux/actions/roomsId';
 // import { setRoomId } from '../../../redux/actions/roomsId';
 
-const LandlordRooms = ({ jamId, roomId }) => {
+const LandlordRooms = ({ jamId, roomId, subSection }) => {
     const [roomInfo, setRoomInfo] = useState({});
     const [showRoomInfo, setShowRoomInfo] = useState(false);
     const [jamRoomsInfo, setJamRoomsInfo] = useState([]);
     const [jamOrderedBookings, setJamOrderedBookings] = useState([]);
 
     useEffect(() => {
-        DataService.getJamRooms(jamId)
-            .then((res) => {
-                setJamRoomsInfo(res);
-            });
+        // DataService.getJamRooms(jamId)
+        //     .then((res) => {
+        //         setJamRoomsInfo(res);
+        //     });
     }, []);
 
+
     useEffect(() => {
-        if (roomId !== 'overview') {
+        if (subSection !== '') {
             // DataService.getRoomBookings(jamId, roomId)
             // .then((res) => {
             //     setRoomBookings(res)
             // })
-            DataService.getRoomInfo(jamId, roomId)
-                .then((res) => {
-                    setRoomInfo(res);
-                    setShowRoomInfo(true);
-                });
+            getRoomInfo(jamId, subSection)
+            // DataService.getRoomInfo(jamId, subSection)
+            //     .then((res) => {
+            //         setRoomInfo(res);
+            //         setShowRoomInfo(true);
+            //     });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [roomId]);
+    }, [subSection]);
+
+    const getRoomInfo = async (jamId) => {
+        const res = await DataService.getRoomInfo(jamId, subSection);
+        setRoomInfo(res);
+    }
+
 
     useEffect(() => {
         if (roomId === 'overview') {
@@ -66,7 +74,6 @@ const LandlordRooms = ({ jamId, roomId }) => {
     return (
         <div className="landlord-rooms">
 
-            {/* <CheckAvailability jamId={jamId} /> */}
             <div className="landlord-rooms-list">
                 {jamRoomsInfo.length > 0 ? 
                     (
@@ -103,8 +110,13 @@ const mapDispatchToProps = (dispatch) => ({
     // setActiveScreen: (screen) => dispatch( setActiveScreen(screen))
 });
 
-const mapStateToProps = (state) => ({
-    user: state.firebase.auth,
-    roomId: state.roomId,
-});
+const mapStateToProps = (state) => {
+    const { subSection } = state.nav;
+    return {
+    // user: state.firebase.auth,
+    // roomId: state.roomId,
+    subSection
+    }
+    
+};
 export default connect(mapStateToProps, mapDispatchToProps)(LandlordRooms);
