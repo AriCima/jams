@@ -165,7 +165,6 @@ export default class DataService {
     }
 
     static getJamInfoById(jamId) {
-        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams').doc(jamId)
                 .get()

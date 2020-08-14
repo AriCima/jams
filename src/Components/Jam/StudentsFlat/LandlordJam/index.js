@@ -11,11 +11,9 @@ import LandlordSettings from '../../../JamSections/LandlordSettings';
 import './index.scss';
 
 const LandlordJam = ({ jamId, jamInfo, section }) => {
-    console.log('jamInfo: ', jamInfo);
-
     const { jamName, jamDesc, jamType } = jamInfo;
+
     const renderSection = (section) => {
-        console.log('section: ', section);
         switch (section) {
             case 'Board':
                 return <LandlordBoard jamId={jamId} />;
@@ -51,13 +49,9 @@ const LandlordJam = ({ jamId, jamInfo, section }) => {
 
 
 const mapStateToProps = state => {
-    const section = state.nav.section;
+    const { section } = state.nav;
     return {
-        section,
-        // jamInfo: state.jamInfo,
-        // auth: state.firebase.auth,
-        // jamActiveSection: state.jamSection,
-        // jammerId: state.jammerId,
+        section
     };
 };
 
