@@ -41,25 +41,6 @@ const LamndlordOverview = ({ jamId, roomId }) => {
         });
     }, [jamId]);
 
-    useEffect(() => {
-
-        if (roomsInfo.length !== 0) {
-            const roomsBookings = [];
-
-            for (let i = 0; i < roomsInfo.length; i++) {
-                if (!Calculations.isEmpty(roomsInfo[i].bookingsSummary)) {
-                    const jamOrderedBookings = Calculations.organizeBookings(roomsInfo[i].bookingsSummary);
-                    const { roomNr } = roomsInfo[i];
-                    const roomId = roomsInfo[i].id;
-                    const roomBookingsSummary = { roomNr, roomId, bookings: jamOrderedBookings };
-                    roomsBookings.push(roomBookingsSummary);
-                }
-            }
-            setBookingsInfo(roomsBookings);
-        }
-
-    }, [roomsInfo]);
-
     return (
         <div className="landlord-overview">
            

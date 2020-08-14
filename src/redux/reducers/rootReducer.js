@@ -11,6 +11,7 @@ import jammerIdReducer from './jammerIdReducer';
 import roomIdReducer from './roomIdReducer';
 // import roomScreenReducer from './roomScreenReducer';
 import roomBookingsReducer from './roomBookingsReducer';
+import navReducers from './navigateReducer';
 
 // sincronizador del firestore data y nuestro state
 // en el background
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     jamSection: jamSectionReducer,
     jammerId: jammerIdReducer,
     roomId: roomIdReducer,
+    nav: navReducers,
     // activeScreen: roomScreenReducer,
     roomBookings: roomBookingsReducer,
     // el firestoreReducer automáticamente sincronizará la propiedad "firestore"

@@ -1,17 +1,20 @@
 import React, {Fragment} from "react";
 import { connect } from 'react-redux';
-import { selectJam } from '../../../../redux/actions/jamId';
+// import { selectJam } from '../../../../redux/actions/jamId';
+import { setJamId } from '../../../../redux/actions/navigateActions';
 
 
 // CSS
 import "./index.scss";
 
- const JamCover = (props) => {
+ const JamCover = ({ jamName, jamId, jamType, jamDesc, user2Name = '', setJamId }) => {
 
-  const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
+  // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
 
   const onSelectJam = (jamId) => {
-    props.selectJam(jamId);
+    // props.selectJam(jamId);
+    console.log(jamId)
+    setJamId(jamId)
   };
 
   return (
@@ -40,10 +43,10 @@ import "./index.scss";
   
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    selectJam: (jamId) => dispatch(selectJam(jamId)),
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     selectJam: (jamId) => dispatch(selectJam(jamId)),
+//   }
+// }
 
-export default connect(null, mapDispatchToProps)(JamCover)
+export default connect(null, { setJamId })(JamCover)

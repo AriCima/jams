@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { connect } from 'react-redux';
 import Login from '../Auth/Login'
-import { getUserJams } from '../../redux/actions/jamsActions';
-import { getJamInfo } from '../../redux/actions/jamInfo';
+// import { getUserJams } from '../../redux/actions/jamsActions';
+// import { getJamInfo } from '../../redux/actions/jamInfo';
+import { setJamId, setSection, setSubSection } from '../../redux/actions/navigateActions';
+
 
 import DataService from '../services/DataService';
-import Calculations from '../services/Calculations';
+// import Calculations from '../services/Calculations';
 
 // COMPONENTS
 import JamsList from '../Lists/JamsList';
@@ -15,11 +17,11 @@ import Jam from '../Jam';
 // CSS
 import './index.scss'; 
 
-const Dashboard = ({ auth, getJamInfo, jamId, jamInfo }) => {
+const Dashboard = ({ auth, jamId, setJamId, setSection, setSubSection }) => {
 
     const [ jamsList, setJamsList ] = useState([]);
-    const [ ownStudentsFlats, setOwnStudentsFlats] = useState([]);
     const [ userId, setUserId ] = useState('');
+    const [jamInfo, setJamInfo] = useState({})
 
     useEffect(() => {
         const userId = auth.uid;
@@ -34,7 +36,16 @@ const Dashboard = ({ auth, getJamInfo, jamId, jamInfo }) => {
     }, [auth.uid]);
 
     useEffect(() => {
-        jamId && getJamInfo(jamId)
+        if(jamId) {
+            setJamId(jamId);
+            setSection('');
+            setSubSection('');
+            DataService.getJamInfoById(jamId)
+            .then(res => {
+                const jamInfo = res;
+                setJamInfo(jamInfo)
+            })
+        }
     }, [jamId]);
 
     return (
@@ -60,20 +71,22 @@ const Dashboard = ({ auth, getJamInfo, jamId, jamInfo }) => {
     );
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // getUserJams: (userId) => dispatch(getUserJams(userId)),
-        getJamInfo: (jamId) => dispatch(getJamInfo(jamId)),
-    };
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         // getUserJams: (userId) => dispatch(getUserJams(userId)),
+//         getJamInfo: (jamId) => dispatch(getJamInfo(jamId)),
+//     };
+// };
 
 const mapStateToProps = state => {
     return {
-        jamId: state.jamId,
-        jamInfo: state.jamInfo,
+        // jamId: state.jamId,
+        // jamInfo: state.jamInfo,
         auth: state.firebase.auth,
         userJams: state.userJams,
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (Dashboard);
+// export default connect(mapStateToProps, mapDispatchToProps) (Dashboard);
+export default connect(mapStateToProps, {setJamId, setSection, setSubSection}) (Dashboard);
+
