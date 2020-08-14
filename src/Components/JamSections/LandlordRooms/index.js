@@ -16,12 +16,12 @@ import './index.scss';
 import { changeRoomId } from '../../../redux/actions/roomsId';
 // import { setRoomId } from '../../../redux/actions/roomsId';
 
-const LandlordRooms = ({ jamId, roomId, subSection }) => {
-    console.log('subSection: ', subSection);
-    const [roomInfo, setRoomInfo] = useState({});
-    const [showRoomInfo, setShowRoomInfo] = useState(false);
+const LandlordRooms = ({ jamId, subSection }) => {
     const [jamRoomsInfo, setJamRoomsInfo] = useState([]);
+    const [roomInfo, setRoomInfo] = useState({});
     const [jamOrderedBookings, setJamOrderedBookings] = useState([]);
+    const [showRoomsList, setShowRoomsList] = useState(false);
+    const [showRoomInfo, setShowRoomInfo] = useState(false);
 
     useEffect(() => {
         getJamRoomsInfo(jamId)
@@ -29,57 +29,36 @@ const LandlordRooms = ({ jamId, roomId, subSection }) => {
 
     const getJamRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
-        console.log('res: ', res);
         setJamRoomsInfo(res);
-    }
 
-
+        const roomsBookings = [];
+        for (let i = 0; i < res.length; i++) {
+            if (!Calculations.isEmpty(res[i].bookingsSummary)) {
+                const jamOrderedBookings = Calculations.organizeBookings(res[i].bookingsSummary);
+                const { roomNr } = res[i];
+                const roomId = res[i].id;
+                const roomBookingsSummary = { roomNr, roomId, bookings: jamOrderedBookings };
+                roomsBookings.push(roomBookingsSummary);
+            }
+        }
+        setJamOrderedBookings(roomsBookings);
+        setShowRoomsList(true);
+    };
 
     useEffect(() => {
         if (subSection !== '') {
-            // DataService.getRoomBookings(jamId, roomId)
-            // .then((res) => {
-            //     setRoomBookings(res)
-            // })
-            getRoomInfo(jamId, subSection)
-            // DataService.getRoomInfo(jamId, subSection)
-            //     .then((res) => {
-            //         setRoomInfo(res);
-            //         setShowRoomInfo(true);
-            //     });
+            getRoomInfo(jamId, subSection);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [subSection]);
 
     const getRoomInfo = async (jamId) => {
         const res = await DataService.getRoomInfo(jamId, subSection);
-        console.log('res: ', res);
         setRoomInfo(res);
+        setShowRoomInfo(true);
     };
 
-    useEffect(() => {
-        if (subSection === '') {
-            if (showRoomsList) {
-                const roomsBookings = [];
-                console.log('jamRoomsInfo[i]: ', jamRoomsInfo);
-
-                for (let i = 0; i < jamRoomsInfo.length; i++) {
-                    if (!Calculations.isEmpty(jamRoomsInfo[i].bookingsSummary)) {
-                        const jamOrderedBookings = Calculations.organizeBookings(jamRoomsInfo[i].bookingsSummary);
-                        const { roomNr } = jamRoomsInfo[i];
-                        const roomId = jamRoomsInfo[i].id;
-                        const roomBookingsSummary = { roomNr, roomId, bookings: jamOrderedBookings };
-                        roomsBookings.push(roomBookingsSummary);
-                    }
-                }
-                setJamOrderedBookings(roomsBookings);
-            }
-        }
-    }, [jamRoomsInfo]);
-
     const showOverview = subSection === '';
-    const showRoomsList = jamRoomsInfo.length !== 0;
-    const bookingsAlreadyOrdered = jamOrderedBookings.length !== 0;
+    const bookingsAlreadyOrdered = jamOrderedBookings.length > 0;
 
     return (
         <div className="landlord-rooms">
@@ -93,7 +72,8 @@ const LandlordRooms = ({ jamId, roomId, subSection }) => {
                             roomsBookings={jamOrderedBookings}
                         />
                     )
-                    : <p>Loading</p>}
+                    : <p>Loading</p>
+                }
             </div>
 
             <div className="landlord-room-info">
@@ -103,20 +83,18 @@ const LandlordRooms = ({ jamId, roomId, subSection }) => {
                         :
                         <p>Loading</p>
                     :
-                    <LandlordRoomInfo roomInfo={roomInfo} />
+                    showRoomInfo ?
+                        <LandlordRoomInfo roomInfo={roomInfo} />
+                        :
+                        <p>Loading Room Info</p>
                 }
             </div>
-           
-
-
         </div>
-
     );
 };
 
 const mapDispatchToProps = (dispatch) => ({
     changeRoomId: (roomId) => dispatch(changeRoomId(roomId)),
-    // setActiveScreen: (screen) => dispatch( setActiveScreen(screen))
 });
 
 const mapStateToProps = (state) => {

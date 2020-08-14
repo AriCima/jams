@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { connect } from 'react-redux';
 import moment from 'moment';
 
 import ButtonPlain from '../../../UI/ButtonPlain';
@@ -15,7 +13,7 @@ import './index.css';
 
 const LandlordRoomInfo = ({ roomInfo }) => {
 
-    
+
     const orderedBookings = Calculations.organizeBookings(roomInfo.bookingsSummary);
     const noNextBooking = Calculations.isEmpty(orderedBookings.nextBooking);
     const noCurrentTenant = Calculations.isEmpty(orderedBookings.currentBooking);
@@ -102,6 +100,4 @@ const LandlordRoomInfo = ({ roomInfo }) => {
     );
 };
 
-
 export default LandlordRoomInfo;
-// export default LandlordRoomInfo;
