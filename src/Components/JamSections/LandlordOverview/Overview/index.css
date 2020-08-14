@@ -1,0 +1,141 @@
+.rooms-overview-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.rooms-info-chart{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* - - - - HEADER - - - - */
+.room-info-chart-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(61,158,247);
+    padding: 5px 0;
+    margin-bottom: 2px;
+}
+.room-info-chart-header-block{
+    width: 14%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.room-info-chart-header-block p{
+    margin-left: 2%;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+}
+/* - - - - - CHART ROWS - - - - - */
+
+.rooms-charts-wrapper{
+    width: 100%;
+}
+
+
+/* - - - - - VACANT LINE - - - - - */
+.vacant-row{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.vacant-row-roomName{
+    width: 14%;
+    margin: 2px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.vacant-info-block{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 5px;
+}
+.room-info-vacant-row{
+    width: 86%;
+    padding-right: 14%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vacant-sign{
+    width: auto;
+    background-color: red;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vacant-sign p{
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+}
+
+/* | - - - - VACANT LINE - - - - | */
+
+.room-info-line{
+    width: 100%;
+    margin: 2px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.room-info-line:nth-child(even){
+    background-color: rgba(0, 144, 248, 0.05);
+}
+.room-info-line:nth-child(odd){
+    background-color: rgba(0, 144, 248, 0.1);
+}
+.room-info-line:nth-child(even):hover{
+    background-color: rgba(0, 144, 248, 0.2);
+}
+.room-info-line:nth-child(odd):hover{
+    background-color: rgba(0, 144, 248, 0.4);
+}
+.room-info-block{
+    width: 14%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 5px;
+}
+.room-info-block p{
+    font-size: 14px;
+    color: rgb(128, 128, 128)
+}
+
+.room-info-block-center{
+    width: 14%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 5px;
+}
+.room-info-chart-block-center p{
+    margin-left: 2%;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    
+}
+
+
