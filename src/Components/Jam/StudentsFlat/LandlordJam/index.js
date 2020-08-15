@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 // COMPONENTS
 import LandlordNavBar from '../../../NavBars/LandlordNavBar';
+import LandlordOverview from '../../../JamSections/LandlordOverview';
 import LandlordBoard from '../../../JamSections/LandlordBoard';
 import LandlordRooms from '../../../JamSections/LandlordRooms';
 import LandlordTenants from '../../../JamSections/LandlordTenants';
@@ -15,6 +16,8 @@ const LandlordJam = ({ jamId, jamInfo, section }) => {
 
     const renderSection = (section) => {
         switch (section) {
+            case 'Overview':
+                return <LandlordOverview jamId={jamId} />;
             case 'Board':
                 return <LandlordBoard jamId={jamId} />;
             case 'Rooms':

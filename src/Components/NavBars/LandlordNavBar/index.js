@@ -7,7 +7,7 @@ import { faComments} from '@fortawesome/free-solid-svg-icons'
 import Calculations from '../../services/Calculations';
 import { setSection, setSubSection } from     "../../../redux/actions/navigateActions";
 
-import './index.css';
+import './index.scss';
 
 const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
 
@@ -22,6 +22,7 @@ const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
         const sections = Calculations.getJamSections(jamType);
         setJamSections(sections);
     }, [jamType, setJamSections]);
+
 
     const renderLandlordNavBar = () => {
         return jamSections.map((section, id) => {
@@ -54,7 +55,9 @@ const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
                         (
                             <>
                                 <div className="jamAdminNavBar-left">
-                                    <div className="jamAdminNavBar-jamName">
+                                    <div className="jamAdminNavBar-jamName"
+                                        onClick={() => onSelectJamSection(`Overview`)}
+                                    >
                                         <p>{jamName}</p>
                                     </div>
                                 </div>

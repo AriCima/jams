@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
+import isEmpty from 'lodash/isEmpty';
 
 import LandlordRoomsList from './LandlordRoomsList';
 import LandlordRoomInfo from './LandlordRoomInfo';
@@ -33,7 +34,7 @@ const LandlordRooms = ({ jamId, subSection }) => {
 
         const roomsBookings = [];
         for (let i = 0; i < res.length; i++) {
-            if (!Calculations.isEmpty(res[i].bookingsSummary)) {
+            if (!isEmpty(res[i].bookingsSummary)) {
                 const jamOrderedBookings = Calculations.organizeBookings(res[i].bookingsSummary);
                 const { roomNr } = res[i];
                 const roomId = res[i].id;

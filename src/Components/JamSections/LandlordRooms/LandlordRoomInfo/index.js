@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
 import ButtonPlain from '../../../UI/ButtonPlain';
 import CurrentTenant from './CurrentTenant';
@@ -15,8 +16,8 @@ const LandlordRoomInfo = ({ roomInfo }) => {
 
 
     const orderedBookings = Calculations.organizeBookings(roomInfo.bookingsSummary);
-    const noNextBooking = Calculations.isEmpty(orderedBookings.nextBooking);
-    const noCurrentTenant = Calculations.isEmpty(orderedBookings.currentBooking);
+    const noNextBooking = isEmpty(orderedBookings.nextBooking);
+    const noCurrentTenant = isEmpty(orderedBookings.currentBooking);
 
     const { bookingsSummary } = roomInfo;
 

@@ -1,21 +1,25 @@
 import React from 'react';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
-import Calculations from '../../../services/Calculations';
+import './index.scss';
+import { setSection, setSubSection } from '../../../../redux/actions/navigateActions';
 
-// CSS
-import './index.css';
-
-const RoomsOverview = ({ roomsInfo }) => {
+const RoomsOverview = ({ roomsFullInfo }) => {
     
-    const isEmpty = (x) => {
-        const empty = Calculations.isEmpty(x);
-        return empty;
+    const showOverviewChart = !isEmpty(roomsFullInfo);
+
+    const handleClick = (section, subSection) => {
+        console.log('CLICK :', section, ' / ', subSection)
+        setSection(section);
+        setSubSection(subSection)
     };
 
-    const renderRoomsChart = () => roomsInfo.map((room, i) => (
-        <div className="rooms-charts-wrapper" key={i}>
-            <div className="room-info-line">
+    const renderRoomsChart = () => roomsFullInfo.map((room, i) => (
+        <div className="overview-charts-wrapper" key={i}>
+            <div className="overview-info-line" 
+                onCLick={() => handleClick('Rooms', room.roomId)}
+            >
                 {isEmpty(room.bookings.currentBooking)
                     ? (
                         <div className="vacant-row">
@@ -24,34 +28,32 @@ const RoomsOverview = ({ roomsInfo }) => {
                                     <p>{room.roomNr}</p>
                                 </div>
                             </div>
-                            <div className="room-info-vacant-row">
-                                <div className="vacant-sign">
-                                    <p>CURRENTLY VACANT</p>
-                                </div>
+                            <div className="overview-info-vacant-row">
+                                <p>Vacant</p>
                             </div>
                         </div>
                     )
                     : (
                         <>
-                            <div className="room-info-block-center">
+                            <div className="overview-info-block-center">
                                 <p>{room.roomNr}</p>
                             </div>
-                            <div className="room-info-block">
+                            <div className="overview-info-block">
                                 <p>{room.bookings.currentBooking.bookingId}</p>
                             </div>
-                            <div className="room-info-block">
+                            <div className="overview-info-block">
                                 <p>{room.bookings.currentBooking.jammerName}</p>
                             </div>
-                            <div className="room-info-block">
+                            <div className="overview-info-block">
                                 <p>{moment(room.bookings.currentBooking.checkIn).format('DD-MMM-YYYY')}</p>
                             </div>
-                            <div className="room-info-block">
+                            <div className="overview-info-block">
                                 <p>{moment(room.bookings.currentBooking.checkOut).format('DD-MMM-YYYY')}</p>
                             </div>
-                            <div className="room-info-block">
+                            <div className="overview-info-block">
                                 <p>{room.bookings.currentBooking.rent}</p>
                             </div>
-                            <div className="room-info-block">
+                            <div className="overview-info-block">
                                 <p>{room.bookings.currentBooking.deposit}</p>
                             </div>
                         </>
@@ -62,26 +64,26 @@ const RoomsOverview = ({ roomsInfo }) => {
     ));
 
     return (
-        <div className="rooms-overview-wrapper">
-            <div className="rooms-info-chart">
-                <div className="room-info-chart-header">
-                    <div className="room-info-chart-header-block">
+        <div className="overview-wrapper">
+            <div className="overview-info-chart">
+                <div className="overview-info-chart-header">
+                    <div className="overview-info-chart-header-block">
                         <p>Room Nr</p>
                     </div>
-                    <div className="room-info-chart-header-block">
+                    <div className="overview-info-chart-header-block">
                         <p>Type</p>
                     </div>
-                    <div className="room-info-chart-header-block">
+                    <div className="overview-info-chart-header-block">
                         <p>Rent €</p>
                     </div>
-                    <div className="room-info-chart-header-block">
+                    <div className="overview-info-chart-header-block">
                         <p>Deposit €</p>
                     </div>
-                    <div className="room-info-chart-header-block">
+                    <div className="overview-info-chart-header-block">
                         <p>Current State</p>
                     </div>
                 </div>
-                {roomsBookings.length !== 0 && renderRoomsChart()}
+                {showOverviewChart ? renderRoomsChart() : <p>Loading</p>}
             </div>
         </div>
     );
