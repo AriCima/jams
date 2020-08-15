@@ -7,13 +7,14 @@ import { setJamId, setSection, setSubSection } from '../../../../redux/actions/n
 // CSS
 import "./index.scss";
 
- const JamCover = ({ jamName, jamId, jamType, jamDesc, user2Name = '', setJamId }) => {
+ const JamCover = ({ jamName, jamId, jamType, jamDesc, user2Name = '', setJamId, setSection, setSubSection }) => {
 
   // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
 
   const onSelectJam = (jamId) => {
+    console.log('click', jamId);
     setJamId(jamId);
-    setSection('overview');
+    setSection('Overview');
     setSubSection('');
   };
 
@@ -49,4 +50,4 @@ import "./index.scss";
 //   }
 // }
 
-export default connect(null, { setJamId })(JamCover)
+export default connect(null, { setJamId, setSection, setSubSection })(JamCover)

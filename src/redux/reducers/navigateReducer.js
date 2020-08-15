@@ -5,21 +5,22 @@ import {
 } from '../actions/navigateActions';
   
 const defaultState = {
-jamId: '',
-section: 'overview',
-subSection: ''
+    jamId: '',
+    section: '',
+    subSection: ''
 };
 
 const updateVal = (state, action) => {
+    console.log('val = ', state)
 return { ...state, ...action.payload };
 };
 
 
 
 function createReducer(initialState, handlers) {
-return function reducer(state = initialState, action) {
-    if (action.type in handlers) {
-    return handlers[action.type](state, action);
+    return function reducer(state = initialState, action) {
+        if (action.type in handlers) {
+        return handlers[action.type](state, action);
     }
     return state;
 };

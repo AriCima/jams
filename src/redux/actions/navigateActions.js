@@ -10,7 +10,7 @@ export const setJamId = (jamId = '') => ({
 });
 
 
-export const setSection = (section = 'overview') => ({
+export const setSection = (section = '') => ({
   type: SECTION,
   payload: {
     section

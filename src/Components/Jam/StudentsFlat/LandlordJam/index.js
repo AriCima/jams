@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { connect } from 'react-redux';
 
 // COMPONENTS
@@ -14,7 +14,15 @@ import './index.scss';
 const LandlordJam = ({ jamId, jamInfo, section }) => {
     const { jamName, jamDesc, jamType } = jamInfo;
 
+    const [currentSection, setCurrentSection] = useState('');
+
+    useEffect(() => {
+        console.log('useEffect', section)
+        setCurrentSection(section)
+    }, [section])
+
     const renderSection = (section) => {
+        console.log('switch :', section)
         switch (section) {
             case 'Overview':
                 return <LandlordOverview jamId={jamId} />;
@@ -44,7 +52,7 @@ const LandlordJam = ({ jamId, jamInfo, section }) => {
             </div>
 
             <div className="landlord-jam-container">
-                {renderSection(section)}
+                {renderSection(currentSection)}
             </div>
         </div>
     );
