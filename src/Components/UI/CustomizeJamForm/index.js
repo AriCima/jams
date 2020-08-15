@@ -14,7 +14,7 @@ const CustomizeJamForm = ( props ) => {
     const handleCloseJamCustomization = () => {
         const jamField = 'jamType'
         const newInfo = false;
-        DataService.updateJamInfo(jamId, jamField, newInfo)
+        DataService.update(jamId, jamField, newInfo)
     
     }
 
@@ -26,7 +26,7 @@ const CustomizeJamForm = ( props ) => {
         const jamField = 'jamType';
         const newInfo = jamType;
     
-        DataService.updateJamInfo(jamId, jamField, newInfo)
+        DataService.update(jamId, jamField, newInfo)
     }
 
     return (

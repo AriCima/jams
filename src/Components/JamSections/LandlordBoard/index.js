@@ -5,30 +5,30 @@ import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import LandlordBoardContent from './LandlordBoardContent';
 import ButtonSubmit from '../../UI/ButtonSubmit';
-import CustomInputField from '../../UI/CustomInputField'
 import CustomTextArea from '../../UI/CustomTextArea';
 
 
 // CSS
 import './index.scss';
 
-const LandlordBoard = (props) => {
+const LandlordBoard = ({ jamId, auth}) => {
 
-    const { jamId } = props;
-    const userId = props.auth.uid;
+    const userId = auth.uid;
 
-    const [sectionInfo, setSectionInfo] = useState([]);
+    const [boardInfo, setBoardInfo] = useState([]);
     const [messageText, setMessageText ] = useState('');
    
     useEffect(() => {
-        DataService.getBoardInfo(jamId, 'board')
-        .then((res) => {
-            setSectionInfo(res)
-        })
+        jamId && getBoardContent(jamId)
     }, [jamId])
 
+
+    const getBoardContent = async (jamId) => {
+        const res = await DataService.getBoardInfo(jamId, 'board');
+        setBoardInfo(res);
+    }
     const renderLandlordBoardContent = () => {
-        return sectionInfo.map((bC, i) => {
+        return boardInfo.map((bC, i) => {
             return (
                 <LandlordBoardContent 
                     key={i} 
@@ -101,7 +101,7 @@ const LandlordBoard = (props) => {
 const mapStateToProps = (state) => {
     return {
         auth: state.firebase.auth,
-        jamId: state.jamId,
+        // jamId: state.jamId,
         // jamActiveSection: state.jamSection,
     }
 }

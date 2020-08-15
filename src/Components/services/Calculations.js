@@ -1,6 +1,8 @@
 import React from 'react';
 
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChalkboard, faComments, faUsers, faUserLock, faCog} from '@fortawesome/free-solid-svg-icons'
 
@@ -64,7 +66,7 @@ export default class Calculations {
               sections = ['Board', 'Jammers', 'MyJam', 'Settings']
               break;
             case 'studentsFlat':
-                sections = ['Overview','Board', 'Tenants', 'Rooms', 'Settings']
+                sections = ['Board', 'Tenants', 'Rooms', 'Settings']
                 break;
             case 'chat': 
                 sections = ['Chat']
@@ -297,13 +299,21 @@ export default class Calculations {
         return flats
     }
 
-    // FUNCTION TO DETERMINE IF AN OBJECT IS EMPTY
-    static isEmpty = (obj) => {
-        for(var key in obj) {
-            if(obj.hasOwnProperty(key))
-                return false;
-        }
-        return true;
+    static getCompleteRoomsInfo = (roomsInfo) => {
+        const rsL = roomsInfo.length
+        const roomsBookings = [];
+
+        for (let i = 0; i < rsL; i++) {
+            if (!isEmpty(roomsInfo[i].bookingsSummary)) {
+                const jamOrderedBookings = Calculations.organizeBookings(roomsInfo[i].bookingsSummary);
+                const { roomNr, roomRent, roomDeposit, roomSize, exterior, double } = roomsInfo[i];
+                const roomId = roomsInfo[i].id;
+                const roomBookingsSummary = { roomNr, roomRent, roomDeposit, roomSize, exterior, double, roomId, bookings: jamOrderedBookings };
+                roomsBookings.push(roomBookingsSummary);
+            };
+        };
+        const orderedRooms = Calculations.sortAscRooms(roomsBookings)
+        return orderedRooms;
     }
 
 }

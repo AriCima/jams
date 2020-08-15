@@ -6,10 +6,7 @@ import moment from 'moment';
 // CSS
 import './index.scss';
 
-const BoardContent = (props) => {
-
-    const { boardContent } = props;
-    console.log('boardContent: ', boardContent);
+const BoardContent = ({ boardContent}) => {
 
     const messageTime = Calculations.getMessageDate(boardContent.createdAt)
 

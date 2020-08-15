@@ -1,20 +1,16 @@
 import React from 'react';
 
-// import DataService from "../../../../../../../../../services/DataService";
-
 import { connect } from 'react-redux';
-import { changeRoomId } from '../../../../../redux/actions/roomsId';
-// import {setActiveScreen} from "../../../../../../redux/actions/roomScreen"
+import { setSubSection } from '../../../../../redux/actions/navigateActions';
 
-// CSS
 import './index.scss';
 
-const LandlordRoomCard = ({ changeRoomId, rI, roomId }) => {
+const LandlordRoomCard = ({ rI, roomId, setSubSection }) => {
 
     const onShowRoomInfo = (roomId) => {
-    // props.setActiveScreen('roomInfo');
-        changeRoomId(roomId);
+        setSubSection(roomId)
     };
+    
     const isVacant = rI.bookings.currentBooking.jammerName === undefined;
     
     return (
@@ -55,18 +51,4 @@ const LandlordRoomCard = ({ changeRoomId, rI, roomId }) => {
     );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    // nombre de la función que paso como prop: (arg) =>
-    // dispatch(nombre del action creator(argumento))
-    changeRoomId: (roomId) => dispatch(changeRoomId(roomId)),
-    // setActiveScreen: (roomInfo) => dispatch(setActiveScreen(roomInfo))
-});
-
-
-const mapStateToProps = (state) => ({
-    user: state.firebase.auth,
-    jamId: state.jamId,
-    userJams: state.userJams,
-    roomId: state.roomId,
-});
-export default connect(mapStateToProps, mapDispatchToProps)(LandlordRoomCard);
+export default connect(null, { setSubSection })(LandlordRoomCard);

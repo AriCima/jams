@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { connect } from 'react-redux';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
 import ButtonPlain from '../../../UI/ButtonPlain';
 import CurrentTenant from './CurrentTenant';
@@ -13,17 +12,18 @@ import PrebBookingForm from '../../../Forms/PreBookingForm';
 // CSS
 import './index.css';
 
-const LandlordRoomInfo = ({ roomInfo, jamId, roomId }) => {
-    console.log('roomInfo: ', roomInfo);
+const LandlordRoomInfo = ({ roomInfo }) => {
+
+
     const orderedBookings = Calculations.organizeBookings(roomInfo.bookingsSummary);
-    const noNextBooking = Calculations.isEmpty(orderedBookings.nextBooking);
-    const noCurrentTenant = Calculations.isEmpty(orderedBookings.currentBooking);
+    const noNextBooking = isEmpty(orderedBookings.nextBooking);
+    const noCurrentTenant = isEmpty(orderedBookings.currentBooking);
 
     const { bookingsSummary } = roomInfo;
 
-    const onNewInvitation = (roomId) => {
-        alert('NEW INVITATION');
-    };
+    // const onNewInvitation = (roomId) => {
+    //     alert('NEW INVITATION');
+    // };
 
     return (
         <div className="room-info-wrapper">
@@ -41,8 +41,8 @@ const LandlordRoomInfo = ({ roomInfo, jamId, roomId }) => {
                     <div className="room-buttons-area">
                         <div className="room-button-block">
                             <PrebBookingForm
-                                jamId={jamId}
-                                roomId={roomId}
+                                // jamId={jamId}
+                                // roomId={roomId}
                                 roomNr={roomInfo.roomNr}
                                 bookingsSummary={bookingsSummary}
                             />
@@ -51,7 +51,7 @@ const LandlordRoomInfo = ({ roomInfo, jamId, roomId }) => {
                             <ButtonPlain
                                 type="button"
                                 text="Invite"
-                                clickHandle={onNewInvitation}
+                                // clickHandle={onNewInvitation}
                             />
                         </div>
                     </div>
@@ -101,10 +101,4 @@ const LandlordRoomInfo = ({ roomInfo, jamId, roomId }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    jamId: state.jamId,
-    roomId: state.roomId,
-});
-
-export default connect(mapStateToProps)(LandlordRoomInfo);
-// export default LandlordRoomInfo;
+export default LandlordRoomInfo;

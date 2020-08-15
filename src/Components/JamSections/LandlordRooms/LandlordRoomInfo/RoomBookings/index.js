@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
 import Calculations from '../../../../services/Calculations';
 import BookingsList from './BookingsList';
@@ -11,11 +12,8 @@ import './index.css';
 const RoomBookings = ({ orderedBookings }) => {
 
     const existsDueContracts = orderedBookings.dueBookings.length;
-    // console.log('existsDueContracts: ', existsDueContracts);
-    const existsNextBooking = Calculations.isEmpty(orderedBookings.nextBooking);
-    // console.log('existsNextBooking: ', existsNextBooking);
+    const existsNextBooking = isEmpty(orderedBookings.nextBooking);
     const existsFutureBookings = orderedBookings.futureBookings.length;
-    // console.log('existsFutureBookings: ', existsFutureBookings);
 
     return (
         <>

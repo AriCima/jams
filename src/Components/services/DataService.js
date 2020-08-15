@@ -165,13 +165,10 @@ export default class DataService {
     }
 
     static getJamInfoById(jamId) {
-        // //console.log('jamID en DS =', jamId)
         return new Promise((resolve, reject) => {
-            // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore().collection('jams').doc(jamId)
                 .get()
                 .then((result) => {
-                    // //console.log('el result del Bis = ', result);
                     resolve(result.data());
                 })
 
@@ -412,7 +409,6 @@ export default class DataService {
                 .get()
                 .then((doc) => {
                     if (doc.exists) {
-                        console.log('Document data:', doc.data());
                         resolve(doc.data());
                     } else {
                     // doc.data() will be undefined in this case

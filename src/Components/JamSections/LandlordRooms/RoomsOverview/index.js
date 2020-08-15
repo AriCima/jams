@@ -1,16 +1,10 @@
 import React from 'react';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
-import Calculations from '../../../services/Calculations';
-
-// CSS
 import './index.css';
 
 const RoomsOverview = ({ roomsBookings }) => {
-    const isEmpty = (x) => {
-        const empty = Calculations.isEmpty(x);
-        return empty;
-    };
 
     const renderRoomsChart = () => roomsBookings.map((room, i) => (
         <div className="rooms-charts-wrapper" key={i}>
