@@ -12,7 +12,6 @@ import "./index.scss";
   // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
 
   const onSelectJam = (jamId) => {
-    console.log('click', jamId);
     setJamId(jamId);
     setSection('Overview');
     setSubSection('');

@@ -21,8 +21,6 @@ const LamndlordOverview = ({ jamId,  setSection, setSubSection }) => {
 
     const getJamRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
-        console.log('res: ', res);
-
         const roomsFullInfo = Calculations.getCompleteRoomsInfo(res);
         setRoomsFullInfo(roomsFullInfo);
     };

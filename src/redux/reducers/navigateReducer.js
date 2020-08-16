@@ -11,8 +11,7 @@ const defaultState = {
 };
 
 const updateVal = (state, action) => {
-    console.log('val = ', state)
-return { ...state, ...action.payload };
+    return { ...state, ...action.payload };
 };
 
 

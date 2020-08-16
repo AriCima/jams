@@ -17,12 +17,10 @@ const LandlordJam = ({ jamId, jamInfo, section }) => {
     const [currentSection, setCurrentSection] = useState('');
 
     useEffect(() => {
-        console.log('useEffect', section)
         setCurrentSection(section)
     }, [section])
 
     const renderSection = (section) => {
-        console.log('switch :', section)
         switch (section) {
             case 'Overview':
                 return <LandlordOverview jamId={jamId} />;

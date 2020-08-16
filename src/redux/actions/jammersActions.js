@@ -30,7 +30,6 @@ export const getJammerInfo = (jamId, jammerId) => {
 }
 
 export const setJammerId = (jammerId) => {
-    console.log('SET JAMMER ID LAUNCHED', jammerId)
     return  {
         type: "JAMMER_ID", 
         payload: jammerId
