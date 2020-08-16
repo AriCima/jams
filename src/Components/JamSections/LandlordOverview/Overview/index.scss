@@ -12,13 +12,13 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        box-shadow: 10px 10px 30px 1px $lightGray;
+        box-shadow: $shadow ;
         .overview-info-chart-header{
             width: 100%;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            background-color: rgb(61,158,247);
+            background-color: $prim;
             padding: 12px 0;
             margin-bottom: 2px;
             .overview-info-chart-header-block{
@@ -35,86 +35,52 @@
             }
         }
         
-        .overview-charts-wrapper{
+
+        .overview-info-line{
             width: 100%;
-            .overview-info-line{
-                width: 100%;
-                margin: 2px 0;
+            padding: 2px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid $charts ;
+            &:hover{
+                opacity: 1;
+                background-color: $hoverGray;
+            };
+            .overview-info-block{
+                width: 14%;
                 display: flex;
-                justify-content: flex-start;
+                justify-content: center;
                 align-items: center;
-                cursor: pointer;
-                box-shadow: -1px 1px 1px 1px $lightGray;
-                &:hover{
-                    opacity: 1;
-                    background-color: $hoverGray;
+                margin: 10px 5px;
+                p{
+                    margin: 0;
+                    font-size: 14px;
+                    color: rgb(128, 128, 128)
                 };
-                .vacant-row{
-                    width: 100%;
-                    display: flex;
-                    justify-content: flex-start;
-                    align-items: center;
-                    .vacant-row-roomName{
-                        width: 14%;
-                        margin: 2px 0;
-                        display: flex;
-                        justify-content: flex-start;
-                        align-items: center;
-                        .vacant-info-block{
-                            width: 100%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            margin: 10px 5px;
-                            p{ 
-                                color: black;
-                                margin: 0;
-                            }
-                        }
-                    }
-                    .overview-info-vacant-row{
-                        width: 86%;
-                        padding-right: 14%;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        p{
-                            margin: 0;
-                            font-size: 12px;
-                            font-weight: 700;
-                            color: red;
-                        }
-                        
-                    }
+                span{
+                    margin: 0;
+                    font-size: 14px;
+                    color: red;
                 }
-                .overview-info-block{
-                    width: 14%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 10px 5px;
-                    p{
-                        margin: 0;
-                        font-size: 14px;
-                        color: rgb(128, 128, 128)
-                    }
-                }
-                
-                .overview-info-block-center{
-                    width: 14%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 10px 5px;
-                    p{
-                        margin: 0 2% 0 0;
-                        font-size: 14px;
-                        font-weight: 700;
-                        color: black; 
-                    }
-                }
-                
             }
+            
+            .overview-info-block-center{
+                width: 14%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 10px 5px;
+                p{
+                    margin: 0 2% 0 0;
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: black; 
+                }
+            }
+            
+        }
             // .overview-info-line:nth-child(even){
             //     background-color: rgba(0, 144, 248, 0.05);
             // }
@@ -127,7 +93,7 @@
             // .overview-info-line:nth-child(odd):hover{
             //     background-color: rgba(0, 144, 248, 0.4);
             // }
-        }
+        
     }
 }
 
