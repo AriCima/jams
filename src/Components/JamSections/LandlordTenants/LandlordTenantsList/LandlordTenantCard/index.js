@@ -1,30 +1,21 @@
 import React from "react";
-import { connect } from 'react-redux';
 
-import { setJammerId } from "../../../../../redux/actions/jammersActions";
 import "./index.scss";
 
-const LandlordTenantCard = ({jI, setJammerId, tenantId}) => {
-
-  const onShowTenantInfo = (tenantId) => {
-    setJammerId(tenantId)
-  }
+const LandlordTenantCard = ({ tL }) => {
 
   return (
-    <div className={`tenant-card-container ${tenantId === jI.id && 'tenantActive'}`} 
-      onClick={()=> onShowTenantInfo(jI.id)}>
 
-      <div className="tenant-img">
-        <img src={"/"} alt="img" />
+    <div className="landlord-tenant-wrapper">
+      <div className="landlord-tenant-picture">
+
       </div>
-
-      <div className="student-info">
-
-        <div className="student-info-upperLine">
-          <p>{jI.tenantName} - {jI.tenantCountry}</p>
+      <div className="landlord-tenant-info">
+        <div className="landlord-tenant-info-name">
+          <p>{tL.jammerName} - </p> <p>{tL.jammerCountry}</p>
         </div>
-        <div className="student-info-lowerLine">
-          <p>{jI.tenantStudy}, {jI.tenantSchool}</p>
+        <div className="landlord-tenant-info-name">
+
         </div>
       </div>
     </div>
@@ -32,19 +23,4 @@ const LandlordTenantCard = ({jI, setJammerId, tenantId}) => {
   
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setJammerId: (tenantId) => dispatch(setJammerId(tenantId)),
-  }
-}
-
-
-const mapStateToProps = (state) => {
-  return {
-      user: state.firebase.auth,
-      jamId: state.jamId,
-      userJams: state.userJams,
-      tenantId: state.jammerId
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(LandlordTenantCard);
+export default LandlordTenantCard;

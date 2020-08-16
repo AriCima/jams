@@ -38,29 +38,41 @@ const LandlordTenants = ({ jamId, subSection, setSubSection }) => {
         setJammerInfo(res);
     };
 
+    const currentTenants = [];
+    const comingTenants = [];
+    const formerTenants = [];
 
 
     return (
         <div className="landlord-tenants">
+
+            <div className="landlord-tenants-section">
+                <div className="subSection-title">
+                    <p>Current Tenants</p>
+                </div>
+                <div className="subsection-wrapper">
+                    <LandlordTenantsList tenantsList={currentTenants} />
+                </div>
+            </div>
+
+            <div className="landlord-tenants-section">
+                <div className="subSection-title">
+                    <p>Coming Tenants</p>
+                </div>
+                <div className="subsection-wrapper">
+                    <LandlordTenantsList tenantsList={comingTenants} />
+                </div>
+            </div>
+
+            <div className="landlord-tenants-section">
+                <div className="subSection-title">
+                    <p>Former Tenants</p>
+                </div>
+                <div className="subsection-wrapper">
+                    <LandlordTenantsList tenantsList={formerTenants} />
+                </div>
+            </div>
             
-            <div className="landlord-tenant-list">
-                {showJammersList ? 
-                    <LandlordTenantsList
-                        jammers={jammers} 
-                    /> 
-                    : 
-                    <p>Loading</p>
-                }
-            </div>
-
-            <div className="landlord-tenants-info">
-
-                <LandlordTenantInfo 
-                    subSection={subSection} 
-                    jamId={jamId} 
-                />
-
-            </div>
         </div>
 
     );

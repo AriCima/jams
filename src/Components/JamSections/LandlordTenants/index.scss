@@ -7,26 +7,48 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    .landlord-tenant-list{
-        margin-top: 2px;
-        width: 100%;
-        min-height: 50px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        overflow-y: scroll;
-        // background-color: rgb(255, 255, 255);
-        // box-shadow: 0px 1px 21px -13px $lightGray;
-    }
-    .landlord-tenants-info{
-        margin-top: 20px;
+    .landlord-tenants-section{
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        overflow-y: scroll;
+        .subSection-title{
+            width: 90%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            border-bottom: 1px solid rgb(134, 134, 134);
+            p{
+                margin: 0;
+                margin-top: 20px;
+                line-height: 35px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: rgb(134, 134, 134);
+            }
+        }
     }
+    // .landlord-tenant-list{
+    //     margin-top: 2px;
+    //     width: 100%;
+    //     min-height: 50px;
+    //     display: flex;
+    //     justify-content: space-between;
+    //     align-items: center;
+    //     overflow-y: scroll;
+    //     // background-color: rgb(255, 255, 255);
+    //     // box-shadow: 0px 1px 21px -13px $lightGray;
+    // }
+    // .landlord-tenants-info{
+    //     margin-top: 20px;
+    //     width: 100%;
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: flex-start;
+    //     align-items: center;
+    //     overflow-y: scroll;
+    // }
 
 }
 

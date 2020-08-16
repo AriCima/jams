@@ -86,7 +86,34 @@
     }
 }
 
-
+.landlord-tenant-wrapper{
+    width: 90%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: $shadow;
+    .landlord-tenant-picture{
+        width: 30%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 1px solid $charts;
+    }
+    .landlord-tenant-info{
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        .landlord-tenant-info-name{
+            width: 100;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 5px;
+        }
+    }
+}
 
 
 
