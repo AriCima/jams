@@ -87,30 +87,70 @@
 }
 
 .landlord-tenant-wrapper{
-    width: 90%;
+    width: 95%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin: 10px 0;
+    border-radius: 10px;
     box-shadow: $shadow;
+
     .landlord-tenant-picture{
         width: 30%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         margin-right: 1px solid $charts;
+        padding: 5px;
     }
     .landlord-tenant-info{
         width: 70%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center;
-        .landlord-tenant-info-name{
+        align-items: flex-start;
+        padding: 5px;
+        .landlord-tenant-info-line{
             width: 100;
             display: flex;
             justify-content: flex-start;
             align-items: center;
             padding: 5px;
+            p{ 
+                color: gray;
+                margin: 0;
+            }
+            h4{
+                font-size: 1rem;
+                font-weight: 700px;
+                margin: 0 5px 0 0;
+            }
+            .contactButton{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 24px;
+                height: 48px;
+                width: 145px;
+                background-color: $button;
+                border-radius: 4px;;
+                p{ 
+                    color: white;
+                    margin: 0;
+                }
+                &:hover{
+                    cursor: pointer;
+                    background-color: $button-hover;
+                }
+            }
+            &-roomInfo{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px;
+                padding-right: 15px;
+            }
         }
     }
 }
