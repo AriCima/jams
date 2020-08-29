@@ -8,7 +8,7 @@ import ButtonSubmit from '../../UI/ButtonSubmit';
 import CustomTextArea from '../../UI/CustomTextArea';
 
 
-// CSS
+// REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
 const LandlordBoard = ({ jamId, auth}) => {

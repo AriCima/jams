@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';  
 
-  
+// REAL TIME DATABASE : https://www.youtube.com/watch?v=noB98K6A0TY
 
 // Initialize Firebase
 var config = {
@@ -14,6 +14,7 @@ var config = {
   messagingSenderId: "441787301493"
 };
 
+// const realTimeDB = firebase.database().ref().child('object');
 
 
 firebase.initializeApp(config);
