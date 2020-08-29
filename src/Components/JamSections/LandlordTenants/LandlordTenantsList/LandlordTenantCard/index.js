@@ -36,14 +36,14 @@ const LandlordTenantCard = ({ tL, setSubsection }) => {
         <div className="landlord-tenant-info-line-roomInfo">
           <p>Room Nr: {tL.roomNr}</p> <p>Rent: {tL.rent}</p> <p>Deposit: {tL.deposit}</p>
         </div>
-        <div className="landlord-tenant-info-line">
+      </div>
+        <div className="landlord-tenant-contact">
           <div className="contactButton"
              onClick={e => handleContact(e)}
           >
             <p>Contact {tL.jammerName} </p>
           </div>
         </div>
-      </div>
     </div>
   )
   

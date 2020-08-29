@@ -95,8 +95,12 @@
     border-radius: 10px;
     box-shadow: $shadow;
 
+    &:hover{
+        cursor: pointer;
+    }
+
     .landlord-tenant-picture{
-        width: 30%;
+        width: 20%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -125,24 +129,7 @@
                 font-weight: 700px;
                 margin: 0 5px 0 0;
             }
-            .contactButton{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0 24px;
-                height: 48px;
-                width: 145px;
-                background-color: $button;
-                border-radius: 4px;;
-                p{ 
-                    color: white;
-                    margin: 0;
-                }
-                &:hover{
-                    cursor: pointer;
-                    background-color: $button-hover;
-                }
-            }
+
             &-roomInfo{
                 width: 100%;
                 display: flex;
@@ -150,6 +137,30 @@
                 align-items: center;
                 padding: 5px;
                 padding-right: 15px;
+            }
+        }
+    }
+    .landlord-tenant-contact{
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .contactButton{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 24px;
+            height: 48px;
+            width: 95%;
+            background-color: $button;
+            border-radius: 4px;;
+            p{ 
+                color: white;
+                margin: 0;
+            }
+            &:hover{
+                cursor: pointer;
+                background-color: $button-hover;
             }
         }
     }
