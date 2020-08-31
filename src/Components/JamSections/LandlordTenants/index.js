@@ -9,7 +9,7 @@ import LandlordTenantInfo from './LandlordTenantInfo';
 
 import './index.scss';
 
-const LandlordTenants = ({ jamId, docType }) => {
+const LandlordTenants = ({ jamId, docType, docId }) => {
     const [jammers, setJammers] = useState([]);
     
     useEffect(() => {
@@ -19,9 +19,7 @@ const LandlordTenants = ({ jamId, docType }) => {
     const getJammersList = async (jamId) => {
         const res = await DataService.getJammers(jamId);
         if(res.length > 0) {
-            // setShowJammersList(true);
             const organizedTenants = Calculations.organizeTenants(res);
-            console.log('organizedTenants: ', organizedTenants);
             setJammers(organizedTenants);
         };
     };
@@ -31,7 +29,7 @@ const LandlordTenants = ({ jamId, docType }) => {
     return (
         <div className="landlord-tenants">
 
-            { showTenantInfo ? <LandlordTenantInfo /> : (
+            { showTenantInfo ? <LandlordTenantInfo docId={docId} /> : (
 
                 <>
                     <div className="landlord-tenants-section">
@@ -71,8 +69,8 @@ const LandlordTenants = ({ jamId, docType }) => {
 
 
 const mapStateToProps = (state) => {
-    const { docType } = state.doc;
-    return { docType }
+    const { docType , docId } = state.doc;
+    return { docType, docId }
     
 };
 export default connect(mapStateToProps, null)(LandlordTenants);

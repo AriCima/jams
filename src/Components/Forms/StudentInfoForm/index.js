@@ -7,28 +7,46 @@ import ButtonSubmit from '../../UI/ButtonSubmit';
 // CSS
 import './index.scss';
 
-const StudentInfoForm = ({ bookingCode }) => {
-    const [bookingInfo, setBookingInfo] = useState({});
+const StudentInfoForm = ({ tenantInfo }) => {
+    const [editedTenantInfo, setEditedTenantInfo] = useState({tenantInfo});
 
     useEffect(() => {
+        setEditedTenantInfo(tenantInfo)
+    }, [tenantInfo]);
 
-        bookingCode && DataService.getPreBookingInfo(bookingCode)
-            .then(result => {
-                setBookingInfo(result);
-            });
-    }, []);
+    const { 
+        jammerName,
+        jammerSurname,
+        jammerEmail,
+        jammerHomeTel,
+        jammerStreet,
+        jammerHouseNr,
+        jammerMobile,
+        jammerFloor,
+        jammerDoor,
+        jammerZipcode,
+        jammerCity,
+        jammerCountry,
+        jammerPassportNr,
+        jammerStudy,
+        jammerSchool,
+        rent,
+        roomNr,
+        deposit,
+        checkIn,
+        checkOut
+    } = editedTenantInfo
 
     const handleInputChange = (event) => {
         event.persist();
-        setBookingInfo(bookingInfo => ({ ...bookingInfo, [event.target.id]: event.target.value }));
+        setEditedTenantInfo(editedTenantInfo => ({ ...editedTenantInfo, [event.target.id]: event.target.value }));
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const requestStatus = 'pending';
-        bookingInfo.jammerCondition = requestStatus;
-        DataService.addNewBookingRequest(bookingInfo);
-
+        editedTenantInfo.jammerCondition = requestStatus;
+        DataService.addNewBookingRequest(editedTenantInfo);
     };
 
     return (
@@ -47,8 +65,8 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Nombre"
                                 placeholder="name"
                                 id="jammerName"
-                                value={bookingInfo.jammerName}
-                                changeControl={handleInputChange}
+                                value={jammerName}
+                                changeControl={e => handleInputChange(e)}
                             />
 
                             <CustomInputFieldWithLabel
@@ -57,7 +75,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Surname"
                                 placeholder="surname"
                                 id="jammerSurname"
-                                value={bookingInfo.jammerSurname}
+                                value={jammerSurname}
                                 changeControl={handleInputChange}
                             />
 
@@ -67,7 +85,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Email"
                                 placeholder="email"
                                 id="jammerEmail"
-                                value={bookingInfo.jammerEmail}
+                                value={jammerEmail}
                                 changeControl={handleInputChange}
                             />
 
@@ -79,7 +97,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Home Tel"
                                 placeholder="tel"
                                 id="jammerHomeTel"
-                                value={bookingInfo.jammerHomeTel}
+                                value={jammerHomeTel}
                                 changeControl={handleInputChange}
                             />
 
@@ -89,7 +107,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Mobile"
                                 placeholder="mobile"
                                 id="jammerMobile"
-                                value={bookingInfo.jammerMobile}
+                                value={jammerMobile}
                                 changeControl={handleInputChange}
                             />
 
@@ -99,7 +117,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Passport Nr:"
                                 placeholder="passport Nr"
                                 id="jammerPassportNr"
-                                value={bookingInfo.jammerPassportNr}
+                                value={jammerPassportNr}
                                 changeControl={handleInputChange}
                             />
 
@@ -116,7 +134,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Check-In:"
                                 placeholder="checkIn"
                                 id="checkIn"
-                                value={bookingInfo.checkIn}
+                                value={checkIn}
                                 changeControl={handleInputChange}
                             />
 
@@ -126,7 +144,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Check-Out:"
                                 placeholder="checkIn"
                                 id="checkOut"
-                                value={bookingInfo.checkOut}
+                                value={checkOut}
                                 changeControl={handleInputChange}
                             />
 
@@ -139,7 +157,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Room Nr:"
                                 placeholder="room nr"
                                 id="roomNr"
-                                value={bookingInfo.roomNr}
+                                value={roomNr}
                                 changeControl={handleInputChange}
                             />
                             <CustomInputFieldWithLabel
@@ -148,7 +166,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Rent:"
                                 placeholder="rent"
                                 id="rent"
-                                value={bookingInfo.rent}
+                                value={rent}
                                 changeControl={handleInputChange}
                             />
 
@@ -158,7 +176,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Deposit:"
                                 placeholder="deposit"
                                 id="deposit"
-                                value={bookingInfo.deposit}
+                                value={deposit}
                                 changeControl={handleInputChange}
                             />
                         </div>
@@ -174,7 +192,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Street:"
                                 placeholder="street"
                                 id="jammerStreet"
-                                value={bookingInfo.jammerStreet}
+                                value={jammerStreet}
                                 changeControl={handleInputChange}
                             />
 
@@ -184,7 +202,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="House Nr:"
                                 placeholder="house nr"
                                 id="jammerHouseNr"
-                                value={bookingInfo.jammerHouseNr}
+                                value={jammerHouseNr}
                                 changeControl={handleInputChange}
                             />
 
@@ -194,7 +212,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Floor"
                                 placeholder="floor"
                                 id="jammerFloor"
-                                value={bookingInfo.jammerFloor}
+                                value={jammerFloor}
                                 changeControl={handleInputChange}
                             />
 
@@ -204,7 +222,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Door"
                                 placeholder="door"
                                 id="jammerDoor"
-                                value={bookingInfo.jammerDoor}
+                                value={jammerDoor}
                                 changeControl={handleInputChange}
                             />
                         </div>
@@ -215,7 +233,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Zip-Code"
                                 placeholder="zip-code"
                                 id="jammerZipCode"
-                                value={bookingInfo.jammerZipCode}
+                                value={jammerZipcode}
                                 changeControl={handleInputChange}
                             />
                             <CustomInputFieldWithLabel
@@ -224,7 +242,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="City"
                                 placeholder="city"
                                 id="jammerCity"
-                                value={bookingInfo.jammerCity}
+                                value={jammerCity}
                                 changeControl={handleInputChange}
                             />
                             <CustomInputFieldWithLabel
@@ -233,7 +251,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Country"
                                 placeholder="country"
                                 id="jammerCountry"
-                                value={bookingInfo.jammerCountry}
+                                value={jammerCountry}
                                 changeControl={handleInputChange}
                             />
                         </div>
@@ -244,7 +262,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="Study"
                                 placeholder="study"
                                 id="jammerStudy"
-                                value={bookingInfo.jammerStudy}
+                                value={jammerStudy}
                                 changeControl={handleInputChange}
                             />
                             <CustomInputFieldWithLabel
@@ -253,7 +271,7 @@ const StudentInfoForm = ({ bookingCode }) => {
                                 label="School"
                                 placeholder="school"
                                 id="jammerSchool"
-                                value={bookingInfo.jammerSchool}
+                                value={jammerSchool}
                                 changeControl={handleInputChange}
                             />
                         </div>
