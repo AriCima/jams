@@ -5,7 +5,7 @@ import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
 import ButtonSubmit from '../../UI/ButtonSubmit';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const StudentInfoForm = ({ bookingCode }) => {
     const [bookingInfo, setBookingInfo] = useState({});

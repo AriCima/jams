@@ -8,14 +8,18 @@ import Calculations from '../../services/Calculations';
 import { setSection, setSubSection } from     "../../../redux/actions/navigateActions";
 
 import './index.scss';
+import { setDocType, setDocId, setEditable } from '../../../redux/actions/docsActions';
 
-const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
+const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEditable, jamName, jamType}) => {
 
     const [jamSections, setJamSections] = useState([]);
 
     const onSelectJamSection = (section) => {
         setSection(section);
         setSubSection('');
+        setDocType('none');
+        setDocId('');
+        setEditable(false);
     };
 
     useEffect(() => {
@@ -86,4 +90,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, { setSection, setSubSection })(LandlordNavBar);
+export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(LandlordNavBar);

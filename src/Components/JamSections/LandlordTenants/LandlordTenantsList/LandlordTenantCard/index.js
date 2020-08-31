@@ -1,21 +1,22 @@
 import React from "react";
 import { connect } from 'react-redux';
-
+import moment from 'moment';
 import { setSubSection } from '../../../../../redux/actions/navigateActions';
 
 import "./index.scss";
+import { setDocType, setDocId, setEditable } from "../../../../../redux/actions/docsActions";
 
-const LandlordTenantCard = ({ tL, setSubsection }) => {
+const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
   console.log('tL: ', tL);
 
-  const handleClick = (e) => {
+  const showTenantForm = (e) => {
     e.preventDefault();
-    alert('go to TENANT FORM');
-
-    // setSubSection(tL.id)
+    setDocType('TENANT-FORM');
+    setDocId(tL.id);
+    setEditable('true');
   }
 
-  const handleContact = (e) => {
+  const launchChat = (e) => {
     e.preventDefault();
     e.stopPropagation();
     alert('launch chat');
@@ -24,7 +25,7 @@ const LandlordTenantCard = ({ tL, setSubsection }) => {
   return (
 
     <div className="landlord-tenant-wrapper"
-      onClick={e => handleClick(e)}
+      onClick={e => showTenantForm(e)}
     >
       <div className="landlord-tenant-picture">
         <img></img>
@@ -36,15 +37,15 @@ const LandlordTenantCard = ({ tL, setSubsection }) => {
           </div>
           <div className="landlord-tenant-contact">
             <div className="contactButton"
-              onClick={e => handleContact(e)}
+              onClick={e => launchChat(e)}
             >
               <p>Chat</p>
             </div>
           </div>
         </div>
         <div className="landlord-tenant-info-line-roomInfo">
-          <p>Check-In: {tL.checkIn}</p>
-          <p>Check-Out: {tL.checkOut}</p>
+          <p>Check-In: {moment(tL.checkIn).format('DD-MMM-YYYY')}</p>
+          <p>Check-Out: {moment(tL.checkOut).format('DD-MMM-YYYY')}</p>
           <p>Room Nr: {tL.roomNr}</p>
           <p>Rent: €/Mo {tL.rent}</p>
           <p>Deposit: € {tL.deposit}</p>
@@ -55,4 +56,4 @@ const LandlordTenantCard = ({ tL, setSubsection }) => {
   
 }
 
-export default connect(null, { setSubSection })(LandlordTenantCard);
+export default connect(null, { setDocType, setDocId, setEditable })(LandlordTenantCard);
