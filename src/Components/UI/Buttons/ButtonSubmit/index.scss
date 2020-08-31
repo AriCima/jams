@@ -1,17 +1,19 @@
 @import '../../../../variables.scss';
 
-.contactButton{
+.submit-button{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
-    width: 95%;
-    color: $button;
+    background-color: $button;
+    border-radius: 4px;
     p{ 
-        margin: 0 5px;
+        color: white;
+        margin: 0;
     }
+    
     &:hover{
         cursor: pointer;
-        color: $button-hover;
+        background-color: $button-hover;
     }
 }

@@ -1,17 +1,17 @@
 import React from 'react';
 
 // CSS
-import './index.css';
+import './index.scss';
 
-const ButtonSubmit = () => {
+const ButtonSubmit = ({text}) => {
 
   return (
-    <button 
-      id="submit"
+    <div
+      className="submit-button"
       type='submit'
       >
-      submit
-    </button>
+      <p>{text}</p>
+    </div>
   );
   
 }

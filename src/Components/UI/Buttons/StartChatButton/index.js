@@ -1,5 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComments } from '@fortawesome/free-regular-svg-icons'
+
 import DataService from '../../../services/DataService';
 import { setJam } from '../../../../redux/actions/jamId';
 
@@ -46,7 +50,11 @@ const StartChatButton = ({ auth, userJams, user2Name, user2Id, userId, tenantId,
     <div className="contactButton"
         onClick={e => launchChat(e)}
     >
-        <p>Chat</p>
+      <FontAwesomeIcon
+        icon={faComments}
+      />
+      <p>Chat</p>
+
     </div>
   )
   

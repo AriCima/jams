@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 
 import DataService from '../../services/DataService';
 import StartChatButton from '../../UI/Buttons/StartChatButton';
+import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
+
 import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
-import ButtonSubmit from '../../UI/ButtonSubmit';
 
 // CSS
 import './index.scss';
 
 const TenantInfoForm = ({ tenantInfo }) => {
     const [editedTenantInfo, setEditedTenantInfo] = useState({tenantInfo});
+    const [editedForm, setEditedForm] = useState(false);
 
     useEffect(() => {
         setEditedTenantInfo(tenantInfo)
@@ -40,7 +42,11 @@ const TenantInfoForm = ({ tenantInfo }) => {
 
     const handleInputChange = (event) => {
         event.persist();
-        setEditedTenantInfo(editedTenantInfo => ({ ...editedTenantInfo, [event.target.id]: event.target.value }));
+        setEditedForm(true);
+        setEditedTenantInfo(editedTenantInfo => ({ 
+            ...editedTenantInfo, 
+            [event.target.id]: event.target.value 
+        }));
     };
 
     const handleSubmit = (event) => {
@@ -50,6 +56,8 @@ const TenantInfoForm = ({ tenantInfo }) => {
         DataService.addNewBookingRequest(editedTenantInfo);
     };
 
+   
+
     return (
         <div className="tenant-info-wrapper">
             <form
@@ -58,7 +66,19 @@ const TenantInfoForm = ({ tenantInfo }) => {
             >
                 <div className="tenant-form-section">
                     <div className="tenant-section-title">
-                        <p>Personal Info</p>
+                        <div className="title-text">
+                            <h4>Personal Info</h4>
+                        </div>
+                        <div className="section-buttons">
+                        { editedForm &&
+                            <div className="section-button">
+                                <ButtonSubmit text='Submit changes' />
+                            </div>
+                        }
+                            <div className="section-button">
+                                <StartChatButton />
+                            </div>
+                        </div>
                     </div>
                     <div className="tenant-form-row">
                         <CustomInputFieldWithLabel
@@ -124,13 +144,12 @@ const TenantInfoForm = ({ tenantInfo }) => {
                         />
 
                     </div>
-                    <div className="chat-button">
-                        <StartChatButton />
-                    </div>
                 </div>
                 <div className="tenant-form-section">
                     <div className="tenant-section-title">
-                        <p>Booking Info</p>
+                        <div className="title-text">
+                            <h4>Booking Info</h4>
+                        </div>
                     </div>
                     <div className="tenant-form-dates-row">
                         <CustomInputFieldWithLabel
@@ -188,7 +207,9 @@ const TenantInfoForm = ({ tenantInfo }) => {
                 </div>
                 <div className="tenant-form-section">
                         <div className="tenant-section-title">
-                            <p>Contract Info</p>
+                            <div className="title-text">
+                                <h4>Contract Info</h4>
+                            </div>
                         </div>
                         <div className="tenant-form-row">
                             <CustomInputFieldWithLabel

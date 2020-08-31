@@ -1,3 +1,6 @@
+@import '../../../variables.scss';
+
+
 .tenant-info-wrapper{
     width: 100%;
 }
@@ -26,20 +29,41 @@
     .tenant-form-section{
         width: 100%;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         flex-direction: column;
         justify-content: center;
         margin-bottom: 30px;
         .tenant-section-title{
-            width: 100%;
-            p{
-                margin-left: 20px;
-                margin-right: 20px;
-                line-height: 35px;
-                border-bottom: 1px solid rgb(134, 134, 134);
-                font-weight: 700;
-                text-transform: uppercase;
-                color: rgb(134, 134, 134);
+            width: 95%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgb(134, 134, 134);
+            .title-text{
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                h4{
+                    font-size: 16px;
+                    text-transform: uppercase;
+                }
+            }
+            .section-buttons{
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                .section-button{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 15px;
+    
+                }
+                p{ 
+                    color: $button;
+                    font-size: 14px;
+                    border: none;
+                }
             }
         }
         .tenant-form-row{
@@ -58,11 +82,7 @@
             flex-wrap: wrap;
             padding: 10px 20px;
         }
-        .chat-button{
-            position: relative;
-            top: 40px;
-            right: 40px;
-        }
+
         .button-area{
             width: 100%;
             display: flex;
