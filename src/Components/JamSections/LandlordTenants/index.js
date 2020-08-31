@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
 import LandlordTenantsList from './LandlordTenantsList';
-import LandlordTenantInfo from './LandlordTenantInfo';
+import LandlordTenantInfo from './TenantInfoForm';
 
 import './index.scss';
 

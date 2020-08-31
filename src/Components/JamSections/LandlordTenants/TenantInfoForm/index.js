@@ -1,8 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 
 import DataService from '../../../services/DataService';
-import StartChatButton from '../../../UI/Buttons/StartChatButton';
-import StudentInfoForm from '../../../Forms/StudentInfoForm';
+import TenantInfoForm from '../../../Forms/TenantInfoForm';
 
 import { connect } from 'react-redux';
 
@@ -24,7 +23,7 @@ const LandlordTenantInfo = ({jamId, docId }) => {
 
   return(
     <div className="tenant-info-wrapper">
-      <StudentInfoForm 
+      <TenantInfoForm 
         tenantInfo={tenantInfo}
       />
     </div>
