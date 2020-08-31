@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
-import ButtonSubmit from '../../UI/ButtonSubmit';
+import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
 
 // CSScp
 import './index.css';
