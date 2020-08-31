@@ -31,19 +31,25 @@ const LandlordTenantCard = ({ tL, setSubsection }) => {
       </div>
       <div className="landlord-tenant-info">
         <div className="landlord-tenant-info-line">
-          <h4>{tL.jammerName} {tL.jammerSurname}</h4> <p>- {tL.jammerCity}, {tL.jammerCountry}</p>
-        </div>
-        <div className="landlord-tenant-info-line-roomInfo">
-          <p>Room Nr: {tL.roomNr}</p> <p>Rent: {tL.rent}</p> <p>Deposit: {tL.deposit}</p>
-        </div>
-      </div>
-        <div className="landlord-tenant-contact">
-          <div className="contactButton"
-             onClick={e => handleContact(e)}
-          >
-            <p>Contact {tL.jammerName} </p>
+          <div className="line-name">
+            <h4>{tL.jammerName} {tL.jammerSurname}</h4> <p>- {tL.jammerCity}, {tL.jammerCountry}</p>
+          </div>
+          <div className="landlord-tenant-contact">
+            <div className="contactButton"
+              onClick={e => handleContact(e)}
+            >
+              <p>Chat</p>
+            </div>
           </div>
         </div>
+        <div className="landlord-tenant-info-line-roomInfo">
+          <p>Check-In: {tL.checkIn}</p>
+          <p>Check-Out: {tL.checkOut}</p>
+          <p>Room Nr: {tL.roomNr}</p>
+          <p>Rent: €/Mo {tL.rent}</p>
+          <p>Deposit: € {tL.deposit}</p>
+        </div>
+      </div>
     </div>
   )
   
