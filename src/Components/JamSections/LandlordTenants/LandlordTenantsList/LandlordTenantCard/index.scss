@@ -142,23 +142,23 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                .contactButton{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 40px;
-                    width: 95%;
-                    background-color: $button;
-                    border-radius: 4px;;
-                    p{ 
-                        color: white;
-                        margin: 0;
-                    }
-                    &:hover{
-                        cursor: pointer;
-                        background-color: $button-hover;
-                    }
-                }
+                // .contactButton{
+                //     display: flex;
+                //     justify-content: center;
+                //     align-items: center;
+                //     height: 40px;
+                //     width: 95%;
+                //     background-color: $button;
+                //     border-radius: 4px;;
+                //     p{ 
+                //         color: white;
+                //         margin: 0;
+                //     }
+                //     &:hover{
+                //         cursor: pointer;
+                //         background-color: $button-hover;
+                //     }
+                // }
             }
 
         }

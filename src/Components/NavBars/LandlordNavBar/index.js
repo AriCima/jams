@@ -14,7 +14,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
 
     const [jamSections, setJamSections] = useState([]);
 
-    const onSelectJamSection = (section) => {
+    const onsetJamSection = (section) => {
         setSection(section);
         setSubSection('');
         setDocType('none');
@@ -35,7 +35,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
                     <div
                         className="jamAdminNavBar-item" 
                         key={id}
-                        onClick={() => onSelectJamSection(`${section}`)}
+                        onClick={() => onsetJamSection(`${section}`)}
                     >
                         <FontAwesomeIcon className="navBar-icon-style" icon={faComments} />
                     </div>
@@ -43,7 +43,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
                     <div
                         className="jamAdminNavBar-item"
                         key={id}
-                        onClick={() => onSelectJamSection(`${section}`)}
+                        onClick={() => onsetJamSection(`${section}`)}
                     >
                         {section}
                     </div>
@@ -60,7 +60,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
                             <>
                                 <div className="jamAdminNavBar-left">
                                     <div className="jamAdminNavBar-jamName"
-                                        onClick={() => onSelectJamSection(`Overview`)}
+                                        onClick={() => onsetJamSection(`Overview`)}
                                     >
                                         <p>{jamName}</p>
                                     </div>

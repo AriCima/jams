@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
+import StartChatButton from '../../../../UI/Buttons/StartChatButton';
 import { setSubSection } from '../../../../../redux/actions/navigateActions';
 
 import "./index.scss";
@@ -19,7 +20,6 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
   const launchChat = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    alert('launch chat');
   }
 
   return (
@@ -36,11 +36,15 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
             <h4>{tL.jammerName} {tL.jammerSurname}</h4> <p>- {tL.jammerCity}, {tL.jammerCountry}</p>
           </div>
           <div className="landlord-tenant-contact">
-            <div className="contactButton"
+            {/* <div className="contactButton"
               onClick={e => launchChat(e)}
             >
               <p>Chat</p>
-            </div>
+            </div> */}
+            <StartChatButton 
+              user2Name={tL.jammerName}
+              user2Id={tL.id}
+            />
           </div>
         </div>
         <div className="landlord-tenant-info-line-roomInfo">
@@ -55,5 +59,7 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
   )
   
 }
+
+
 
 export default connect(null, { setDocType, setDocId, setEditable })(LandlordTenantCard);

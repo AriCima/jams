@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
 import LandlordTenantsList from './LandlordTenantsList';
-import { setSubSection } from '../../../redux/actions/navigateActions';
-
+import LandlordTenantInfo from './LandlordTenantInfo';
 
 import './index.scss';
 
@@ -32,7 +31,7 @@ const LandlordTenants = ({ jamId, docType }) => {
     return (
         <div className="landlord-tenants">
 
-            { showTenantInfo ? <p>TENANT FORM</p> : (
+            { showTenantInfo ? <LandlordTenantInfo /> : (
 
                 <>
                     <div className="landlord-tenants-section">

@@ -6,20 +6,20 @@ import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 // REDUX
 import { connect } from 'react-redux';
-import { selectJam } from '../../../../redux/actions/jamId';
+import { setJam } from '../../../../redux/actions/jamId';
 
 // CSS
 import "./index.css";
 
 const Home = (props) => {
 
-  const onSelectJam = (jamId) => {
-    props.selectJam(jamId);
+  const onsetJam = (jamId) => {
+    props.setJam(jamId);
   };
 
   return (
 
-    <button  className="home-button" onClick={()=> onSelectJam(null)}>
+    <button  className="home-button" onClick={()=> onsetJam(null)}>
         <FontAwesomeIcon className="home-icon-style" icon={faHome} />
     </button>
   )
@@ -28,7 +28,7 @@ const Home = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectJam: () => dispatch(selectJam(null)),
+    setJam: () => dispatch(setJam(null)),
   }
 }
 

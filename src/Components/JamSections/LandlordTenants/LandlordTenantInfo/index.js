@@ -5,7 +5,7 @@ import ButtonContactTenant from '../../../UI/ButtonContactTenant';
 import StudentInfoForm from '../../../Forms/StudentInfoForm';
 
 import { connect } from 'react-redux';
-import { selectJam } from "../../../../redux/actions/jamId";
+import { setJam } from "../../../../redux/actions/jamId";
 import { setJamSection } from "../../../../redux/actions/jamSection";
 
 // CSS
@@ -33,11 +33,11 @@ const LandlordTenantInfo = ({ auth, jamId, tenantId, userJams }) => {
   //     const tenantName = tenantInfo.name
   
   //     if(userJams.includes(chatId)){
-  //       return selectJam(chatId)
+  //       return setJam(chatId)
   //     };
       
   //     if(userJams.includes(reverseChatId)){
-  //       return selectJam(reverseChatId)
+  //       return setJam(reverseChatId)
   //     }
   
   //     const chatInfo = { 

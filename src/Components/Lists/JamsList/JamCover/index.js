@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import { connect } from 'react-redux';
-// import { selectJam } from '../../../../redux/actions/jamId';
+// import { setJam } from '../../../../redux/actions/jamId';
 import { setJamId, setSection, setSubSection } from '../../../../redux/actions/navigateActions';
 
 
@@ -11,7 +11,7 @@ import "./index.scss";
 
   // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
 
-  const onSelectJam = (jamId) => {
+  const onsetJam = (jamId) => {
     setJamId(jamId);
     setSection('Overview');
     setSubSection('');
@@ -19,7 +19,7 @@ import "./index.scss";
 
   return (
 
-    <div className="jamsList-jamCover-container" onClick={()=> onSelectJam(jamId)}>
+    <div className="jamsList-jamCover-container" onClick={()=> onsetJam(jamId)}>
       
       <div className="jams-list-container-line">
         { jamType === 'chat' ?
@@ -45,7 +45,7 @@ import "./index.scss";
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
-//     selectJam: (jamId) => dispatch(selectJam(jamId)),
+//     setJam: (jamId) => dispatch(setJam(jamId)),
 //   }
 // }
 
