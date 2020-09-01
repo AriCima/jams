@@ -1,11 +1,11 @@
 @import '../../../../variables.scss';
 
-.submit-button{
+.cancel-button{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
-    background-color: $button;
+    background-color: $cancel;
     border-radius: 4px;
     padding: 0 15px;
     p{ 
@@ -15,6 +15,6 @@
     
     &:hover{
         cursor: pointer;
-        background-color: $button-hover;
+        background-color: $cancel-hover;
     }
 }

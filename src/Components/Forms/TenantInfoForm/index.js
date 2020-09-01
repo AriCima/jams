@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DataService from '../../services/DataService';
 import StartChatButton from '../../UI/Buttons/StartChatButton';
 import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
+import ButtonCancel from '../../UI/Buttons/ButtonCancel';
 
 import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
 
@@ -56,6 +57,11 @@ const TenantInfoForm = ({ tenantInfo }) => {
         DataService.addNewBookingRequest(editedTenantInfo);
     };
 
+    const cancelChanges = () => {
+        setEditedTenantInfo(tenantInfo);
+        setEditedForm(false);
+    }
+
    
 
     return (
@@ -64,21 +70,37 @@ const TenantInfoForm = ({ tenantInfo }) => {
                 className="tenant-form-body"
                 onSubmit={handleSubmit}
             >
+                <div className="tenant-form-header">
+                    <div className="jammerName">
+                        <h4>{jammerName} {jammerSurname}</h4>
+                        <div className="section-button">
+                            <StartChatButton />
+                        </div>
+                    </div>
+                    <div className="section-buttons">
+                        { editedForm &&
+                            <>
+                                <div className="section-button">
+                                    <ButtonSubmit text='Submit changes' />
+                                </div>
+                                <div className="section-button">
+                                    <ButtonCancel
+                                        text='Cancel'
+                                        clickHandle={cancelChanges}
+                                    />
+                                </div>
+                            </>
+                        }
+                    </div>
+                </div>
+               
                 <div className="tenant-form-section">
                     <div className="tenant-section-title">
                         <div className="title-text">
                             <h4>Personal Info</h4>
                         </div>
-                        <div className="section-buttons">
-                        { editedForm &&
-                            <div className="section-button">
-                                <ButtonSubmit text='Submit changes' />
-                            </div>
-                        }
-                            <div className="section-button">
-                                <StartChatButton />
-                            </div>
-                        </div>
+
+                       
                     </div>
                     <div className="tenant-form-row">
                         <CustomInputFieldWithLabel
