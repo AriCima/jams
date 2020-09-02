@@ -29,7 +29,7 @@ const ContractES = (props) => {
         // jammerZipCode,
         // jammerEmail,
         // jammerHomeTel,
-        // jammerMobile,
+        // mobile,
         // jammerCourse, 
         // jammerCompany,
         accInfo,
@@ -87,7 +87,7 @@ const ContractES = (props) => {
                     <span>{jammerTitle} {jammerName} {jammerSurname}</span>, 
                     mayor de edad, con domicilio en 
                     <span>{jammerStreet} {jammerHouseNr} {jammerFloor} {jammerDoor} {jammerZipCode}, {jammerCity} {jammerCountry},</span>
-                    provisto de <span>{jammerDocument} nº {jammerIdNr} </span>, email {jammerEmail}, teléfono {jammerHomeTel} y teléfono móvil {jammerMobile} actuando en su propio nombre e interés.<br/></p>
+                    provisto de <span>{jammerDocument} nº {jammerIdNr} </span>, email {jammerEmail}, teléfono {jammerHomeTel} y teléfono móvil {mobile} actuando en su propio nombre e interés.<br/></p>
                     {jammerCondition === 'student' ?
                         (
                             <p>estudiante de {jammerCourse} en {jammerSchool}.</p>

@@ -10,7 +10,7 @@ import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
 // CSS
 import './index.scss';
 
-const TenantInfoForm = ({ tenantInfo }) => {
+const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
     const [editedTenantInfo, setEditedTenantInfo] = useState({tenantInfo});
     const [editedForm, setEditedForm] = useState(false);
 
@@ -25,7 +25,7 @@ const TenantInfoForm = ({ tenantInfo }) => {
         jammerHomeTel,
         jammerStreet,
         jammerHouseNr,
-        jammerMobile,
+        mobile,
         jammerFloor,
         jammerDoor,
         jammerZipcode,
@@ -44,17 +44,18 @@ const TenantInfoForm = ({ tenantInfo }) => {
     const handleInputChange = (event) => {
         event.persist();
         setEditedForm(true);
+        const eidtedKey = event.target.id;
+        const editedValue = event.target.value;
         setEditedTenantInfo(editedTenantInfo => ({ 
             ...editedTenantInfo, 
-            [event.target.id]: event.target.value 
+            [eidtedKey]: editedValue 
         }));
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const requestStatus = 'pending';
-        editedTenantInfo.jammerCondition = requestStatus;
-        DataService.addNewBookingRequest(editedTenantInfo);
+    const submitForm = () => { // CHAPUZA
+        const jId = jamId.jamId; // CHAPUZA
+        DataService.updateTenantInfo(jId, docId, editedTenantInfo)
+        setEditedForm(false);
     };
 
     const cancelChanges = () => {
@@ -62,13 +63,11 @@ const TenantInfoForm = ({ tenantInfo }) => {
         setEditedForm(false);
     }
 
-   
-
     return (
         <div className="tenant-info-wrapper">
             <form
                 className="tenant-form-body"
-                onSubmit={handleSubmit}
+                onSubmit={e => submitForm(e)}
             >
                 <div className="tenant-form-header">
                     <div className="jammerName">
@@ -81,7 +80,10 @@ const TenantInfoForm = ({ tenantInfo }) => {
                         { editedForm &&
                             <>
                                 <div className="section-button">
-                                    <ButtonSubmit text='Submit changes' />
+                                    <ButtonSubmit
+                                        text='Submit changes'
+                                        clickHandle={submitForm}
+                                    />
                                 </div>
                                 <div className="section-button">
                                     <ButtonCancel
@@ -150,8 +152,8 @@ const TenantInfoForm = ({ tenantInfo }) => {
                             width="200px"
                             label="Mobile"
                             placeholder="mobile"
-                            id="jammerMobile"
-                            value={jammerMobile}
+                            id="mobile"
+                            value={mobile}
                             changeControl={handleInputChange}
                         />
 

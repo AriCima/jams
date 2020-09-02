@@ -3,31 +3,33 @@ import React from 'react';
 // CSS
 import './index.scss';
 
-const ButtonCancel = (props) => {
+const ButtonPlain = (props) => {
 
   const handleClick = () => {
     props.clickHandle()
   }
 
   return (
-    <div 
-      className="cancel-button"
+    <div
+      className="plain-button"
       onClick={(e) => {
         e.preventDefault(); 
-        handleClick()}}
-      >
-      {props.text}
+        handleClick()
+      }}
+    >
+      <p>{props.text}</p>
     </div>
   );
   
 }
 
 
-export default ButtonCancel;
+export default ButtonPlain;
 
 
 // IMPLEMENTATION
 
-{/* <ButtonPlain 
-  clickHandle={fn del padre}
+{/* <ButtonPlain
+  text="xxxxxxx"
+  clickHandle={father fn}
 /> */}

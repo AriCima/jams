@@ -25,6 +25,8 @@ const LandlordTenantInfo = ({jamId, docId }) => {
     <div className="tenant-info-wrapper">
       <TenantInfoForm 
         tenantInfo={tenantInfo}
+        docId={docId}
+        jamId={jamId}
       />
     </div>
   )

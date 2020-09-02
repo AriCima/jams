@@ -445,6 +445,20 @@ export default class DataService {
         });
     }
 
+    static updateTenantInfo(jamId, jammerId, editedTenantInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('jams')
+                .doc(jamId)
+                .collection('jammers')
+                .doc(jammerId)
+                .set(editedTenantInfo)
+                .catch((error) => {
+                    const errorCode = error.code;
+                // console.log('Message could not be sent: ', errorCode);
+                });
+        });
+    }
+
     // PREBOOKING
     static addPreBooking(preBookingInfo) {
         console.log('preBookingInfo: ', preBookingInfo);

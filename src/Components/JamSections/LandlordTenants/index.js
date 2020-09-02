@@ -2,65 +2,32 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import DataService from '../../services/DataService';
-import Calculations from '../../services/Calculations';
-import LandlordTenantsList from './LandlordTenantsList';
+// import DataService from '../../services/DataService';
+// import Calculations from '../../services/Calculations';
+// import LandlordTenantsList from './LandlordTenantsList';
 import LandlordTenantInfo from './LandlordTenantInfo';
+import LandlordTenantsOverview from './LandlordTenantsOverview';
+
 
 import './index.scss';
 
 const LandlordTenants = ({ jamId, docType, docId }) => {
-    const [jammers, setJammers] = useState([]);
-    
-    useEffect(() => {
-        getJammersList(jamId)
-    }, []);
 
-    const getJammersList = async (jamId) => {
-        const res = await DataService.getJammers(jamId);
-        if(res.length > 0) {
-            const organizedTenants = Calculations.organizeTenants(res);
-            setJammers(organizedTenants);
-        };
-    };
-
-    const showTenantInfo = docType === 'TENANT-FORM';
+    const renderTenantsScreen = () => {
+        switch (docType) {
+            case 'TENANT-FORM':
+                return <LandlordTenantInfo docId={docId} /> 
+            case 'ADD-TENANT':
+                return <LandlordTenantInfo docId={docId} />
+            default: 
+                return <LandlordTenantsOverview jamId={jamId}/>
+        }
+    }
 
     return (
         <div className="landlord-tenants">
 
-            { showTenantInfo ? <LandlordTenantInfo docId={docId} /> : (
-
-                <>
-                    <div className="landlord-tenants-section">
-                        <div className="subSection-title">
-                            <p>Current Tenants</p>
-                        </div>
-                        <div className="subsection-wrapper">
-                            <LandlordTenantsList tenantsList={jammers.currentTenants} />
-                        </div>
-                    </div>
-
-                    <div className="landlord-tenants-section">
-                        <div className="subSection-title">
-                            <p>Future Tenants</p>
-                        </div>
-                        <div className="subsection-wrapper">
-                            <LandlordTenantsList tenantsList={jammers.futureTenants} />
-                        </div>
-                    </div>
-
-                    <div className="landlord-tenants-section">
-                        <div className="subSection-title">
-                            <p>Former Tenants</p>
-                        </div>
-                        <div className="subsection-wrapper">
-                            <LandlordTenantsList tenantsList={jammers.formerTenants} />
-                        </div>
-                    </div>
-                </>
-
-            )}
+            {renderTenantsScreen()}
             
         </div>
 

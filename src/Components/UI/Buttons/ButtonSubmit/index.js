@@ -3,14 +3,22 @@ import React from 'react';
 // CSS
 import './index.scss';
 
-const ButtonSubmit = ({text}) => {
+const ButtonSubmit = (props) => {
+
+  const handleClick = () => {
+    props.clickHandle()
+  }
 
   return (
     <div
       className="submit-button"
       type='submit'
-      >
-      <p>{text}</p>
+      onClick={(e) => {
+        e.preventDefault(); 
+        handleClick()
+      }}
+    >
+      <p>{props.text}</p>
     </div>
   );
   

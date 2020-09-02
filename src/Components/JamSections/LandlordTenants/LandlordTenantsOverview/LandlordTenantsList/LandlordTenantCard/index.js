@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
-import StartChatButton from '../../../../UI/Buttons/StartChatButton';
-import { setSubSection } from '../../../../../redux/actions/navigateActions';
+import StartChatButton from '../../../../../UI/Buttons/StartChatButton';
 
 import "./index.scss";
-import { setDocType, setDocId, setEditable } from "../../../../../redux/actions/docsActions";
+import { setDocType, setDocId, setEditable } from "../../../../../../redux/actions/docsActions";
 
 const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
 
