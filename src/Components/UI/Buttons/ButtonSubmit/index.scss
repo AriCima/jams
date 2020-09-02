@@ -1,0 +1,20 @@
+@import '../../../../variables.scss';
+
+.submit-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: $button;
+    border-radius: 4px;
+    padding: 0 15px;
+    p{ 
+        color: white;
+        margin: 0;
+    }
+    
+    &:hover{
+        cursor: pointer;
+        background-color: $button-hover;
+    }
+}

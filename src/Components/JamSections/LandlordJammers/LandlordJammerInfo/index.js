@@ -5,7 +5,7 @@ import ButtonContactJammer from '../../../../../../../../UI/ButtonContactJammer'
 import StudentInfoForm from '../../../../../../../../UI/Forms/StudentsFlat/StudentInfoForm';
 
 import { connect } from 'react-redux';
-import { selectJam } from "../../../../../../../../../redux/actions/jamId";
+import { setJam } from "../../../../../../../../../redux/actions/jamId";
 
 // CSS
 import './index.css';
@@ -35,11 +35,11 @@ const LandlordJammerInfo = (props) => {
       const jammerName = jammerInfo.name
   
       if(userJams.includes(chatId)){
-        return selectJam(chatId)
+        return setJam(chatId)
       };
       
       if(userJams.includes(reverseChatId)){
-        return selectJam(reverseChatId)
+        return setJam(reverseChatId)
       }
   
       const chatInfo = { 

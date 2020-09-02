@@ -3,7 +3,6 @@ import Calculations from '../../../services/Calculations';
 
 import moment from 'moment';
 
-// CSS
 import './index.scss';
 
 const BoardContent = ({ boardContent}) => {

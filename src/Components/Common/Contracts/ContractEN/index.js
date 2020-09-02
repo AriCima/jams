@@ -36,7 +36,7 @@ const ContractEN = (props) => {
         jammerZipCode,
         jammerEmail,
         jammerHomeTel,
-        jammerMobile,
+        mobile,
         jammerCourse, 
         jammerCompany,
         jamCity,
@@ -85,7 +85,7 @@ const ContractEN = (props) => {
                     <span>{jammerTitle} {jammerName} {jammerSurname}</span>, 
                     of legal age, domiciled in 
                     <span>{jammerStreet} {jammerHouseNr} {jammerFloor} {jammerDoor} {jammerZipCode}, {jammerCity} {jammerCountry},</span>
-                    provided  <span>{jammerDocument} number {jammerIdNr} </span>, email {jammerEmail}, telephone{jammerHomeTel} and mobile {jammerMobile} aacting in his/her own name and interest.<br/></p>
+                    provided  <span>{jammerDocument} number {jammerIdNr} </span>, email {jammerEmail}, telephone{jammerHomeTel} and mobile {mobile} aacting in his/her own name and interest.<br/></p>
                     {jammerCondition === 'student' ?
                         (
                             <p>Student of {jammerCourse} in {jammerSchool}.</p>

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import StudentJammersList from './StudentJammersList';
 import StudentJammersContent from './StudentJammersContent';
-import ButtonSubmit from '../../UI/ButtonSubmit';
+import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
 import CustomInputField from '../../UI/CustomInputField'
 
 

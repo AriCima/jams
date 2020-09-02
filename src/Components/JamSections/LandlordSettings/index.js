@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setJamSection } from '../../../redux/actions/jamSection';
 import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel'
-import ButtonSubmit from '../../UI/ButtonSubmit';
+import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
 
 // CSS
 import './index.css';

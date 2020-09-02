@@ -8,14 +8,18 @@ import Calculations from '../../services/Calculations';
 import { setSection, setSubSection } from     "../../../redux/actions/navigateActions";
 
 import './index.scss';
+import { setDocType, setDocId, setEditable } from '../../../redux/actions/docsActions';
 
-const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
+const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEditable, jamName, jamType}) => {
 
     const [jamSections, setJamSections] = useState([]);
 
-    const onSelectJamSection = (section) => {
+    const onsetJamSection = (section) => {
         setSection(section);
         setSubSection('');
+        setDocType('none');
+        setDocId('');
+        setEditable(false);
     };
 
     useEffect(() => {
@@ -31,7 +35,7 @@ const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
                     <div
                         className="jamAdminNavBar-item" 
                         key={id}
-                        onClick={() => onSelectJamSection(`${section}`)}
+                        onClick={() => onsetJamSection(`${section}`)}
                     >
                         <FontAwesomeIcon className="navBar-icon-style" icon={faComments} />
                     </div>
@@ -39,7 +43,7 @@ const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
                     <div
                         className="jamAdminNavBar-item"
                         key={id}
-                        onClick={() => onSelectJamSection(`${section}`)}
+                        onClick={() => onsetJamSection(`${section}`)}
                     >
                         {section}
                     </div>
@@ -56,7 +60,7 @@ const LandlordNavBar = ({ setSection, setSubSection, jamName, jamType}) => {
                             <>
                                 <div className="jamAdminNavBar-left">
                                     <div className="jamAdminNavBar-jamName"
-                                        onClick={() => onSelectJamSection(`Overview`)}
+                                        onClick={() => onsetJamSection(`Overview`)}
                                     >
                                         <p>{jamName}</p>
                                     </div>
@@ -86,4 +90,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, { setSection, setSubSection })(LandlordNavBar);
+export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(LandlordNavBar);

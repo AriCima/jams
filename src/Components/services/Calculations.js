@@ -247,6 +247,32 @@ export default class Calculations {
         return result
     }
 
+    // - - - - - - - - TENANTW
+
+    static organizeTenants = (tenants) => {
+
+        const result = {
+            currentTenants: [], 
+            formerTenants: [],
+            futureTenants: []
+        };
+        
+        const currentDate = new Date();
+
+        tenants.forEach(e => {
+            const cOut = new Date(e.checkOut);
+            const cIn = new Date(e.checkIn);
+            if ( currentDate > cOut ) {
+                result.formerTenants.push(e)
+            } else if ( currentDate < cIn) {
+                result.futureTenants.push(e);
+            } else if ( (currentDate >= cIn) && (currentDate <= cOut) ) {
+                result.currentTenants.push(e);
+            }
+        });
+        return result
+    }
+
     static checkOverlapping(checkIn, checkOut, bookings){
         
         for (let k=0; k < bookings.length; k++){
@@ -315,5 +341,7 @@ export default class Calculations {
         const orderedRooms = Calculations.sortAscRooms(roomsBookings)
         return orderedRooms;
     }
+
+
 
 }

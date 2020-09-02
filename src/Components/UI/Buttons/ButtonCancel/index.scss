@@ -1,0 +1,20 @@
+@import '../../../../variables.scss';
+
+.cancel-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: $cancel;
+    border-radius: 4px;
+    padding: 0 15px;
+    p{ 
+        color: white;
+        margin: 0;
+    }
+    
+    &:hover{
+        cursor: pointer;
+        background-color: $cancel-hover;
+    }
+}

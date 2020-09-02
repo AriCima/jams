@@ -10,9 +10,10 @@ import { setSection, setSubSection } from '../../../redux/actions/navigateAction
 import Overview from './Overview';
 
 import './index.scss';
+import AddTenantButton from '../../UI/Buttons/AddTenantButton';
+import InviteTenantButton from '../../UI/Buttons/InviteTenantButton';
 
-const LamndlordOverview = ({ jamId,  setSection, setSubSection }) => {
-    // const [jamRoomsInfo, setJamRoomsInfo] = useState([]);
+const LamndlordOverview = ({ jamId }) => {
     const [roomsFullInfo, setRoomsFullInfo] = useState([]);
 
     useEffect(() => {
@@ -27,13 +28,20 @@ const LamndlordOverview = ({ jamId,  setSection, setSubSection }) => {
 
     return (
         <div className="landlord-overview">
+
+            <div className="landlord-overview-buttonsArea">
+                <div className="landlord-overview-button">
+                    <AddTenantButton jamId={jamId}/>
+                </div>
+                <div className="landlord-overview-button">
+                    <InviteTenantButton jamId={jamId} />                
+                </div>
+            </div>
            
             <div className="landlord-overview-info">
-
                 <Overview
                     roomsFullInfo={roomsFullInfo}
                 />
-
             </div>
 
         </div>

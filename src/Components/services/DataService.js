@@ -399,7 +399,6 @@ export default class DataService {
     }
 
     static getJammerInfo(jamId, jammerId) {
-        console.log('GET JAMMER INFO LAUNCHED IN SERVICE', jamId, jammerId);
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
@@ -409,7 +408,8 @@ export default class DataService {
                 .get()
                 .then((doc) => {
                     if (doc.exists) {
-                        resolve(doc.data());
+                        const res = doc.data();
+                        resolve(res);
                     } else {
                     // doc.data() will be undefined in this case
                         console.log('No such document!');
@@ -441,6 +441,20 @@ export default class DataService {
 
                 .catch((error) => {
                     // console.log('error: ', error);
+                });
+        });
+    }
+
+    static updateTenantInfo(jamId, jammerId, editedTenantInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('jams')
+                .doc(jamId)
+                .collection('jammers')
+                .doc(jammerId)
+                .set(editedTenantInfo)
+                .catch((error) => {
+                    const errorCode = error.code;
+                // console.log('Message could not be sent: ', errorCode);
                 });
         });
     }

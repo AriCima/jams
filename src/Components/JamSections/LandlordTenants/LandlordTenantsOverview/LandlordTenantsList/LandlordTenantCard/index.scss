@@ -1,4 +1,4 @@
-@import '../../../../../variables.scss';
+@import '../../../../../../variables.scss';
 
 .tenant-card-container{
     width: 150px;
@@ -86,7 +86,98 @@
     }
 }
 
+.landlord-tenant-wrapper{
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: $shadow;
 
+    &:hover{
+        cursor: pointer;
+    }
+
+    .landlord-tenant-picture{
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        box-shadow: $shadow;
+        padding: 5px;
+    }
+    .landlord-tenant-info{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 5px;
+        .landlord-tenant-info-line{
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 5px;
+            .line-name{
+                width: 80%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                p{ 
+                    color: gray;
+                    font-size: 14px;
+                    margin: 0;
+                }
+                h4{
+                    font-size: 16px;
+                    font-weight: 700px;
+                    margin: 0 5px 0 0;
+                }
+            }
+            .landlord-tenant-contact{
+                width: 20%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // .contactButton{
+                //     display: flex;
+                //     justify-content: center;
+                //     align-items: center;
+                //     height: 40px;
+                //     width: 95%;
+                //     background-color: $button;
+                //     border-radius: 4px;;
+                //     p{ 
+                //         color: white;
+                //         margin: 0;
+                //     }
+                //     &:hover{
+                //         cursor: pointer;
+                //         background-color: $button-hover;
+                //     }
+                // }
+            }
+
+        }
+        .landlord-tenant-info-line-roomInfo{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            padding-right: 15px;
+            p{ 
+                color: gray;
+                font-size: 14px;
+                margin: 0;
+            }
+        }
+    }
+
+}
 
 
 

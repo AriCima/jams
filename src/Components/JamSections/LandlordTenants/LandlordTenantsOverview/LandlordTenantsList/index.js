@@ -4,15 +4,14 @@ import LandlordTenantCard from './LandlordTenantCard';
 
 import './index.scss';
 
-const LandlordTenantsList = ({ jammers, jamInfo }) => {
+const LandlordTenantsList = ({ tenantsList }) => {
 
     const renderJammersList = () => {
-        return jammers.map((jammerInfo, i) => {
+        return tenantsList.map((tL, i) => {
             return (
                 <React.Fragment key={i}>
                     <LandlordTenantCard
-                        jamInfo={jamInfo} 
-                        jI={jammerInfo} 
+                        tL={tL} 
                     />
                 </React.Fragment>
             )
@@ -20,12 +19,10 @@ const LandlordTenantsList = ({ jammers, jamInfo }) => {
     }
 
     return (
-
         <Fragment>
-            { jammers ? renderJammersList() : <p>Loading</p>}
+            { tenantsList ? renderJammersList() : <p>Loading</p>}
         </Fragment>
-
-    );   
+    );
 };
 
 export default LandlordTenantsList;

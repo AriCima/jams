@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import DataService from '../../services/DataService';
 import LandlordBoardContent from './LandlordBoardContent';
-import ButtonSubmit from '../../UI/ButtonSubmit';
+import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
 import CustomTextArea from '../../UI/CustomTextArea';
 
 
-// CSS
+// REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
 const LandlordBoard = ({ jamId, auth}) => {
@@ -86,7 +86,10 @@ const LandlordBoard = ({ jamId, auth}) => {
                 </div>
 
                 <div className="landlord-board-button-area">
-                    <ButtonSubmit/>
+                <ButtonSubmit
+                    text='Send Message'
+                    clickHandle={onSubmit}
+                />
                 </div>
 
             </form>

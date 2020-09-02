@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 // CSS
 import "./index.css";
-import { selectJam } from "../../../../../redux/actions/jamId";
+import { setJam } from "../../../../../redux/actions/jamId";
 import {setJamSection} from "../../../../../redux/actions/jamSection";
 
 const StudentJammerCard = (props) => {
@@ -24,11 +24,11 @@ const StudentJammerCard = (props) => {
     const reverseChatId = jammerId + userId;
 
     if(userJams.includes(chatId)){
-      return selectJam(chatId)
+      return setJam(chatId)
     };
     
     if(userJams.includes(reverseChatId)){
-      return selectJam(reverseChatId)
+      return setJam(reverseChatId)
     }
 
     const chatInfo = { 

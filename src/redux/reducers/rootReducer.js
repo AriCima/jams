@@ -12,6 +12,7 @@ import roomIdReducer from './roomIdReducer';
 // import roomScreenReducer from './roomScreenReducer';
 import roomBookingsReducer from './roomBookingsReducer';
 import navReducers from './navigateReducer';
+import docReducers from './docReducer';
 
 // sincronizador del firestore data y nuestro state
 // en el background
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     alert: alertsReducer,
     auth: authReducer,
     nav: navReducers,
+    doc: docReducers,
     userJams: userJamsReducer,
     jamId: jamIdReducer,
     jamInfo: jamInfoReducer,
