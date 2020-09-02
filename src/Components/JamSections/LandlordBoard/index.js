@@ -86,7 +86,10 @@ const LandlordBoard = ({ jamId, auth}) => {
                 </div>
 
                 <div className="landlord-board-button-area">
-                    <ButtonSubmit/>
+                <ButtonSubmit
+                    text='Send Message'
+                    clickHandle={onSubmit}
+                />
                 </div>
 
             </form>
