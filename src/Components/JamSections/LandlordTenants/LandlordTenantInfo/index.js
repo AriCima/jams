@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 import './index.scss';
 
 const LandlordTenantInfo = ({jamId, docId }) => {
-  console.log('docId: ', docId);
-
   const [tenantInfo, setTenantInfo] = useState([]);
 
   useEffect(() => {

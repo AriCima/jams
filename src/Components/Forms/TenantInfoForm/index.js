@@ -52,10 +52,16 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
         }));
     };
 
+    const newTenant = docId === '';
+
     const submitForm = () => { // CHAPUZA
-        const jId = jamId.jamId; // CHAPUZA
-        DataService.updateTenantInfo(jId, docId, editedTenantInfo)
-        setEditedForm(false);
+        const jId = jamId.jamId; // CHAPUZA        
+        if (newTenant) {
+            DataService.setTenantInfo(jId, docId, editedTenantInfo)
+        } else {
+            DataService.setTenantInfo(jId, docId, editedTenantInfo)
+            setEditedForm(false);
+        }
     };
 
     const cancelChanges = () => {
@@ -72,7 +78,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
             <div className="tenant-form-header">
                 <div className="jammerName">
                     <h4>{jammerName} {jammerSurname}</h4>
-                    { docId && (
+                    { !newTenant && (
                         <div className="section-button">
                             <StartChatButton />
                         </div>
