@@ -72,9 +72,11 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                 <div className="tenant-form-header">
                     <div className="jammerName">
                         <h4>{jammerName} {jammerSurname}</h4>
-                        <div className="section-button">
-                            <StartChatButton />
-                        </div>
+                        { docId && (
+                            <div className="section-button">
+                                <StartChatButton />
+                            </div>
+                        )}
                     </div>
                     <div className="section-buttons">
                         { editedForm &&
@@ -327,9 +329,6 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         </div>
 
                     </div>
-                <div className="tenant-info-form-button-area">
-                    <ButtonSubmit />
-                </div>
             </form>
         </div>
     );

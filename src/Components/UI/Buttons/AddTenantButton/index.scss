@@ -1,12 +1,13 @@
 @import '../../../../variables.scss';
 
-.inviteButton{
+.add-button{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
     padding: 0 15px;
     color: $button;
+    border: 1px solid $button;
     border-radius: 5px;
     p{ 
         margin: 0 5px;

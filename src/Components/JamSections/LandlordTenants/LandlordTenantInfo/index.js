@@ -9,12 +9,13 @@ import { connect } from 'react-redux';
 import './index.scss';
 
 const LandlordTenantInfo = ({jamId, docId }) => {
+  console.log('docId: ', docId);
 
   const [tenantInfo, setTenantInfo] = useState([]);
 
   useEffect(() => {
     const jId = jamId.jamId;  // CHAPUZA
-    DataService.getJammerInfo(jId, docId)
+    docId && DataService.getJammerInfo(jId, docId)
     .then(result => {
       setTenantInfo(result)
     })

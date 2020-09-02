@@ -18,26 +18,6 @@ const RoomsOverview = ({ roomsFullInfo }) => {
         return (
 
             <OverviewLine key={i}  room={room} />
-            // <div className="overview-info-line"
-            //     key={i} 
-            //     onCLick={e => handleClick(e, roomId)}
-            // >
-            //     <div className="overview-info-block">
-            //         <p>{room.roomNr}</p>
-            //     </div>
-            //     <div className="overview-info-block">
-            //         <p>{room.roomType}</p>
-            //     </div>
-            //     <div className="overview-info-block">
-            //         {vacantRoom ?  <span>vacant</span>: <p>{bookInfo.jammerName}</p>}
-            //     </div>
-            //     <div className="overview-info-block">
-            //         {vacantRoom ? <p>-</p> : <p>{bookInfo.deposit}</p>}
-            //     </div>
-            //     <div className="overview-info-block">
-            //         {vacantRoom ? <p>-</p> : <p>{bookInfo.rent}</p>}
-            //     </div>
-            // </div>
         )
     });
 

@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import LandlordTenantInfo from './LandlordTenantInfo';
 import LandlordTenantsOverview from './LandlordTenantsOverview';
 
-
 import './index.scss';
 
 const LandlordTenants = ({ jamId, docType, docId }) => {

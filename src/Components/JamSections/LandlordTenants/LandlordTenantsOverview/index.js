@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import DataService from '../../../services/DataService';
 import Calculations from '../../../services/Calculations';
 import LandlordTenantsList from './LandlordTenantsList';
-
+import InviteTenantButton from '../../../UI/Buttons/InviteTenantButton';
+import AddTenantButton from '../../../UI/Buttons/AddTenantButton';
 import './index.scss';
 
 const LandlordTenantsOverview = ({ jamId }) => {
@@ -26,6 +27,15 @@ const LandlordTenantsOverview = ({ jamId }) => {
     return (
 
         <>
+            <div className="landlord-tenants-buttonsArea">
+                <div className="landlord-tenants-button">
+                    <AddTenantButton jamId={jamId}/>
+                </div>
+                <div className="landlord-tenants-button">
+                    <InviteTenantButton jamId={jamId} />                
+                </div>
+            </div>
+
             <div className="landlord-tenants-section">
                 <div className="subSection-title">
                     <p>Current Tenants</p>

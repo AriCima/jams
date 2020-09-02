@@ -16,7 +16,7 @@ const InviteTenantButton = ({ jamId, jamName }) => {
 
   return (
 
-    <div className="inviteButton"
+    <div className="invite-button"
         onClick={e => sendInvitation(e)}
     >
       <FontAwesomeIcon

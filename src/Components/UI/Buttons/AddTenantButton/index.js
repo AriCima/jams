@@ -23,7 +23,7 @@ const AddTenantButton = ({ jamId, setSection, setSubSection, setDocType, setDocI
 
   return (
 
-    <div className="inviteButton"
+    <div className="add-button"
         onClick={e => addTenant(e)}
     >
       <FontAwesomeIcon

@@ -7,6 +7,16 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    .landlord-overview-buttonsArea{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 15px;
+        .landlord-overview-button{
+            margin: 0 15px;
+        }
+    }
     .landlord-rooms-list{
         margin-top: 2px;
         width: 100%;
