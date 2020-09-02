@@ -56,12 +56,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
 
     const submitForm = () => { // CHAPUZA
         const jId = jamId.jamId; // CHAPUZA        
-        if (newTenant) {
-            DataService.setTenantInfo(jId, docId, editedTenantInfo)
-        } else {
-            DataService.setTenantInfo(jId, docId, editedTenantInfo)
-            setEditedForm(false);
-        }
+        DataService.setTenantInfo(jId, docId, editedTenantInfo);
     };
 
     const cancelChanges = () => {

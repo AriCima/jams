@@ -70,11 +70,16 @@ export default class DataService {
 
     // JAMS
     // Create
-    static createJam(jamInfo) {
+    static createJam(jamInfo, userId, email) {
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams').add(jamInfo)
                 .then((doc) => {
                     console.log('doc del create: ', doc);
+                    const jamId = doc.id;
+                    const userInfo = { userId, email };
+                    jamInfo.jamId = jamId;
+                    this.addJamToUser(userId, jamInfo);
+                    this.updateJammersInJam(jamId, userInfo);
                     resolve({ id: doc.id });
                 })
                 .catch((error) => {
