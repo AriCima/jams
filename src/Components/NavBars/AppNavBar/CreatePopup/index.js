@@ -67,10 +67,6 @@ const CreatePopup = (props) => {
     DataService.createJam(newJam, userId, email)
     .then(res => {
       const jamId = res.id;
-      // newJam.jamId = res.id;
-      // const userInfo = { userId, email: user.email };
-      // DataService.addJamToUser(userId, newJam);
-      // DataService.updateJammersInJam(jamId, userInfo);
 
       if (newJam.jamType === 'rooms-rental') {
         const rooms = Number(newJam.nrOfRooms);

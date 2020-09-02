@@ -1,7 +1,9 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import DataService from '../../../services/DataService';
-import TenantInfoForm from '../../../Forms/TenantInfoForm';
+import EditTenantInfoForm from '../../../Forms/EditTenantInfoForm';
+import NewTenantInfoForm from '../../../Forms/NewTenantInfoForm';
+
 
 import { connect } from 'react-redux';
 
@@ -22,11 +24,17 @@ const LandlordTenantInfo = ({jamId, docId }) => {
 
   return(
     <div className="tenant-info-wrapper">
-      <TenantInfoForm 
+      {docId ? (
+        <EditTenantInfoForm 
         tenantInfo={tenantInfo}
         docId={docId}
         jamId={jamId}
       />
+      ):(
+        <NewTenantInfoForm 
+          jamId={jamId}
+        />
+      )}
     </div>
   )
 }
