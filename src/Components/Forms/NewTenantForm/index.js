@@ -7,7 +7,7 @@ import Calculations from '../../services/Calculations';
 import './index.scss';
 
 
-const useMyCustomForm = ({ jamId }) => {
+const useNewTenantForm = ({ jamId }) => {
 
     const { register, errors, handleSubmit } = useForm();
 
@@ -276,4 +276,4 @@ const useMyCustomForm = ({ jamId }) => {
     );
 };
 
-export default useMyCustomForm;
+export default useNewTenantForm;

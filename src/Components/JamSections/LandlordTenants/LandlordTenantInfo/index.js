@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import DataService from '../../../services/DataService';
 import EditTenantInfoForm from '../../../Forms/EditTenantInfoForm';
-import NewTenantInfoForm from '../../../Forms/NewTenantInfoForm';
-import ReactForm from '../../../Forms/ReactForm';
+import NewTenantForm from '../../../Forms/NewTenantForm';
+import EditTenantForm from '../../../Forms/EditTenantForm';
 
 
 import { connect } from 'react-redux';
@@ -26,19 +26,20 @@ const LandlordTenantInfo = ({jamId, docId }) => {
   return(
     <div className="tenant-info-wrapper">
       {docId ? (
-        <EditTenantInfoForm 
+      //   <EditTenantInfoForm 
+      //   tenantInfo={tenantInfo}
+      //   docId={docId}
+      //   jamId={jamId}
+      // />
+      <EditTenantForm 
         tenantInfo={tenantInfo}
         docId={docId}
         jamId={jamId}
       />
       ):(
-        // <NewTenantInfoForm 
-        //   jamId={jamId}
-        // />
-        <ReactForm
-          jamId={jamId}
-        />
-      )}
+        <NewTenantForm 
+          jamId={jamId}/>
+     )}
     </div>
   )
 }
