@@ -26,11 +26,11 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
       <div className="landlord-tenant-info">
         <div className="landlord-tenant-info-line">
           <div className="line-name">
-            <h4>{tL.jammerName} {tL.jammerSurname}</h4> <p>- {tL.jammerCity}, {tL.jammerCountry}</p>
+            <h4>{tL.firstName} {tL.lastName}</h4> <p>- {tL.city}, {tL.country}</p>
           </div>
           <div className="landlord-tenant-contact">
             <StartChatButton 
-              user2Name={tL.jammerName}
+              user2Name={tL.firstName}
               user2Id={tL.id}
             />
           </div>

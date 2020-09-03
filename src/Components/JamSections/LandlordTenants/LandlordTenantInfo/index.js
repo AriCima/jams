@@ -25,17 +25,12 @@ const LandlordTenantInfo = ({jamId, docId }) => {
 
   return(
     <div className="tenant-info-wrapper">
-      {docId ? (
-      //   <EditTenantInfoForm 
-      //   tenantInfo={tenantInfo}
-      //   docId={docId}
-      //   jamId={jamId}
-      // />
-      <EditTenantForm 
-        tenantInfo={tenantInfo}
-        docId={docId}
-        jamId={jamId}
-      />
+      {docId && tenantInfo.length !== 0 ? (
+        <EditTenantForm 
+          tenantInfo={tenantInfo}
+          docId={docId}
+          jamId={jamId}
+        />
       ):(
         <NewTenantForm 
           jamId={jamId}/>

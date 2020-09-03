@@ -30,12 +30,12 @@ const LandlordJammerCard = (props) => {
 
         <div className="landlord-student-info-upperLine">
           <div className="landlord-student-info-upperLine-block">
-            <p>{jI.jammerName} - {jI.jammerCountry}</p>
+            <p>{jI.firstName} - {jI.country}</p>
           </div>
         </div>
         <div className="landlord-student-info-lowerLine">
           <div className="landlord-student-info-lowerLine-block">
-            <p>{jI.jammerStudy}, {jI.jammerSchool}</p>
+            <p>{jI.study}, {jI.school}</p>
           </div>
         </div>
       </div>

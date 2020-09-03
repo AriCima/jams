@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {useForm} from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
@@ -10,16 +10,11 @@ import './index.scss';
 
 
 const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
-    const [editedTenantInfo, setEditedTenantInfo] = useState({tenantInfo});
+
     const [editedForm, setEditedForm] = useState(false);
-
-    useEffect(() => {
-        setEditedTenantInfo(tenantInfo)
-    }, [tenantInfo]);
-
     const { 
-        name,
-        surname,
+        firstName,
+        lastName,
         email,
         homeTel,
         street,
@@ -38,21 +33,49 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
         deposit,
         checkIn,
         checkOut
-    } = editedTenantInfo
+    } = tenantInfo
 
-    const { register, errors, handleSubmit } = useForm();
+    const { register, errors, handleSubmit } = useForm({
+        defaultValues: {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            homeTel: homeTel,
+            street: street,
+            houseNr: houseNr,
+            mobile: mobile,
+            floor: floor,
+            door: door,
+            zipCode: zipCode,
+            city: city,
+            country: country,
+            passportNr: passportNr,
+            study: study,
+            school: school,
+            rent: rent,
+            roomNr: roomNr,
+            deposit: deposit,
+            checkIn: checkIn,
+            checkOut: checkOut,
+        }
+    });
 
     const onSubmit = (data) => {
         const userId = data.email;
         data.userId = userId;
         data.registeredUser = false;
         const jId = jamId.jamId // CHAPUZA
-        DataService.editTenantInfo(jId, docId, editedTenantInfo);
+        DataService.editTenantInfo(jId, docId, data);
     };
 
     const cancelChanges = () => {
-        setEditedTenantInfo(tenantInfo);
         setEditedForm(false);
+        //CHAPUÇZA -> FALTA HACER VOLVER A LOS VALORES INICIALES
+    }
+
+    const handleMyClick = (e) => {
+        e.persist();
+        setEditedForm(true);
     }
 
     return (
@@ -72,10 +95,12 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                             {errors.firstName && <div className="field-error">Required</div>}
                         </div>
                         <input
-                        name="firstName"
-                        ref={register({
-                            required: true,
-                        })} />
+                            name="firstName"
+                            ref={register({
+                                required: true,
+                            })} 
+                            onClick={(e)=>{handleMyClick(e)}}
+                        />
                     </div>
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -87,6 +112,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                             ref={register({ 
                                 required: true,
                             })}
+                            onClick={(e)=>{handleMyClick(e)}}
                         />
                     </div>
                     <div className="custom-input-block">
@@ -100,6 +126,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 required: true,
                                 pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                             })}
+                            onClick={(e)=>{handleMyClick(e)}}
                         />
                     </div>
                 </div>
@@ -108,13 +135,15 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Passport Nr</label>
-                            {errors.passport && <div className="field-error">Required</div>}
+                            {errors.passportNr && <div className="field-error">Required</div>}
                         </div>
                         <input
-                        name="passport"
-                        ref={register({
-                            required: true,
-                        })} />
+                            name="passportNr"
+                            ref={register({
+                                required: true,
+                            })}
+                            onClick={(e)=>{handleMyClick(e)}}
+                        />
                     </div>
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -126,6 +155,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                             ref={register({ 
                                 required: true,
                             })}
+                            onClick={(e)=>{handleMyClick(e)}}
                         />
                     </div>
                     <div className="custom-input-block">
@@ -138,6 +168,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                             ref={register({ 
                                 required: true,
                             })}
+                            onClick={(e)=>{handleMyClick(e)}}
                         />
                     </div>
                 </div>
@@ -156,6 +187,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                         <div className="custom-input-block">
@@ -168,6 +200,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                     </div>
@@ -181,6 +214,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                         <div className="custom-input-block">
@@ -192,6 +226,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                         <div className="custom-input-block">
@@ -204,6 +239,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                         <div className="custom-input-block">
@@ -216,6 +252,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                         <div className="custom-input-block">
@@ -228,6 +265,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 ref={register({ 
                                     required: true,
                                 })}
+                                onClick={(e)=>{handleMyClick(e)}}
                             />
                         </div>
                     </div>
@@ -246,11 +284,13 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 {errors.checkIn && <div className="field-error">Required</div>}
                             </div>
                             <input
-                            name="checkIn"
-                            placeholder="DD-MM-YYYY"
-                            ref={register({
-                                required: true,
-                            })} />
+                                name="checkIn"
+                                placeholder="DD-MM-YYYY"
+                                ref={register({
+                                    required: true,
+                                })}
+                                onClick={(e)=>{handleMyClick(e)}}
+                            />
                         </div>
 
                         <div className="custom-input-block">
@@ -259,11 +299,13 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 {errors.checkOut && <div className="field-error">Required</div>}
                             </div>
                             <input
-                            name="checkOut"
-                            placeholder="DD-MM-YYYY"
-                            ref={register({
-                                required: true,
-                            })} />
+                                name="checkOut"
+                                placeholder="DD-MM-YYYY"
+                                ref={register({
+                                    required: true,
+                                })}
+                                onClick={(e)=>{handleMyClick(e)}}
+                            />
                         </div>
 
                         <div className="custom-input-block">
@@ -272,10 +314,12 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 {errors.roomNr && <div className="field-error">Required</div>}
                             </div>
                             <input
-                            name="roomNr"
-                            ref={register({
-                                required: true,
-                            })} />
+                                name="roomNr"
+                                ref={register({
+                                    required: true,
+                                })}
+                                onClick={(e)=>{handleMyClick(e)}}
+                            />
                         </div>
                         <div className="custom-input-block">
                             <div className="block-label">
@@ -283,10 +327,12 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 {errors.rent && <div className="field-error">Required</div>}
                             </div>
                             <input
-                            name="rent"
-                            ref={register({
-                                required: true,
-                            })} />
+                                name="rent"
+                                ref={register({
+                                    required: true,
+                                })}
+                                onClick={(e)=>{handleMyClick(e)}}
+                            />
                         </div>
                         <div className="custom-input-block">
                             <div className="block-label">
@@ -294,10 +340,12 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 {errors.deposit && <div className="field-error">Required</div>}
                             </div>
                             <input
-                            name="deposit"
-                            ref={register({
-                                required: true,
-                            })} />
+                                name="deposit"
+                                ref={register({
+                                    required: true,
+                                })}
+                                onClick={(e)=>{handleMyClick(e)}}
+                            />
                         </div>
 
                     </div>
