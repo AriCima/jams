@@ -1,74 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
 import DataService from '../../services/DataService';
-import Calculations from '../../services/Calculations';
 import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
-import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
-import ButtonCancel from '../../UI/Buttons/ButtonCancel';
 
+// CSS
 import './index.scss';
 
-const inputFields = { 
-    name: '',
-    surname: '',
-    email: '',
-    homeTel: '',
-    street: '',
-    houseNr: '',
-    mobile: '',
-    floor: '',
-    door: '',
-    zipCode: '',
-    city: '',
-    country: '',
-    passportNr: '',
-    study: '',
-    school: '',
-    rent: '',
-    roomNr: '',
-    deposit: '',
-    checkIn: '',
-    checkOut: ''
-} 
+const NewInvitationForm = ({ jamId }) => {
+    const [tenantInfo, setTenantInfo] = useState([]);
+    const [editedForm, setEditedForm] = useState(false);
 
-const NewTenantInfoForm = ({ jamId }) => {
-    const [tenantInfo, setTenantInfo] = useState(inputFields);
-    const [fullfilledForm, setFullfilledForm] = useState(false);
-    const [nonValidEmail, setNonValidEmail] = (true);
-    const [emptyEmail, setEmptyEmail] = (true);
-    
+    useEffect(() => {
+        setTenantInfo(tenantInfo)
+    }, [tenantInfo]);
+
     const handleInputChange = (e) => {
         e.persist();
-        const editedKey = e.target.id;
+        const eidtedKey = e.target.id;
         const editedValue = e.target.value;
-        setTenantInfo(tenantInfo => ({ 
-            ...tenantInfo, 
-            [editedKey]: editedValue 
+        setTenantInfo(editedTenantInfo => ({ 
+            ...editedTenantInfo, 
+            [eidtedKey]: editedValue 
         }));
-        
-        if (editedKey === 'email') {
-            setEmptyEmail(false);
-            setTimeout(() => {
-                const validEmail = Calculations.validateEmail(editedValue);
-                !validEmail && setNonValidEmail(true);
-            }, 3000)
-
-        }
     };
 
-    setTimeout(function(){ alert("Hello"); }, 3000);
-    
-    const submitForm = (e) => { // CHAPUZA
-        e.preventDafault();
-        const filledForm = Calculations.checkAllInputsAreFilled(tenantInfo);
+    const submitForm = () => { // CHAPUZA
         const jId = jamId.jamId; // CHAPUZA  
         const jammerId = tenantInfo.jammerEmail;      
         DataService.saveTenantInfo(jId, jammerId, tenantInfo);
-    };
-
-    const cancelChanges = () => {
-        setTenantInfo(tenantInfo);
-        setFullfilledForm(false);
     };
 
     return (
@@ -77,30 +36,6 @@ const NewTenantInfoForm = ({ jamId }) => {
             className="tenant-form-body"
             onSubmit={e => submitForm(e)}
         >
-            <div className="tenant-form-header">
-                <div className="jammerName">
-                    <h4>{tenantInfo.jammerName} {tenantInfo.jammerSurname}</h4>
-                </div>
-                <div className="section-buttons">
-                    { fullfilledForm &&
-                        <>
-                            <div className="section-button">
-                                <ButtonSubmit
-                                    text='Submit changes'
-                                    clickHandle={submitForm}
-                                />
-                            </div>
-                            <div className="section-button">
-                                <ButtonCancel
-                                    text='Cancel'
-                                    clickHandle={cancelChanges}
-                                />
-                            </div>
-                        </>
-                    }
-                </div>
-            </div>
-
             <div className="tenant-form-section">
                 <div className="tenant-section-title">
                     <div className="title-text">
@@ -334,4 +269,4 @@ const NewTenantInfoForm = ({ jamId }) => {
     );
 };
 
-export default NewTenantInfoForm;
+export default NewInvitationForm;

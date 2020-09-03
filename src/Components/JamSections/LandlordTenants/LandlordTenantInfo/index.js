@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import DataService from '../../../services/DataService';
 import EditTenantInfoForm from '../../../Forms/EditTenantInfoForm';
 import NewTenantInfoForm from '../../../Forms/NewTenantInfoForm';
+import ReactForm from '../../../Forms/ReactForm';
 
 
 import { connect } from 'react-redux';
@@ -31,9 +32,10 @@ const LandlordTenantInfo = ({jamId, docId }) => {
         jamId={jamId}
       />
       ):(
-        <NewTenantInfoForm 
-          jamId={jamId}
-        />
+        // <NewTenantInfoForm 
+        //   jamId={jamId}
+        // />
+        <ReactForm />
       )}
     </div>
   )

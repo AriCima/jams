@@ -8,7 +8,7 @@ import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import Dashboard from '../Dashboard';
 import PreBookingForm from '../Forms/PreBookingForm';
-import TenantInfoForm from '../Forms/TenantInfoForm';
+// import TenantInfoForm from '../Forms/TenantInfoForm';
 import Footer from '../Footer';
 
 
@@ -28,7 +28,7 @@ function App() {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route path="/invite/:bookingCode" exact render={(props) => <PreBookingForm propsFn={props.history} bookingCode={props.match.params.bookingCode} />} />
-                        <Route path="/jam_reg/:bookingCode" exact render={(props) => <TenantInfoForm propsFn={props.history} bookingCode={props.match.params.bookingCode} />} />
+                        {/* <Route path="/jam_reg/:bookingCode" exact render={(props) => <TenantInfoForm propsFn={props.history} bookingCode={props.match.params.bookingCode} />} /> */}
                     </Switch>
                 </div>
                 <div className="footer"><Footer /></div>

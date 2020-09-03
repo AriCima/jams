@@ -19,21 +19,21 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
     }, [tenantInfo]);
 
     const { 
-        jammerName,
-        jammerSurname,
-        jammerEmail,
-        jammerHomeTel,
-        jammerStreet,
-        jammerHouseNr,
+        name,
+        surname,
+        email,
+        homeTel,
+        street,
+        houseNr,
         mobile,
-        jammerFloor,
-        jammerDoor,
-        jammerZipcode,
-        jammerCity,
-        jammerCountry,
-        jammerPassportNr,
-        jammerStudy,
-        jammerSchool,
+        floor,
+        door,
+        zipCode,
+        city,
+        country,
+        passportNr,
+        study,
+        school,
         rent,
         roomNr,
         deposit,
@@ -72,7 +72,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
         >
             <div className="tenant-form-header">
                 <div className="jammerName">
-                    <h4>{jammerName} {jammerSurname}</h4>
+                    <h4>{name} {surname}</h4>
                     { !newTenant && (
                         <div className="section-button">
                             <StartChatButton />
@@ -114,7 +114,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Nombre"
                         placeholder="name"
                         id="jammerName"
-                        value={jammerName}
+                        value={name}
                         changeControl={e => handleInputChange(e)}
                     />
 
@@ -124,7 +124,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Surname"
                         placeholder="surname"
                         id="jammerSurname"
-                        value={jammerSurname}
+                        value={surname}
                         changeControl={handleInputChange}
                     />
 
@@ -134,7 +134,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Email"
                         placeholder="email"
                         id="jammerEmail"
-                        value={jammerEmail}
+                        value={email}
                         changeControl={handleInputChange}
                     />
 
@@ -146,7 +146,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Home Tel"
                         placeholder="tel"
                         id="jammerHomeTel"
-                        value={jammerHomeTel}
+                        value={homeTel}
                         changeControl={handleInputChange}
                     />
 
@@ -166,7 +166,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Passport Nr:"
                         placeholder="passport Nr"
                         id="jammerPassportNr"
-                        value={jammerPassportNr}
+                        value={passportNr}
                         changeControl={handleInputChange}
                     />
 
@@ -245,7 +245,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Street:"
                             placeholder="street"
                             id="jammerStreet"
-                            value={jammerStreet}
+                            value={street}
                             changeControl={handleInputChange}
                         />
 
@@ -255,7 +255,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="House Nr:"
                             placeholder="house nr"
                             id="jammerHouseNr"
-                            value={jammerHouseNr}
+                            value={houseNr}
                             changeControl={handleInputChange}
                         />
 
@@ -265,7 +265,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Floor"
                             placeholder="floor"
                             id="jammerFloor"
-                            value={jammerFloor}
+                            value={floor}
                             changeControl={handleInputChange}
                         />
 
@@ -275,7 +275,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Door"
                             placeholder="door"
                             id="jammerDoor"
-                            value={jammerDoor}
+                            value={door}
                             changeControl={handleInputChange}
                         />
                     </div>
@@ -286,7 +286,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Zip-Code"
                             placeholder="zip-code"
                             id="jammerZipCode"
-                            value={jammerZipcode}
+                            value={zipCode}
                             changeControl={handleInputChange}
                         />
                         <CustomInputFieldWithLabel
@@ -295,7 +295,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="City"
                             placeholder="city"
                             id="jammerCity"
-                            value={jammerCity}
+                            value={city}
                             changeControl={handleInputChange}
                         />
                         <CustomInputFieldWithLabel
@@ -304,7 +304,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Country"
                             placeholder="country"
                             id="jammerCountry"
-                            value={jammerCountry}
+                            value={country}
                             changeControl={handleInputChange}
                         />
                     </div>
@@ -315,7 +315,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Study"
                             placeholder="study"
                             id="jammerStudy"
-                            value={jammerStudy}
+                            value={study}
                             changeControl={handleInputChange}
                         />
                         <CustomInputFieldWithLabel
@@ -324,7 +324,7 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="School"
                             placeholder="school"
                             id="jammerSchool"
-                            value={jammerSchool}
+                            value={school}
                             changeControl={handleInputChange}
                         />
                     </div>
