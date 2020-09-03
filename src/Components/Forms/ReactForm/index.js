@@ -3,19 +3,20 @@ import {useForm} from "react-hook-form";
 
 import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
-import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
-import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
-import ButtonCancel from '../../UI/Buttons/ButtonCancel';
 
 import './index.scss';
 
 
-const useMyCustomForm = () => {
+const useMyCustomForm = ({ jamId }) => {
 
     const { register, errors, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data)
+        const userId = data.email;
+        data.userId = userId;
+        data.registeredUser = false;
+        const jId = jamId.jamId // CHAPUZA
+        DataService.saveTenantInfo(jId, data);
     };
 
     return (
@@ -94,7 +95,7 @@ const useMyCustomForm = () => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Mobile</label>
-                            {errors.mobile && <div className="field-error">Non valid address</div>}
+                            {errors.mobile && <div className="field-error">Required</div>}
                         </div>
                         <input
                             name="mobile"
@@ -210,6 +211,7 @@ const useMyCustomForm = () => {
                             </div>
                             <input
                             name="checkIn"
+                            placeholder="DD-MM-YYYY"
                             ref={register({
                                 required: true,
                             })} />
@@ -222,6 +224,7 @@ const useMyCustomForm = () => {
                             </div>
                             <input
                             name="checkOut"
+                            placeholder="DD-MM-YYYY"
                             ref={register({
                                 required: true,
                             })} />

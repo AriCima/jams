@@ -35,7 +35,9 @@ const LandlordTenantInfo = ({jamId, docId }) => {
         // <NewTenantInfoForm 
         //   jamId={jamId}
         // />
-        <ReactForm />
+        <ReactForm
+          jamId={jamId}
+        />
       )}
     </div>
   )
