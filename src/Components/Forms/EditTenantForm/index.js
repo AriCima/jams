@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import ReactDatePicker from 'react-datepicker';
-import tw from "date-fns/locale/zh-TW";
+import moment from 'moment';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -15,7 +15,6 @@ import './index.scss';
 const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
 
     const [editedForm, setEditedForm] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
     
     const { 
         firstName,
@@ -40,6 +39,10 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
         checkOut
     } = tenantInfo
 
+    // const [checkInDate, setCheckInDate] = useState(moment(checkIn).format('DD-MMM-YYYY')); // CHAPuZA
+    // const [checkOutDate, setCheckOutDate] = useState(moment(checkIn).format('DD-MMM-YYYY'));
+    // VER https://stackoverflow.com/questions/61605448/how-to-use-react-hook-form-with-my-customized-react-date-picker
+
     const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
             firstName: firstName,
@@ -60,25 +63,33 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
             rent: rent,
             roomNr: roomNr,
             deposit: deposit,
-            checkIn: checkIn,
-            checkOut: checkOut,
+            checkIn: moment(checkIn).format('DD-MMM-YYYY'),
+            checkOut:  moment(checkOut).format('DD-MMM-YYYY'),
         }
     });
 
-    const DatePicker = ({ selected, onChange }) => {
-        return (
-            <ReactDatePicker
-                // className="form-control"
-                selected={selected}
-                onChange={date => setStartDate(date)}
-                // locale={tw}
-                dateFormat="dd/MM/yyyy"
-                dateFormatCalendar="yyyy"
-                isClearable
-                value={checkIn}
-            />
-        )
-    };
+    // const InDatePicker = ({ selected, onChange }) => {
+    //     return (
+    //         <ReactDatePicker
+    //             selected={selected}
+    //             onChange={date => setCheckInDate(date)}
+    //             dateFormat="dd/MM/yyyy"
+    //             dateFormatCalendar="yyyy"
+    //             isClearable
+    //         />
+    //     )
+    // };
+    // const OutDatePicker = ({ selected, onChange }) => {
+    //     return (
+    //         <ReactDatePicker
+    //             selected={selected}
+    //             onChange={date => setCheckOutDate(date)}
+    //             dateFormat="dd/MM/yyyy"
+    //             dateFormatCalendar="yyyy"
+    //             isClearable
+    //         />
+    //     )
+    // };
 
     const onSubmit = (data) => {
         const userId = data.email;
@@ -107,7 +118,6 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                 <div className="form-section-title">
                     <p>Personal information</p>
                 </div>
-
                 <div className="form-line">
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -150,7 +160,6 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                         />
                     </div>
                 </div>
-
                 <div className="form-line">
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -291,7 +300,6 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                     </div>
 
                 </div>
-
                 <div className="form-section">
                     <div className="form-section-title">
                         <p>Contract Info</p>
@@ -303,21 +311,21 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 <label>Check-In</label>
                                 {errors.checkIn && <div className="field-error">Required</div>}
                             </div>
-                            {/* <input
+                            <input
                                 name="checkIn"
                                 placeholder="DD-MM-YYYY"
                                 ref={register({
                                     required: true,
                                 })}
                                 onClick={(e)=>{handleMyClick(e)}} 
-                            /> */}
-                                <Controller 
-                                    as={DatePicker} 
+                            />
+                                {/* <Controller 
+                                    as={InDatePicker} 
                                     control={control} 
                                     valueName="checkIn"
                                     name="checkIn"
-                                    onChange={(date) => date}
-                                />
+                                    onChange={(date) => {handleMyClick(date)}}
+                                /> */}
                         </div>
 
                         <div className="custom-input-block">
@@ -377,22 +385,17 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
 
                     </div>
                 </div>
-                
-                
             </div>
             { editedForm &&
-                <>
-                    <div className="hook-form-buttonArea">
-                        <input type="submit" />
-                    </div>
-
+                <div className="hook-form-buttonArea">
+                    <input type="submit" />
                     <div className="section-button">
                         <ButtonCancel
                             text='Cancel'
                             clickHandle={cancelChanges}
                         />
                     </div>
-                </>
+                </div>
             }
         </form>
     );

@@ -36,10 +36,11 @@ const useNewTenantForm = ({ jamId }) => {
                             {errors.firstName && <div className="field-error">Required</div>}
                         </div>
                         <input
-                        name="firstName"
-                        ref={register({
-                            required: true,
-                        })} />
+                            name="firstName"
+                            ref={register({
+                                required: true,
+                            })}
+                        />
                     </div>
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -69,7 +70,7 @@ const useNewTenantForm = ({ jamId }) => {
                 </div>
 
                 <div className="form-line">
-                    <div className="custom-input-block">
+                    {/* <div className="custom-input-block">
                         <div className="block-label">
                             <label>Passport Nr</label>
                             {errors.passport && <div className="field-error">Required</div>}
@@ -79,8 +80,8 @@ const useNewTenantForm = ({ jamId }) => {
                         ref={register({
                             required: true,
                         })} />
-                    </div>
-                    <div className="custom-input-block">
+                    </div> */}
+                    {/* <div className="custom-input-block">
                         <div className="block-label">
                             <label>Home Tel</label>
                             {errors.homeTel && <div className="field-error">Required</div>}
@@ -91,8 +92,8 @@ const useNewTenantForm = ({ jamId }) => {
                                 required: true,
                             })}
                         />
-                    </div>
-                    <div className="custom-input-block">
+                    </div> */}
+                    {/* <div className="custom-input-block">
                         <div className="block-label">
                             <label>Mobile</label>
                             {errors.mobile && <div className="field-error">Required</div>}
@@ -103,9 +104,9 @@ const useNewTenantForm = ({ jamId }) => {
                                 required: true,
                             })}
                         />
-                    </div>
+                    </div> */}
                 </div>
-                <div className="form-section">
+                {/* <div className="form-section">
                     <div className="form-section-title">
                         <p>Home Address</p>
                     </div>
@@ -196,7 +197,7 @@ const useNewTenantForm = ({ jamId }) => {
                         </div>
                     </div>
 
-                </div>
+                </div> */}
 
                 <div className="form-section">
                     <div className="form-section-title">

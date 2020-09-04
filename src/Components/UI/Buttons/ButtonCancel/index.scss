@@ -1,13 +1,16 @@
 @import '../../../../variables.scss';
 
 .cancel-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    background-color: $cancel;
-    border-radius: 4px;
-    padding: 0 15px;
+    background: $cancel;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 10px;
+    border-radius: 5px;
+    margin: 0 10px;
     p{ 
         color: white;
         margin: 0;
