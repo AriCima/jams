@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useForm, useWatch } from "react-hook-form";
+import React, { useState } from 'react';
+import { useForm, Controller } from "react-hook-form";
+import ReactDatePicker from 'react-datepicker';
+import tw from "date-fns/locale/zh-TW";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 import DataService from '../../services/DataService';
-import Calculations from '../../services/Calculations';
 import ButtonCancel from '../../UI/Buttons/ButtonCancel';
 
 
@@ -12,6 +15,8 @@ import './index.scss';
 const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
 
     const [editedForm, setEditedForm] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    
     const { 
         firstName,
         lastName,
@@ -35,7 +40,7 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
         checkOut
     } = tenantInfo
 
-    const { register, errors, handleSubmit } = useForm({
+    const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
             firstName: firstName,
             lastName: lastName,
@@ -59,6 +64,21 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
             checkOut: checkOut,
         }
     });
+
+    const DatePicker = ({ selected, onChange }) => {
+        return (
+            <ReactDatePicker
+                // className="form-control"
+                selected={selected}
+                onChange={date => setStartDate(date)}
+                // locale={tw}
+                dateFormat="dd/MM/yyyy"
+                dateFormatCalendar="yyyy"
+                isClearable
+                value={checkIn}
+            />
+        )
+    };
 
     const onSubmit = (data) => {
         const userId = data.email;
@@ -283,14 +303,21 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 <label>Check-In</label>
                                 {errors.checkIn && <div className="field-error">Required</div>}
                             </div>
-                            <input
+                            {/* <input
                                 name="checkIn"
                                 placeholder="DD-MM-YYYY"
                                 ref={register({
                                     required: true,
                                 })}
-                                onClick={(e)=>{handleMyClick(e)}}
-                            />
+                                onClick={(e)=>{handleMyClick(e)}} 
+                            /> */}
+                                <Controller 
+                                    as={DatePicker} 
+                                    control={control} 
+                                    valueName="checkIn"
+                                    name="checkIn"
+                                    onChange={(date) => date}
+                                />
                         </div>
 
                         <div className="custom-input-block">
