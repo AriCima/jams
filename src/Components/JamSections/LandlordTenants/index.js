@@ -14,9 +14,9 @@ const LandlordTenants = ({ jamId, docType, docId }) => {
 
     const renderTenantsScreen = () => {
         switch (docType) {
-            case 'TENANT-FORM':
+            case 'TENANT-FORM': // for existing tenants --> edit info
                 return <LandlordTenantInfo docId={docId} /> 
-            case 'ADD-TENANT':
+            case 'ADD-TENANT':  // for new tenants --> set info
                 return <LandlordTenantInfo docId={docId} />
             default: 
                 return <LandlordTenantsOverview jamId={jamId}/>

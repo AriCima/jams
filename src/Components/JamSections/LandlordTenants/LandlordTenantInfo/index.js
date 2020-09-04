@@ -1,7 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import DataService from '../../../services/DataService';
-import TenantInfoForm from '../../../Forms/TenantInfoForm';
+import EditTenantInfoForm from '../../../Forms/EditTenantInfoForm';
+import NewTenantForm from '../../../Forms/NewTenantForm';
+import EditTenantForm from '../../../Forms/EditTenantForm';
+
 
 import { connect } from 'react-redux';
 
@@ -9,8 +12,6 @@ import { connect } from 'react-redux';
 import './index.scss';
 
 const LandlordTenantInfo = ({jamId, docId }) => {
-  console.log('docId: ', docId);
-
   const [tenantInfo, setTenantInfo] = useState([]);
 
   useEffect(() => {
@@ -24,11 +25,16 @@ const LandlordTenantInfo = ({jamId, docId }) => {
 
   return(
     <div className="tenant-info-wrapper">
-      <TenantInfoForm 
-        tenantInfo={tenantInfo}
-        docId={docId}
-        jamId={jamId}
-      />
+      {docId && tenantInfo.length !== 0 ? (
+        <EditTenantForm 
+          tenantInfo={tenantInfo}
+          docId={docId}
+          jamId={jamId}
+        />
+      ):(
+        <NewTenantForm 
+          jamId={jamId}/>
+     )}
     </div>
   )
 }

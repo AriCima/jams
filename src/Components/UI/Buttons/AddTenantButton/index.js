@@ -15,9 +15,9 @@ const AddTenantButton = ({ jamId, setSection, setSubSection, setDocType, setDocI
 
   const addTenant = () => {
     setSection('Tenants');
-    setSubSection();
+    setSubSection('');
     setDocType('ADD-TENANT');
-    setDocId();
+    setDocId('');
     setEditable(true);
   }
 

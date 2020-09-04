@@ -1,67 +1,75 @@
 import React, { useEffect, useState } from 'react';
 
 import DataService from '../../services/DataService';
-import StartChatButton from '../../UI/Buttons/StartChatButton';
+import Calculations from '../../services/Calculations';
+import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
 import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
 import ButtonCancel from '../../UI/Buttons/ButtonCancel';
 
-import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
-
-// CSS
 import './index.scss';
 
-const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
-    const [editedTenantInfo, setEditedTenantInfo] = useState({tenantInfo});
-    const [editedForm, setEditedForm] = useState(false);
+const inputFields = { 
+    name: '',
+    surname: '',
+    email: '',
+    homeTel: '',
+    street: '',
+    houseNr: '',
+    mobile: '',
+    floor: '',
+    door: '',
+    zipCode: '',
+    city: '',
+    country: '',
+    passportNr: '',
+    study: '',
+    school: '',
+    rent: '',
+    roomNr: '',
+    deposit: '',
+    checkIn: '',
+    checkOut: ''
+} 
 
-    useEffect(() => {
-        setEditedTenantInfo(tenantInfo)
-    }, [tenantInfo]);
-
-    const { 
-        jammerName,
-        jammerSurname,
-        jammerEmail,
-        jammerHomeTel,
-        jammerStreet,
-        jammerHouseNr,
-        mobile,
-        jammerFloor,
-        jammerDoor,
-        jammerZipcode,
-        jammerCity,
-        jammerCountry,
-        jammerPassportNr,
-        jammerStudy,
-        jammerSchool,
-        rent,
-        roomNr,
-        deposit,
-        checkIn,
-        checkOut
-    } = editedTenantInfo
-
-    const handleInputChange = (event) => {
-        event.persist();
-        setEditedForm(true);
-        const eidtedKey = event.target.id;
-        const editedValue = event.target.value;
-        setEditedTenantInfo(editedTenantInfo => ({ 
-            ...editedTenantInfo, 
-            [eidtedKey]: editedValue 
+const NewTenantInfoForm = ({ jamId }) => {
+    const [tenantInfo, setTenantInfo] = useState(inputFields);
+    const [fullfilledForm, setFullfilledForm] = useState(false);
+    const [nonValidEmail, setNonValidEmail] = (true);
+    const [emptyEmail, setEmptyEmail] = (true);
+    
+    const handleInputChange = (e) => {
+        e.persist();
+        const editedKey = e.target.id;
+        const editedValue = e.target.value;
+        setTenantInfo(tenantInfo => ({ 
+            ...tenantInfo, 
+            [editedKey]: editedValue 
         }));
+        
+        if (editedKey === 'email') {
+            setEmptyEmail(false);
+            setTimeout(() => {
+                const validEmail = Calculations.validateEmail(editedValue);
+                !validEmail && setNonValidEmail(true);
+            }, 3000)
+
+        }
     };
 
-    const submitForm = () => { // CHAPUZA
-        const jId = jamId.jamId; // CHAPUZA
-        DataService.updateTenantInfo(jId, docId, editedTenantInfo)
-        setEditedForm(false);
+    setTimeout(function(){ alert("Hello"); }, 3000);
+    
+    const submitForm = (e) => { // CHAPUZA
+        e.preventDafault();
+        const filledForm = Calculations.checkAllInputsAreFilled(tenantInfo);
+        const jId = jamId.jamId; // CHAPUZA  
+        const jammerId = tenantInfo.jammerEmail;      
+        DataService.saveTenantInfo(jId, jammerId, tenantInfo);
     };
 
     const cancelChanges = () => {
-        setEditedTenantInfo(tenantInfo);
-        setEditedForm(false);
-    }
+        setTenantInfo(tenantInfo);
+        setFullfilledForm(false);
+    };
 
     return (
 
@@ -71,15 +79,10 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
         >
             <div className="tenant-form-header">
                 <div className="jammerName">
-                    <h4>{jammerName} {jammerSurname}</h4>
-                    { docId && (
-                        <div className="section-button">
-                            <StartChatButton />
-                        </div>
-                    )}
+                    <h4>{tenantInfo.jammerName} {tenantInfo.jammerSurname}</h4>
                 </div>
                 <div className="section-buttons">
-                    { editedForm &&
+                    { fullfilledForm &&
                         <>
                             <div className="section-button">
                                 <ButtonSubmit
@@ -97,14 +100,12 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                     }
                 </div>
             </div>
-            
+
             <div className="tenant-form-section">
                 <div className="tenant-section-title">
                     <div className="title-text">
                         <h4>Personal Info</h4>
                     </div>
-
-                    
                 </div>
                 <div className="tenant-form-row">
                     <CustomInputFieldWithLabel
@@ -113,7 +114,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Nombre"
                         placeholder="name"
                         id="jammerName"
-                        value={jammerName}
+                        value={tenantInfo.jammerName}
                         changeControl={e => handleInputChange(e)}
                     />
 
@@ -123,7 +124,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Surname"
                         placeholder="surname"
                         id="jammerSurname"
-                        value={jammerSurname}
+                        value={tenantInfo.jammerSurname}
                         changeControl={handleInputChange}
                     />
 
@@ -133,7 +134,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Email"
                         placeholder="email"
                         id="jammerEmail"
-                        value={jammerEmail}
+                        value={tenantInfo.jammerEmail}
                         changeControl={handleInputChange}
                     />
 
@@ -145,7 +146,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Home Tel"
                         placeholder="tel"
                         id="jammerHomeTel"
-                        value={jammerHomeTel}
+                        value={tenantInfo.jammerHomeTel}
                         changeControl={handleInputChange}
                     />
 
@@ -155,7 +156,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Mobile"
                         placeholder="mobile"
                         id="mobile"
-                        value={mobile}
+                        value={tenantInfo.mobile}
                         changeControl={handleInputChange}
                     />
 
@@ -165,7 +166,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Passport Nr:"
                         placeholder="passport Nr"
                         id="jammerPassportNr"
-                        value={jammerPassportNr}
+                        value={tenantInfo.jammerPassportNr}
                         changeControl={handleInputChange}
                     />
 
@@ -184,7 +185,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Check-In:"
                         placeholder="checkIn"
                         id="checkIn"
-                        value={checkIn}
+                        value={tenantInfo.checkIn}
                         changeControl={handleInputChange}
                     />
 
@@ -194,7 +195,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Check-Out:"
                         placeholder="checkIn"
                         id="checkOut"
-                        value={checkOut}
+                        value={tenantInfo.checkOut}
                         changeControl={handleInputChange}
                     />
 
@@ -207,7 +208,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Room Nr:"
                         placeholder="room nr"
                         id="roomNr"
-                        value={roomNr}
+                        value={tenantInfo.roomNr}
                         changeControl={handleInputChange}
                     />
                     <CustomInputFieldWithLabel
@@ -216,7 +217,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Rent:"
                         placeholder="rent"
                         id="rent"
-                        value={rent}
+                        value={tenantInfo.rent}
                         changeControl={handleInputChange}
                     />
 
@@ -226,7 +227,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                         label="Deposit:"
                         placeholder="deposit"
                         id="deposit"
-                        value={deposit}
+                        value={tenantInfo.deposit}
                         changeControl={handleInputChange}
                     />
                 </div>
@@ -244,7 +245,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Street:"
                             placeholder="street"
                             id="jammerStreet"
-                            value={jammerStreet}
+                            value={tenantInfo.jammerStreet}
                             changeControl={handleInputChange}
                         />
 
@@ -254,7 +255,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="House Nr:"
                             placeholder="house nr"
                             id="jammerHouseNr"
-                            value={jammerHouseNr}
+                            value={tenantInfo.jammerHouseNr}
                             changeControl={handleInputChange}
                         />
 
@@ -264,7 +265,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Floor"
                             placeholder="floor"
                             id="jammerFloor"
-                            value={jammerFloor}
+                            value={tenantInfo.jammerFloor}
                             changeControl={handleInputChange}
                         />
 
@@ -274,7 +275,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Door"
                             placeholder="door"
                             id="jammerDoor"
-                            value={jammerDoor}
+                            value={tenantInfo.jammerDoor}
                             changeControl={handleInputChange}
                         />
                     </div>
@@ -285,7 +286,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Zip-Code"
                             placeholder="zip-code"
                             id="jammerZipCode"
-                            value={jammerZipcode}
+                            value={tenantInfo.jammerZipcode}
                             changeControl={handleInputChange}
                         />
                         <CustomInputFieldWithLabel
@@ -294,7 +295,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="City"
                             placeholder="city"
                             id="jammerCity"
-                            value={jammerCity}
+                            value={tenantInfo.jammerCity}
                             changeControl={handleInputChange}
                         />
                         <CustomInputFieldWithLabel
@@ -303,7 +304,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Country"
                             placeholder="country"
                             id="jammerCountry"
-                            value={jammerCountry}
+                            value={tenantInfo.jammerCountry}
                             changeControl={handleInputChange}
                         />
                     </div>
@@ -314,7 +315,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="Study"
                             placeholder="study"
                             id="jammerStudy"
-                            value={jammerStudy}
+                            value={tenantInfo.jammerStudy}
                             changeControl={handleInputChange}
                         />
                         <CustomInputFieldWithLabel
@@ -323,7 +324,7 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                             label="School"
                             placeholder="school"
                             id="jammerSchool"
-                            value={jammerSchool}
+                            value={tenantInfo.jammerSchool}
                             changeControl={handleInputChange}
                         />
                     </div>
@@ -333,4 +334,4 @@ const TenantInfoForm = ({ tenantInfo, docId, jamId }) => {
     );
 };
 
-export default TenantInfoForm;
+export default NewTenantInfoForm;

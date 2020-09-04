@@ -2,6 +2,7 @@ import React from 'react';
 
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
+import values from 'lodash/values';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChalkboard, faComments, faUsers, faUserLock, faCog} from '@fortawesome/free-solid-svg-icons'
@@ -58,6 +59,20 @@ export default class Calculations {
      console.log('code = ', code)
      return code
     };
+
+    static checkAllInputsAreFilled(arr) {
+        console.log('arr: ', arr);
+        const arrL = arr.length;
+        let cont = 0;
+        for(let i= 0; i < arrL; i++){
+            const obj = arr[i];
+            const objValue = values(obj);
+            if(objValue !== ''){
+                cont = cont+1
+            };
+        }
+
+    }
     static getJamSections(type){
         //console.log('get Jam Sections launched')
         let sections = [];
@@ -65,7 +80,7 @@ export default class Calculations {
             case 'accommodation':
               sections = ['Board', 'Jammers', 'MyJam', 'Settings']
               break;
-            case 'studentsFlat':
+            case 'rooms-rental':
                 sections = ['Board', 'Tenants', 'Rooms', 'Settings']
                 break;
             case 'chat': 
@@ -76,6 +91,41 @@ export default class Calculations {
         }
        return sections;
     };
+
+    static getJammerInputFields(jamType) {
+
+        let inputFields = {}
+
+        if (jamType === 'rooms-rental') {
+           return inputFields = { 
+                name: '',
+                surname: '',
+                email: '',
+                homeTel: '',
+                street: '',
+                houseNr: '',
+                mobile: '',
+                floor: '',
+                door: '',
+                zipCode: '',
+                city: '',
+                country: '',
+                passportNr: '',
+                study: '',
+                school: '',
+                rent: '',
+                roomNr: '',
+                deposit: '',
+                checkIn: '',
+                checkOut: ''
+            } 
+        }
+    }
+
+    static validateEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
 
     // - - - - - SORTING FUNCTIONS 
 

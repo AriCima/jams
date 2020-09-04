@@ -70,11 +70,16 @@ export default class DataService {
 
     // JAMS
     // Create
-    static createJam(jamInfo) {
+    static createJam(jamInfo, userId, email) {
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams').add(jamInfo)
                 .then((doc) => {
                     console.log('doc del create: ', doc);
+                    const jamId = doc.id;
+                    const userInfo = { userId, email };
+                    jamInfo.jamId = jamId;
+                    this.addJamToUser(userId, jamInfo);
+                    this.updateJammersInJam(jamId, userInfo);
                     resolve({ id: doc.id });
                 })
                 .catch((error) => {
@@ -444,17 +449,37 @@ export default class DataService {
                 });
         });
     }
+    static saveTenantInfo(jamId, tenantInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('jams')
+                .doc(jamId)
+                .collection('jammers')
+                .add(tenantInfo)
+                .then((res) => {
+                    console.log("Document written with ID: ", res);
+                    resolve(res);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    console.log('Tenant info could not be saved: ', errorCode);
+                });
+        });
+    }
 
-    static updateTenantInfo(jamId, jammerId, editedTenantInfo) {
+    static editenantInfo(jamId, jammerId, editedTenantInfo) {
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
                 .doc(jamId)
                 .collection('jammers')
                 .doc(jammerId)
                 .set(editedTenantInfo)
+                .then((res) => {
+                    console.log("Document written with ID: ", res);
+                    resolve(res);
+                })
                 .catch((error) => {
                     const errorCode = error.code;
-                // console.log('Message could not be sent: ', errorCode);
+                    console.log('Tenant info could not be saved: ', errorCode);
                 });
         });
     }
