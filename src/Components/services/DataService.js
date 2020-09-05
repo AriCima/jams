@@ -381,7 +381,7 @@ export default class DataService {
         });
     }
 
-    // JAMMERS
+    //  * * * * * * * JAMMERS  * * * * * * *
 
     static getJammers(jamId) {
         return new Promise((resolve, reject) => {
@@ -484,13 +484,14 @@ export default class DataService {
         });
     }
 
-    // PREBOOKING
-    static addPreBooking(preBookingInfo) {
-        console.log('preBookingInfo: ', preBookingInfo);
+    //  * * * * * * * INVITATIONS * * * * * * * 
+    static newTenantInvitation(jId, data) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
-                .collection('preBookings')
-                .add(preBookingInfo)
+                .collection('jams')
+                .doc(jId)
+                .collection('invitations')
+                .add(data)
                 .then((docRef) => {
                     console.log('Document written with ID: ', docRef.id);
                     resolve(docRef);

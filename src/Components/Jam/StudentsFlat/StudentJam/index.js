@@ -12,7 +12,8 @@ import StudentSettings from '../../../JamSections/StudentSettings';
 
 import './index.css';
 
-const StudentJam = ({ jamId, jamInfo, jamActiveSection } ) => {
+const StudentJam = ({ jamId, invId, jamInfo, jamActiveSection } ) => {
+
 
     return (
 
