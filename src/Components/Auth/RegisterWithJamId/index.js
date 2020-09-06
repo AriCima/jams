@@ -28,7 +28,7 @@ const useRegisterWithJamId = ({jamId, invId }) => {
     const email = data.email;
     const password = data.password;
 
-    AuthService.Register(email, password)
+    AuthService.register(email, password)
     .then(res => {
       const userId = res.id;
       DataService.getJamInfoById(jamId)

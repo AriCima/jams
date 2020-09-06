@@ -1,27 +1,29 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
+import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-import Calculations from '../../services/Calculations';
-import AuthService from '../../services/AuthService';
 import DataService from '../../services/DataService';
 
 import './index.scss';
+import { setJamId, setSection, setSubSection } from '../../../redux/actions/navigateActions';
 
 
-const useTenantPerosnalInfoForm = ({ jamId }) => {
+const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubSection }) => {
 
     let history = useHistory();
+
     const { register, errors, handleSubmit } = useForm();
 
-    const [invitationInfo, setInvitationInfo] = useState({};
+    // const [invitationInfo, setInvitationInfo] = useState({});
   
-    useEffect(() => {
-        invId && DataService.getInvitationInfo(jamId, invId)
-        .then(data => {
-        set
-        })
-    }, [jamId, invId]);
+    // useEffect(() => {
+    //     invId && DataService.getInvitationInfo(jamId, invId)
+    //     .then(data => {
+    //         console.log('data: ', data);
+    //         setInvitationInfo(data);
+    //     })
+    // }, [jamId, invId]);
 
 
     const onSubmit = (data) => {
@@ -30,7 +32,9 @@ const useTenantPerosnalInfoForm = ({ jamId }) => {
         .then((data) => {
             console.log('data =', data);
             const invId = data.id;
-            history.push(`/register/${jamId}/${invId}`);
+            setJamId(jamId);
+            setSection('overview');
+            setSubSection('');
         })
     };
 
@@ -235,4 +239,4 @@ const useTenantPerosnalInfoForm = ({ jamId }) => {
     );
 };
 
-export default useTenantPerosnalInfoForm;
+export default connect(null, {setJamId, setSection, setSubSection})(useTenantPerosnalInfoForm);
