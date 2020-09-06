@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import DataService from '../../../services/DataService';
-import EditTenantInfoForm from '../../../Forms/EditTenantInfoForm';
 import NewTenantForm from '../../../Forms/NewTenantForm';
 import EditTenantForm from '../../../Forms/EditTenantForm';
 

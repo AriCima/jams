@@ -319,12 +319,16 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
                                 })}
                                 onClick={(e)=>{handleMyClick(e)}} 
                             />
-                                {/* <Controller 
-                                    as={InDatePicker} 
-                                    control={control} 
-                                    valueName="checkIn"
-                                    name="checkIn"
-                                    onChange={(date) => {handleMyClick(date)}}
+                                {/* <Controller
+                                    control={control}
+                                    name="ReactDatepicker"
+                                    render={({ onChange, onBlur, value}) => (
+                                    <InDatePicker
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        selected={value}
+                                    />
+                                    )}
                                 /> */}
                         </div>
 

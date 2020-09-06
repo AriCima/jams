@@ -24,7 +24,7 @@ export default class AuthService {
             });
             
         });
-    }
+    };
 
     static register(email, password){
 
@@ -42,5 +42,5 @@ export default class AuthService {
                 reject(errorMessage)
             })
         });
-    }
-}
+    };
+};

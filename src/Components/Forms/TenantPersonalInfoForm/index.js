@@ -1,25 +1,40 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
+import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 import DataService from '../../services/DataService';
 
 import './index.scss';
+import { setJamId, setSection, setSubSection } from '../../../redux/actions/navigateActions';
 
 
-const useInviteTenantForm = ({ jamId }) => {
+const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubSection }) => {
 
     let history = useHistory();
+
     const { register, errors, handleSubmit } = useForm();
 
+    // const [invitationInfo, setInvitationInfo] = useState({});
+  
+    // useEffect(() => {
+    //     invId && DataService.getInvitationInfo(jamId, invId)
+    //     .then(data => {
+    //         console.log('data: ', data);
+    //         setInvitationInfo(data);
+    //     })
+    // }, [jamId, invId]);
+
+
     const onSubmit = (data) => {
-        data.registeredUser = false;
-        const jId = jamId.jamId // CHAPUZA
-        DataService.newTenantInvitation(jId, data)
+        data.registeredUser = true;
+        DataService.saveTenantInfo(jamId, data)
         .then((data) => {
             console.log('data =', data);
             const invId = data.id;
-            history.push(`/register/${jId}/${invId}`);
+            setJamId(jamId);
+            setSection('overview');
+            setSubSection('');
         })
     };
 
@@ -29,6 +44,14 @@ const useInviteTenantForm = ({ jamId }) => {
             className="hook-form"
             onSubmit={handleSubmit(onSubmit)}>
             <div className="form-section">
+                <div className="form-header">
+                    <div className="form-header-title">
+                        <p>Welcomo to {jamName} ! In order to jam with us I need you to fill the following form</p>
+                        <p>This information will bu used to prepare your contract, and only your name, city and couuntry
+                            will be visible for your other flatmates.
+                        </p>
+                    </div>
+                </div>
                 <div className="form-section-title">
                     <p>Personal information</p>
                 </div>
@@ -74,7 +97,7 @@ const useInviteTenantForm = ({ jamId }) => {
                 </div>
 
                 <div className="form-line">
-                    {/* <div className="custom-input-block">
+                    <div className="custom-input-block">
                         <div className="block-label">
                             <label>Passport Nr</label>
                             {errors.passport && <div className="field-error">Required</div>}
@@ -84,8 +107,8 @@ const useInviteTenantForm = ({ jamId }) => {
                         ref={register({
                             required: true,
                         })} />
-                    </div> */}
-                    {/* <div className="custom-input-block">
+                    </div>
+                    <div className="custom-input-block">
                         <div className="block-label">
                             <label>Home Tel</label>
                             {errors.homeTel && <div className="field-error">Required</div>}
@@ -96,8 +119,8 @@ const useInviteTenantForm = ({ jamId }) => {
                                 required: true,
                             })}
                         />
-                    </div> */}
-                    {/* <div className="custom-input-block">
+                    </div>
+                    <div className="custom-input-block">
                         <div className="block-label">
                             <label>Mobile</label>
                             {errors.mobile && <div className="field-error">Required</div>}
@@ -108,9 +131,9 @@ const useInviteTenantForm = ({ jamId }) => {
                                 required: true,
                             })}
                         />
-                    </div> */}
+                    </div>
                 </div>
-                {/* <div className="form-section">
+                <div className="form-section">
                     <div className="form-section-title">
                         <p>Home Address</p>
                     </div>
@@ -201,76 +224,9 @@ const useInviteTenantForm = ({ jamId }) => {
                         </div>
                     </div>
 
-                </div> */}
+                </div> 
 
-                <div className="form-section">
-                    <div className="form-section-title">
-                        <p>Contract Info</p>
-                    </div>
-
-                    <div className="form-line">
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Check-In</label>
-                                {errors.checkIn && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                                name="checkIn"
-                                placeholder="DD-MM-YYYY"
-                                ref={register({
-                                    required: true,
-                                })} 
-                            />
-                        </div>
-
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Check-Out</label>
-                                {errors.checkOut && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                                name="checkOut"
-                                placeholder="DD-MM-YYYY"
-                                ref={register({
-                                    required: true,
-                                })}
-                            />
-                        </div>
-
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Room Nr</label>
-                                {errors.roomNr && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                            name="roomNr"
-                            ref={register({
-                                required: true,
-                            })} />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Rent €/Mo</label>
-                                {errors.rent && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                            name="rent"
-                            ref={register({
-                                required: true,
-                            })} />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Deposit €</label>
-                                {errors.deposit && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                            name="deposit"
-                            ref={register({
-                                required: true,
-                            })} />
-                        </div>
-
+               
                     </div>
                 </div>
                 
@@ -283,4 +239,4 @@ const useInviteTenantForm = ({ jamId }) => {
     );
 };
 
-export default useInviteTenantForm;
+export default connect(null, {setJamId, setSection, setSubSection})(useTenantPerosnalInfoForm);

@@ -1,18 +1,13 @@
 import React from 'react';
-
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-// COMPONENTS
+
 import AppNavBar from '../NavBars/AppNavBar/AppNavBar.js';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
+import RegisterWithJamId from '../Auth/RegisterWithJamId';
 import Dashboard from '../Dashboard';
-import PreBookingForm from '../Forms/PreBookingForm';
-// import TenantInfoForm from '../Forms/TenantInfoForm';
 import Footer from '../Footer';
 
-
-// CSS
 import './index.scss';
 
 
@@ -27,8 +22,7 @@ function App() {
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
-                        <Route path="/invite/:bookingCode" exact render={(props) => <PreBookingForm propsFn={props.history} bookingCode={props.match.params.bookingCode} />} />
-                        {/* <Route path="/jam_reg/:bookingCode" exact render={(props) => <TenantInfoForm propsFn={props.history} bookingCode={props.match.params.bookingCode} />} /> */}
+                        <Route path="/register/:jamID/:invID" exact render={(props) => <RegisterWithJamId propsFn={props.history} jamId={props.match.params.jamID} invId={props.match.params.invID} />} />
                     </Switch>
                 </div>
                 <div className="footer"><Footer /></div>
