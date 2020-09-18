@@ -4,8 +4,8 @@ import { combineReducers } from 'redux';
 import alertsReducer from './alertsReducer';
 import authReducer from './authReducer';
 import userJamsReducer from './userJamsReducer';
-import jamSectionReducer from './jamSectionReducer';
-import jamIdReducer from './jamIdReducer';
+// import jamSectionReducer from './jamSectionReducer';
+// import jamIdReducer from './jamIdReducer';
 import jamInfoReducer from './jamInfoReducer';
 import jammerIdReducer from './jammerIdReducer';
 import roomIdReducer from './roomIdReducer';
@@ -13,6 +13,8 @@ import roomIdReducer from './roomIdReducer';
 import roomBookingsReducer from './roomBookingsReducer';
 import navReducers from './navigateReducer';
 import docReducers from './docReducer';
+import userReducers from './userReducer';
+
 
 // sincronizador del firestore data y nuestro state
 // en el background
@@ -24,11 +26,12 @@ const rootReducer = combineReducers({
     nav: navReducers,
     doc: docReducers,
     userJams: userJamsReducer,
-    jamId: jamIdReducer,
+    // jamId: jamIdReducer,
     jamInfo: jamInfoReducer,
-    jamSection: jamSectionReducer,
+    // jamSection: jamSectionReducer,
     jammerId: jammerIdReducer,
     roomId: roomIdReducer,
+    userInfo: userReducers,
     // activeScreen: roomScreenReducer,
     roomBookings: roomBookingsReducer,
     // el firestoreReducer automáticamente sincronizará la propiedad "firestore"

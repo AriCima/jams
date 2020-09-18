@@ -1,7 +1,7 @@
 export const HandleCustomizationForm = (jamId) => {
     
     return {
-        type: 'CUTOMIZATION_STATUS', 
+        type: 'CUSTOMIZATION_STATUS', 
         payload: jamId
     }
 };

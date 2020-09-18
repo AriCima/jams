@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+
 import { useHistory } from "react-router-dom";
 import {useForm} from "react-hook-form";
+import { setJamId, setSection, setSubSection } from '../../../redux/actions/navigateActions.js'
+
 import AuthService from '../../services/AuthService'
 import DataService from '../../services/DataService';
 
-const useRegisterWithJamId = ({jamId, invId }) => {
+import './index.scss';
+import { setUserId, setUserRole } from '../../../redux/actions/userActions.js';
+
+const RegisterWithInvitation = ({jamId, userId, invId, firstName, setJamId, setSection, setSubSection, setUserId, setUserRole }) => {
+  console.log('firstName: ', firstName);
   const [passwordError, setPasswordError] = useState(false);
   const [jamInfo, setJamInfo] = useState({});
+
 
   useEffect(() => {
     jamId && DataService.getJamInfoById(jamId)
@@ -37,9 +46,18 @@ const useRegisterWithJamId = ({jamId, invId }) => {
         DataService.addJamToUser(userId, jamInfo);
       })
     });
-    history.push(`/jam/${jamId}/${invId}`);
 
+    const userRole = jamInfo.adminId === userId ? 'Admin' : 'Guest';
+    
+    setJamId(jamId);
+    setUserRole(userRole);
+    setSection('overview');
+    setSubSection('');
+    history.push(`/`);
   };
+
+  console.log('jamInfo: ', jamInfo);
+  const {jamName, admin } = jamInfo;
 
   return (
     <form
@@ -48,7 +66,9 @@ const useRegisterWithJamId = ({jamId, invId }) => {
     >
       <div className="register-form-section">
           <div className="register-form-section-title">
-            <p>Please register to jam to {jamId}</p>
+            <p>Hello {firstName} !<p>
+            <p>{admin} has invite you to join to {jamName}</p>
+            </p>Please register to Jammint and we'll take you there</p>
           </div>
 
           <div className="form-line">
@@ -94,4 +114,5 @@ const useRegisterWithJamId = ({jamId, invId }) => {
   );
 };
 
-export default useRegisterWithJamId;
+
+export default connect (null, {setJamId, setSection, setSubSection, setUserId, setUserRole})(RegisterWithInvitation);

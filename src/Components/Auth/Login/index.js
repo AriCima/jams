@@ -5,7 +5,7 @@ import DataService from '../../services/DataService';
 import {Link} from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { loginAction } from '../../../redux/actions/authActions'
+import { setUserId } from '../../../redux/actions/userActions'
 import { Redirect } from 'react-router-dom'
 
 import './index.css';
@@ -26,7 +26,6 @@ class Login extends Component {
     }
 
     handleChange=(e)=>{
-        console.log('login state: ', e.target.id)
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -36,6 +35,10 @@ class Login extends Component {
     submitLogin = (e) => {
         e.preventDefault();
         AuthService.login(this.state.email, this.state.password)
+        .then(res => {
+            const userId = res.user.uid;
+            this.props.setUserId(userId)
+        })
     }
 
     render(){
@@ -88,12 +91,6 @@ class Login extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loginAction: (creds) => dispatch(loginAction((creds)))
-    }
-};
-
 const mapStateToProps = (state) => {
     return {
         authError: state.auth.authError,
@@ -101,4 +98,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, { setUserId })(Login)

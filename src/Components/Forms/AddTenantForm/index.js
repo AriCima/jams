@@ -1,41 +1,34 @@
-import React from 'react';
-import {useForm} from "react-hook-form";
-import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useForm, Controller } from "react-hook-form";
+import ReactDatePicker from 'react-datepicker';
+import moment from 'moment';
+
+// import "react-datepicker/dist/react-datepicker.css";
 
 import DataService from '../../services/DataService';
+import ButtonCancel from '../../UI/Buttons/ButtonCancel';
+
 
 import './index.scss';
-import { setJamId, setSection, setSubSection } from '../../../redux/actions/navigateActions';
 
 
-const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubSection }) => {
+const useAddTenantForm = ({ tenantInfo, docId, jamId }) => {
 
-    let history = useHistory();
 
-    const { register, errors, handleSubmit } = useForm();
 
-    // const [invitationInfo, setInvitationInfo] = useState({});
-  
-    // useEffect(() => {
-    //     invId && DataService.getInvitationInfo(jamId, invId)
-    //     .then(data => {
-    //         console.log('data: ', data);
-    //         setInvitationInfo(data);
-    //     })
-    // }, [jamId, invId]);
+    // const [checkInDate, setCheckInDate] = useState(moment(checkIn).format('DD-MMM-YYYY')); // CHAPuZA
+    // const [checkOutDate, setCheckOutDate] = useState(moment(checkIn).format('DD-MMM-YYYY'));
+    // VER https://stackoverflow.com/questions/61605448/how-to-use-react-hook-form-with-my-customized-react-date-picker
+
+    const { register, errors, handleSubmit, control } = useForm({});
 
 
     const onSubmit = (data) => {
-        data.registeredUser = true;
-        DataService.saveTenantInfo(jamId, data)
-        .then((data) => {
-            console.log('data =', data);
-            const invId = data.id;
-            setJamId(jamId);
-            setSection('overview');
-            setSubSection('');
-        })
+        const userId = data.email;
+        data.userId = userId;
+        data.registeredUser = false;
+        const jId = jamId.jamId // CHAPUZA
+        DataService.editTenantInfo(jId, docId, data);
     };
 
     return (
@@ -44,18 +37,9 @@ const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubS
             className="hook-form"
             onSubmit={handleSubmit(onSubmit)}>
             <div className="form-section">
-                <div className="form-header">
-                    <div className="form-header-title">
-                        <p>Welcomo to {jamName} ! In order to jam with us I need you to fill the following form</p>
-                        <p>This information will bu used to prepare your contract, and only your name, city and couuntry
-                            will be visible for your other flatmates.
-                        </p>
-                    </div>
-                </div>
                 <div className="form-section-title">
                     <p>Personal information</p>
                 </div>
-
                 <div className="form-line">
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -66,7 +50,7 @@ const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubS
                             name="firstName"
                             ref={register({
                                 required: true,
-                            })}
+                            })} 
                         />
                     </div>
                     <div className="custom-input-block">
@@ -95,18 +79,18 @@ const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubS
                         />
                     </div>
                 </div>
-
                 <div className="form-line">
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Passport Nr</label>
-                            {errors.passport && <div className="field-error">Required</div>}
+                            {errors.passportNr && <div className="field-error">Required</div>}
                         </div>
                         <input
-                        name="passport"
-                        ref={register({
-                            required: true,
-                        })} />
+                            name="passportNr"
+                            ref={register({
+                                required: true,
+                            })}
+                        />
                     </div>
                     <div className="custom-input-block">
                         <div className="block-label">
@@ -224,19 +208,94 @@ const useTenantPerosnalInfoForm = ({ jamId, invId, setJamId, setSection, setSubS
                         </div>
                     </div>
 
-                </div> 
+                </div>
+                <div className="form-section">
+                    <div className="form-section-title">
+                        <p>Contract Info</p>
+                    </div>
 
-               
+                    <div className="form-line">
+                        <div className="custom-input-block">
+                            <div className="block-label">
+                                <label>Check-In</label>
+                                {errors.checkIn && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="checkIn"
+                                placeholder="DD-MM-YYYY"
+                                ref={register({
+                                    required: true,
+                                })}
+                            />
+                                {/* <Controller
+                                    control={control}
+                                    name="ReactDatepicker"
+                                    render={({ onChange, onBlur, value}) => (
+                                    <InDatePicker
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        selected={value}
+                                    />
+                                    )}
+                                /> */}
+                        </div>
+
+                        <div className="custom-input-block">
+                            <div className="block-label">
+                                <label>Check-Out</label>
+                                {errors.checkOut && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="checkOut"
+                                placeholder="DD-MM-YYYY"
+                                ref={register({
+                                    required: true,
+                                })}
+                            />
+                        </div>
+
+                        <div className="custom-input-block">
+                            <div className="block-label">
+                                <label>Room Nr</label>
+                                {errors.roomNr && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="roomNr"
+                                ref={register({
+                                    required: true,
+                                })}
+                            />
+                        </div>
+                        <div className="custom-input-block">
+                            <div className="block-label">
+                                <label>Rent €/Mo</label>
+                                {errors.rent && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="rent"
+                                ref={register({
+                                    required: true,
+                                })}
+                            />
+                        </div>
+                        <div className="custom-input-block">
+                            <div className="block-label">
+                                <label>Deposit €</label>
+                                {errors.deposit && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="deposit"
+                                ref={register({
+                                    required: true,
+                                })}
+                            />
+                        </div>
+
                     </div>
                 </div>
-                
-                
-            </div>
-            <div className="hook-form-buttonArea">
-                <input type="submit" />
             </div>
         </form>
     );
 };
 
-export default connect(null, {setJamId, setSection, setSubSection})(useTenantPerosnalInfoForm);
+export default useAddTenantForm;

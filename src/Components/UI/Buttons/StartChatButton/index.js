@@ -5,13 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments } from '@fortawesome/free-regular-svg-icons'
 
 import DataService from '../../../services/DataService';
-import { setJam } from '../../../../redux/actions/jamId';
+import { setJamId } from '../../../../redux/actions/navigateActions.js';
 
 import "./index.scss";
 
-const StartChatButton = ({ auth, userJams, user2Name, user2Id, userId, tenantId, setJam}) => {
-
-    const user1Id = auth.uid;
+const StartChatButton = ({ userId, userJams, user2Name, user2Id, user1Id, tenantId, setJamId}) => {
 
     const launchChat = (e) => {
         e.preventDefault();
@@ -21,11 +19,11 @@ const StartChatButton = ({ auth, userJams, user2Name, user2Id, userId, tenantId,
         const reverseChatId = tenantId + userId;
 
         if(userJams.includes(chatId)){
-        return setJam(chatId)
+        return setJamId(chatId)
         };
         
         if(userJams.includes(reverseChatId)){
-        return setJam(reverseChatId)
+        return setJamId(reverseChatId)
         }
 
         const chatInfo = { 
@@ -62,9 +60,9 @@ const StartChatButton = ({ auth, userJams, user2Name, user2Id, userId, tenantId,
 
 const mapStateToProps = state => {
     return { 
-      auth: state.firebase.auth,
+      userId: state.userInfo.userId,
       userJams: state.userJams,
     }
 };
 
-export default connect (mapStateToProps, { setJam })(StartChatButton);
+export default connect (mapStateToProps, { setJamId })(StartChatButton);

@@ -3,15 +3,12 @@ import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
-
-import DataService from '../../../services/DataService';
-import { setJam } from '../../../../redux/actions/jamId';
 import { setSection, setSubSection } from '../../../../redux/actions/navigateActions';
 import { setDocType, setDocId, setEditable } from '../../../../redux/actions/docsActions';
 
 import "./index.scss";
 
-const AddTenantButton = ({ jamId, setSection, setSubSection, setDocType, setDocId, setEditable }) => {
+const AddTenantButton = ({ setSection, setSubSection, setDocType, setDocId, setEditable }) => {
 
   const addTenant = () => {
     setSection('Tenants');
@@ -42,4 +39,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect (mapStateToProps, {setJam, setSection, setSubSection, setDocType, setDocId, setEditable})(AddTenantButton);
+export default connect (mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable})(AddTenantButton);

@@ -3,15 +3,19 @@ import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
-
-import DataService from '../../../services/DataService';
+import { setSection, setSubSection } from '../../../../redux/actions/navigateActions';
+import { setDocType, setDocId, setEditable } from '../../../../redux/actions/docsActions';
 
 import "./index.scss";
 
-const InviteTenantButton = ({ jamId, jamName }) => {
+const InviteTenantButton = ({ setSection, setSubSection, setDocType, setDocId, setEditable }) => {
 
   const sendInvitation = () => {
-
+    setSection('Tenants');
+    setSubSection('');
+    setDocType('INVITE-TENANT');
+    setDocId('');
+    setEditable(true);
   }
 
   return (
@@ -29,10 +33,5 @@ const InviteTenantButton = ({ jamId, jamName }) => {
   
 }
 
-const mapStateToProps = state => {
-    return { 
-      auth: state.firebase.auth,
-    }
-};
 
-export default connect (mapStateToProps, null)(InviteTenantButton);
+export default connect (null, {setSection, setSubSection, setDocType, setDocId, setEditable})(InviteTenantButton);

@@ -11,7 +11,7 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
   const showTenantForm = (e) => {
     e.preventDefault();
     setDocType('TENANT-FORM');
-    setDocId(tL.id);
+    setDocId(tL.id); // tenant's userId
     setEditable('true');
   }
 

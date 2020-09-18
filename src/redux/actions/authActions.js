@@ -23,39 +23,39 @@ export const registerAction = (newUser) => {
     }
 }
 
-export const loginAction = (credentials) => {
-    return (dispatch, getState, {getFirebase, getFirestore}) => {
-        const firebase = getFirebase();
-        const firestore = getFirestore();
+// export const loginAction = (credentials) => {
+//     return (dispatch, getState, {getFirebase, getFirestore}) => {
+//         const firebase = getFirebase();
+//         const firestore = getFirestore();
 
-        firebase.auth().signInWithEmailAndPassword(
-            credentials.email,
-            credentials.password
-        ).then((res) => {
-            console.log('login res = ', res, ' / ', res.user.uid)
-            firestore.collection('users')
-            .doc(res.user.uid).collection('userJams').get()
-            .then(function(querySnapshot) {
-                const userJams = []
-                querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    userJams.push(doc.data())
-                    return userJams
-                });
-                // //console.log('doc received', userJams);
-                console.log('userJams: ', userJams);
-                dispatch({type: 'LOGIN_SUCCESS', userJams})
-            })
-            .catch(function(error) {
-                //console.log("Error getting documents: ", error);
-            });
+//         firebase.auth().signInWithEmailAndPassword(
+//             credentials.email,
+//             credentials.password
+//         ).then((res) => {
+//             console.log('login res = ', res, ' / ', res.user.uid)
+//             firestore.collection('users')
+//             .doc(res.user.uid).collection('userJams').get()
+//             .then(function(querySnapshot) {
+//                 const userJams = []
+//                 querySnapshot.forEach(function(doc) {
+//                     // doc.data() is never undefined for query doc snapshots
+//                     userJams.push(doc.data())
+//                     return userJams
+//                 });
+//                 // //console.log('doc received', userJams);
+//                 console.log('userJams: ', userJams);
+//                 dispatch({type: 'LOGIN_SUCCESS', userJams})
+//             })
+//             .catch(function(error) {
+//                 //console.log("Error getting documents: ", error);
+//             });
 
-            //console.log('res del login = ', res)
-            // dispatch({type: 'LOGIN_SUCCESS'})
-        }).catch((err) =>
-        dispatch({type: 'LOGIN_ERROR', err}) )
-    }
-}
+//             //console.log('res del login = ', res)
+//             // dispatch({type: 'LOGIN_SUCCESS'})
+//         }).catch((err) =>
+//         dispatch({type: 'LOGIN_ERROR', err}) )
+//     }
+// }
 
 export const signOut = () => {
     return (dispatch, getState, {getFirebase}) => {

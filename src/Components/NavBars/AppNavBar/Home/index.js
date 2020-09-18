@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 
 // FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,15 +6,15 @@ import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 // REDUX
 import { connect } from 'react-redux';
-import { setJam } from '../../../../redux/actions/jamId';
+import { setJamId } from '../../../../redux/actions/navigateActions.js';
 
 // CSS
 import "./index.css";
 
-const Home = (props) => {
+const Home = ({ setJamId }) => {
 
   const onsetJam = (jamId) => {
-    props.setJam(jamId);
+    setJamId(jamId);
   };
 
   return (
@@ -26,10 +26,4 @@ const Home = (props) => {
   
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setJam: () => dispatch(setJam(null)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Home)
+export default connect(null, setJamId)(Home)

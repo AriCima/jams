@@ -7,14 +7,11 @@ import { connect } from 'react-redux';
 
 // CSS
 import "./index.css";
-import { setJam } from "../../../../../redux/actions/jamId";
+import { setJamId } from "../../../../../redux/actions/navigateActions.js";
 import {setJamSection} from "../../../../../redux/actions/jamSection";
 
-const StudentJammerCard = (props) => {
+const StudentJammerCard = ({ userId, userJams, jI, jamInfo }) => {
 
-  const { user, userJams, jI, jamInfo } = props
-  //console.log('props en el jammerCard = ', props)
-  const userId = user.uid;
   const jammerId = jI.userId;
   const jammerName= jI.userName;
 
@@ -24,11 +21,11 @@ const StudentJammerCard = (props) => {
     const reverseChatId = jammerId + userId;
 
     if(userJams.includes(chatId)){
-      return setJam(chatId)
+      return setJamId(chatId)
     };
     
     if(userJams.includes(reverseChatId)){
-      return setJam(reverseChatId)
+      return setJamId(reverseChatId)
     }
 
     const chatInfo = { 
@@ -87,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-      user: state.firebase.auth,
+      userId: state.userInfo.userId,
       jamId: state.jamId,
       userJams: state.userJams,
   }

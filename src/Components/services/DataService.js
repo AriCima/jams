@@ -2,12 +2,18 @@ import firebase from 'firebase';
 
 export default class DataService {
     // USERS
-    static saveUserInfoInFirestore(userId, userToSave) {
+    static saveUserInfoInFirestore(userId, userInfo) {
+        console.log('userInfo: ', userInfo);
+        console.log('userId: ', userId);
         // registro en Firebase
         // //console.log("el user recibido en el registro firestore es:", userId)
         // //console.log("el userToSave recibido en firestore es: ", userToSave)
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users').doc(userId).set(userToSave)
+            firebase.firestore().collection('users').doc(userId).set({ 
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                email: userInfo.email
+            })
                 .then((result) => {
                     // console.log("User information succesfully saved !")
                     resolve(result);
@@ -18,6 +24,22 @@ export default class DataService {
                     // console.log('User NOT added: ', errorCode);
                 });
         });
+    }
+
+    static checkIfEmialExists(email) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('users').where('email', '==', email)
+                .get()
+                .then((res) => {
+                    console.log('empty: ', res.empty);
+                    const docExists = !res.empty;
+                    resolve(docExists)
+                })
+        })
+            .catch((error) => {
+                const errorCode = error.code;
+                // console.log('Usuario No Existe : ', errorCode);
+            });
     }
 
     static getUserInfo(userId) {

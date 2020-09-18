@@ -1,5 +1,5 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // COMPONENTS
 import LandlordJam from './StudentsFlat/LandlordJam';
@@ -8,13 +8,10 @@ import StudentJam from './StudentsFlat/StudentJam';
 
 import './index.css';
 
-const Jam = ({ jamId, jamInfo, userId } ) => {
-  
-  const isAdmin = jamInfo.adminId && jamInfo.adminId === userId;
-
+const Jam = ({ jamId, jamInfo, userRole} ) => {
   return (
     <>
-      { isAdmin ?
+      { userRole === 'Admin' ?
         <LandlordJam jamId={jamId} jamInfo={jamInfo} />
         :
         <StudentJam jamId={jamId} />
@@ -23,7 +20,14 @@ const Jam = ({ jamId, jamInfo, userId } ) => {
   );
 };
 
-export default Jam;
+const mapStateToProps = state => {
+  const { userRole  } = state.userInfo;
+  return {
+      userRole
+  };
+};
+
+export default connect(mapStateToProps, null)(Jam);
 
 
 

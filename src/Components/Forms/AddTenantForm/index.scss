@@ -1,16 +1,16 @@
 @import '../../../variables.scss';
 
-.register-hook-form {
+.hook-form {
     max-width: 100%;
     margin: 0 auto;
-    .register-form-section{
+    .form-section{
         width: 100%;
         padding: 15px;
         display:flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        .register-form-section-title{
+        .form-section-title{
             width: 100%;
             display:flex;
             justify-content: flex-start;
@@ -20,17 +20,18 @@
                 font-size: 18px;
             }
         }
-        .register-form-line{
-          width: 100%;
-          display:flex;
-          justify-content: space-between;
-          align-items: center;
-          .custom-input-block, .custom-input-block-street{
+        .form-line{
+            width: 100%;
+            display:flex;
+            justify-content: flex-start;
+            align-items: center;
+            .custom-input-block, .custom-input-block-street{
                 display:flex;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: flex-start;
-                width: 45%;
+                margin: 0 10px;
+                width: 30%;
                 .block-label{
                     width: 100%;
                     display:flex;
@@ -69,58 +70,7 @@
                 ::placeholder{
                     color: $lightGray;
                 }
-          }
-        }
-        .form-column{
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-         .register-block-long{
-            width: 100%;
-            display:flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            .block-label{
-              width: 100%;
-              display:flex;
-              justify-content: flex-start;
-              align-items: center;
-              font-size: 14px;
-              font-weight: 200;
-              line-height: 2;
-              label {
-                text-align: left;
-                display: block;
-                color: black;
-                margin-bottom: 0;
-              }
-              .field-error{
-                display:flex;
-                justify-content: flex-start;
-                white-space: nowrap;
-                align-items: center;
-                overflow: show;
-                color: red;
-                margin-left: 10px;
-              }
             }
-            input {
-              display: block;
-              box-sizing: border-box;
-              width: 100%;
-              border-radius: 4px;
-              border: 1px solid $charts;
-              padding: 10px 15px;
-              margin-bottom: 10px;
-              font-size: 14px;
-              width: 100%;
-            }
-            ::placeholder{
-                color: $lightGray;
-            }
-          }
         }
     }
     .hook-form-buttonArea{
@@ -145,3 +95,14 @@
         }
     }
 }
+
+  
+  
+  
+  
+  
+  
+
+
+
+

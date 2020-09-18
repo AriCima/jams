@@ -1,88 +1,67 @@
-/* eslint-disable indent */
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useState, useEffect }from 'react';
 import { connect } from 'react-redux';
 
 // COMPONENTS
-import StudentNavBar from '../../../NavBars/StudentNavBar';
-import StudentBoard from '../../../JamSections/StudentBoard';
-import StudentJammers from '../../../JamSections/StudentJammers'
-import StudentMyJam from '../../../JamSections/StudentMyJam';
-import StudentSettings from '../../../JamSections/StudentSettings';
+// import TenantNavBar from '../../../NavBars/LandlordNavBar';
+// import TenantOverview from '../../../JamSections/TenantOverview';
+// import TenantBoard from '../../../JamSections/TenantBoard';
+// import TenantRooms from '../../../JamSections/TenantRooms';
+// import TenantTenants from '../../../JamSections/TenantTenants';
+// import TenantSettings from '../../../JamSections/TenantSettings';
 
+// import './index.scss';
 
-import './index.css';
+const TenantJam = ({ jamId, jamInfo, section }) => {
+    // const { jamName, jamDesc, jamType } = jamInfo;
 
-const StudentJam = ({ jamId, invId, jamInfo, jamActiveSection } ) => {
+    // const [currentSection, setCurrentSection] = useState('');
 
+    // useEffect(() => {
+    //     setCurrentSection(section)
+    // }, [section])
+
+    const renderSection = (section) => {
+        // switch (section) {
+        //     case 'Overview':
+        //         return <TenantOverview jamId={jamId} />;
+        //     case 'Board':
+        //         return <TenantBoard jamId={jamId} />;
+        //     case 'Rooms':
+        //         return <TenantRooms jamId={jamId} />;
+        //     case 'Tenants':
+        //         return <TenantTenants jamId={jamId} />;
+        //     case 'Settings':
+        //         return <TenantSettings jamId={jamId} />;
+        //     case 'rent':
+        //     default:
+        //         return ;
+        // }
+    };
 
     return (
-
-        <div className="student-jam-wrapper">
-            <div className="student-jam-header">
-                {jamInfo === [] ? <></> : (
-                    <StudentNavBar
-                        jamName={jamInfo.jamName}
-                        jamActiveSection={jamInfo.jamActiveSection}
-                        jamType={jamInfo.jamType}
-                    />
-                )}
+        <div className="landlord-jam-wrapper">
+            <div className="landlord-jam-header">
+                {/* <TenantNavBar
+                    jamName={jamName}
+                    jamDesc={jamDesc}
+                    jamSection={section}
+                    jamType={jamType}
+                /> */}
             </div>
 
-            <div className="student-jam-container">
-                { jamActiveSection === 'board' && (
-                    <StudentBoard
-                        jamId={jamId}
-                        jamInfo={jamInfo}
-                    />
-                )}
-
-          { (jamActiveSection === 'jammers' || jamActiveSection === 'flatmates') && 
-            <StudentJammers 
-              jamId={jamId}
-              jamInfo={jamInfo}
-            />
-          }
-
-          { jamActiveSection === 'myJam' && 
-            <StudentMyJam 
-              jamId={jamId}
-              jamInfo={jamInfo}
-            />
-          }
-
-          { jamActiveSection === 'settings' && 
-            <StudentSettings 
-              jamId={jamId}
-              jamInfo={jamInfo}
-            />
-          } 
+            <div className="landlord-jam-container">
+                {/* {renderSection(currentSection)} */}
+            </div>
         </div>
-        
-      </div>
-
     );
 };
 
 
 const mapStateToProps = state => {
-  return { 
-    jamInfo: state.jamInfo,
-    auth: state.firebase.auth,
-    jamActiveSection: state.jamSection
-  }
+    const { section } = state.nav;
+    return {
+        section
+    };
 };
 
-export default connect(mapStateToProps) (StudentJam);
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default connect(mapStateToProps)(TenantJam);

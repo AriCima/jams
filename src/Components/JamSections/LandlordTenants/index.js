@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-// import DataService from '../../services/DataService';
-// import Calculations from '../../services/Calculations';
-// import LandlordTenantsList from './LandlordTenantsList';
 import LandlordTenantInfo from './LandlordTenantInfo';
 import LandlordTenantsOverview from './LandlordTenantsOverview';
+import InviteTenantForm from '../../Forms/InviteTenantForm';
+// import AddTenantForm from '../../Forms/InviteTenantForm';
 
 import './index.scss';
 
@@ -16,8 +15,10 @@ const LandlordTenants = ({ jamId, docType, docId }) => {
         switch (docType) {
             case 'TENANT-FORM': // for existing tenants --> edit info
                 return <LandlordTenantInfo docId={docId} /> 
-            case 'ADD-TENANT':  // for new tenants --> set info
-                return <LandlordTenantInfo docId={docId} />
+            // case 'ADD-TENANT':  // to add a new tenant --> set info
+            //     return <AddTenantForm jamId={jamId} />
+            case 'INVITE-TENANT':  // to invite a new tenants --> set info
+                return <InviteTenantForm jamId={jamId} />
             default: 
                 return <LandlordTenantsOverview jamId={jamId}/>
         }

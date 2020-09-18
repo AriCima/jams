@@ -1,25 +1,26 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import DataService from '../../services/DataService';
 
 import './index.scss';
 
 
-const useInviteTenantForm = ({ jamId }) => {
+const useInviteTenantForm = ({jamId}) => {
 
     let history = useHistory();
     const { register, errors, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
         data.registeredUser = false;
-        const jId = jamId.jamId // CHAPUZA
-        DataService.newTenantInvitation(jId, data)
-        .then((data) => {
-            console.log('data =', data);
-            const invId = data.id;
-            history.push(`/register/${jId}/${invId}`);
+        const { firstName } = data
+        DataService.newTenantInvitation(jamId, data)
+        .then((res) => {
+            const invId = res.id;
+            // CHAPUZA AQUI HAY QUE AUTOMATIZAR FUNCION DE INVITACION
+            history.push(`/register/${jamId}/${firstName}/${invId}`);
         })
     };
 
@@ -283,4 +284,9 @@ const useInviteTenantForm = ({ jamId }) => {
     );
 };
 
-export default useInviteTenantForm;
+const mapStateToProps = (state) => {
+    const jamId = state.nav.jamId;
+    return { jamId }
+};
+
+export default connect(mapStateToProps, null)(useInviteTenantForm);

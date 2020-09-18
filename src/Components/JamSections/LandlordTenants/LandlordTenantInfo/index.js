@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import DataService from '../../../services/DataService';
-import NewTenantForm from '../../../Forms/NewTenantForm';
+import useInviteTenantForm from '../../../Forms/InviteTenantForm';
 import EditTenantForm from '../../../Forms/EditTenantForm';
 
 
@@ -31,7 +31,7 @@ const LandlordTenantInfo = ({jamId, docId }) => {
           jamId={jamId}
         />
       ):(
-        <NewTenantForm 
+        <useInviteTenantForm 
           jamId={jamId}/>
      )}
     </div>

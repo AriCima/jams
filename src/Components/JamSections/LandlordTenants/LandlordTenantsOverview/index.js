@@ -28,9 +28,9 @@ const LandlordTenantsOverview = ({ jamId }) => {
 
         <>
             <div className="landlord-tenants-buttonsArea">
-                <div className="landlord-tenants-button">
+                {/* <div className="landlord-tenants-button">
                     <AddTenantButton jamId={jamId}/>
-                </div>
+                </div> */}
                 <div className="landlord-tenants-button">
                     <InviteTenantButton jamId={jamId} />                
                 </div>

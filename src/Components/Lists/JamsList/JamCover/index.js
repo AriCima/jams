@@ -43,10 +43,5 @@ import "./index.scss";
   
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     setJam: (jamId) => dispatch(setJam(jamId)),
-//   }
-// }
 
 export default connect(null, { setJamId, setSection, setSubSection })(JamCover)

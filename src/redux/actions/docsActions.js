@@ -9,7 +9,7 @@ export const setDocType = (docType = 'none') => ({
   }
 });
 
-
+// docId = referencia del documento que se está abriendo, por lo gral === userId
 export const setDocId = (docId = '') => ({
   type: DOC_ID,
   payload: {
