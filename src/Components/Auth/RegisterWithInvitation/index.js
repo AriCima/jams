@@ -11,7 +11,8 @@ import DataService from '../../services/DataService';
 import './index.scss';
 import { setUserId, setUserRole } from '../../../redux/actions/userActions.js';
 
-const RegisterWithInvitation = ({jamId, userId, invId, firstName, setJamId, setSection, setSubSection, setUserId, setUserRole }) => {
+const RegisterWithInvitation = ({jamId, userId, invId, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserRole }) => {
+  console.log('admintName: ', adminName);
   console.log('firstName: ', firstName);
   const [passwordError, setPasswordError] = useState(false);
   const [jamInfo, setJamInfo] = useState({});
@@ -56,7 +57,6 @@ const RegisterWithInvitation = ({jamId, userId, invId, firstName, setJamId, setS
     history.push(`/`);
   };
 
-  console.log('jamInfo: ', jamInfo);
   const {jamName, admin } = jamInfo;
 
   return (

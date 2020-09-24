@@ -1,39 +1,25 @@
 import { firestoreReducer } from 'redux-firestore';
 import { firebaseReducer } from 'react-redux-firebase';
 import { combineReducers } from 'redux';
-import alertsReducer from './alertsReducer';
-import authReducer from './authReducer';
 import userJamsReducer from './userJamsReducer';
-// import jamSectionReducer from './jamSectionReducer';
-// import jamIdReducer from './jamIdReducer';
-import jamInfoReducer from './jamInfoReducer';
-import jammerIdReducer from './jammerIdReducer';
-import roomIdReducer from './roomIdReducer';
-// import roomScreenReducer from './roomScreenReducer';
 import roomBookingsReducer from './roomBookingsReducer';
 import navReducers from './navigateReducer';
 import docReducers from './docReducer';
 import userReducers from './userReducer';
+import jamReducers from './jamReducer';
 
 
 // sincronizador del firestore data y nuestro state
 // en el background
 
-// las keys del rootReducer serán las kayes del state
+// las keys del rootReducer serán las keys del state
 const rootReducer = combineReducers({
-    alert: alertsReducer,
-    auth: authReducer,
     nav: navReducers,
     doc: docReducers,
     userJams: userJamsReducer,
-    // jamId: jamIdReducer,
-    jamInfo: jamInfoReducer,
-    // jamSection: jamSectionReducer,
-    jammerId: jammerIdReducer,
-    roomId: roomIdReducer,
     userInfo: userReducers,
-    // activeScreen: roomScreenReducer,
     roomBookings: roomBookingsReducer,
+    jamInfo: jamReducers,
     // el firestoreReducer automáticamente sincronizará la propiedad "firestore"
     // del Obj "state" con nuestra data en la base de datos
     // tomará esa data y ésta data dependerá de qué componente

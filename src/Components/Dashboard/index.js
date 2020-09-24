@@ -8,8 +8,10 @@ import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
 
 import './index.scss'; 
+import { setJamId } from "../../redux/actions/navigateActions.js";
+import { setJamName, setJamAdminId, setJamAdminName } from "../../redux/actions/jamActions.js";
 
-const Dashboard = ({ auth, jamId, setUserRole, setUserId  }) => {
+const Dashboard = ({ auth, jamId, setUserRole, setUserId, setJamName, setJamAdminId, setJamAdminName  }) => {
 
     const userId = auth.uid;
 
@@ -33,10 +35,14 @@ const Dashboard = ({ auth, jamId, setUserRole, setUserId  }) => {
 
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
+        const {jamName, adminId, adminName } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
         setUserRole(userRole)
         setUserId(userId)
         setJamInfo(res);
+        setJamName(jamName)
+        setJamAdminId(adminId);
+        setJamAdminName(adminName);
     }
 
     useEffect((jamInfo) => {
@@ -77,5 +83,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {setUserRole, setUserId}) (Dashboard);
+export default connect(mapStateToProps, {setUserRole, setUserId, setJamName, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
 

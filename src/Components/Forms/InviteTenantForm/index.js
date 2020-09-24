@@ -8,7 +8,8 @@ import DataService from '../../services/DataService';
 import './index.scss';
 
 
-const useInviteTenantForm = ({jamId}) => {
+const useInviteTenantForm = ({jamId, adminName}) => {
+    console.log('adminName: ', adminName);
 
     let history = useHistory();
     const { register, errors, handleSubmit } = useForm();
@@ -20,7 +21,7 @@ const useInviteTenantForm = ({jamId}) => {
         .then((res) => {
             const invId = res.id;
             // CHAPUZA AQUI HAY QUE AUTOMATIZAR FUNCION DE INVITACION
-            history.push(`/register/${jamId}/${firstName}/${invId}`);
+            history.push(`/register/${jamId}/${adminName}/${firstName}/${invId}`);
         })
     };
 
@@ -73,136 +74,6 @@ const useInviteTenantForm = ({jamId}) => {
                         />
                     </div>
                 </div>
-
-                <div className="form-line">
-                    {/* <div className="custom-input-block">
-                        <div className="block-label">
-                            <label>Passport Nr</label>
-                            {errors.passport && <div className="field-error">Required</div>}
-                        </div>
-                        <input
-                        name="passport"
-                        ref={register({
-                            required: true,
-                        })} />
-                    </div> */}
-                    {/* <div className="custom-input-block">
-                        <div className="block-label">
-                            <label>Home Tel</label>
-                            {errors.homeTel && <div className="field-error">Required</div>}
-                        </div>
-                        <input
-                            name="homeTel"
-                            ref={register({ 
-                                required: true,
-                            })}
-                        />
-                    </div> */}
-                    {/* <div className="custom-input-block">
-                        <div className="block-label">
-                            <label>Mobile</label>
-                            {errors.mobile && <div className="field-error">Required</div>}
-                        </div>
-                        <input
-                            name="mobile"
-                            ref={register({ 
-                                required: true,
-                            })}
-                        />
-                    </div> */}
-                </div>
-                {/* <div className="form-section">
-                    <div className="form-section-title">
-                        <p>Home Address</p>
-                    </div>
-                    <div className="form-line">
-                        <div className="custom-input-block-street">
-                            <div className="block-label">
-                                <label>Street</label>
-                                {errors.street && <div className="field-error">Non valid address</div>}
-                            </div>
-                            <input
-                                name="street"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>House Nr</label>
-                                {errors.houseNr && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                                name="houseNr"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                    </div>
-                    <div className="form-line">
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Floor</label>
-                            </div>
-                            <input
-                                name="floor"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Door</label>
-                            </div>
-                            <input
-                                name="door"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>ZipCode</label>
-                                {errors.zipCode && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                                name="zipCode"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>City</label>
-                                {errors.city && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                                name="city"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                        <div className="custom-input-block">
-                            <div className="block-label">
-                                <label>Country</label>
-                                {errors.country && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                                name="country"
-                                ref={register({ 
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                    </div>
-
-                </div> */}
 
                 <div className="form-section">
                     <div className="form-section-title">
@@ -285,8 +156,10 @@ const useInviteTenantForm = ({jamId}) => {
 };
 
 const mapStateToProps = (state) => {
+    console.log('state-jamInfo: ', state);
     const jamId = state.nav.jamId;
-    return { jamId }
+    const adminName = state.jamInfo.firstName
+    return { jamId, adminName }
 };
 
 export default connect(mapStateToProps, null)(useInviteTenantForm);
