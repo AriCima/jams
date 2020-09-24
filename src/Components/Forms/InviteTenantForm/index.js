@@ -8,8 +8,7 @@ import DataService from '../../services/DataService';
 import './index.scss';
 
 
-const useInviteTenantForm = ({jamId, adminName}) => {
-    console.log('adminName: ', adminName);
+const useInviteTenantForm = ({jamId, jamName, adminName}) => {
 
     let history = useHistory();
     const { register, errors, handleSubmit } = useForm();
@@ -21,7 +20,7 @@ const useInviteTenantForm = ({jamId, adminName}) => {
         .then((res) => {
             const invId = res.id;
             // CHAPUZA AQUI HAY QUE AUTOMATIZAR FUNCION DE INVITACION
-            history.push(`/register/${jamId}/${adminName}/${firstName}/${invId}`);
+            history.push(`/register/${jamId}/${jamName}/${adminName}/${firstName}/${invId}`);
         })
     };
 
@@ -156,10 +155,9 @@ const useInviteTenantForm = ({jamId, adminName}) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log('state-jamInfo: ', state);
     const jamId = state.nav.jamId;
-    const adminName = state.jamInfo.firstName
-    return { jamId, adminName }
+    const {jamName, adminName} = state.jamInfo
+    return { jamId, jamName, adminName }
 };
 
 export default connect(mapStateToProps, null)(useInviteTenantForm);

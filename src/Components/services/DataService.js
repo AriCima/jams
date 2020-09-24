@@ -3,8 +3,6 @@ import firebase from 'firebase';
 export default class DataService {
     // USERS
     static saveUserInfoInFirestore(userId, userInfo) {
-        console.log('userInfo: ', userInfo);
-        console.log('userId: ', userId);
         // registro en Firebase
         // //console.log("el user recibido en el registro firestore es:", userId)
         // //console.log("el userToSave recibido en firestore es: ", userToSave)
@@ -515,7 +513,6 @@ export default class DataService {
                 .collection('invitations')
                 .add(data)
                 .then((docRef) => {
-                    console.log('Document written with ID: ', docRef.id);
                     resolve(docRef);
                 })
                 .catch((error) => {

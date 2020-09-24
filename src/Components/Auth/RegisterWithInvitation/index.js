@@ -9,55 +9,37 @@ import AuthService from '../../services/AuthService'
 import DataService from '../../services/DataService';
 
 import './index.scss';
-import { setUserId, setUserRole } from '../../../redux/actions/userActions.js';
+import { setUserId } from '../../../redux/actions/userActions.js';
 
-const RegisterWithInvitation = ({jamId, userId, invId, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserRole }) => {
-  console.log('admintName: ', adminName);
-  console.log('firstName: ', firstName);
-  const [passwordError, setPasswordError] = useState(false);
-  const [jamInfo, setJamInfo] = useState({});
-
-
-  useEffect(() => {
-    jamId && DataService.getJamInfoById(jamId)
-    .then(res => {
-      setJamInfo(res);
-    })
-  }, [jamId]);
-
+const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId }) => {
   
   let history = useHistory();
-  const { register, errors, handleSubmit } = useForm();
+
+  const { register, errors, getValues, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    data.registeredUser = true;
-    if(data.password !== data.confirmPassword){
-      setPasswordError(true);
-      return;
-    }
-    const email = data.email;
-    const password = data.password;
 
-    AuthService.register(email, password)
-    .then(res => {
-      const userId = res.id;
-      DataService.getJamInfoById(jamId)
-      .then(res => {
-        const jamInfo = res
-        DataService.addJamToUser(userId, jamInfo);
-      })
-    });
-
-    const userRole = jamInfo.adminId === userId ? 'Admin' : 'Guest';
+    const {firstName, lastName, email, password } = data;
     
-    setJamId(jamId);
-    setUserRole(userRole);
-    setSection('overview');
-    setSubSection('');
-    history.push(`/`);
-  };
+    DataService.checkIfEmialExists(email)
+    .then(exists => {
+      if (exists === true) {
+        alert('el email ya existe')
+        return;
+      } else {
 
-  const {jamName, admin } = jamInfo;
+        AuthService.register(firstName, lastName, email, password)
+        .then(res => {
+          const userId = res;
+          setJamId(jamId);
+          setUserId(userId);
+          setSection('overview');
+          setSubSection('');
+          history.push(`/`);
+        });
+      }
+    })
+  };
 
   return (
     <form
@@ -67,10 +49,35 @@ const RegisterWithInvitation = ({jamId, userId, invId, adminName, firstName, set
       <div className="register-form-section">
           <div className="register-form-section-title">
             <p>Hello {firstName} !<p>
-            <p>{admin} has invite you to join to {jamName}</p>
+            <p>{adminName} has invite you to join to {jamName}</p>
             </p>Please register to Jammint and we'll take you there</p>
           </div>
-
+          <div className="register-form-line">
+              <div className="custom-input-block">
+                  <div className="block-label">
+                      <label>First name</label>
+                      {errors.firstName && <div className="field-error">Required</div>}
+                  </div>
+                  <input
+                      name="firstName"
+                      ref={register({
+                          required: true,
+                      })}
+                  />
+              </div>
+              <div className="custom-input-block">
+                  <div className="block-label">
+                      <label>Last name</label>
+                      {errors.lastName && <div className="field-error">Required</div>}
+                  </div>
+                  <input
+                      name="lastName"
+                      ref={register({ 
+                          required: true,
+                      })}
+                  />
+              </div>
+          </div>
           <div className="form-line">
               <div className="custom-input-block">
                   <div className="block-label">
@@ -87,25 +94,38 @@ const RegisterWithInvitation = ({jamId, userId, invId, adminName, firstName, set
               </div>
           </div>
 
-          <div className="form-line">
-              <div className="custom-input-block">
+          <div className="register-block-long">
                   <div className="block-label">
                       <label>Password</label>
-                      {passwordError && <div className="field-error">Non valid password</div>}
+                      {errors.password && <div className="field-error">Non valid password</div>}
                   </div>
-                  <input name="password" />
+                  <input
+                    name="password" 
+                    ref={register({ 
+                      required: true,
+                      pattern: '',
+                    })}
+                  />
               </div>
+              <div className="register-block-long">
+                <div className="block-label">
+                    <label>Confirm Password</label>
+                    {errors.confirmPassword && <div className="field-error">{errors.confirmPassword.message}</div>}
+                </div>
+                <input
+                  name="confirmPassword" 
+                  ref={register({ 
+                    required: true,
+                    pattern: '',
+                    validate: {
+                      matchesPreviousPassword: value => {
+                        const { password } = getValues();
+                        return password === value || "Passwords should match!";
+                      }
+                    }
+                  })}
+                />
             </div>
-
-            <div className="form-line">
-              <div className="custom-input-block">
-                  <div className="block-label">
-                      <label>Confirm Password</label>
-                      {passwordError && <div className="field-error">Non valid password</div>}
-                  </div>
-                  <input name="confirmPassword"/>
-              </div>
-          </div> 
       </div>
       <div className="hook-form-buttonArea">
           <input type="submit" />
@@ -115,4 +135,4 @@ const RegisterWithInvitation = ({jamId, userId, invId, adminName, firstName, set
 };
 
 
-export default connect (null, {setJamId, setSection, setSubSection, setUserId, setUserRole})(RegisterWithInvitation);
+export default connect (null, {setUserId, setJamId, setSection, setSubSection })(RegisterWithInvitation);

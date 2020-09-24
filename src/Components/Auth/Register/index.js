@@ -19,14 +19,12 @@ const useRegisterForm = ({jamId}) => {
     const {firstName, lastName, email, password }= data;  
     DataService.checkIfEmialExists(email)
     .then(exists => {
-      console.log('exists: ', exists);
       if (exists === true) {
         alert('el email ya existe')
         return;
       } else {
         AuthService.register(firstName, lastName, email, password)
         .then(res => {
-          console.log(res);
           history.push('/')
         })
       }

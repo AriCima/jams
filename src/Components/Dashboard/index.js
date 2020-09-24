@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from 'react-redux';
-import { setUserRole, setUserId } from '../../redux/actions/userActions.js'
+import { setUserRole } from '../../redux/actions/userActions.js'
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import JamsList from '../Lists/JamsList';
@@ -11,9 +11,8 @@ import './index.scss';
 import { setJamId } from "../../redux/actions/navigateActions.js";
 import { setJamName, setJamAdminId, setJamAdminName } from "../../redux/actions/jamActions.js";
 
-const Dashboard = ({ auth, jamId, setUserRole, setUserId, setJamName, setJamAdminId, setJamAdminName  }) => {
-
-    const userId = auth.uid;
+const Dashboard = ({ userId, jamId, setUserRole, setJamName, setJamAdminId, setJamAdminName  }) => {
+    console.log('Dash userId: ', userId);
 
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({})
@@ -30,24 +29,27 @@ const Dashboard = ({ auth, jamId, setUserRole, setUserId, setJamName, setJamAdmi
 
 
     useEffect(() => {
-        jamId && getJamInfo(jamId);
+        jamId && getJamInfo(jamId, userId);
     }, [jamId]);
 
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
         const {jamName, adminId, adminName } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
-        setUserRole(userRole)
-        setUserId(userId)
+        // Info en el state
         setJamInfo(res);
+
+        // Info en Redux
+        setUserRole(userRole)
         setJamName(jamName)
         setJamAdminId(adminId);
         setJamAdminName(adminName);
     }
 
-    useEffect((jamInfo) => {
-       jamInfo && setJamInfo(jamInfo)
-    }, [jamInfo])
+    // useEffect((jamInfo) => {
+
+    //    jamInfo && setJamInfo(jamInfo)
+    // }, [jamInfo])
 
     const renderJam = jamId && jamInfo;
 
@@ -76,12 +78,10 @@ const Dashboard = ({ auth, jamId, setUserRole, setUserId, setJamName, setJamAdmi
 
 const mapStateToProps = state => {
     const jamId = state.nav.jamId;
-    return {
-        jamId,
-        auth: state.firebase.auth,
-        userJams: state.userJams,
-    };
+    const { userId, userRole } = state.userInfo;
+
+    return { jamId, userId, userRole, userJams: state.userJams };
 };
 
-export default connect(mapStateToProps, {setUserRole, setUserId, setJamName, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
+export default connect(mapStateToProps, {setUserRole, setJamName, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
 

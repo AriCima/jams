@@ -28,22 +28,21 @@ export default class AuthService {
     };
 
     static register(firstName, lastName, email, password){
-
         return new Promise((resolve, reject) => {
 
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((result) => {
-                console.log("REGISTER OK userId", result.user.uid);
+                // console.log("REGISTER OK userId", result.user.uid);
                 const userId = result.user.uid;
                 const userInfo = {
                     firstName: firstName,
                     lastName: lastName,
                     email: email
-                }
+                };
                 DataService.saveUserInfoInFirestore(userId, userInfo)
                 .then(res => {
-                    console.log('user in Firestore OK: ', result)
-                    resolve(res);  
+                    // console.log('user in Firestore OK: ', result)
+                    resolve(userId);  
                 })
                 console.log('RegisterResult OK: ', result)
             })
@@ -55,4 +54,34 @@ export default class AuthService {
             })
         });
     };
+
+    static registerWithInvitation(firstName, lastName, email, password, jamId, jamInfo){
+        return new Promise((resolve, reject) => {
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((result) => {
+                const userId = result.user.uid;
+                const userInfo = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email
+                };
+                DataService.saveUserInfoInFirestore(userId, userInfo)
+                .then(res => {
+                    // console.log('user in Firestore OK: ', result)
+                    resolve(res);
+                })
+                DataService.addJamToUser(userId, jamInfo);
+                console.log('RegisterResult OK: ', result)
+                resolve(result)
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                console.log('AUTH SERVICE::::errorCode: ', errorCode);
+                var errorMessage = error.message;
+                reject(errorMessage)
+            })
+        });
+    };
 };
+
