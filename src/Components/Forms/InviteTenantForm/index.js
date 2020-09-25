@@ -73,7 +73,7 @@ const useInviteTenantForm = ({jamId, jamName, adminName}) => {
                         />
                     </div>
                 </div>
-
+{/* 
                 <div className="form-section">
                     <div className="form-section-title">
                         <p>Contract Info</p>
@@ -144,7 +144,7 @@ const useInviteTenantForm = ({jamId, jamName, adminName}) => {
 
                     </div>
                 </div>
-                
+                 */}
                 
             </div>
             <div className="hook-form-buttonArea">

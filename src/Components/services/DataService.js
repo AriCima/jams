@@ -3,23 +3,21 @@ import firebase from 'firebase';
 export default class DataService {
     // USERS
     static saveUserInfoInFirestore(userId, userInfo) {
-        // registro en Firebase
-        // //console.log("el user recibido en el registro firestore es:", userId)
-        // //console.log("el userToSave recibido en firestore es: ", userToSave)
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users').doc(userId).set({ 
-                firstName: userInfo.firstName,
-                lastName: userInfo.lastName,
-                email: userInfo.email
-            })
-                .then((result) => {
-                    // console.log("User information succesfully saved !")
-                    resolve(result);
+            firebase.firestore()
+                .collection('users')
+                .doc(userId)
+                .set({ 
+                    firstName: userInfo.firstName,
+                    lastName: userInfo.lastName,
+                    email: userInfo.email
                 })
-
+                .then(
+                    console.log("User information succesfully saved !")
+                )
                 .catch((error) => {
                     const errorCode = error.code;
-                    // console.log('User NOT added: ', errorCode);
+                    console.log('User NOT added: ', errorCode);
                 });
         });
     }
@@ -29,7 +27,6 @@ export default class DataService {
             firebase.firestore().collection('users').where('email', '==', email)
                 .get()
                 .then((res) => {
-                    console.log('empty: ', res.empty);
                     const docExists = !res.empty;
                     resolve(docExists)
                 })
@@ -92,13 +89,15 @@ export default class DataService {
     // Create
     static createJam(jamInfo, userId, email) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams').add(jamInfo)
+            firebase.firestore()
+                .collection('jams')
+                .add(jamInfo)
                 .then((doc) => {
                     console.log('doc del create: ', doc);
                     const jamId = doc.id;
                     const userInfo = { userId, email };
                     jamInfo.jamId = jamId;
-                    this.addJamToUser(userId, jamInfo);
+                    this.updateUserJams(userId, jamId);
                     this.updateJammersInJam(jamId, userInfo);
                     resolve({ id: doc.id });
                 })
@@ -191,7 +190,8 @@ export default class DataService {
 
     static getJamInfoById(jamId) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams').doc(jamId)
+            firebase.firestore().collection('jams')
+                .doc(jamId)
                 .get()
                 .then((result) => {
                     resolve(result.data());
@@ -248,16 +248,13 @@ export default class DataService {
         });
     }
 
-    static addJamToUser(userId, jamToJoin) {
+    static updateUserJams(userId, jamId, jamInfo) {
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('users')
                 .doc(userId)
                 .collection('userJams')
-                .add(jamToJoin)
-                // .onSnapshot(function(doc) {
-                //     console.log("Jam succesfully added to user: ", doc.data());
-                //     resolve(doc);
-                // })
+                .doc(jamId)
+                .set(jamInfo)
                 .then((result) => {
                     console.log('Jam succesfully added to user');
                 })
@@ -268,10 +265,14 @@ export default class DataService {
         });
     }
 
-    static updateJammersInJam(jamId, newJammer) {
+    static updateJammersInJam(jamId, jammerId, newJammer) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams').doc(jamId).collection('jammers')
-                .add(newJammer)
+            firebase.firestore()
+                .collection('jams')
+                .doc(jamId)
+                .collection('jammers')
+                .doc(jammerId)
+                .set(newJammer)
                 .then((result) => {
                     console.log('Jammers succesfully UPDATED');
                     resolve(result);
@@ -424,6 +425,8 @@ export default class DataService {
     }
 
     static getJammerInfo(jamId, jammerId) {
+        console.log('jammerId: ', jammerId);
+        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
@@ -469,13 +472,21 @@ export default class DataService {
                 });
         });
     }
-    static saveJammerInfo(jamId, userId, jammerInfo) {
+
+    // guarda en jammers(jammerId) la info básica del register
+    static saveUserInfoInJam(jamId, userId, jammerInfo) {
+        const {firstName, lastName, email, registeredUser } = jammerInfo;
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
                 .doc(jamId)
                 .collection('jammers')
                 .doc(userId)
-                .add(jammerInfo)
+                .set({
+                    firstName, 
+                    lastName,
+                    email,
+                    registeredUser
+                })
                 .then((res) => {
                     console.log("Document written with ID: ", res);
                     resolve(res);
@@ -483,6 +494,27 @@ export default class DataService {
                 .catch((error) => {
                     const errorCode = error.code;
                     console.log('Tenant info could not be saved: ', errorCode);
+                });
+        });
+    }
+
+    // guarda en jammers(jammerId) la info del JamRegistrationForm
+    static saveJammerInfoInJam(jamId, userId, jammerInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('jams')
+                .doc(jamId)
+                .collection('jammers')
+                .doc(userId)
+                .set({
+                    jammerInfo: jammerInfo
+                })
+                .then((res) => {
+                    console.log("Document written with ID: ", res);
+                    resolve(res);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    console.log('Jammer info could not be saved: ', errorCode);
                 });
         });
     }

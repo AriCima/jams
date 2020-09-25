@@ -7,13 +7,14 @@ import DataService from '../../services/DataService';
 
 import './index.scss';
 
-const JamRegistrationForm = ({ jamId, jamName, jammerId, invId, showForm, setRegisteredUser }) => {
+const JamRegistrationForm = ({ jamId, jamName, userId, invId, showForm, setRegisteredUser }) => {
 
     const [jammerInfo, setJammerInfo] = useState({});    
 
     useEffect(() => {
-        invId && DataService.getJammerInfo(jamId, jammerId)
+        userId && DataService.getJammerInfo(jamId, userId)
         .then(data => {
+            console.log('data: form ', data);
             setJammerInfo(data);
         })
     }, []);
@@ -28,7 +29,7 @@ const JamRegistrationForm = ({ jamId, jamName, jammerId, invId, showForm, setReg
 
     const onSubmit = (data) => {
         data.registeredUser = true;
-        DataService.saveJammerInfo(jamId, jammerId, data)
+        DataService.saveJammerInfoInJam(jamId, userId, data)
         .then(() => {
             setRegisteredUser(true);
             showForm(false);
@@ -230,4 +231,15 @@ const JamRegistrationForm = ({ jamId, jamName, jammerId, invId, showForm, setReg
     );
 };
 
-export default connect(null, { setRegisteredUser })(JamRegistrationForm);
+const mapStateToProps = state => {
+
+    const { section } = state.nav;
+    const {jamName, jamDesc, jamType } = state.jamInfo;
+    const { jamId } = state.nav;
+    const {userId, userName } = state.userInfo;
+
+    return { jamId, userId, section, userName, jamName, jamDesc, jamType };
+};
+
+
+export default connect(mapStateToProps, { setRegisteredUser })(JamRegistrationForm);

@@ -13,6 +13,16 @@ import { setUserId, setUserName } from '../../../redux/actions/userActions.js';
 
 const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserName }) => {
   
+  const [jamInfo, setJamInfo] = useState({});
+
+  useEffect(() => {
+    jamId && DataService.getJamInfoById(jamId)
+    .then((data) => {
+      console.log('data = ', data);
+      setJamInfo(data);
+    });
+  }, [jamId])
+
   let history = useHistory();
 
   const { register, errors, getValues, handleSubmit } = useForm();
@@ -28,11 +38,9 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
         return;
       } else {
 
-        AuthService.register(firstName, lastName, email, password)
+        AuthService.registerWithInvitation(firstName, lastName, email, password, jamId, jamInfo)
         .then(res => {
-          const userId = res;
-          const jammerInfo = {firstName, lastName, registeredUser: false};
-          DataService.saveJammerInfo(jamId, userId, jammerInfo);
+          const userId = res.user.uid;
           setJamId(jamId);
           setUserId(userId);
           setUserName(firstName);

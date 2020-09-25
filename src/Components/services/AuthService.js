@@ -37,7 +37,8 @@ export default class AuthService {
                 const userInfo = {
                     firstName: firstName,
                     lastName: lastName,
-                    email: email
+                    email: email,
+                    userJams: []
                 };
                 DataService.saveUserInfoInFirestore(userId, userInfo)
                 .then(res => {
@@ -64,20 +65,19 @@ export default class AuthService {
                 const userInfo = {
                     firstName: firstName,
                     lastName: lastName,
-                    email: email
+                    email: email,
+                    userJams: [jamId]
                 };
-                DataService.saveUserInfoInFirestore(userId, userInfo)
-                .then(res => {
-                    // console.log('user in Firestore OK: ', result)
-                    resolve(res);
-                })
-                DataService.addJamToUser(userId, jamInfo);
-                console.log('RegisterResult OK: ', result)
+                console.log('userInfo: ', userInfo);
+                DataService.saveUserInfoInFirestore(userId, userInfo);
+                DataService.updateJammersInJam(jamId, userId, userInfo);
+                DataService.updateUserJams(userId, jamId, jamInfo);
+                console.log('RegisterResult OK: ', result);
                 resolve(result)
             })
             .catch((error) => {
                 var errorCode = error.code;
-                console.log('AUTH SERVICE::::errorCode: ', errorCode);
+                console.log('AUTH SERVICE::::errorCode: ', error);
                 var errorMessage = error.message;
                 reject(errorMessage)
             })

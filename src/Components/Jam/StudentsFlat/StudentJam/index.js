@@ -22,7 +22,9 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     
     useEffect(() => {
-        DataService.getJammerInfo(jamId, userId)
+        console.log('jamId: ', jamId);
+        console.log('userId: ', userId);
+        jamId && DataService.getJammerInfo(jamId, userId)
         .then(res => {
             const alreadyRegistered = res.registeredUser;
             setRegisteredUser(alreadyRegistered);
@@ -60,6 +62,7 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
                 <div className="jamRegistration-Form-wrapper">
                     <JamRegistrationForm
                         showForm={showForm}
+                        userId={userId}
                     />
                 </div>
             )}
@@ -87,9 +90,10 @@ const mapStateToProps = state => {
 
     const { section } = state.nav;
     const {jamName, jamDesc, jamType } = state.jamInfo;
-    const {userId, userName }= state.userInfo;
+    const { jamId } = state.nav;
+    const {userId, userName } = state.userInfo;
 
-    return { section, userId, userName, jamName, jamDesc, jamType };
+    return { jamId, section, userId, userName, jamName, jamDesc, jamType };
 };
 
 export default connect(mapStateToProps, { setRegisteredUser })(TenantJam);
