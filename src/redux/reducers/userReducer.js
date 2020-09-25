@@ -1,6 +1,7 @@
 import {
     USER_ID,
     USER_NAME,
+    USER_LASTNAME,
     USER_ROLE,
     REGISTERED_USER,
     USER_JAMS
@@ -27,6 +28,7 @@ function createReducer(initialState, handlers) {
 const navReducers = createReducer(defaultState, {
 [USER_ID]: updateVal,
 [USER_NAME]: updateVal,
+[USER_LASTNAME]: updateVal,
 [USER_ROLE]: updateVal,
 [REGISTERED_USER]: updateVal,
 [USER_JAMS]: updateVal

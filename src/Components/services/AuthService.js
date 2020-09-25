@@ -68,7 +68,6 @@ export default class AuthService {
                     email: email,
                     userJams: [jamId]
                 };
-                console.log('userInfo: ', userInfo);
                 DataService.saveUserInfoInFirestore(userId, userInfo);
                 DataService.updateJammersInJam(jamId, userId, userInfo);
                 DataService.updateUserJams(userId, jamId, jamInfo);
@@ -76,7 +75,6 @@ export default class AuthService {
                 resolve(result)
             })
             .catch((error) => {
-                var errorCode = error.code;
                 console.log('AUTH SERVICE::::errorCode: ', error);
                 var errorMessage = error.message;
                 reject(errorMessage)

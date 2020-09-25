@@ -1,0 +1,59 @@
+
+.jamAdminNavBar-left{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .jamAdminNavBar-jamName{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        p{
+            margin: 0;
+            font-size: 18px;
+            color: rgb(61,158,247)
+        }
+        
+    }
+}
+.jamAdminNavBar-right{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .jamAdminNavBar-item{
+        height: 100%;
+        margin: 0 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        p{ 
+            margin: 0;
+        }
+        .navBar-icon-style{
+            color: rgb(79, 86,109);
+            padding: 0;
+            margin: 0 20px;
+            font-size: 30px;
+            transition: 0.066s;
+            .navBar-icon-style:hover{
+                color: rgb(61,158,247);
+            }
+            
+            .jamAdminNavBar-item:hover{
+                color: rgb(61,158,247);
+            }
+        }
+    }
+}
+.jamAdminNavBar-chat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+

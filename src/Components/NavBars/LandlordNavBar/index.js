@@ -6,9 +6,8 @@ import { faComments} from '@fortawesome/free-solid-svg-icons'
 
 import Calculations from '../../services/Calculations';
 import { setSection, setSubSection } from     "../../../redux/actions/navigateActions";
-
-import './index.scss';
 import { setDocType, setDocId, setEditable } from '../../../redux/actions/docsActions';
+import './index.scss';
 
 const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEditable, jamName, jamType}) => {
 
@@ -23,7 +22,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
     };
 
     useEffect(() => {
-        const sections = Calculations.getJamSections(jamType);
+        const sections = Calculations.getJamAdminSections(jamType);
         setJamSections(sections);
     }, [jamType, setJamSections]);
 

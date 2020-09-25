@@ -255,9 +255,7 @@ export default class DataService {
                 .collection('userJams')
                 .doc(jamId)
                 .set(jamInfo)
-                .then((result) => {
-                    console.log('Jam succesfully added to user');
-                })
+ 
                 .catch((error) => {
                     const errorCode = error.code;
                     console.log('ERROR Jam NOT added to user: ', errorCode);
@@ -425,8 +423,6 @@ export default class DataService {
     }
 
     static getJammerInfo(jamId, jammerId) {
-        console.log('jammerId: ', jammerId);
-        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
@@ -552,6 +548,24 @@ export default class DataService {
                     const errorCode = error.code;
                     console.log('Message could not be sent: ', errorCode);
                 });
+        });
+    }
+
+    static getInvitationInfo(jamId, invId) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('jams')
+            .doc(jamId)
+            .collection('invitations')
+            .doc(invId)
+            .get()
+            .then(result => {
+                const invInfo = result.data();
+                resolve(invInfo);
+            })
+
+            .catch((error) => {
+                // console.log('error: ', error);
+            });
         });
     }
 

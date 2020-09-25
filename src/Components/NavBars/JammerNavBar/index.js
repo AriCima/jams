@@ -2,17 +2,15 @@
 
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-
-import Calculations from '../../services/Calculations';
-import { setJamSection } from '../../../redux/actions/jamSection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments } from '@fortawesome/free-solid-svg-icons'
+import Calculations from '../../services/Calculations';
+import { setSection, setSubSection } from     "../../../redux/actions/navigateActions";
+import { setDocType, setDocId, setEditable } from '../../../redux/actions/docsActions';
+import './index.scss';
 
 
-// CSS
-import './index.css';
-
-const JamNavBar = ({ setJamSection, jamName, jamType}) => {
+const JammerNavBar = ({ setJamSection, jamName, jamType}) => {
     
     const [jamSections, setJamSections] = useState([])
    
@@ -21,24 +19,25 @@ const JamNavBar = ({ setJamSection, jamName, jamType}) => {
     };
 
     useEffect(() => {
-        const sections = Calculations.getJamSections(jamType)
+        const sections = Calculations.getJamJammerSections(jamType)
         setJamSections(sections)
     }, [jamType, setJamSections])
 
-    const renderLandlordNavBar = () => {
+
+    const renderJammerNavBar = () => {
         return jamSections.map((section, id) => {
             
             const fontIcon = Calculations.getHeaderIcon(section);
 
             return jamType === 'chat' ? 
             
-            <div className="jamAdminNavBar-item" key={id} onClick={() => onsetJamSection(`${section}`)}>
+            <div className="jamJammerNavBar-item" key={id} onClick={() => onsetJamSection(`${section}`)}>
                     <FontAwesomeIcon className="navBar-icon-style" icon={faComments} />
             </div>
             
             : 
 
-            <div className="jamAdminNavBar-item" key={id} onClick={() => onsetJamSection(`${section}`)}>
+            <div className="jamJammerNavBar-item" key={id} onClick={() => onsetJamSection(`${section}`)}>
                 {fontIcon}
             </div>
             
@@ -46,24 +45,24 @@ const JamNavBar = ({ setJamSection, jamName, jamType}) => {
     };
 
     return ( 
-        <div className="jam-student-NavBar">
+        <div className="jamJammer-NavBar">
             {jamSections === undefined ? <p>NO JAM SELECTED</p> : 
                 <Fragment>
                 {jamType !== 'chat' ? 
                     (
                         <Fragment>
-                            <div className="jam-student-NavBar-left">
-                                <div className="jam-student-NavBar-jamName">
+                            <div className="jamJammerNavBar-left">
+                                <div className="jamJammerNavBar-jamName">
                                     <p>No ADMIN {jamName}</p>
                                 </div>
                             </div>
-                            <div className="jam-student-NavBar-right">
-                                {renderLandlordNavBar()}
+                            <div className="jamJammerNavBar-right">
+                                {renderJammerNavBar()}
                             </div>
                         </Fragment>
                     ) : (
-                        <div className="jam-student-NavBar-chat">
-                            {renderLandlordNavBar()}
+                        <div className="jamJammer-NavBar-chat">
+                            {renderJammerNavBar()}
                         </div>
                     )
                 }
@@ -74,18 +73,13 @@ const JamNavBar = ({ setJamSection, jamName, jamType}) => {
 
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setJamSection: (section) => dispatch(setJamSection(section))
-    }
-};
 
 const mapStateToProps = (state) => {
+    const { section, subSection } = state.nav;
     return {
-        jamSection: state.jamSection,
-        jamId: state.jamId,
-        user: state.firebase.auth,
+        section,
+        subSection
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(JamNavBar);
+export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(JammerNavBar);

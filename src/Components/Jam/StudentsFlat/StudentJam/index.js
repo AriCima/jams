@@ -2,13 +2,10 @@ import React, { useState, useEffect }from 'react';
 import { connect } from 'react-redux';
 
 import { setRegisteredUser } from  '../../../../redux/actions/userActions';
-
 import DataService from '../../../services/DataService';
-
 import JamRegistrationForm from '../../../Forms/JamRegistrationForm';
 
-// COMPONENTS
-// import TenantNavBar from '../../../NavBars/LandlordNavBar';
+import JammerNavBar from '../../../NavBars/JammerNavBar';
 // import TenantOverview from '../../../JamSections/TenantOverview';
 // import TenantBoard from '../../../JamSections/TenantBoard';
 // import TenantRooms from '../../../JamSections/TenantRooms';
@@ -22,8 +19,6 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     
     useEffect(() => {
-        console.log('jamId: ', jamId);
-        console.log('userId: ', userId);
         jamId && DataService.getJammerInfo(jamId, userId)
         .then(res => {
             const alreadyRegistered = res.registeredUser;
@@ -58,21 +53,14 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
 
     return (
         <div className="jam-wrapper">
-            { showRegisterForm && (
-                <div className="jamRegistration-Form-wrapper">
-                    <JamRegistrationForm
-                        showForm={showForm}
-                        userId={userId}
-                    />
-                </div>
-            )}
+            
             <div className="jam-navBar">
-                {/* <TenantNavBar
+                <JammerNavBar
                     jamName={jamName}
                     jamDesc={jamDesc}
                     jamSection={section}
                     jamType={jamType}
-                /> */}
+                />
 
                 THiS IS TENANTS JAM
             </div>
@@ -80,6 +68,16 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
             <div className="jam-body">
                 {/* {renderSection(currentSection)} */}
             </div>
+
+            { showRegisterForm && (
+                <div className="jamRegistration-Form-wrapper">
+                    <JamRegistrationForm
+                        showForm={showForm}
+                        userId={userId}
+                    />
+                    <div className="form-bg"></div>
+                </div>
+            )}
 
         </div>
     );

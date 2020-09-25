@@ -6,10 +6,28 @@
   .jamRegistration-Form-wrapper{
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0, 0.2);
-    background-color: rgba(0,0,0, 0.2);
-    filter: blur(5px);
+    position: absolute;
+    top: -40px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  .form-bg{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -40px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(0,0,0,0.2);
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    z-index: 0;
+  }
+
   .jam-navBar{
     position: fixed;
     top: 0;
@@ -21,6 +39,7 @@
     align-items: center;
     border-bottom: 1px solid grey;
     border-left: 1px solid grey;
+    z-index: 0;
     .jam-body{
       width: 100%;
       height: calc(100vh - 80px); // 40px header + 40px footer
@@ -29,6 +48,7 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
+      z-index: 0;
     }
   }
 }

@@ -73,7 +73,7 @@ export default class Calculations {
         }
 
     }
-    static getJamSections(type){
+    static getJamAdminSections(type){
         //console.log('get Jam Sections launched')
         let sections = [];
         switch (type) {
@@ -82,6 +82,25 @@ export default class Calculations {
               break;
             case 'rooms-rental':
                 sections = ['Board', 'Tenants', 'Rooms', 'Settings']
+                break;
+            case 'chat': 
+                sections = ['Chat']
+                break;
+            default:
+              //console.log('no reconoce tipo')
+        }
+       return sections;
+    };
+
+    static getJamJammerSections(type){
+        //console.log('get Jam Sections launched')
+        let sections = [];
+        switch (type) {
+            case 'accommodation':
+              sections = ['Board', 'Jammers', 'MyJam', 'Settings']
+              break;
+            case 'rooms-rental':
+                sections = ['Board', 'Flatmates', 'Settings']
                 break;
             case 'chat': 
                 sections = ['Chat']

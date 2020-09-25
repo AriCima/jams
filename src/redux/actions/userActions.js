@@ -1,5 +1,6 @@
 export const USER_ID = 'USER_ID';
 export const USER_NAME = 'USER_NAME';
+export const USER_LASTNAME = 'USER_LASTNAME';
 export const USER_ROLE = 'USER_ROLE';
 export const REGISTERED_USER =  false
 export const USER_JAMS =  [];
@@ -15,6 +16,13 @@ export const setUserName= (userName = '') => ({
   type: USER_NAME,
   payload: {
     userName
+  }
+});
+
+export const setUserLastName= (userLastName = '') => ({
+  type: USER_NAME,
+  payload: {
+    userLastName
   }
 });
 

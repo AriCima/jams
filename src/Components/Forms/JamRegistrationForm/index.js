@@ -7,23 +7,27 @@ import DataService from '../../services/DataService';
 
 import './index.scss';
 
-const JamRegistrationForm = ({ jamId, jamName, userId, invId, showForm, setRegisteredUser }) => {
+const JamRegistrationForm = ({ jamId, jamName, userId, userName, userLastName, invId, showForm, setRegisteredUser }) => {
 
-    const [jammerInfo, setJammerInfo] = useState({});    
+    const [invInfo, setInvInfo] = useState({})
 
     useEffect(() => {
-        userId && DataService.getJammerInfo(jamId, userId)
-        .then(data => {
-            console.log('data: form ', data);
-            setJammerInfo(data);
+        DataService.getInvitationInfo(jamId, invId)
+        .then(res => {
+            setInvInfo(res)
         })
-    }, []);
+    }, [invId])
 
     const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
-            firstName: jammerInfo.firstName,
-            lastName: jammerInfo.lastName,
-            email: jammerInfo.email
+            firstName: userName,
+            lastName: userLastName,
+            email: invInfo.email,
+            checkIn: invInfo.checkIn,
+            checkOut: invInfo.checkOut,
+            roomNr: invInfo.roomNr,
+            rent: invInfo.rent,
+            deposit: invInfo.deposit
         }
     });
 
@@ -42,14 +46,85 @@ const JamRegistrationForm = ({ jamId, jamName, userId, invId, showForm, setRegis
             onSubmit={ handleSubmit(onSubmit) }
         >
             <div className="form-section">
-                <div className="jamRegister-form-header">
+                <div className="form-header">
                     <div className="form-header-title">
-                        <p>Welcomo to {jamName} ! In order to jam with us I need you to fill the following form</p>
+                        <h4>Welcomo to <span>{jamName}</span> ! In order to jam with us I need you to fill the following form</h4>
                         <p>This information will bu used to prepare your contract, and only your name, city and couuntry
                             will be visible for your other flatmates.
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <div className="form-section">
+                <div className="form-section-title">
+                    <p>Booking Info</p>
+                </div>
+                <div className="form-line">
+                    <div className="custom-input-block">
+                        <div className="block-label">
+                            <label>Room Nr</label>
+                        </div>
+                        <input
+                            name="roomNr"
+                            ref={register({
+                                required: true,
+                            })}
+                            disabled
+                        />
+                    </div>
+                    <div className="custom-input-block">
+                        <div className="block-label">
+                            <label>Check-In</label>
+                        </div>
+                        <input
+                            name="checkIn"
+                            ref={register({
+                                required: true,
+                            })}
+                            disabled
+                        />
+                    </div>
+                    <div className="custom-input-block">
+                        <div className="block-label">
+                            <label>Check-Out</label>
+                        </div>
+                        <input
+                            name="checkOut"
+                            ref={register({
+                                required: true,
+                            })}
+                            disabled
+                        />
+                    </div>
+                    <div className="custom-input-block">
+                        <div className="block-label">
+                            <label>Rent €/Mo</label>
+                        </div>
+                        <input
+                            name="rent"
+                            ref={register({
+                                required: true,
+                            })}
+                            disabled
+                        />
+                    </div>
+                    <div className="custom-input-block">
+                        <div className="block-label">
+                            <label>Deposit €</label>
+                        </div>
+                        <input
+                            name="deposit"
+                            ref={register({
+                                required: true,
+                            })}
+                            disabled
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="form-section">
                 <div className="form-section-title">
                     <p>Personal information</p>
                 </div>
@@ -232,13 +307,14 @@ const JamRegistrationForm = ({ jamId, jamName, userId, invId, showForm, setRegis
 };
 
 const mapStateToProps = state => {
+    console.log('state: ', state.userInfo);
 
     const { section } = state.nav;
     const {jamName, jamDesc, jamType } = state.jamInfo;
     const { jamId } = state.nav;
-    const {userId, userName } = state.userInfo;
+    const {userId, userName, userLastName } = state.userInfo;
 
-    return { jamId, userId, section, userName, jamName, jamDesc, jamType };
+    return { jamId, userId, section, userName, userLastName, jamName, jamDesc, jamType };
 };
 
 

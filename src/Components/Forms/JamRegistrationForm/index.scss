@@ -2,7 +2,10 @@
 
 .jamRegister-form {
     width: 60%;
+    border-radius: 15px;
     margin: 0 auto;
+    background-color: white;
+    z-index: 1;
     .form-section{
         width: 100%;
         padding: 15px;
@@ -10,6 +13,28 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+        .form-header{
+            width: 100%;
+            .form-header-title{
+                width: 100%;
+                display:flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                h4{
+                    font-size: 16px
+                    span{
+                        color: $button;
+                        font-weight: 700px;
+                    }
+                }
+                p{
+                    font-size: 12px;
+                    color: gray;
+                }
+
+            }
+        }
         .form-section-title{
             width: 100%;
             display:flex;
@@ -43,7 +68,7 @@
                     label {
                         text-align: left;
                         display: block;
-                        color: black;
+                        color: $fBlue;
                         margin-bottom: 0;
                     }
                     .field-error{

@@ -9,16 +9,15 @@ import AuthService from '../../services/AuthService'
 import DataService from '../../services/DataService';
 
 import './index.scss';
-import { setUserId, setUserName } from '../../../redux/actions/userActions.js';
+import { setUserId, setUserName, setUserLastName } from '../../../redux/actions/userActions.js';
 
-const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserName }) => {
+const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserName, setUserLastName }) => {
   
   const [jamInfo, setJamInfo] = useState({});
 
   useEffect(() => {
     jamId && DataService.getJamInfoById(jamId)
     .then((data) => {
-      console.log('data = ', data);
       setJamInfo(data);
     });
   }, [jamId])
@@ -44,6 +43,7 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
           setJamId(jamId);
           setUserId(userId);
           setUserName(firstName);
+          setUserLastName(lastName);
           setSection('overview');
           setSubSection('');
           history.push(`/`);
@@ -146,4 +146,4 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
 };
 
 
-export default connect (null, {setUserId, setUserName, setJamId, setSection, setSubSection })(RegisterWithInvitation);
+export default connect (null, {setUserId, setUserName, setUserLastName, setJamId, setSection, setSubSection })(RegisterWithInvitation);
