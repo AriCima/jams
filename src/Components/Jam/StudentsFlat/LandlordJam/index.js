@@ -39,8 +39,8 @@ const LandlordJam = ({ jamId, jamInfo, section }) => {
     };
 
     return (
-        <div className="landlord-jam-wrapper">
-            <div className="landlord-jam-header">
+        <div className="jam-wrapper">
+            <div className="jam-navBar">
                 <LandlordNavBar
                     jamName={jamName}
                     jamDesc={jamDesc}
@@ -49,7 +49,7 @@ const LandlordJam = ({ jamId, jamInfo, section }) => {
                 />
             </div>
 
-            <div className="landlord-jam-container">
+            <div className="jam-body">
                 {renderSection(currentSection)}
             </div>
         </div>

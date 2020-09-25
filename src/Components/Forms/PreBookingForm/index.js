@@ -15,7 +15,7 @@ import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
 
 // REDUX
-import { launchAlert } from '../../../redux/actions/alertsActions';
+import { launchAlert } from '../../../redux/actions/OLD/alertsActions';
 
 const PreBookingForm = ({
     jamId, roomId, roomNr, bookingsSummary, launchAlert,

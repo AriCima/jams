@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from 'react-redux';
-import { setUserRole } from '../../redux/actions/userActions.js'
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
 
 import './index.scss'; 
-import { setJamId } from "../../redux/actions/navigateActions.js";
-import { setJamName, setJamAdminId, setJamAdminName } from "../../redux/actions/jamActions.js";
+import { setJamId } from '../../redux/actions/navigateActions.js';
+import { setJamName, setJamAdminId, setJamAdminName } from '../../redux/actions/jamActions.js';
+import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
-const Dashboard = ({ userId, jamId, setUserRole, setJamName, setJamAdminId, setJamAdminName  }) => {
-    console.log('Dash userId: ', userId);
+const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJamAdminId, setJamAdminName  }) => {
 
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({})
@@ -21,6 +20,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setJamName, setJamAdminId, setJ
         if (userId) {
             DataService.getUserJams(userId)
             .then(result => {
+                setUserJams(result);
                 setJamsList(result);
             })
             .catch(err => console.log(err));
@@ -44,12 +44,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setJamName, setJamAdminId, setJ
         setJamName(jamName)
         setJamAdminId(adminId);
         setJamAdminName(adminName);
-    }
-
-    // useEffect((jamInfo) => {
-
-    //    jamInfo && setJamInfo(jamInfo)
-    // }, [jamInfo])
+    };
 
     const renderJam = jamId && jamInfo;
 
@@ -83,5 +78,5 @@ const mapStateToProps = state => {
     return { jamId, userId, userRole, userJams: state.userJams };
 };
 
-export default connect(mapStateToProps, {setUserRole, setJamName, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
+export default connect(mapStateToProps, {setUserRole, setUserJams, setJamName, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
 

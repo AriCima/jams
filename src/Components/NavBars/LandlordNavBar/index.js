@@ -52,7 +52,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
     };
 
     return ( 
-        <div className="jamAdminNavBar">
+        <>
             {jamSections === undefined ? <p>NO JAM SELECTED</p> :(
                 <>
                     {jamType !== 'chat' ?
@@ -77,7 +77,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
                     }
                 </>
             )}
-        </div>
+        </>
     );
 
 };

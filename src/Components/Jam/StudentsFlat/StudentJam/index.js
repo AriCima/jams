@@ -1,6 +1,12 @@
 import React, { useState, useEffect }from 'react';
 import { connect } from 'react-redux';
 
+import { setRegisteredUser } from  '../../../../redux/actions/userActions';
+
+import DataService from '../../../services/DataService';
+
+import JamRegistrationForm from '../../../Forms/JamRegistrationForm';
+
 // COMPONENTS
 // import TenantNavBar from '../../../NavBars/LandlordNavBar';
 // import TenantOverview from '../../../JamSections/TenantOverview';
@@ -9,16 +15,26 @@ import { connect } from 'react-redux';
 // import TenantTenants from '../../../JamSections/TenantTenants';
 // import TenantSettings from '../../../JamSections/TenantSettings';
 
-// import './index.scss';
+import './index.scss';
 
-const TenantJam = ({ jamId, jamInfo, section }) => {
-    // const { jamName, jamDesc, jamType } = jamInfo;
+const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section, setRegisteredUser }) => {
+    
+    const [showRegisterForm, setShowRegisterForm] = useState(false);
+    
+    useEffect(() => {
+        DataService.getJammerInfo(jamId, userId)
+        .then(res => {
+            const alreadyRegistered = res.registeredUser;
+            setRegisteredUser(alreadyRegistered);
+            if (!alreadyRegistered) {
+                setTimeout(() => showForm(true), 3000);
+            } 
+        })
+    }, [userId])
 
-    // const [currentSection, setCurrentSection] = useState('');
-
-    // useEffect(() => {
-    //     setCurrentSection(section)
-    // }, [section])
+    const showForm = (x) => {
+        setShowRegisterForm(x);
+    }
 
     const renderSection = (section) => {
         // switch (section) {
@@ -39,29 +55,41 @@ const TenantJam = ({ jamId, jamInfo, section }) => {
     };
 
     return (
-        <div className="landlord-jam-wrapper">
-            <div className="landlord-jam-header">
+        <div className="jam-wrapper">
+            { showRegisterForm && (
+                <div className="jamRegistration-Form-wrapper">
+                    <JamRegistrationForm
+                        showForm={showForm}
+                    />
+                </div>
+            )}
+            <div className="jam-navBar">
                 {/* <TenantNavBar
                     jamName={jamName}
                     jamDesc={jamDesc}
                     jamSection={section}
                     jamType={jamType}
                 /> */}
+
+                THiS IS TENANTS JAM
             </div>
 
-            <div className="landlord-jam-container">
+            <div className="jam-body">
                 {/* {renderSection(currentSection)} */}
             </div>
+
         </div>
     );
 };
 
 
 const mapStateToProps = state => {
+
     const { section } = state.nav;
-    return {
-        section
-    };
+    const {jamName, jamDesc, jamType } = state.jamInfo;
+    const {userId, userName }= state.userInfo;
+
+    return { section, userId, userName, jamName, jamDesc, jamType };
 };
 
-export default connect(mapStateToProps)(TenantJam);
+export default connect(mapStateToProps, { setRegisteredUser })(TenantJam);

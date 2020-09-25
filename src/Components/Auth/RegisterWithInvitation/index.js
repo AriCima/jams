@@ -9,9 +9,9 @@ import AuthService from '../../services/AuthService'
 import DataService from '../../services/DataService';
 
 import './index.scss';
-import { setUserId } from '../../../redux/actions/userActions.js';
+import { setUserId, setUserName } from '../../../redux/actions/userActions.js';
 
-const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId }) => {
+const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserName }) => {
   
   let history = useHistory();
 
@@ -31,8 +31,11 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
         AuthService.register(firstName, lastName, email, password)
         .then(res => {
           const userId = res;
+          const jammerInfo = {firstName, lastName, registeredUser: false};
+          DataService.saveJammerInfo(jamId, userId, jammerInfo);
           setJamId(jamId);
           setUserId(userId);
+          setUserName(firstName);
           setSection('overview');
           setSubSection('');
           history.push(`/`);
@@ -135,4 +138,4 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
 };
 
 
-export default connect (null, {setUserId, setJamId, setSection, setSubSection })(RegisterWithInvitation);
+export default connect (null, {setUserId, setUserName, setJamId, setSection, setSubSection })(RegisterWithInvitation);

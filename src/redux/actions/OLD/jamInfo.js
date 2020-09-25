@@ -1,6 +1,6 @@
 
 
-import DataService from '../../Components/services/DataService';
+import DataService from '../../../Components/services/DataService';
 
 // COMO ESTOY USANDO THUNK MIDDLEWARE, 
 // LA ACCION PUEDE DEVOLVER UNA FUNCION

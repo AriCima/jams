@@ -33,6 +33,6 @@ const JamsList = (props) => {
     </div>
   )
   
-}
+};
 
 export default JamsList;

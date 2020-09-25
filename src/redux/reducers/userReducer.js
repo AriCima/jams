@@ -1,6 +1,9 @@
 import {
     USER_ID,
-    USER_ROLE
+    USER_NAME,
+    USER_ROLE,
+    REGISTERED_USER,
+    USER_JAMS
 } from '../actions/userActions';
   
 const defaultState = {
@@ -9,7 +12,6 @@ const defaultState = {
 };
 
 const updateVal = (state, action) => {
-    console.log('user action: ', action);
     return { ...state, ...action.payload };
 };
 
@@ -24,7 +26,10 @@ function createReducer(initialState, handlers) {
 
 const navReducers = createReducer(defaultState, {
 [USER_ID]: updateVal,
-[USER_ROLE]: updateVal
+[USER_NAME]: updateVal,
+[USER_ROLE]: updateVal,
+[REGISTERED_USER]: updateVal,
+[USER_JAMS]: updateVal
 });
 
 export default navReducers;

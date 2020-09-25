@@ -469,12 +469,13 @@ export default class DataService {
                 });
         });
     }
-    static saveTenantInfo(jamId, tenantInfo) {
+    static saveJammerInfo(jamId, userId, jammerInfo) {
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
                 .doc(jamId)
                 .collection('jammers')
-                .add(tenantInfo)
+                .doc(userId)
+                .add(jammerInfo)
                 .then((res) => {
                     console.log("Document written with ID: ", res);
                     resolve(res);

@@ -1,27 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {useForm} from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import AuthService from '../../services/AuthService';
-import { setUserId } from '../../../redux/actions/userActions'
+import { setUserId, setUserName } from '../../../redux/actions/userActions'
 
 import './index.scss';
 
 
 
-const useLoginForm = ({ setUserId }) => {
+const useLoginForm = ({ setUserId, setUserName }) => {
     const { register, errors, handleSubmit } = useForm();
-    
     let history = useHistory();
+
+    useEffect(() => {
+
+        const userIdInLocalStorage = localStorage.getItem('userId') || '';
+        const userNameInLocalStorage = localStorage.getItem('userName') || '';
+        if (userIdInLocalStorage !== '') {
+            setUserId(userIdInLocalStorage);
+            setUserName(userNameInLocalStorage);
+            history.push('/');
+        };
+
+    }, []);
 
     const onLogin = (data) => {
         const { email, password }= data;  
 
         AuthService.login(email, password)
         .then(res => {
+            console.log('res: ', res);
             const userId = res.user.uid;
+            const userName = res.userName;
             setUserId(userId);
+            setUserName(userName);
+           
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('userName', userName);
+              
             history.push('/');
         })
     }
@@ -73,4 +91,4 @@ const useLoginForm = ({ setUserId }) => {
 };
 
 
-export default connect(null, { setUserId })(useLoginForm);
+export default connect(null, { setUserId, setUserName })(useLoginForm);

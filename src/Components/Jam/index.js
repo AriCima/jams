@@ -5,11 +5,7 @@ import { connect } from 'react-redux';
 import LandlordJam from './StudentsFlat/LandlordJam';
 import StudentJam from './StudentsFlat/StudentJam';
 
-
-import './index.css';
-
 const Jam = ({ jamId, jamInfo, userRole} ) => {
-  console.log('userRole: ', userRole);
   return (
     <>
       { userRole === 'Admin' ?

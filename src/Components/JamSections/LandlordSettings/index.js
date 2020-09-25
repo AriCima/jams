@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 // COMPONENTS
 import { connect } from 'react-redux';
-import { setJamSection } from '../../../redux/actions/jamSection';
+import { setJamSection } from '../../../redux/actions/OLD/jamSection';
 import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel'
 import ButtonSubmit from '../../UI/Buttons/ButtonSubmit';
 
