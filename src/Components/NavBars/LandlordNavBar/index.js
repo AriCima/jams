@@ -32,7 +32,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
             return jamType === 'Chat' ?
                 (
                     <div
-                        className="jamAdminNavBar-item" 
+                        className="jamNavBar-item" 
                         key={id}
                         onClick={() => onsetJamSection(`${section}`)}
                     >
@@ -40,7 +40,7 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
                     </div>
                 ):(
                     <div
-                        className="jamAdminNavBar-item"
+                        className="jamNavBar-item"
                         key={id}
                         onClick={() => onsetJamSection(`${section}`)}
                     >
@@ -57,19 +57,19 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
                     {jamType !== 'chat' ?
                         (
                             <>
-                                <div className="jamAdminNavBar-left">
-                                    <div className="jamAdminNavBar-jamName"
+                                <div className="jamNavBar-left">
+                                    <div className="jamNavBar-jamName"
                                         onClick={() => onsetJamSection(`Overview`)}
                                     >
                                         <p>{jamName}</p>
                                     </div>
                                 </div>
-                                <div className="jamAdminNavBar-right">
+                                <div className="jamNavBar-right">
                                     {renderLandlordNavBar()}
                                 </div>
                             </>
                         ) : (
-                            <div className="jamAdminNavBar-chat">
+                            <div className="jamNavBar-chat">
                                 {renderLandlordNavBar()}
                             </div>
                         )

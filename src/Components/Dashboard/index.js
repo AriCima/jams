@@ -8,10 +8,10 @@ import Jam from '../Jam';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
-import { setJamName, setJamAdminId, setJamAdminName } from '../../redux/actions/jamActions.js';
+import { setJamName, setJamType, setJamAdminId, setJamAdminName } from '../../redux/actions/jamActions.js';
 import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
-const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJamAdminId, setJamAdminName  }) => {
+const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJamType, setJamAdminId, setJamAdminName  }) => {
 
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({})
@@ -33,10 +33,8 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
     }, [jamId]);
 
     const getJamInfo = async (jamId) => {
-        console.log('jamId: ', jamId);
         const res = await DataService.getJamInfoById(jamId);
-        console.log('res: ', res);
-        const {jamName, adminId, adminName } = res;
+        const {jamName, adminId, adminName, jamType } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
         // Info en el state
         setJamInfo(res);
@@ -46,6 +44,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
         setJamName(jamName)
         setJamAdminId(adminId);
         setJamAdminName(adminName);
+        setJamType(jamType)
     };
 
     const renderJam = jamId && jamInfo;
@@ -80,5 +79,5 @@ const mapStateToProps = state => {
     return { jamId, userId, userRole, userJams: state.userJams };
 };
 
-export default connect(mapStateToProps, {setUserRole, setUserJams, setJamName, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
+export default connect(mapStateToProps, {setUserRole, setUserJams, setJamName, setJamType, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
 

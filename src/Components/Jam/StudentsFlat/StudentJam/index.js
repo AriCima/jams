@@ -5,7 +5,7 @@ import { setRegisteredUser } from  '../../../../redux/actions/userActions';
 import DataService from '../../../services/DataService';
 import JamRegistrationForm from '../../../Forms/JamRegistrationForm';
 
-import JammerNavBar from '../../../NavBars/JammerNavBar';
+import UserNavBar from '../../../NavBars/UserNavBar';
 // import TenantOverview from '../../../JamSections/TenantOverview';
 // import TenantBoard from '../../../JamSections/TenantBoard';
 // import TenantRooms from '../../../JamSections/TenantRooms';
@@ -14,7 +14,7 @@ import JammerNavBar from '../../../NavBars/JammerNavBar';
 
 import './index.scss';
 
-const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section, setRegisteredUser }) => {
+const TenantJam = ({ jamId, userId, setRegisteredUser }) => {
     
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     
@@ -56,12 +56,7 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
         <div className="jam-wrapper">
             
             <div className="jam-navBar">
-                <JammerNavBar
-                    jamName={jamName}
-                    jamDesc={jamDesc}
-                    jamSection={section}
-                    jamType={jamType}
-                />
+                <UserNavBar/>
             </div>
 
             <div className="jam-body">

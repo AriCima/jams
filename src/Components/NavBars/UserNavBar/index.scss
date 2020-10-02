@@ -1,10 +1,9 @@
-
-.jamAdminNavBar-left{
+.jamNavBar-left{
     width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
-    .jamAdminNavBar-jamName{
+    .jamNavBar-jamName{
         width: 100%;
         display: flex;
         justify-content: center;
@@ -18,12 +17,12 @@
         
     }
 }
-.jamAdminNavBar-right{
+.jamNavBar-right{
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    .jamAdminNavBar-item{
+    .jamNavBar-item{
         height: 100%;
         margin: 0 15px;
         display: flex;
@@ -49,11 +48,8 @@
         }
     }
 }
-.jamAdminNavBar-chat{
+.jamNavBar-chat{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-
-
