@@ -1,5 +1,6 @@
 export const USER_ID = 'USER_ID';
-export const USER_NAME = 'USER_NAME';
+export const USER_EMAIL = 'USER_EMAIL';
+export const USER_FIRSTNAME = 'USER_FIRSTNAME';
 export const USER_LASTNAME = 'USER_LASTNAME';
 export const USER_ROLE = 'USER_ROLE';
 export const REGISTERED_USER =  false
@@ -12,17 +13,24 @@ export const setUserId = (userId = '') => ({
   }
 });
 
-export const setUserName= (userName = '') => ({
-  type: USER_NAME,
+export const setUserEmail = (email = '') => ({
+  type: USER_ID,
   payload: {
-    userName
+    email
   }
 });
 
-export const setUserLastName= (userLastName = '') => ({
-  type: USER_NAME,
+export const setUserFirstName= (firstName = '') => ({
+  type: USER_FIRSTNAME,
   payload: {
-    userLastName
+    firstName
+  }
+});
+
+export const setUserLastName= (lastName = '') => ({
+  type: USER_LASTNAME,
+  payload: {
+    lastName
   }
 });
 

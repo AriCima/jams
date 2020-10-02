@@ -14,7 +14,6 @@ import RoomsOverview from './RoomsOverview';
 
 // CSS
 import './index.scss';
-import { changeRoomId } from '../../../redux/actions/OLD/roomsId';
 // import { setRoomId } from '../../../redux/actions/roomsId';
 
 const LandlordRooms = ({ jamId, subSection }) => {

@@ -87,24 +87,74 @@ export default class DataService {
 
     // JAMS
     // Create
-    static createJam(jamInfo, userId, email) {
+    static createJam(jamInfo, userId, email, firstName, lastName) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
                 .add(jamInfo)
                 .then((doc) => {
-                    console.log('doc del create: ', doc);
+                    // console.log('doc del create: ', doc);
                     const jamId = doc.id;
-                    const userInfo = { userId, email };
+                    console.log('jamId: ', jamId);
+                    const userInfo = { userId, email, firstName, lastName };
                     jamInfo.jamId = jamId;
-                    this.updateUserJams(userId, jamId);
-                    this.updateJammersInJam(jamId, userInfo);
+
+                    if (jamInfo.jamType === 'rooms-rental') {
+                        const rooms = Number(jamInfo.nrOfRooms);
+                        for (let i = 0; i < rooms; i++) {
+                          const roomNr = i + 1;
+                          const roomInfo = {
+                            roomNr,
+                          };
+                          DataService.addNewRoom(jamId, roomInfo);
+                        }
+                      }
+
+                    this.addJamToUser(userId, jamId, jamInfo);
+                    this.addJammerToJam(jamId, userInfo);
                     resolve({ id: doc.id });
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log('Jam could not be created: ', errorCode, errorMessage);
+                });
+        });
+    }
+    static addJamToUser(userId, jamId, jamInfo) {
+        console.log('userId: ', userId);
+        console.log('jamId: ', jamId);
+        console.log('jamInfo: ', jamInfo);
+
+        return new Promise((resolve, reject) => {
+            firebase.firestore().collection('users')
+                .doc(userId)
+                .collection('userJams')
+                .doc(jamId)
+                .set(jamInfo)
+ 
+                .catch((error) => {
+                    const errorCode = error.code;
+                    console.log('ERROR Jam NOT added to user: ', errorCode);
+                });
+        });
+    }
+
+    static addJammerToJam(jamId, userInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('jams')
+                .doc(jamId)
+                .collection('jammers')
+                .doc(userInfo.userId)
+                .set(userInfo)
+                .then((result) => {
+                    console.log('Jammers succesfully UPDATED');
+                    resolve(result);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    console.log('ERROR Jam NOT added to user: ', errorCode);
                 });
         });
     }
@@ -248,39 +298,7 @@ export default class DataService {
         });
     }
 
-    static updateUserJams(userId, jamId, jamInfo) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users')
-                .doc(userId)
-                .collection('userJams')
-                .doc(jamId)
-                .set(jamInfo)
- 
-                .catch((error) => {
-                    const errorCode = error.code;
-                    console.log('ERROR Jam NOT added to user: ', errorCode);
-                });
-        });
-    }
 
-    static updateJammersInJam(jamId, jammerId, newJammer) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore()
-                .collection('jams')
-                .doc(jamId)
-                .collection('jammers')
-                .doc(jammerId)
-                .set(newJammer)
-                .then((result) => {
-                    console.log('Jammers succesfully UPDATED');
-                    resolve(result);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    console.log('ERROR Jam NOT added to user: ', errorCode);
-                });
-        });
-    }
 
     static updateJamInfo(jamId, jamField, newInfo) {
         return new Promise((resolve, reject) => {

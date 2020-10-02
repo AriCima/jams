@@ -8,8 +8,9 @@ export default class AuthService {
         return new Promise((resolve, reject) => {
 
             firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((result) =>{
+            .then((result) =>{                
                 resolve(result);
+                console.log('result: ', result);
                 console.log('El result del LOGIN en Auth es: ', result)
             })
 

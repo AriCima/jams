@@ -9,7 +9,7 @@ import "./index.scss";
 const JamsList = (props) => {
 
   const { userJams } = props;
-
+  
   const _renderJams = () => {
     return userJams.map((jam, j) => {
       return (
@@ -18,7 +18,7 @@ const JamsList = (props) => {
             jamName={jam.jamName} 
             jamDesc={jam.jamDesc}
             jamCode={jam.jamCode}
-            jamId={jam.jamId}
+            jamId={jam.id}
             jamType={jam.jamType}
             user2Name={jam.user2Name}
             />

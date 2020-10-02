@@ -1,46 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {useForm} from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import AuthService from '../../services/AuthService';
-import { setUserId, setUserName } from '../../../redux/actions/userActions'
+import DataService from '../../services/DataService';
+import { setUserId, setUserEmail, setUserFirstName, setUserLastName } from '../../../redux/actions/userActions'
 
 import './index.scss';
 
-
-
-const useLoginForm = ({ setUserId, setUserName }) => {
+const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastName }) => {
     const { register, errors, handleSubmit } = useForm();
     let history = useHistory();
 
     useEffect(() => {
-
         const userIdInLocalStorage = localStorage.getItem('userId') || '';
-        const userNameInLocalStorage = localStorage.getItem('userName') || '';
+        const userFirstNameInLocalStorage = localStorage.getItem('firstName') || '';
+        const userLastNameInLocalStorage = localStorage.getItem('lastName') || '';
+        const userEmail = localStorage.getItem('email') || '';
+
         if (userIdInLocalStorage !== '') {
             setUserId(userIdInLocalStorage);
-            setUserName(userNameInLocalStorage);
+            setUserFirstName(userFirstNameInLocalStorage);
+            setUserLastName(userLastNameInLocalStorage);
+            setUserEmail(userEmail);
             history.push('/');
         };
 
     }, []);
 
     const onLogin = (data) => {
-        const { email, password }= data;  
+        const { email, password } = data;  
 
         AuthService.login(email, password)
         .then(res => {
-            console.log('res: ', res);
-            const userId = res.user.uid;
-            const userName = res.userName;
-            setUserId(userId);
-            setUserName(userName);
-           
-            localStorage.setItem('userId', userId);
-            localStorage.setItem('userName', userName);
-              
-            history.push('/');
+            const userId = res.user.uid
+            DataService.getUserInfo(userId)
+            .then((res) => {
+                const { firstName, lastName } = res;
+                console.log('userId 2: ', userId);
+                setUserId(userId);
+                setUserEmail(email);
+                setUserFirstName(firstName);
+                setUserLastName(lastName);
+               
+                localStorage.setItem('userId', userId);
+                localStorage.setItem('firstName', firstName);
+                localStorage.setItem('lastName', lastName);
+                history.push('/');
+            })
         })
     }
 
@@ -91,4 +99,4 @@ const useLoginForm = ({ setUserId, setUserName }) => {
 };
 
 
-export default connect(null, { setUserId, setUserName })(useLoginForm);
+export default connect(null, { setUserId, setUserEmail, setUserFirstName, setUserLastName })(useLoginForm);

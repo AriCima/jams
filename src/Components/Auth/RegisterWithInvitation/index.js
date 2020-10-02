@@ -9,9 +9,9 @@ import AuthService from '../../services/AuthService'
 import DataService from '../../services/DataService';
 
 import './index.scss';
-import { setUserId, setUserName, setUserLastName } from '../../../redux/actions/userActions.js';
+import { setUserId, setUserFirstName, setUserLastName } from '../../../redux/actions/userActions.js';
 
-const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserName, setUserLastName }) => {
+const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserFirstName, setUserLastName }) => {
   
   const [jamInfo, setJamInfo] = useState({});
 
@@ -42,7 +42,7 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
           const userId = res.user.uid;
           setJamId(jamId);
           setUserId(userId);
-          setUserName(firstName);
+          setUserFirstName(firstName);
           setUserLastName(lastName);
           setSection('overview');
           setSubSection('');
@@ -146,4 +146,4 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
 };
 
 
-export default connect (null, {setUserId, setUserName, setUserLastName, setJamId, setSection, setSubSection })(RegisterWithInvitation);
+export default connect (null, {setUserId, setUserFirstName, setUserLastName, setJamId, setSection, setSubSection })(RegisterWithInvitation);

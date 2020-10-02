@@ -11,7 +11,7 @@ const Jam = ({ jamId, jamInfo, userRole} ) => {
       { userRole === 'Admin' ?
         <LandlordJam jamId={jamId} jamInfo={jamInfo} />
         :
-        <StudentJam jamId={jamId} />
+        <StudentJam jamId={jamId} jamInfo={jamInfo}/>
       }
     </>
   );

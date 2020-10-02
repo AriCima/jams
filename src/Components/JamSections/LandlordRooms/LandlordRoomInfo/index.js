@@ -2,12 +2,10 @@ import React from 'react';
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 
-import ButtonPlain from '../../../UI/ButtonPlain';
 import CurrentTenant from './CurrentTenant';
 import RoomBookings from './RoomBookings';
 import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 import Calculations from '../../../services/Calculations';
-import PrebBookingForm from '../../../Forms/PreBookingForm';
 
 // CSS
 import './index.css';
@@ -40,19 +38,10 @@ const LandlordRoomInfo = ({ roomInfo }) => {
 
                     <div className="room-buttons-area">
                         <div className="room-button-block">
-                            <PrebBookingForm
-                                // jamId={jamId}
-                                // roomId={roomId}
-                                roomNr={roomInfo.roomNr}
-                                bookingsSummary={bookingsSummary}
-                            />
+                            <p>Acá estaba el preBooking Form</p>
                         </div>
                         <div className="room-button-block">
-                            <ButtonPlain
-                                type="button"
-                                text="Invite"
-                                // clickHandle={onNewInvitation}
-                            />
+                            
                         </div>
                     </div>
                 </div>

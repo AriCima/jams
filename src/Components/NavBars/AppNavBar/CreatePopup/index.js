@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable indent */
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -18,10 +19,7 @@ import Calculations from '../../../services/Calculations';
 // CSS
 import './index.css';
 
-const CreatePopup = (props) => {
-  // eslint-disable-next-line indent
-  const { user } = props;
-
+const CreatePopup = ({ userId, email, firstName, lastName }) => {
   const [open, setOpen] = useState(false);
 
   const [jamName, setJamName] = useState('');
@@ -46,14 +44,14 @@ const CreatePopup = (props) => {
 
   const onCreatenewJam = (e) => {
     e.preventDefault();
-    const userId = user.uid;
-    const email = user.email
     const createdAt = new Date();
     const jamCode = Calculations.generateCode();
     const updatedAt = '';
 
     const newJam = {
       adminId: userId,
+      adminName: firstName, 
+      adminLastName: lastName,
       jamCode,
       jamName,
       jamDesc,
@@ -64,21 +62,7 @@ const CreatePopup = (props) => {
     };
 
 
-    DataService.createJam(newJam, userId, email)
-    .then(res => {
-      const jamId = res.id;
-
-      if (newJam.jamType === 'rooms-rental') {
-        const rooms = Number(newJam.nrOfRooms);
-        for (let i = 0; i < rooms; i++) {
-          const roomNr = i + 1;
-          const roomInfo = {
-            roomNr,
-          };
-          DataService.addNewRoom(jamId, roomInfo);
-        }
-      }
-    });
+    DataService.createJam(newJam, userId, email, firstName, lastName)
 
     setOpen(false);
   };
@@ -183,4 +167,11 @@ const CreatePopup = (props) => {
   );
 };
 
-export default CreatePopup;
+const mapStateToProps = state => {
+  const { userId, email, firstName, lastName} = state.userInfo;
+
+  return { userId, email, firstName, lastName };
+};
+
+export default connect(mapStateToProps)(CreatePopup);
+

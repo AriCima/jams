@@ -12,6 +12,7 @@ import "./index.scss";
   // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
 
   const onsetJam = (jamId) => {
+    console.log(jamId)
     setJamId(jamId);
     setSection('Overview');
     setSubSection('');

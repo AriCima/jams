@@ -22,6 +22,7 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
         jamId && DataService.getJammerInfo(jamId, userId)
         .then(res => {
             const alreadyRegistered = res.registeredUser;
+            console.log('alreadyRegistered: ', alreadyRegistered);
             setRegisteredUser(alreadyRegistered);
             if (!alreadyRegistered) {
                 setTimeout(() => showForm(true), 3000);
@@ -33,23 +34,23 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
         setShowRegisterForm(x);
     }
 
-    const renderSection = (section) => {
-        // switch (section) {
-        //     case 'Overview':
-        //         return <TenantOverview jamId={jamId} />;
-        //     case 'Board':
-        //         return <TenantBoard jamId={jamId} />;
-        //     case 'Rooms':
-        //         return <TenantRooms jamId={jamId} />;
-        //     case 'Tenants':
-        //         return <TenantTenants jamId={jamId} />;
-        //     case 'Settings':
-        //         return <TenantSettings jamId={jamId} />;
-        //     case 'rent':
-        //     default:
-        //         return ;
-        // }
-    };
+    // const renderSection = (section) => {
+    //     switch (section) {
+    //         case 'Overview':
+    //             return <TenantOverview jamId={jamId} />;
+    //         case 'Board':
+    //             return <TenantBoard jamId={jamId} />;
+    //         case 'Rooms':
+    //             return <TenantRooms jamId={jamId} />;
+    //         case 'Tenants':
+    //             return <TenantTenants jamId={jamId} />;
+    //         case 'Settings':
+    //             return <TenantSettings jamId={jamId} />;
+    //         case 'rent':
+    //         default:
+    //             return ;
+    //     }
+    // };
 
     return (
         <div className="jam-wrapper">
@@ -61,8 +62,6 @@ const TenantJam = ({ jamId, jamName, jamDesc, jamType, userName, userId, section
                     jamSection={section}
                     jamType={jamType}
                 />
-
-                THiS IS TENANTS JAM
             </div>
 
             <div className="jam-body">
