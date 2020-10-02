@@ -70,8 +70,8 @@ export default class AuthService {
                     userJams: [jamId]
                 };
                 DataService.saveUserInfoInFirestore(userId, userInfo);
-                DataService.updateJammersInJam(jamId, userId, userInfo);
-                DataService.updateUserJams(userId, jamId, jamInfo);
+                DataService.addJammerToJam(jamId, userId, userInfo);
+                DataService.addJamToUser(userId, jamId, jamInfo);
                 console.log('RegisterResult OK: ', result);
                 resolve(result)
             })

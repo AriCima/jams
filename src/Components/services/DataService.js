@@ -122,10 +122,6 @@ export default class DataService {
         });
     }
     static addJamToUser(userId, jamId, jamInfo) {
-        console.log('userId: ', userId);
-        console.log('jamId: ', jamId);
-        console.log('jamInfo: ', jamInfo);
-
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('users')
                 .doc(userId)

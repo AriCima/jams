@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { connect } from 'react-redux';
 
-// SERVICES
 import DataService from "../../../services/DataService"
-
-// FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-
-// Material UI
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -33,17 +29,14 @@ const JoinPopup = (props) => {
   };
 
   const handleClickOpen = () => {
+    // CHECK IF ALREADY JOINED IN THIS JAM
     DataService.getUserJams(userId)
     .then(result =>{
-     
       for (let i = 0; i<result.length; i++) {
         console.log(result[i].jamId)
         jamIds[i] = result[i].jamId;
       }
-      
       setJamIds(jamIds)
-      console.log('jamIds = ', jamIds)
-
     }).catch(function (error) {   
       console.log(error);
     })
@@ -65,29 +58,28 @@ const JoinPopup = (props) => {
       let joinedAt = new Date();
       let jamCode = jam.jamCode;
 
-      const jamToJoin = {
-        isAdmin : false,
+      const jamInfo = {
         jamCode : jamCode,
         jamName : jam.jamName,
         jamId   : jamId,
-        jamDescription : jam.jamDesc,
+        jamDesc : jam.jamDesc,
         joinedAt : joinedAt
       }
 
       if( jamIds.includes(jamId) ) {
-        alert(`You are already jammer in ${jamToJoin.jamName}`)
+        alert(`You are already jammer in ${jamInfo.jamName}`)
         return
       }
 
-      DataService.addJamToUser(userId, jamToJoin)
+      DataService.addJamToUser(userId, jamId, jamInfo)
       .then(result =>{
         console.log('result del addJamToUser', result)
       }).catch(function (error) {   
         console.log(error);
       });
 
-      const newJammer = {userId: userId}
-      DataService.updateJammersInJam(jamId, userId, newJammer)
+      const userInfo = {userId: userId}
+      DataService.addJammerToJam(jamId, userId, userInfo)
       .then(result =>{
         console.log('result del updatJammers', result)
       }).catch(function (error) {   
@@ -137,5 +129,11 @@ const JoinPopup = (props) => {
   );
 }
 
-export default JoinPopup;
+const mapStateToProps = state => {
+  const { userId, email, firstName, lastName} = state.userInfo;
+
+  return { userId, email, firstName, lastName };
+};
+
+export default connect(mapStateToProps)(JoinPopup);
 

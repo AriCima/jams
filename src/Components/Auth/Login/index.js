@@ -17,13 +17,14 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
         const userIdInLocalStorage = localStorage.getItem('userId') || '';
         const userFirstNameInLocalStorage = localStorage.getItem('firstName') || '';
         const userLastNameInLocalStorage = localStorage.getItem('lastName') || '';
-        const userEmail = localStorage.getItem('email') || '';
+        const email = localStorage.getItem('email') || '';
+        console.log('email: ', email);
 
         if (userIdInLocalStorage !== '') {
             setUserId(userIdInLocalStorage);
             setUserFirstName(userFirstNameInLocalStorage);
             setUserLastName(userLastNameInLocalStorage);
-            setUserEmail(userEmail);
+            setUserEmail(email);
             history.push('/');
         };
 
@@ -38,13 +39,14 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
             DataService.getUserInfo(userId)
             .then((res) => {
                 const { firstName, lastName } = res;
-                console.log('userId 2: ', userId);
                 setUserId(userId);
                 setUserEmail(email);
                 setUserFirstName(firstName);
                 setUserLastName(lastName);
                
+                console.log('email: ', email);
                 localStorage.setItem('userId', userId);
+                localStorage.setItem('email', email);
                 localStorage.setItem('firstName', firstName);
                 localStorage.setItem('lastName', lastName);
                 history.push('/');

@@ -14,7 +14,7 @@ export const setUserId = (userId = '') => ({
 });
 
 export const setUserEmail = (email = '') => ({
-  type: USER_ID,
+  type: USER_EMAIL,
   payload: {
     email
   }
