@@ -11,9 +11,9 @@ import CustomTextArea from '../../UI/CustomTextArea';
 // REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
-const LandlordBoard = ({ jamId, auth}) => {
+const LandlordBoard = ({ adminId, jamId, userId, userName }) => {
 
-    const userId = auth.uid;
+    const isAdmin = adminId === userId
 
     const [boardInfo, setBoardInfo] = useState([]);
     const [messageText, setMessageText ] = useState('');
@@ -27,7 +27,8 @@ const LandlordBoard = ({ jamId, auth}) => {
         const res = await DataService.getBoardInfo(jamId, 'board');
         setBoardInfo(res);
     }
-    const renderLandlordBoardContent = () => {
+
+    const renderBoardContent = () => {
         return boardInfo.map((bC, i) => {
             return (
                 <LandlordBoardContent 
@@ -40,7 +41,6 @@ const LandlordBoard = ({ jamId, auth}) => {
 
     const handleInputChange = (event) => {
         event.persist();
-        // setaccInfo(boardMessage.text => ({...boardMessage, [event.target.id]: event.target.value}));
         setMessageText(event.target.value)
     }
 
@@ -63,37 +63,46 @@ const LandlordBoard = ({ jamId, auth}) => {
 
         DataService.saveMessage(jamId, 'board', messageInfo)
     }
+
+    const renderBoard = () => {
+        return (
+            <>
+                
+                <div className="landlord-board">
+                    {renderBoardContent()}
+                </div>
+                {isAdmin && 
+                    <form className="landlord-board-input-form" onSubmit={onSubmit}>
+                    
+                    <div className="landlord-board-input-field">
+                            <CustomTextArea
+                                width='100%'
+                                cols=''
+                                rows='3'
+                                placeholder='Type your message . . .'
+                                type="text"
+                                id='inputTest'
+                                changeControl={handleInputChange}
+                            />
+                        </div>
+
+                        <div className="landlord-board-button-area">
+                        <ButtonSubmit
+                            text='Send Message'
+                            clickHandle={onSubmit}
+                        />
+                        </div>
+
+                    </form>
+                }
+            </>
+        )
+        
+    }
     
     return (
         <div className="landlord-board-wrapper">
-
-            <div className="landlord-board">
-                {renderLandlordBoardContent()}
-            </div>
-            
-            <form className="landlord-board-input-form" onSubmit={onSubmit}>
-               
-               <div className="landlord-board-input-field">
-                    <CustomTextArea
-                        width='100%'
-                        cols=''
-                        rows='3'
-                        placeholder='Type your message . . .'
-                        type="text"
-                        id='inputTest'
-                        changeControl={handleInputChange}
-                    />
-                </div>
-
-                <div className="landlord-board-button-area">
-                <ButtonSubmit
-                    text='Send Message'
-                    clickHandle={onSubmit}
-                />
-                </div>
-
-            </form>
-        
+            {renderBoard()}
         </div>
 
     );   
@@ -101,11 +110,12 @@ const LandlordBoard = ({ jamId, auth}) => {
 
 
 
-const mapStateToProps = (state) => {
-    return {
-        auth: state.firebase.auth,
-        // jamId: state.jamId,
-        // jamActiveSection: state.jamSection,
-    }
-}
+const mapStateToProps = state => {
+    const { adminId } = state.jamInfo;
+    const { jamId } = state.nav;
+    const { userId, userName } = state.userInfo;
+
+    return { adminId, jamId, userId, userName };
+};
+
 export default connect(mapStateToProps)(LandlordBoard);

@@ -6,15 +6,13 @@ import DataService from '../../../services/DataService';
 import JamRegistrationForm from '../../../Forms/JamRegistrationForm';
 
 import UserNavBar from '../../../NavBars/UserNavBar';
-// import TenantOverview from '../../../JamSections/TenantOverview';
-// import TenantBoard from '../../../JamSections/TenantBoard';
-// import TenantRooms from '../../../JamSections/TenantRooms';
-// import TenantTenants from '../../../JamSections/TenantTenants';
-// import TenantSettings from '../../../JamSections/TenantSettings';
+import UserOverview from '../../../JamSections/UserOverview';
+import UserBoard from '../../../JamSections/UserBoard';
+import UserJammers from '../../../JamSections/UserJammers';
 
 import './index.scss';
 
-const TenantJam = ({ jamId, userId, setRegisteredUser }) => {
+const TenantJam = ({ jamId, section, userId, setRegisteredUser }) => {
     
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     
@@ -34,23 +32,18 @@ const TenantJam = ({ jamId, userId, setRegisteredUser }) => {
         setShowRegisterForm(x);
     }
 
-    // const renderSection = (section) => {
-    //     switch (section) {
-    //         case 'Overview':
-    //             return <TenantOverview jamId={jamId} />;
-    //         case 'Board':
-    //             return <TenantBoard jamId={jamId} />;
-    //         case 'Rooms':
-    //             return <TenantRooms jamId={jamId} />;
-    //         case 'Tenants':
-    //             return <TenantTenants jamId={jamId} />;
-    //         case 'Settings':
-    //             return <TenantSettings jamId={jamId} />;
-    //         case 'rent':
-    //         default:
-    //             return ;
-    //     }
-    // };
+    const renderSection = (section) => {
+        switch (section) {
+            case 'Overview':
+                return <UserOverview jamId={jamId} />;
+            case 'Board':
+                return <UserBoard jamId={jamId} />;
+            case 'Tenants':
+                return <UserJammers jamId={jamId} />;
+            default:
+                return ;
+        }
+    };
 
     return (
         <div className="jam-wrapper">
@@ -60,7 +53,7 @@ const TenantJam = ({ jamId, userId, setRegisteredUser }) => {
             </div>
 
             <div className="jam-body">
-                {/* {renderSection(currentSection)} */}
+                {renderSection(section)}
             </div>
 
             { showRegisterForm && (
@@ -80,9 +73,8 @@ const TenantJam = ({ jamId, userId, setRegisteredUser }) => {
 
 const mapStateToProps = state => {
 
-    const { section } = state.nav;
     const {jamName, jamDesc, jamType } = state.jamInfo;
-    const { jamId } = state.nav;
+    const { jamId, section } = state.nav;
     const {userId, userName } = state.userInfo;
 
     return { jamId, section, userId, userName, jamName, jamDesc, jamType };
