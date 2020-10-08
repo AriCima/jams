@@ -20,7 +20,7 @@ const JammersList = ({ jammersList }) => {
 
     return (
         <Fragment>
-            { jammersList ? renderJammersList() : <p>Loading</p>}
+            { jammersList.lenght > 0 ? renderJammersList() : <p>Loading</p>}
         </Fragment>
     );
 };

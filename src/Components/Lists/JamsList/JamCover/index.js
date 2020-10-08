@@ -9,10 +9,7 @@ import "./index.scss";
 
  const JamCover = ({ jamName, jamId, jamType, jamDesc, user2Name = '', setJamId, setSection, setSubSection }) => {
 
-  // const { jamName, jamId, jamType, jamDesc, user2Name = '' } = props
-
   const onsetJam = (jamId) => {
-    console.log(jamId)
     setJamId(jamId);
     setSection('Overview');
     setSubSection('');

@@ -14,9 +14,7 @@ const AdminOverview = ({ roomsFullInfo }) => {
 
 
     const renderRoomsChart = () => roomsFullInfo.map((room, i) => {
-
         return (
-
             <OverviewLine key={i}  room={room} />
         )
     });

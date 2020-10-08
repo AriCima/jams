@@ -12,7 +12,6 @@ const OverviewLine = ({ room }) => {
     const roomId = room.roomId;
 
     const handleClick = (e, roomId) => {
-        console.log('CLICK :', roomId)
         setSection('Rooms');
         setSubSection(roomId)
     };

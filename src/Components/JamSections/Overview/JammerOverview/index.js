@@ -2,14 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import JammerCard from '../../../Lists/JammersList/JammerCard';
 import JammerInfo from '../../../JamSections/Jammers/JammerInfo';
+import StartChatButton from '../../../UI/Buttons/StartChatButton';
 
 import './index.scss';
 
-const JammerOverview = ({ jamId, userId}) => {
-
-    const adminInfo = [];
+const JammerOverview = ({ jamName, jamType, userId, adminId, adminName}) => {
     
     return (
         <div className="overview-wrapper">
@@ -20,8 +18,8 @@ const JammerOverview = ({ jamId, userId}) => {
                 </div>
             </div>
             <div className="jammer-overview-serction-content">
-               <p>Jam Name</p>
-               <p>Jam Description</p>
+               <p>Jam Name: {jamName}</p>
+               <p>Jam Type: {jamType}</p>
             </div>
 
             <div className="jammer-overview-serction">
@@ -30,7 +28,13 @@ const JammerOverview = ({ jamId, userId}) => {
                 </div>
             </div>
             <div className="jammer-overview-serction-content">
-                <JammerCard adminInfo={adminInfo} />
+                <p>Admin Name: <span>{adminName}</span></p>
+                <div className="startChat-button">
+                    <StartChatButton 
+                    user2Name={adminName}
+                    user2Id={adminId}
+                    />
+                </div>
             </div>
 
             <div className="jammer-overview-serction">
@@ -39,7 +43,7 @@ const JammerOverview = ({ jamId, userId}) => {
                 </div>
             </div>
             <div className="jammer-overview-serction-content">
-                <JammerInfo docId={userId}/>
+                <JammerInfo docId={userId} />
             </div>
 
         </div>
@@ -49,8 +53,9 @@ const JammerOverview = ({ jamId, userId}) => {
 const mapStateToProps = (state) => {
     const { jamId } = state.nav.jamId;
     const { userId, userRole } = state.userInfo;
+    const { jamName, jamType, adminName } = state.jamInfo
     
-    return {jamId, userId, userRole};
+    return {jamId, userId, userRole, jamName, jamType, adminName};
 };
 export default connect(mapStateToProps, null)(JammerOverview);
 

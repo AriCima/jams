@@ -14,14 +14,15 @@ import './index.scss';
 
 const Overview = ({ jamId, userRole, userId }) => {
     const [roomsFullInfo, setRoomsFullInfo] = useState([]);
-    const [jammerInfo, setJammerInfo] = useState({});
+    // const [jammerInfo, setJammerInfo] = useState({});
 
     useEffect(() => {
         if(userRole === 'Admin') {
             getJamRoomsInfo(jamId)
-        } else {
-            getGuestInfo(jamId, userId)
         }
+        //  else {
+        //     getGuestInfo(jamId, userId)
+        // }
     }, [jamId]);
 
     const getJamRoomsInfo = async (jamId) => {
@@ -30,10 +31,11 @@ const Overview = ({ jamId, userRole, userId }) => {
         setRoomsFullInfo(roomsFullInfo);
     };
 
-    const getGuestInfo = async (jamId, userId) => {
-        const res = await DataService.getJammerInfo(jamId, userId);
-        setRoomsFullInfo(res);
-    };
+    // const getGuestInfo = async (jamId, userId) => {
+    //     console.log('jamId: ', jamId);
+    //     const res = await DataService.getJammerInfo(jamId, userId);
+    //     setJammerInfo(res);
+    // };
 
     const renderOverview = () => {
         if(userRole === 'Admin') {
@@ -56,7 +58,7 @@ const Overview = ({ jamId, userRole, userId }) => {
             return (
                 <div className="overview">
                     <div className="overview-info">
-                        <JammerOverview jammerInfo={jammerInfo} />
+                        <JammerOverview />
                     </div>
                 </div>
             )

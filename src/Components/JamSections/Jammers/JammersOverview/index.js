@@ -74,16 +74,16 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
                         <p>These are your flatmates !</p>
                     </div>
                     <div className="subsection-wrapper">
-                        <JammersList jammersList={jammers.myFlatMates} />
+                        <JammersList jammersList={jammers} />
                     </div>
                 </div>
             )
         }
     };
-
+    console.log('jammers: ', jammers);
     return (
         <>
-            { renderJammersList() }
+            { jammers.length > 0 ? renderJammersList() : <p>You have no flatmates yet</p> }
         </>
     );
 };

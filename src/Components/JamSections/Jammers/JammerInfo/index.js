@@ -10,12 +10,18 @@ import { connect } from 'react-redux';
 // CSS
 import './index.scss';
 
-const JammerInfo = ({jamId, docId }) => {
+const JammerInfo = ({jamId, userRole, userId, jammerInfo, docId }) => {
+  
   const [tenantInfo, setTenantInfo] = useState([]);
 
   useEffect(() => {
-    const jId = jamId.jamId;  // CHAPUZA
-    docId && DataService.getJammerInfo(jId, docId)
+    let documentId;
+    if (userRole === 'Admin'){
+      documentId = docId;
+    } else {
+      documentId = userId
+    }
+    DataService.getJammerInfo(jamId, documentId)
     .then(result => {
       setTenantInfo(result)
     })
@@ -38,11 +44,11 @@ const JammerInfo = ({jamId, docId }) => {
   )
 }
 
+
 const mapStateToProps = state => {
-  return { 
-    auth: state.firebase.auth,
-    jamId: state.jamId
-  }
+  const { jamId, docId } = state.nav;
+  const { userId , userRole } = state.userInfo
+  return { jamId, docId, userId }
 };
   
 export default connect(mapStateToProps, null) (JammerInfo);

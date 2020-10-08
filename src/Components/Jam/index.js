@@ -10,6 +10,7 @@ import Settings from '../JamSections/Settings';
 
 import './index.scss';
 const Jam = ({ jamId, section } ) => {
+    console.log('section: ', section);
 
   const renderSection = (section) => {
       switch (section) {

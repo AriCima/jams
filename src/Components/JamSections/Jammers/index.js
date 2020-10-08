@@ -9,8 +9,9 @@ import InviteJammerForm from '../../Forms/InviteJammerForm';
 import './index.scss';
 
 const Jammers = ({ jamId, docType, docId, userRole }) => {
+    console.log('userRole: ', userRole);
 
-    const renderTenantsScreen = () => {
+    const renderJammersScreen = () => {
 
         if(userRole === 'Admin') {
             switch (docType) {
@@ -29,7 +30,7 @@ const Jammers = ({ jamId, docType, docId, userRole }) => {
     return (
         <div className="jammers">
 
-            {renderTenantsScreen()}
+            {renderJammersScreen()}
             
         </div>
 

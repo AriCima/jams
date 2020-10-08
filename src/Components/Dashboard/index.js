@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
+
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import JamsList from '../Lists/JamsList';
@@ -12,7 +13,6 @@ import { setJamName, setJamType, setJamAdminId, setJamAdminName } from '../../re
 import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
 const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJamType, setJamAdminId, setJamAdminName  }) => {
-
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({})
 
@@ -36,6 +36,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
         const res = await DataService.getJamInfoById(jamId);
         const {jamName, adminId, adminName, jamType } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
+       
         // Info en el state
         setJamInfo(res);
 
@@ -47,7 +48,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
         setJamType(jamType)
     };
 
-    const renderJam = jamId && jamInfo;
+    const renderJam = jamId && !isEmpty(jamInfo);
 
     return (
         <div className="dashboard">
