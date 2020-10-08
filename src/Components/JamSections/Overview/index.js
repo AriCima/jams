@@ -14,28 +14,18 @@ import './index.scss';
 
 const Overview = ({ jamId, userRole, userId }) => {
     const [roomsFullInfo, setRoomsFullInfo] = useState([]);
-    // const [jammerInfo, setJammerInfo] = useState({});
 
     useEffect(() => {
         if(userRole === 'Admin') {
             getJamRoomsInfo(jamId)
         }
-        //  else {
-        //     getGuestInfo(jamId, userId)
-        // }
-    }, [jamId]);
+    }, [jamId, userRole]);
 
     const getJamRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
         const roomsFullInfo = Calculations.getCompleteRoomsInfo(res);
         setRoomsFullInfo(roomsFullInfo);
     };
-
-    // const getGuestInfo = async (jamId, userId) => {
-    //     console.log('jamId: ', jamId);
-    //     const res = await DataService.getJammerInfo(jamId, userId);
-    //     setJammerInfo(res);
-    // };
 
     const renderOverview = () => {
         if(userRole === 'Admin') {
@@ -74,9 +64,9 @@ const Overview = ({ jamId, userRole, userId }) => {
 
 
 const mapStateToProps = (state) => {
-    const { jamId } = state.nav.jamId;
-    const {userId, userRole } = state.userInfo;
-    
+    const { jamId } = state.nav;
+    const { userId, userRole } = state.userInfo;
+
     return {jamId, userId, userRole};
 };
 export default connect(mapStateToProps, null)(Overview);

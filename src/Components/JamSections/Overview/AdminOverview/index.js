@@ -7,11 +7,8 @@ import { setSection, setSubSection } from '../../../../redux/actions/navigateAct
 
 import './index.scss';
 
-const AdminOverview = ({ roomsFullInfo }) => {
-    
-    const showOverviewChart = !isEmpty(roomsFullInfo);
-    
-
+const AdminOverview = ({ roomsFullInfo }) => {    
+    console.log('roomsFullInfo: ', roomsFullInfo);
 
     const renderRoomsChart = () => roomsFullInfo.map((room, i) => {
         return (
@@ -39,7 +36,7 @@ const AdminOverview = ({ roomsFullInfo }) => {
                         <p>Rent €</p>
                     </div>
                 </div>
-                {showOverviewChart ? renderRoomsChart() : <p>Loading</p>}
+                { renderRoomsChart() }
             </div>
         </div>
     );

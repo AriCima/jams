@@ -10,20 +10,19 @@ import Settings from '../JamSections/Settings';
 
 import './index.scss';
 const Jam = ({ jamId, section } ) => {
-    console.log('section: ', section);
 
   const renderSection = (section) => {
       switch (section) {
           case 'Overview':
-              return <Overview jamId={jamId} />;
+              return <Overview />;
           case 'Board':
-              return <Board jamId={jamId} />;
+              return <Board/>;
           case 'Rooms':
-              return <Rooms jamId={jamId} />;
+              return <Rooms />;
           case 'Tenants':
-              return <Jammers jamId={jamId} />;
+              return <Jammers />;
           case 'Settings':
-              return <Settings jamId={jamId} />;
+              return <Settings />;
           case 'rent':
           default:
               return ;
