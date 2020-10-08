@@ -2,10 +2,8 @@
 import React from 'react';
 
 // COMPONENTS
-import LandlordRoomCard from './LandlordRoomCard';
-import ButtonPlain from '../../../UI/ButtonPlain';
-import ModalNewRoom from '../../../UI/ModalNewRoom';
-import Calculations from '../../../services/Calculations'
+import RoomCard from './RoomCard';
+import Calculations from '../../services/Calculations';
 
 // CSS
 import './index.scss';
@@ -16,7 +14,7 @@ const LandlordRoomsList = ({ roomsBookings }) => {
         return orderedRooms.map((rI, i) => {
             return (
                 <React.Fragment key={i}>
-                    <LandlordRoomCard
+                    <RoomCard
                         rI={rI} 
                     />
                 </React.Fragment>

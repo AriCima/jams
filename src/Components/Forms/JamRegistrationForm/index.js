@@ -307,8 +307,6 @@ const JamRegistrationForm = ({ jamId, jamName, userId, userName, userLastName, i
 };
 
 const mapStateToProps = state => {
-    console.log('state: ', state.userInfo);
-
     const { section } = state.nav;
     const {jamName, jamDesc, jamType } = state.jamInfo;
     const { jamId } = state.nav;

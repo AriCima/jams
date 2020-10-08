@@ -7,7 +7,7 @@ import { setSection, setSubSection } from '../../../../redux/actions/navigateAct
 
 import './index.scss';
 
-const RoomsOverview = ({ roomsFullInfo }) => {
+const AdminOverview = ({ roomsFullInfo }) => {
     
     const showOverviewChart = !isEmpty(roomsFullInfo);
     
@@ -47,4 +47,4 @@ const RoomsOverview = ({ roomsFullInfo }) => {
     );
 };
 
-export default RoomsOverview;
+export default AdminOverview;

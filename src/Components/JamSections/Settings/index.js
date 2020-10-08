@@ -5,22 +5,22 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // CSS
-import './index.css';
+import './index.scss';
 
-const LandlordSettings = (props) => {
+const Settings = (props) => {
 
  
 
     return (
 
-        <div className="landlord-jam-settings">
-            <div className="landlord-jam-settings-section">
-                <div className="landlord-jam-settings-section-title">
+        <div className="settings">
+            <div className="settings-section">
+                <div className="settings-section-title">
                     <h2>Jam Info</h2>
                 </div>
             </div>
-            <div className="landlord-jam-settings-section">
-                <div className="landlord-jam-settings-section-title">
+            <div className="settings-section">
+                <div className="settings-section-title">
                     <h2>Apartment Info</h2>
                     <p>
                         We
@@ -29,8 +29,8 @@ const LandlordSettings = (props) => {
                     </p>
                 </div>
             </div>
-            <div className="landlord-jam-settings-section">
-                <div className="landlord-jam-settings-section-title">
+            <div className="settings-section">
+                <div className="settings-section-title">
                     <h2>Landlord Info</h2>
                 </div>
             </div>
@@ -46,4 +46,4 @@ const mapStateToProps = (state) => {
         jamId: state.nav.jamId,
     };
 };
-export default connect(mapStateToProps, null)(LandlordSettings);
+export default connect(mapStateToProps, null)(Settings);

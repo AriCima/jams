@@ -7,7 +7,7 @@ import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
 import isEmpty from 'lodash/isEmpty';
 
-import LandlordRoomsList from './LandlordRoomsList';
+import RoomsList from '../../Lists/RoomsList';
 import LandlordRoomInfo from './LandlordRoomInfo';
 import RoomsOverview from './RoomsOverview';
 // import CheckAvailability from '../../../../../../../Common/CheckAvailability';
@@ -16,7 +16,7 @@ import RoomsOverview from './RoomsOverview';
 import './index.scss';
 // import { setRoomId } from '../../../redux/actions/roomsId';
 
-const LandlordRooms = ({ jamId, subSection }) => {
+const Rooms = ({ jamId, subSection }) => {
     const [jamRoomsInfo, setJamRoomsInfo] = useState([]);
     const [roomInfo, setRoomInfo] = useState({});
     const [jamOrderedBookings, setJamOrderedBookings] = useState([]);
@@ -66,7 +66,7 @@ const LandlordRooms = ({ jamId, subSection }) => {
             <div className="landlord-rooms-list">
                 {showRoomsList ? 
                     (
-                        <LandlordRoomsList
+                        <RoomsList
                             jamId={jamId}
                             jamRoomsInfo={jamRoomsInfo}
                             roomsBookings={jamOrderedBookings}
@@ -100,4 +100,4 @@ const mapStateToProps = (state) => {
     return { subSection }
     
 };
-export default connect(mapStateToProps, null)(LandlordRooms);
+export default connect(mapStateToProps, null)(Rooms);

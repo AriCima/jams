@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { setSubSection } from '../../../../../redux/actions/navigateActions';
+import { setSubSection } from '../../../../redux/actions/navigateActions';
 
 import './index.scss';
 

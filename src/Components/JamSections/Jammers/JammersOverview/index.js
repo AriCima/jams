@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import DataService from '../../../services/DataService';
 import Calculations from '../../../services/Calculations';
-import JammersList from './JammersList';
+import JammersList from '../../../Lists/JammersList';
 import InviteJammerButton from '../../../UI/Buttons/InviteJammerButton';
 import './index.scss';
 
@@ -79,7 +79,7 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
                 </div>
             )
         }
-    }
+    };
 
     return (
         <>
@@ -92,7 +92,7 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
 const mapStateToProps = (state) => {
     const { docType , docId } = state.doc;
     const { userRole, userId } = state.userInfo
-    return { docType, docId, userRole }
+    return { docType, docId, userRole, userId }
     
 };
 export default connect(mapStateToProps, null)(JammersOverview);
