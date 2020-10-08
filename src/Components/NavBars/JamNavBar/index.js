@@ -7,9 +7,10 @@ import { faComments} from '@fortawesome/free-solid-svg-icons'
 import Calculations from '../../services/Calculations';
 import { setSection, setSubSection } from     "../../../redux/actions/navigateActions";
 import { setDocType, setDocId, setEditable } from '../../../redux/actions/docsActions';
+
 import './index.scss';
 
-const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEditable, jamName, jamType}) => {
+const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, setEditable, jamName, jamType}) => {
 
     const [jamSections, setJamSections] = useState([]);
 
@@ -22,9 +23,14 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
     };
 
     useEffect(() => {
-        const sections = Calculations.getJamAdminSections(jamType);
+        let sections
+        if (userRole === 'Admin') {
+            sections = Calculations.getJamAdminSections(jamType);
+        } else {
+            sections = Calculations.getJamGuestSections(jamType);
+        }
         setJamSections(sections);
-    }, [jamType, setJamSections]);
+    }, [jamType, userRole]);
 
 
     const renderLandlordNavBar = () => {
@@ -83,10 +89,8 @@ const LandlordNavBar = ({ setSection, setSubSection, setDocType, setDocId, setEd
 
 const mapStateToProps = (state) => {
     const { section, subSection } = state.nav;
-    return {
-        section,
-        subSection
-    }
+    const { userRole } = state.userInfo;
+    return { section, subSection, userRole }
 };
 
-export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(LandlordNavBar);
+export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(JamNavBar);

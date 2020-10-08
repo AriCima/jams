@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import JamNavBar from '../NavBars/LandlordNavBar';
+import JamNavBar from '../NavBars/JamNavBar';
 import Overview from '../JamSections/Overview';
 import Board from '../JamSections/Board';
 import Rooms from '../JamSections/Rooms';

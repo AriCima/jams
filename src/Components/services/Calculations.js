@@ -92,7 +92,7 @@ export default class Calculations {
        return sections;
     };
 
-    static getJamUserSections(type){
+    static getJamGuestSections(type){
         //console.log('get Jam Sections launched')
         let sections = [];
         switch (type) {
@@ -100,7 +100,7 @@ export default class Calculations {
               sections = ['Board', 'Jammers', 'MyJam', 'Settings']
               break;
             case 'rooms-rental':
-                sections = ['Board', 'Flatmates']
+                sections = ['Overview', 'Board', 'Flatmates']
                 break;
             case 'chat': 
                 sections = ['Chat']
