@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import DataService from '../../../services/DataService';
 import useInviteJammerForm from '../../../Forms/InviteJammerForm';
 import EditJammerForm from '../../../Forms/EditJammerForm';
-
+import StartChatButton from '../../../UI/Buttons/StartChatButton';
 
 import { connect } from 'react-redux';
 
 // CSS
 import './index.scss';
 
-const JammerInfo = ({jamId, userRole, userId, jammerInfo, docId }) => {
+const JammerInfo = ({jamId, userRole, userId, docId }) => {
   
   const [tenantInfo, setTenantInfo] = useState([]);
 
@@ -25,17 +25,24 @@ const JammerInfo = ({jamId, userRole, userId, jammerInfo, docId }) => {
     .then(result => {
       setTenantInfo(result)
     })
-    
   }, [jamId, docId])
 
   return(
-    <div className="tenant-info-wrapper">
+    <div className="jammer-info-wrapper">
       {docId && tenantInfo.length !== 0 ? (
-        <EditJammerForm 
-          tenantInfo={tenantInfo}
-          docId={docId}
-          jamId={jamId}
-        />
+        <>
+          <div className="start-chatButton">
+            <StartChatButton 
+              user2Name={tenantInfo.firstName}
+              user2Id={docId}
+            />
+          </div>
+          <EditJammerForm 
+            tenantInfo={tenantInfo}
+            docId={docId}
+            jamId={jamId}
+          />
+        </>
       ):(
         <useInviteJammerForm 
           jamId={jamId}/>
@@ -46,9 +53,10 @@ const JammerInfo = ({jamId, userRole, userId, jammerInfo, docId }) => {
 
 
 const mapStateToProps = state => {
-  const { jamId, docId } = state.nav;
+  const { jamId } = state.nav;
+  const { docId } = state.doc;
   const { userId , userRole } = state.userInfo
-  return { jamId, docId, userId }
+  return { jamId, docId, userId, userRole }
 };
   
 export default connect(mapStateToProps, null) (JammerInfo);

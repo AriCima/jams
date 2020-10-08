@@ -9,7 +9,6 @@ import InviteJammerForm from '../../Forms/InviteJammerForm';
 import './index.scss';
 
 const Jammers = ({ jamId, docType, docId, userRole }) => {
-    console.log('userRole: ', userRole);
 
     const renderJammersScreen = () => {
 

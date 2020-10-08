@@ -1,5 +1,6 @@
 
 import React, { Fragment } from 'react';
+import isEmpty from 'lodash/isEmpty';
 import JammerCard from './JammerCard';
 
 import './index.scss';
@@ -20,7 +21,7 @@ const JammersList = ({ jammersList }) => {
 
     return (
         <Fragment>
-            { jammersList.lenght > 0 ? renderJammersList() : <p>Loading</p>}
+            { !isEmpty(jammersList) ? renderJammersList() : <p>Loading</p>}
         </Fragment>
     );
 };

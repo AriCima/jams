@@ -30,15 +30,15 @@ const Jam = ({ jamId, section } ) => {
   };
 
   return (
-      <div className="jam-wrapper">
-          <div className="jam-navBar">
-              <JamNavBar/>
-          </div>
+    <>
+        <div className="jam-navBar">
+            <JamNavBar/>
+        </div>
 
-          <div className="jam-body">
-              {renderSection(section)}
-          </div>
-      </div>
+        <div className="jam-body">
+            {renderSection(section)}
+        </div>
+    </>
   );
 };
 

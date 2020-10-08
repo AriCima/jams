@@ -1,15 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import isEmpty from 'lodash/isEmpty';
 import OverviewLine from './OverviewLine';
-
-import { setSection, setSubSection } from '../../../../redux/actions/navigateActions';
 
 import './index.scss';
 
 const AdminOverview = ({ roomsFullInfo }) => {    
-    console.log('roomsFullInfo: ', roomsFullInfo);
-
     const renderRoomsChart = () => roomsFullInfo.map((room, i) => {
         return (
             <OverviewLine key={i}  room={room} />

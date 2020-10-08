@@ -64,9 +64,7 @@ const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, 
                         (
                             <>
                                 <div className="jamNavBar-left">
-                                    <div className="jamNavBar-jamName"
-                                        onClick={() => onsetJamSection(`Overview`)}
-                                    >
+                                    <div className="jamNavBar-jamName">
                                         <p>{jamName}</p>
                                     </div>
                                 </div>
@@ -90,7 +88,8 @@ const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, 
 const mapStateToProps = (state) => {
     const { section, subSection } = state.nav;
     const { userRole } = state.userInfo;
-    return { section, subSection, userRole }
+    const { jamName, jamType } = state.jamInfo;
+    return { section, subSection, userRole, jamName, jamType }
 };
 
 export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(JamNavBar);

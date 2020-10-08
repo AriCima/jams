@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
+import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 
 import DataService from '../../../services/DataService';
@@ -11,9 +12,10 @@ import './index.scss';
 const JammersOverview = ({ jamId, userRole, userId }) => {
     const [jammers, setJammers] = useState([]);
     
+    
     useEffect(() => {
         getJammersList(jamId)
-    }, []);
+    }, [jamId]);
 
     const getJammersList = async (jamId) => {
         const res = await DataService.getJammers(jamId);
@@ -80,19 +82,21 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
             )
         }
     };
-    console.log('jammers: ', jammers);
+
     return (
         <>
-            { jammers.length > 0 ? renderJammersList() : <p>You have no flatmates yet</p> }
+            { !isEmpty(jammers) && renderJammersList() }
         </>
     );
 };
 
 
 const mapStateToProps = (state) => {
+    const { jamId } = state.nav;
     const { docType , docId } = state.doc;
-    const { userRole, userId } = state.userInfo
-    return { docType, docId, userRole, userId }
+    const { userRole, userId } = state.userInfo;
+
+    return { jamId, docType, docId, userRole, userId }
     
 };
 export default connect(mapStateToProps, null)(JammersOverview);
