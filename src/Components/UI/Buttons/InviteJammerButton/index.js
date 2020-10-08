@@ -8,7 +8,7 @@ import { setDocType, setDocId, setEditable } from '../../../../redux/actions/doc
 
 import "./index.scss";
 
-const InviteTenantButton = ({ setSection, setSubSection, setDocType, setDocId, setEditable }) => {
+const InviteJammerButton = ({ setSection, setSubSection, setDocType, setDocId, setEditable }) => {
 
   const sendInvitation = () => {
     setSection('Tenants');
@@ -34,4 +34,4 @@ const InviteTenantButton = ({ setSection, setSubSection, setDocType, setDocId, s
 }
 
 
-export default connect (null, {setSection, setSubSection, setDocType, setDocId, setEditable})(InviteTenantButton);
+export default connect (null, {setSection, setSubSection, setDocType, setDocId, setEditable})(InviteJammerButton);

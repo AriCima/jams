@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import DataService from '../../../services/DataService';
-import useInviteTenantForm from '../../../Forms/InviteTenantForm';
-import EditTenantForm from '../../../Forms/EditTenantForm';
+import useInviteJammerForm from '../../../Forms/InviteJammerForm';
+import EditJammerForm from '../../../Forms/EditJammerForm';
 
 
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 // CSS
 import './index.scss';
 
-const LandlordTenantInfo = ({jamId, docId }) => {
+const JammerInfo = ({jamId, docId }) => {
   const [tenantInfo, setTenantInfo] = useState([]);
 
   useEffect(() => {
@@ -25,13 +25,13 @@ const LandlordTenantInfo = ({jamId, docId }) => {
   return(
     <div className="tenant-info-wrapper">
       {docId && tenantInfo.length !== 0 ? (
-        <EditTenantForm 
+        <EditJammerForm 
           tenantInfo={tenantInfo}
           docId={docId}
           jamId={jamId}
         />
       ):(
-        <useInviteTenantForm 
+        <useInviteJammerForm 
           jamId={jamId}/>
      )}
     </div>
@@ -45,4 +45,4 @@ const mapStateToProps = state => {
   }
 };
   
-export default connect(mapStateToProps, null) (LandlordTenantInfo);
+export default connect(mapStateToProps, null) (JammerInfo);

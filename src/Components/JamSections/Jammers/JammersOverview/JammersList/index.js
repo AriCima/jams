@@ -1,16 +1,16 @@
 
 import React, { Fragment } from 'react';
-import LandlordTenantCard from './LandlordTenantCard';
+import JammerCard from './JammerCard';
 
 import './index.scss';
 
-const LandlordTenantsList = ({ tenantsList }) => {
+const JammersList = ({ jammersList }) => {
 
     const renderJammersList = () => {
-        return tenantsList.map((tL, i) => {
+        return jammersList.map((tL, i) => {
             return (
                 <React.Fragment key={i}>
-                    <LandlordTenantCard
+                    <JammerCard
                         tL={tL} 
                     />
                 </React.Fragment>
@@ -20,9 +20,9 @@ const LandlordTenantsList = ({ tenantsList }) => {
 
     return (
         <Fragment>
-            { tenantsList ? renderJammersList() : <p>Loading</p>}
+            { jammersList ? renderJammersList() : <p>Loading</p>}
         </Fragment>
     );
 };
 
-export default LandlordTenantsList;
+export default JammersList;

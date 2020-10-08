@@ -316,11 +316,11 @@ export default class Calculations {
         return result
     }
 
-    // - - - - - - - - TENANTW
+    // - - - - - - - - JAMMERS - - - - - - - - 
 
-    static organizeTenants = (tenants) => {
+    static organizeAdminTenants = (tenants) => {
 
-        const result = {
+        let result = {
             currentTenants: [], 
             formerTenants: [],
             futureTenants: []
@@ -340,6 +340,26 @@ export default class Calculations {
             }
         });
         return result
+    }
+
+    static organizeFlatmates = (tenants, userId) => {
+
+        let flatMates = [];
+        const userIndex = tenants.map(function(e) { 
+            return e.userId; 
+        }).indexOf(userId);
+
+        const userCheckInDate = tenants[userIndex].checkIn;
+        const userCheckOutDate = tenants[userIndex].checkOut;
+
+        tenants.forEach(e => {
+            const cIn = new Date(e.checkIn);
+            const cOut = new Date(e.checkOut);
+            if ((cIn > userCheckInDate && cIn < userCheckOutDate) || (cOut > userCheckInDate && cOut < userCheckOutDate)) {
+                flatMates.push(e)
+            };
+        });
+        return flatMates
     }
 
     static checkOverlapping(checkIn, checkOut, bookings){

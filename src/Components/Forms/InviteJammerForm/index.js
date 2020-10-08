@@ -8,7 +8,7 @@ import DataService from '../../services/DataService';
 import './index.scss';
 
 
-const useInviteTenantForm = ({jamId, jamName, adminName}) => {
+const useInviteJammerForm = ({jamId, jamName, adminName}) => {
 
     let history = useHistory();
     const { register, errors, handleSubmit } = useForm();
@@ -160,4 +160,4 @@ const mapStateToProps = (state) => {
     return { jamId, jamName, adminName }
 };
 
-export default connect(mapStateToProps, null)(useInviteTenantForm);
+export default connect(mapStateToProps, null)(useInviteJammerForm);

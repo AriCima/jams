@@ -6,9 +6,9 @@ import StartChatButton from '../../../../../UI/Buttons/StartChatButton';
 import "./index.scss";
 import { setDocType, setDocId, setEditable } from "../../../../../../redux/actions/docsActions";
 
-const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
+const JammerCard = ({ tL, setDocType, setDocId, setEditable }) => {
 
-  const showTenantForm = (e) => {
+  const showJammerForm = (e) => {
     e.preventDefault();
     setDocType('TENANT-FORM');
     setDocId(tL.id); // tenant's userId
@@ -18,7 +18,7 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
   return (
 
     <div className="landlord-tenant-wrapper"
-      onClick={e => showTenantForm(e)}
+      onClick={e => showJammerForm(e)}
     >
       <div className="landlord-tenant-picture">
         <img></img>
@@ -50,4 +50,4 @@ const LandlordTenantCard = ({ tL, setDocType, setDocId, setEditable }) => {
 
 
 
-export default connect(null, { setDocType, setDocId, setEditable })(LandlordTenantCard);
+export default connect(null, { setDocType, setDocId, setEditable })(JammerCard);

@@ -12,7 +12,7 @@ import ButtonCancel from '../../UI/Buttons/ButtonCancel';
 import './index.scss';
 
 
-const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
+const useEditJammerForm = ({ tenantInfo, docId, jamId }) => {
 
     const [editedForm, setEditedForm] = useState(false);
     
@@ -405,4 +405,4 @@ const useEditTenantForm = ({ tenantInfo, docId, jamId }) => {
     );
 };
 
-export default useEditTenantForm;
+export default useEditJammerForm;
