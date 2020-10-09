@@ -96,8 +96,9 @@ const Rooms = ({ jamId, subSection }) => {
 
 
 const mapStateToProps = (state) => {
-    const { subSection } = state.nav;
-    return { subSection }
+    const { jamId, subSection } = state.nav;
+
+    return { jamId, subSection }
     
 };
 export default connect(mapStateToProps, null)(Rooms);

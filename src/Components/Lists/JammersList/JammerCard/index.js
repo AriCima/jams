@@ -6,7 +6,10 @@ import StartChatButton from '../../../UI/Buttons/StartChatButton';
 import "./index.scss";
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 
-const JammerCard = ({ tL, setDocType, setDocId, setEditable }) => {
+const JammerCard = ({ userId, firstName, jamName, tL, setDocType, setDocId, setEditable }) => {
+  console.log('userId: ', userId);
+  console.log('jammerId: ', tL.userId);
+  console.log('jammerName: ', tL.firstName);
 
   const showJammerForm = (e) => {
     e.preventDefault();
@@ -30,8 +33,11 @@ const JammerCard = ({ tL, setDocType, setDocId, setEditable }) => {
           </div>
           <div className="landlord-tenant-contact">
             <StartChatButton 
+              user1Name={firstName}
+              user1Id={userId}
               user2Name={tL.firstName}
-              user2Id={tL.id}
+              user2Id={tL.userId}
+              jamName={jamName}
             />
           </div>
         </div>
@@ -48,6 +54,14 @@ const JammerCard = ({ tL, setDocType, setDocId, setEditable }) => {
   
 }
 
+const mapStateToProps = state => {
+
+  const jamId = state.nav.jamId;
+  const { userId, userRole, firstName } = state.userInfo;
+  const { jamName } = state.jamInfo
+
+  return { jamId, userId, userRole, firstName, jamName };
+};
 
 
-export default connect(null, { setDocType, setDocId, setEditable })(JammerCard);
+export default connect(mapStateToProps, { setDocType, setDocId, setEditable })(JammerCard);

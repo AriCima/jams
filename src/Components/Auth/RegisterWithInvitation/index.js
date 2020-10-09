@@ -11,7 +11,20 @@ import DataService from '../../services/DataService';
 import './index.scss';
 import { setUserId, setUserFirstName, setUserLastName } from '../../../redux/actions/userActions.js';
 
-const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId, setSection, setSubSection, setUserId, setUserFirstName, setUserLastName }) => {
+const RegisterWithInvitation = ({
+    adminName, 
+    firstName, 
+    invId, 
+    jamId, 
+    jamName, 
+    lastName, 
+    setJamId, 
+    setSection, 
+    setSubSection, 
+    setUserFirstName, 
+    setUserId, 
+    setUserLastName 
+  }) => {
   
   const [jamInfo, setJamInfo] = useState({});
 
@@ -24,7 +37,13 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
 
   let history = useHistory();
 
-  const { register, errors, getValues, handleSubmit } = useForm();
+
+  const { register, errors, handleSubmit, getValues, control } = useForm({
+    defaultValues: {
+        firstName: firstName,
+        lastName: lastName,
+    }
+});
 
   const onSubmit = (data) => {
 
@@ -37,7 +56,7 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
         return;
       } else {
 
-        AuthService.registerWithInvitation(firstName, lastName, email, password, jamId, jamInfo)
+        AuthService.registerWithInvitation(firstName, lastName, email, password, jamId, jamInfo, invId)
         .then(res => {
           const userId = res.user.uid;
           setJamId(jamId);
@@ -62,6 +81,7 @@ const RegisterWithInvitation = ({jamId, jamName, adminName, firstName, setJamId,
             <p>Hello {firstName} !<p>
             <p>{adminName} has invite you to join to {jamName}</p>
             </p>Please register to Jammint and we'll take you there</p>
+            <p>INVITATION {invId}</p>
           </div>
           <div className="register-form-line">
               <div className="custom-input-block">

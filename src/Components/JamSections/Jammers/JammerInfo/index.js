@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 // CSS
 import './index.scss';
 
-const JammerInfo = ({jamId, userRole, userId, docId }) => {
+const JammerInfo = ({jamId, jamName, userRole, firstName, userId, docId }) => {
   
   const [tenantInfo, setTenantInfo] = useState([]);
 
@@ -33,8 +33,11 @@ const JammerInfo = ({jamId, userRole, userId, docId }) => {
         <>
           <div className="start-chatButton">
             <StartChatButton 
+              user1Name={firstName}
+              user1Id={userId}
               user2Name={tenantInfo.firstName}
               user2Id={docId}
+              jamName={jamName}
             />
           </div>
           <EditJammerForm 
@@ -55,8 +58,10 @@ const JammerInfo = ({jamId, userRole, userId, docId }) => {
 const mapStateToProps = state => {
   const { jamId } = state.nav;
   const { docId } = state.doc;
-  const { userId , userRole } = state.userInfo
-  return { jamId, docId, userId, userRole }
+  const { jamName } = state.jamInfo;
+  const { userId , firstName, userRole } = state.userInfo
+
+  return { jamId, jamName, docId, userId, userRole, firstName }
 };
   
 export default connect(mapStateToProps, null) (JammerInfo);

@@ -23,8 +23,25 @@ function App() {
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
-                        <Route path="/register/:jamID/:jamName/:adminName/:jName/:invID" exact render={(props) => <RegisterWithInvitation propsFn={props.history} jamId={props.match.params.jamID} jamName={props.match.params.jamName} adminName={props.match.params.adminName} firstName={props.match.params.jName} invId={props.match.params.invID} />} />
-                        <Route path="/jam-register/:jamID:/:jamNAME/:invID" exact render={(props) => <JamRegistrationForm propsFn={props.history} jamId={props.match.params.jamID} jamName={props.match.params.jamNAME} invId={props.match.params.invID} />} />
+                        <Route path="/register/:jamId/:jamName/:adminName/:firstName/:lastName/:invId" exact render={(props) => 
+                            <RegisterWithInvitation 
+                                propsFn={props.history}
+                                jamId={props.match.params.jamId}
+                                jamName={props.match.params.jamName}
+                                adminName={props.match.params.adminName}
+                                firstName={props.match.params.firstName}
+                                lastName={props.match.params.lastName}
+                                invId={props.match.params.invId}
+                            />
+                        } 
+                        />
+                        <Route path="/jam-register/:jamId:/:jamName/:invId" exact render={(props) => 
+                            <JamRegistrationForm
+                                propsFn={props.history}
+                                jamId={props.match.params.jamId}
+                                jamName={props.match.params.jamName}
+                                invId={props.match.params.invId} />} 
+                            />
                     </Switch>
                 </div>
                 <div className="footer"><Footer /></div>

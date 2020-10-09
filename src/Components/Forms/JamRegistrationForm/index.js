@@ -7,8 +7,14 @@ import DataService from '../../services/DataService';
 
 import './index.scss';
 
-const JamRegistrationForm = ({ jamId, jamName, userId, userName, userLastName, invId, showForm, setRegisteredUser }) => {
-
+const JamRegistrationForm = ({
+    jamId,
+    jamName,
+    userId,
+    invId,
+    showForm,
+    setRegisteredUser
+}) => {
     const [invInfo, setInvInfo] = useState({})
 
     useEffect(() => {
@@ -20,8 +26,8 @@ const JamRegistrationForm = ({ jamId, jamName, userId, userName, userLastName, i
 
     const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
-            firstName: userName,
-            lastName: userLastName,
+            firstName: invInfo.firstName,
+            lastName: invInfo.lastName,
             email: invInfo.email,
             checkIn: invInfo.checkIn,
             checkOut: invInfo.checkOut,
@@ -310,9 +316,9 @@ const mapStateToProps = state => {
     const { section } = state.nav;
     const {jamName, jamDesc, jamType } = state.jamInfo;
     const { jamId } = state.nav;
-    const {userId, userName, userLastName } = state.userInfo;
+    const {userId } = state.userInfo;
 
-    return { jamId, userId, section, userName, userLastName, jamName, jamDesc, jamType };
+    return { jamId, userId, section, jamName, jamDesc, jamType };
 };
 
 

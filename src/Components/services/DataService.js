@@ -24,7 +24,9 @@ export default class DataService {
 
     static checkIfEmialExists(email) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users').where('email', '==', email)
+            firebase.firestore()
+                .collection('users')
+                .where('email', '==', email)
                 .get()
                 .then((res) => {
                     const docExists = !res.empty;
@@ -95,7 +97,6 @@ export default class DataService {
                 .then((doc) => {
                     // console.log('doc del create: ', doc);
                     const jamId = doc.id;
-                    console.log('jamId: ', jamId);
                     const userInfo = { userId, email, firstName, lastName };
                     jamInfo.jamId = jamId;
 
@@ -108,10 +109,10 @@ export default class DataService {
                           };
                           DataService.addNewRoom(jamId, roomInfo);
                         }
-                      }
+                    }
 
                     this.addJamToUser(userId, jamId, jamInfo);
-                    this.addJammerToJam(jamId, userInfo);
+                    // this.addJammerToJam(jamId, userInfo);
                     resolve({ id: doc.id });
                 })
                 .catch((error) => {
@@ -121,9 +122,32 @@ export default class DataService {
                 });
         });
     }
-    static addJamToUser(userId, jamId, jamInfo) {
+
+    static startChat(chatId, chatInfo, user1Id, user2Id) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users')
+            firebase.firestore()
+                .collection('jams')
+                .doc(chatId)
+                .set(chatInfo)
+                .then((res) => {
+                    if(res) {
+                        this.addJamToUser(user1Id, chatId, chatInfo);
+                        this.addJamToUser(user2Id, chatId, chatInfo);
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log('Chat could not be created: ', errorCode, ' / ', errorMessage);
+                });
+        });
+    }
+
+
+    static addJamToUser(jamId, userId, jamInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('users')
                 .doc(userId)
                 .collection('userJams')
                 .doc(jamId)
@@ -172,20 +196,7 @@ export default class DataService {
         });
     }
 
-    static startChat(chatId, jamInfo) {
-        // console.log('chatId y jamInfo = ', chatId, " / ", jamInfo)
-        return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams').doc(chatId).set(jamInfo)
-                .then(
-                    // console.log('chat succesfully added')
-                )
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // console.log('Jam could not be created: ', errorCode, errorMessage);
-                });
-        });
-    }
+
 
     // GET INFO
     static getJamToJoin(jamCode) {
@@ -566,6 +577,8 @@ export default class DataService {
     }
 
     static getInvitationInfo(jamId, invId) {
+        console.log('jamId: ', jamId);
+        console.log('invId: ', invId);
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
             .doc(jamId)

@@ -12,7 +12,7 @@ import UserJammers from '../../../JamSections/UserJammers';
 
 import './index.scss';
 
-const TenantJam = ({ jamId, section, userId, setRegisteredUser }) => {
+const TenantJam = ({ jamId, section, userId }) => {
     
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     
@@ -73,11 +73,10 @@ const TenantJam = ({ jamId, section, userId, setRegisteredUser }) => {
 
 const mapStateToProps = state => {
 
-    const {jamName, jamDesc, jamType } = state.jamInfo;
     const { jamId, section } = state.nav;
-    const {userId, userName } = state.userInfo;
+    const { userId, userName } = state.userInfo;
 
-    return { jamId, section, userId, userName, jamName, jamDesc, jamType };
+    return { jamId, section, userId, userName, };
 };
 
 export default connect(mapStateToProps, { setRegisteredUser })(TenantJam);

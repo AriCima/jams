@@ -7,7 +7,9 @@ import StartChatButton from '../../../UI/Buttons/StartChatButton';
 
 import './index.scss';
 
-const JammerOverview = ({ jamName, jamType, userId, adminId, adminName}) => {
+// Esta es la info que ve el inquilino en su Jam/Overview
+
+const JammerOverview = ({ jamName, jamType, userId, firstName, adminName, adminId}) => {
     
     return (
         <div className="overview-wrapper">
@@ -30,10 +32,13 @@ const JammerOverview = ({ jamName, jamType, userId, adminId, adminName}) => {
             <div className="jammer-overview-serction-content">
                 <p>Admin Name: <span>{adminName}</span></p>
                 <div className="startChat-button">
-                    <StartChatButton 
+                <StartChatButton 
+                    user1Name={firstName}
+                    user1Id={userId}
                     user2Name={adminName}
                     user2Id={adminId}
-                    />
+                    jamName={jamName}
+                />
                 </div>
             </div>
 
@@ -52,10 +57,10 @@ const JammerOverview = ({ jamName, jamType, userId, adminId, adminName}) => {
 
 const mapStateToProps = (state) => {
     const { jamId } = state.nav.jamId;
-    const { userId, userRole } = state.userInfo;
-    const { jamName, jamType, adminName } = state.jamInfo
+    const { userId, userRole, firstName } = state.userInfo;
+    const { jamName, jamType, adminName, adminId } = state.jamInfo
     
-    return {jamId, userId, userRole, jamName, jamType, adminName};
+    return {jamId, userId, userRole, jamName, jamType, firstName, adminName};
 };
 export default connect(mapStateToProps, null)(JammerOverview);
 

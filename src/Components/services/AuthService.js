@@ -57,21 +57,32 @@ export default class AuthService {
         });
     };
 
-    static registerWithInvitation(firstName, lastName, email, password, jamId, jamInfo){
+    static registerWithInvitation(firstName, lastName, email, password, jamId, jamInfo, invId){
+        console.log('invId: ', invId);
         return new Promise((resolve, reject) => {
 
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((result) => {
                 const userId = result.user.uid;
                 const userInfo = {
+                    userId,
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
+                    invId,
                     userJams: [jamId]
                 };
                 DataService.saveUserInfoInFirestore(userId, userInfo);
-                DataService.addJammerToJam(jamId, userId, userInfo);
-                DataService.addJamToUser(userId, jamId, jamInfo);
+                DataService.addJamToUser(jamId, userId, jamInfo);
+                const jammerInfo = {
+                    userId,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    invId, 
+                    registeredUser: false
+                }
+                DataService.addJammerToJam(jamId, jammerInfo);
                 console.log('RegisterResult OK: ', result);
                 resolve(result)
             })

@@ -15,12 +15,12 @@ const useInviteJammerForm = ({jamId, jamName, adminName}) => {
 
     const onSubmit = (data) => {
         data.registeredUser = false;
-        const { firstName } = data
+        const { firstName, lastName, email } = data
         DataService.newTenantInvitation(jamId, data)
         .then((res) => {
             const invId = res.id;
             // CHAPUZA AQUI HAY QUE AUTOMATIZAR FUNCION DE INVITACION
-            history.push(`/register/${jamId}/${jamName}/${adminName}/${firstName}/${invId}`);
+            history.push(`/register/${jamId}/${jamName}/${adminName}/${firstName}/${lastName}/${invId}`);
         })
     };
 
