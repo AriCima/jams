@@ -13,6 +13,7 @@ import { setRegisteredUser } from  '../../redux/actions/userActions';
 import JamRegistrationForm from '../Forms/JamRegistrationForm';
 
 import './index.scss';
+import { setDocId } from '../../redux/actions/docsActions';
 const Jam = ({ jamId, userId, section } ) => {
 
     const [showRegisterForm, setShowRegisterForm] = useState(false);
@@ -22,7 +23,6 @@ const Jam = ({ jamId, userId, section } ) => {
         jamId && DataService.getJammerInfo(jamId, userId)
         .then(res => {
             const alreadyRegistered = res.registeredUser;
-            console.log('alreadyRegistered: ', alreadyRegistered);
             setRegisteredUser(alreadyRegistered);
             if (!alreadyRegistered) {
                 const invitationId = res.invId;

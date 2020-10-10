@@ -18,6 +18,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
 
     useEffect(() => {
         if (userId) {
+            console.log('userId: ', userId);
             DataService.getUserJams(userId)
             .then(result => {
                 setUserJams(result);

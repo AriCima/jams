@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import {useForm} from "react-hook-form";
 import { setJamId, setSection, setSubSection } from '../../../redux/actions/navigateActions.js'
+import { setDocType, setDocId } from '../../../redux/actions/docsActions.js'
 
 import AuthService from '../../services/AuthService'
 import DataService from '../../services/DataService';
@@ -17,13 +18,15 @@ const RegisterWithInvitation = ({
     invId, 
     jamId, 
     jamName, 
-    lastName, 
+    lastName,
+    setDocType, 
+    setDocId,
     setJamId, 
     setSection, 
     setSubSection, 
     setUserFirstName, 
     setUserId, 
-    setUserLastName 
+    setUserLastName,
   }) => {
   
   const [jamInfo, setJamInfo] = useState({});
@@ -65,6 +68,8 @@ const RegisterWithInvitation = ({
           setUserLastName(lastName);
           setSection('overview');
           setSubSection('');
+          setDocType('jam-registration');
+          setDocId(invId)
           history.push(`/`);
         });
       }
@@ -166,4 +171,4 @@ const RegisterWithInvitation = ({
 };
 
 
-export default connect (null, {setUserId, setUserFirstName, setUserLastName, setJamId, setSection, setSubSection })(RegisterWithInvitation);
+export default connect (null, {setUserId, setUserFirstName, setUserLastName, setJamId, setSection, setSubSection, setDocId })(RegisterWithInvitation);

@@ -111,8 +111,8 @@ export default class DataService {
                         }
                     }
 
-                    this.addJamToUser(userId, jamId, jamInfo);
-                    // this.addJammerToJam(jamId, userInfo);
+                    this.addJamToUser(jamId, userId, jamInfo);
+                    this.addJammerToJam(jamId, userInfo);
                     resolve({ id: doc.id });
                 })
                 .catch((error) => {
@@ -131,8 +131,8 @@ export default class DataService {
                 .set(chatInfo)
                 .then((res) => {
                     if(res) {
-                        this.addJamToUser(user1Id, chatId, chatInfo);
-                        this.addJamToUser(user2Id, chatId, chatInfo);
+                        this.addJamToUser(chatId, user1Id, chatInfo);
+                        this.addJamToUser(chatId, user2Id, chatInfo);
                     }
                 })
                 .catch((error) => {
@@ -152,7 +152,11 @@ export default class DataService {
                 .collection('userJams')
                 .doc(jamId)
                 .set(jamInfo)
- 
+                .then((result) => {
+                    console.log('Jam added to Jammer');
+                    resolve(result);
+                })
+            
                 .catch((error) => {
                     const errorCode = error.code;
                     console.log('ERROR Jam NOT added to user: ', errorCode);
@@ -577,8 +581,6 @@ export default class DataService {
     }
 
     static getInvitationInfo(jamId, invId) {
-        console.log('jamId: ', jamId);
-        console.log('invId: ', invId);
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
             .doc(jamId)

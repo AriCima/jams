@@ -42,11 +42,11 @@ export default class AuthService {
                     userJams: []
                 };
                 DataService.saveUserInfoInFirestore(userId, userInfo)
-                .then(res => {
-                    // console.log('user in Firestore OK: ', result)
-                    resolve(userId);  
-                })
+                .then(
+                    console.log('user in Firestore OK: ')
+                )
                 console.log('RegisterResult OK: ', result)
+                resolve(userId);
             })
             .catch((error) => {
                 var errorCode = error.code;

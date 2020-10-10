@@ -16,10 +16,12 @@ const JamRegistrationForm = ({
     setRegisteredUser
 }) => {
     const [invInfo, setInvInfo] = useState({})
-
+    
+    console.log('invId: ', invId);
     useEffect(() => {
         DataService.getInvitationInfo(jamId, invId)
         .then(res => {
+            console.log('res: ', res);
             setInvInfo(res)
         })
     }, [invId])

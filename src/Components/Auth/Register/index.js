@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 
 import DataService from '../../services/DataService';
 import AuthService from '../../services/AuthService';
+import { setUserId, setUserFirstName, setUserLastName } from '../../../redux/actions/userActions.js';
 
 import './index.scss';
-import { setJamId } from '../../../redux/actions/navigateActions';
 
 
-const useRegisterForm = ({jamId}) => {
+const useRegisterForm = ({setUserId, setUserFirstName, setUserLastName}) => {
 
   let history = useHistory();
   const { register, errors, getValues, handleSubmit } = useForm();
@@ -25,7 +25,12 @@ const useRegisterForm = ({jamId}) => {
       } else {
         AuthService.register(firstName, lastName, email, password)
         .then(res => {
-          history.push('/')
+          console.log('res: ', res);
+          const userId = res;
+          setUserId(userId);
+          setUserFirstName(firstName);
+          setUserLastName(lastName);
+          history.push(`/`);
         })
       }
     })
@@ -123,9 +128,6 @@ const useRegisterForm = ({jamId}) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const jamId = state.nav.jamId;
-  return { jamId }
-};
 
-export default connect(mapStateToProps, null)(useRegisterForm);
+
+export default connect (null, {setUserId, setUserFirstName, setUserLastName })(useRegisterForm);
