@@ -23,7 +23,7 @@ const Jam = ({ jamId, userId, section, userRole } ) => {
     useEffect(() => {
         if(userRole) {
             const isAdmin = userRole === 'Admin';
-           
+            setShowRegisterForm(false);
             console.log('isAdmin: ', isAdmin);
             if(!isAdmin) {
                 getJammerInfo();
