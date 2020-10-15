@@ -15,10 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // CSS
 import './index.css';
 
-const JoinPopup = (props) => {
-
-  const { user } = props;
-  const userId = user.uid;
+const JoinPopup = ({ userId, email, firstName, lastName }) => {
  
   const [open, setOpen] = useState(false);
   const [jamCode, setjamCode] = useState('');
@@ -65,21 +62,23 @@ const JoinPopup = (props) => {
         jamDesc : jam.jamDesc,
         joinedAt : joinedAt
       }
+      
+      console.log('jamInfo: ', jamInfo);
 
       if( jamIds.includes(jamId) ) {
         alert(`You are already jammer in ${jamInfo.jamName}`)
         return
       }
 
-      DataService.addJamToUser(userId, jamId, jamInfo)
+      DataService.addJamToUser(jamId, userId, jamInfo)
       .then(result =>{
         console.log('result del addJamToUser', result)
       }).catch(function (error) {   
         console.log(error);
       });
 
-      const userInfo = {userId: userId}
-      DataService.addJammerToJam(jamId, userId, userInfo)
+      const userInfo = { userId, email, firstName, lastName };
+      DataService.addJammerToJam(jamId, userInfo)
       .then(result =>{
         console.log('result del updatJammers', result)
       }).catch(function (error) {   
@@ -103,7 +102,7 @@ const JoinPopup = (props) => {
         <DialogTitle id="form-dialog-title">Join</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Input the JamCode.{props.userId}
+            Input the JamCode.{userId}
           </DialogContentText>
           <TextField
             autoFocus

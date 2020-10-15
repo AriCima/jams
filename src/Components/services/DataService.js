@@ -110,7 +110,6 @@ export default class DataService {
                           DataService.addNewRoom(jamId, roomInfo);
                         }
                     }
-
                     this.addJamToUser(jamId, userId, jamInfo);
                     this.addJammerToJam(jamId, userInfo);
                     resolve({ id: doc.id });

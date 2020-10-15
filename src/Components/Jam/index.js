@@ -14,13 +14,26 @@ import JamRegistrationForm from '../Forms/JamRegistrationForm';
 
 import './index.scss';
 import { setDocId } from '../../redux/actions/docsActions';
-const Jam = ({ jamId, userId, section } ) => {
+
+const Jam = ({ jamId, userId, section, userRole } ) => {
 
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [invId, setInvId] = useState('')
     
     useEffect(() => {
-        jamId && DataService.getJammerInfo(jamId, userId)
+        if(userRole) {
+            const isAdmin = userRole === 'Admin';
+           
+            console.log('isAdmin: ', isAdmin);
+            if(!isAdmin) {
+                getJammerInfo();
+            };
+        }
+    }, [userRole]);
+
+
+    const getJammerInfo = async () => {
+        DataService.getJammerInfo(jamId, userId)
         .then(res => {
             const alreadyRegistered = res.registeredUser;
             setRegisteredUser(alreadyRegistered);
@@ -28,31 +41,31 @@ const Jam = ({ jamId, userId, section } ) => {
                 const invitationId = res.invId;
                 setInvId(invitationId);
                 setTimeout(() => showForm(true), 3000);
-            } 
+            }
         })
-    }, [userId])
+    }
 
-  const renderSection = (section) => {
-      switch (section) {
-          case 'Overview':
-              return <Overview />;
-          case 'Board':
-              return <Board/>;
-          case 'Rooms':
-              return <Rooms />;
-          case 'Tenants':
-              return <Jammers />;
-          case 'Settings':
-              return <Settings />;
-          case 'rent':
-          default:
-              return ;
-      }
-  };
+    const renderSection = (section) => {
+        switch (section) {
+            case 'Overview':
+                return <Overview />;
+            case 'Board':
+                return <Board/>;
+            case 'Rooms':
+                return <Rooms />;
+            case 'Tenants':
+                return <Jammers />;
+            case 'Settings':
+                return <Settings />;
+            case 'rent':
+            default:
+                return ;
+        }
+    };
 
-  const showForm = (x) => {
-    setShowRegisterForm(x);
-}
+    const showForm = (x) => {
+        setShowRegisterForm(x);
+    }
 
   return (
     <>
@@ -63,7 +76,6 @@ const Jam = ({ jamId, userId, section } ) => {
         <div className="jam-body">
             {renderSection(section)}
         </div>
-
 
         { showRegisterForm && (
                 <div className="jamRegistration-Form-wrapper">
@@ -77,14 +89,15 @@ const Jam = ({ jamId, userId, section } ) => {
             )}
     </>
   );
+
 };
 
 
 
 const mapStateToProps = state => {
     const { jamId, section } = state.nav;
-    const { userId } = state.userInfo;
-    return { section, jamId, userId };
+    const { userId, userRole } = state.userInfo;
+    return { section, jamId, userId, userRole };
 };
 
 export default connect(mapStateToProps)(Jam);

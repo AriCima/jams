@@ -1,4 +1,5 @@
 import React,  { useEffect, useState } from 'react';
+import isEmpty from 'lodash/isEmpty';
 import {useForm} from "react-hook-form";
 import { connect } from 'react-redux';
 import { setRegisteredUser } from '../../../redux/actions/userActions.js'
@@ -17,13 +18,14 @@ const JamRegistrationForm = ({
 }) => {
     const [invInfo, setInvInfo] = useState({})
     
-    console.log('invId: ', invId);
     useEffect(() => {
-        DataService.getInvitationInfo(jamId, invId)
-        .then(res => {
-            console.log('res: ', res);
-            setInvInfo(res)
-        })
+        if (invId) {
+            DataService.getInvitationInfo(jamId, invId)
+            .then(res => {
+                console.log('res: ', res);
+                setInvInfo(res)
+            })
+        }
     }, [invId])
 
     const { register, errors, handleSubmit, control } = useForm({
@@ -47,6 +49,8 @@ const JamRegistrationForm = ({
             showForm(false);
         })
     };
+
+    const editableFields = isEmpty.invInfo ? 'editable' : 'disable';
 
     return ( 
         <form
@@ -78,7 +82,7 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            disabled
+                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -90,7 +94,7 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            disabled
+                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -102,7 +106,7 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            disabled
+                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -114,7 +118,7 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            disabled
+                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -126,7 +130,7 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            disabled
+                            editableFields
                         />
                     </div>
                 </div>
@@ -316,9 +320,9 @@ const JamRegistrationForm = ({
 
 const mapStateToProps = state => {
     const { section } = state.nav;
-    const {jamName, jamDesc, jamType } = state.jamInfo;
+    const { jamName, jamDesc, jamType } = state.jamInfo;
     const { jamId } = state.nav;
-    const {userId } = state.userInfo;
+    const { userId } = state.userInfo;
 
     return { jamId, userId, section, jamName, jamDesc, jamType };
 };

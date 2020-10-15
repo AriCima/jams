@@ -45,6 +45,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
         setUserRole(userRole)
         setJamName(jamName)
         setJamAdminId(adminId);
+        console.log('adminId: ', adminId);
         setJamAdminName(adminName);
         setJamType(jamType)
     };
@@ -60,10 +61,24 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
             ):(
                 <>
                 <aside className="jams-list">
-                    {jamsList ?  <JamsList userJams={jamsList}/> : <div><p>no jams yet</p></div>}
+                    {jamsList ?  
+                        <JamsList
+                            userJams={jamsList}
+                        /> 
+                        : 
+                        <div><p>no jams yet</p></div>
+                    }
                 </aside>
                 <div className="jam-screen">
-                    {renderJam ? <Jam userId={userId} jamId={jamId} jamInfo={jamInfo} /> : <div><p>select a Jam</p></div>}
+                    {renderJam ? 
+                        <Jam
+                            // userId={userId}
+                            // jamId={jamId}
+                            // jamInfo={jamInfo}
+                        /> 
+                        :
+                        <div><p>select a Jam</p></div>
+                    }
                 </div>
                 </>
             )
