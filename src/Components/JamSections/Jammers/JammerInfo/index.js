@@ -23,6 +23,7 @@ const JammerInfo = ({jamId, jamName, userRole, firstName, userId, docId }) => {
     }
     DataService.getJammerInfo(jamId, documentId)
     .then(result => {
+      console.log('result: ', result);
       setTenantInfo(result)
     })
   }, [jamId, docId])

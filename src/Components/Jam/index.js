@@ -28,7 +28,7 @@ const Jam = ({ jamId, userId, section, userRole } ) => {
             if(!isAdmin) {
                 getJammerInfo();
             };
-        }
+        };
     }, [userRole]);
 
 

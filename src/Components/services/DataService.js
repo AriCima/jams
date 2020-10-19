@@ -67,13 +67,37 @@ export default class DataService {
             });
     }
 
+    // static getUserJams(userId) {
+    //     return new Promise((resolve, reject) => {
+    //         firebase.firestore().collection('users').doc(userId).collection('userJams')
+    //             .get()
+    //             .then(result => {
+    //                 const jams = [];
+    //                 result.docs.forEach(d => {
+    //                     const j = d.data();
+    //                     j.id = d.id;
+    //                     jams.push(j);
+    //                 });
+    //                 resolve(jams);
+    //             });
+    //     })
+    //         .catch((error) => {
+    //             const errorCode = error.code;
+    //             // console.log('Usuario No Existe : ', errorCode);
+    //         });
+    // }
+
     static getUserJams(userId) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users').doc(userId).collection('userJams')
-                .get()
-                .then(result => {
+            firebase.firestore()
+                .collection('users')
+                .doc(userId)
+                .collection('userJams')
+                .onSnapshot(function(doc) {
+                    // console.log('doc: ', doc);
+                    // console.log("Current data: ", doc.docs);
                     const jams = [];
-                    result.docs.forEach(d => {
+                    doc.docs.forEach(d => {
                         const j = d.data();
                         j.id = d.id;
                         jams.push(j);
@@ -451,6 +475,8 @@ export default class DataService {
     }
 
     static getJammerInfo(jamId, jammerId) {
+        // console.log('jamId: ', jamId);
+        // console.log('jammerId: ', jammerId);
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
@@ -459,6 +485,7 @@ export default class DataService {
                 .doc(jammerId)
                 .get()
                 .then((doc) => {
+                    console.log('doc: ', doc);
                     if (doc.exists) {
                         const res = doc.data();
                         resolve(res);
@@ -529,9 +556,7 @@ export default class DataService {
                 .doc(jamId)
                 .collection('jammers')
                 .doc(userId)
-                .set({
-                    jammerInfo: jammerInfo
-                })
+                .set(jammerInfo)
                 .then((res) => {
                     console.log("Document written with ID: ", res);
                     resolve(res);

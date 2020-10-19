@@ -1,5 +1,6 @@
 import {
     JAM_NAME,
+    JAM_DESC,
     JAM_TYPE,
     JAM_ADMIN_ID,
     JAM_ADMIN_NAME
@@ -7,6 +8,7 @@ import {
   
 const defaultState = {
     jamName: '',
+    jamDesc: '',
     jamType: '',
     adminId: '',
     adminName: ''
@@ -27,6 +29,7 @@ function createReducer(initialState, handlers) {
 
 const jamReducers = createReducer(defaultState, {
 [JAM_NAME]: updateVal,
+[JAM_DESC]: updateVal,
 [JAM_TYPE]: updateVal,
 [JAM_ADMIN_ID]: updateVal,
 [JAM_ADMIN_NAME]: updateVal,

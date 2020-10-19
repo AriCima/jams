@@ -1,0 +1,87 @@
+@import '../../../../variables.scss';
+
+.overview-wrapper{
+    width: 100%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .jammer-overview-serction{
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .jammer-overview-serction-title{
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            h3{
+                font-size: 18px;
+                color: $fBlue;
+                margin: 0;
+                span{
+                    font-size: 14px;
+                    color: $fBlue;
+                    font-style: italic;
+                }
+            }
+        };
+        .contract-section{
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .congract-pic{
+                margin: 0;
+                
+            }
+            .contract-info{
+                margin-left: 40px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .contract-info-line{
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .contract-info-block{
+                        margin: 10px;
+                        p{
+                            font-size: 14px;
+                            span{
+                                margin-left: 20px;
+                                font-style: italic;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+    .jammer-overview-adminInfo{
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .overview-adminInfo{
+            h3{
+                font-size: 18px;
+                color: $fBlue;
+                margin: 0;
+                span{
+                    font-weight: 700;
+                }
+            }
+        }
+    };
+    .startChat-button{
+        margin-left: 60px;
+    }
+}

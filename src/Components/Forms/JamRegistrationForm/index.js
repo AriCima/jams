@@ -12,6 +12,9 @@ const JamRegistrationForm = ({
     jamId,
     jamName,
     userId,
+    firstName,
+    lastName,
+    email,
     invId,
     showForm,
     setRegisteredUser
@@ -30,9 +33,9 @@ const JamRegistrationForm = ({
 
     const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
-            firstName: invInfo.firstName,
-            lastName: invInfo.lastName,
-            email: invInfo.email,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
             checkIn: invInfo.checkIn,
             checkOut: invInfo.checkOut,
             roomNr: invInfo.roomNr,
@@ -43,6 +46,7 @@ const JamRegistrationForm = ({
 
     const onSubmit = (data) => {
         data.registeredUser = true;
+        data.userId = userId;
         DataService.saveJammerInfoInJam(jamId, userId, data)
         .then(() => {
             setRegisteredUser(true);
@@ -50,7 +54,7 @@ const JamRegistrationForm = ({
         })
     };
 
-    const editableFields = isEmpty.invInfo ? 'editable' : 'disable';
+    const editableFields = isEmpty.invInfo ? true : false;
 
     return ( 
         <form
@@ -82,7 +86,6 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -94,7 +97,6 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -106,7 +108,6 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -118,7 +119,6 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            editableFields
                         />
                     </div>
                     <div className="custom-input-block">
@@ -130,7 +130,6 @@ const JamRegistrationForm = ({
                             ref={register({
                                 required: true,
                             })}
-                            editableFields
                         />
                     </div>
                 </div>
@@ -322,9 +321,9 @@ const mapStateToProps = state => {
     const { section } = state.nav;
     const { jamName, jamDesc, jamType } = state.jamInfo;
     const { jamId } = state.nav;
-    const { userId } = state.userInfo;
+    const { userId, firstName, lastName, email } = state.userInfo;
 
-    return { jamId, userId, section, jamName, jamDesc, jamType };
+    return { jamId, userId, firstName, lastName, email, section, jamName, jamDesc, jamType };
 };
 
 

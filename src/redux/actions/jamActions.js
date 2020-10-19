@@ -1,4 +1,5 @@
 export const JAM_NAME = 'JAM_NAME';
+export const JAM_DESC = 'JAM_DESC';
 export const JAM_TYPE = 'JAM_NAME';
 export const JAM_ADMIN_NAME = 'JAM_ADMIN_NAME';
 export const JAM_ADMIN_ID = 'JAM_ADMIN_ID';
@@ -17,6 +18,15 @@ export const setJamType = (jamType) => {
     type: JAM_TYPE, 
     payload: {
       jamType
+    }
+  }
+};
+
+export const setJamDesc = (jamDesc) => {
+  return {
+    type: JAM_DESC, 
+    payload: {
+      jamDesc
     }
   }
 };

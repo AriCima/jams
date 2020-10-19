@@ -9,24 +9,36 @@ import Jam from '../Jam';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
-import { setJamName, setJamType, setJamAdminId, setJamAdminName } from '../../redux/actions/jamActions.js';
+import { setJamName, setJamType, setJamAdminId, setJamAdminName, setJamDesc } from '../../redux/actions/jamActions.js';
 import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
-const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJamType, setJamAdminId, setJamAdminName  }) => {
+const Dashboard = ({ 
+    userId,
+    jamId,
+    setUserRole,
+    setUserJams,
+    setJamName,
+    setJamDesc,
+    setJamType,
+    setJamAdminId,
+    setJamAdminName
+}) => {
     const [jamsList, setJamsList] = useState([]);
-    const [jamInfo, setJamInfo] = useState({})
+    const [jamInfo, setJamInfo] = useState({});
+    const [uJams, setUJams] = useState([]);
 
     useEffect(() => {
         if (userId) {
-            console.log('userId: ', userId);
             DataService.getUserJams(userId)
             .then(result => {
                 setUserJams(result);
+                setUJams(result);
                 setJamsList(result);
             })
             .catch(err => console.log(err));
-        }
+        }       
     }, [userId]);
+
 
 
     useEffect(() => {
@@ -35,7 +47,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
 
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
-        const {jamName, adminId, adminName, jamType } = res;
+        const {jamName, adminId, adminName, jamType ,jamDesc } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
        
         // Info en el state
@@ -45,7 +57,7 @@ const Dashboard = ({ userId, jamId, setUserRole, setUserJams, setJamName, setJam
         setUserRole(userRole)
         setJamName(jamName)
         setJamAdminId(adminId);
-        console.log('adminId: ', adminId);
+        setJamDesc(jamDesc);
         setJamAdminName(adminName);
         setJamType(jamType)
     };
@@ -96,5 +108,14 @@ const mapStateToProps = state => {
     return { jamId, userId, userRole, userJams: state.userJams };
 };
 
-export default connect(mapStateToProps, {setUserRole, setUserJams, setJamName, setJamType, setJamId, setJamAdminId, setJamAdminName}) (Dashboard);
+export default connect(mapStateToProps, {
+    setUserRole,
+    setUserJams,
+    setJamName,
+    setJamDesc,
+    setJamType,
+    setJamId,
+    setJamAdminId,
+    setJamAdminName
+}) (Dashboard);
 
