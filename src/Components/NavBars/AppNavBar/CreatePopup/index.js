@@ -17,7 +17,7 @@ import DataService from '../../../services/DataService';
 import Calculations from '../../../services/Calculations';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const CreatePopup = ({ userId, email, firstName, lastName }) => {
   const [open, setOpen] = useState(false);

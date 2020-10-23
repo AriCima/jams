@@ -89,7 +89,9 @@ const Dashboard = ({
                             // jamInfo={jamInfo}
                         /> 
                         :
-                        <div><p>select a Jam</p></div>
+                        <div className="select-jam">
+                            <p>select a Jam</p>
+                        </div>
                     }
                 </div>
                 </>

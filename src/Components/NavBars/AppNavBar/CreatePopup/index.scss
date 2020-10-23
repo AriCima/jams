@@ -1,19 +1,21 @@
-.join-button{
+@import '../../../../variables.scss';
+
+.create-button{
     height: 100%;
     border: none;
-    background-color: rgba(34, 96, 200, 1);
+    background-color: transparent;
 }
 
-.join-icon-style{
-    color:white;
+.create-icon-style{
+    color:  rgba(61,158,247, 0.6);
     padding: 0;
     font-size: 18px;
     transition: 0.066s;
+    color: $lightGray
 }
-.join-icon-style:hover{
-    color: rgb(61,158,247);
+.create-icon-style:hover{
+    color: rgba(61,158,247, 1);
 }
-
 .popup {
     position: fixed;
     width: 100%;

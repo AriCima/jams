@@ -60,19 +60,6 @@ export default class Calculations {
      return code
     };
 
-    static checkAllInputsAreFilled(arr) {
-        console.log('arr: ', arr);
-        const arrL = arr.length;
-        let cont = 0;
-        for(let i= 0; i < arrL; i++){
-            const obj = arr[i];
-            const objValue = values(obj);
-            if(objValue !== ''){
-                cont = cont+1
-            };
-        }
-
-    }
     static getJamAdminSections(type){
         //console.log('get Jam Sections launched')
         let sections = [];
@@ -110,36 +97,6 @@ export default class Calculations {
         }
        return sections;
     };
-
-    static getJammerInputFields(jamType) {
-
-        let inputFields = {}
-
-        if (jamType === 'rooms-rental') {
-           return inputFields = { 
-                name: '',
-                surname: '',
-                email: '',
-                homeTel: '',
-                street: '',
-                houseNr: '',
-                mobile: '',
-                floor: '',
-                door: '',
-                zipCode: '',
-                city: '',
-                country: '',
-                passportNr: '',
-                study: '',
-                school: '',
-                rent: '',
-                roomNr: '',
-                deposit: '',
-                checkIn: '',
-                checkOut: ''
-            } 
-        }
-    }
 
     static validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

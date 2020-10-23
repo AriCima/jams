@@ -60,7 +60,7 @@ const NewTenantInfoForm = ({ jamId }) => {
     
     const submitForm = (e) => { // CHAPUZA
         e.preventDafault();
-        const filledForm = Calculations.checkAllInputsAreFilled(tenantInfo);
+        // const filledForm = Calculations.checkAllInputsAreFilled(tenantInfo);
         const jId = jamId.jamId; // CHAPUZA  
         const jammerId = tenantInfo.jammerEmail;      
         DataService.saveJammerInfo(jId, jammerId, tenantInfo);

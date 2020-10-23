@@ -44,7 +44,6 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
                 setUserFirstName(firstName);
                 setUserLastName(lastName);
                
-                console.log('email: ', email);
                 localStorage.setItem('userId', userId);
                 localStorage.setItem('email', email);
                 localStorage.setItem('firstName', firstName);
@@ -54,49 +53,61 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
         })
     }
 
-    return (
+    const goToRegister = () => {
 
-        <form
-            className="register-hook-form"
-            onSubmit={handleSubmit(onLogin)}
-        >
-        <div className="register-form-section">
-            <div className="form-section-title">
-                <p>LOGIN and start jamin'</p>
-            </div>
-            <div className="form-column">
-                <div className="register-block-long">
-                    <div className="block-label">
-                        <label>Email</label>
-                        {errors.email && <div className="field-error">Non valid address</div>}
+    }
+    return (
+        <div className="login-wrapper">
+            <form
+                className="login-hook-form"
+                onSubmit={handleSubmit(onLogin)}
+            >
+                <div className="login-form-section">
+                    <div className="form-section-title">
+                        <p>LOGIN and start jamin'</p>
                     </div>
-                    <input
-                        name="email"
-                        ref={register({ 
-                            required: true,
-                            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        })}
-                    />
-                </div>
-                <div className="register-block-long">
-                    <div className="block-label">
-                        <label>Password</label>
-                        {errors.password && <div className="field-error">Non valid password</div>}
+                    <div className="form-column">
+                        <div className="login-block-long">
+                            <div className="block-label">
+                                <label>Email</label>
+                                {errors.email && <div className="field-error">Non valid address</div>}
+                            </div>
+                            <input
+                                name="email"
+                                ref={register({ 
+                                    required: true,
+                                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                })}
+                            />
+                        </div>
+                        <div className="login-block-long">
+                            <div className="block-label">
+                                <label>Password</label>
+                                {errors.password && <div className="field-error">Non valid password</div>}
+                            </div>
+                            <input
+                                name="password" 
+                                ref={register({ 
+                                required: true,
+                                pattern: '',
+                                })}
+                            />
+                        </div>
                     </div>
-                    <input
-                        name="password" 
-                        ref={register({ 
-                        required: true,
-                        pattern: '',
-                        })}
-                    />
                 </div>
+                <div className="hook-form-buttonArea">
+                    <input type="submit" />
+                </div>
+            </form>
+            <div className="login-register-area">
+                <p>Or if you don't have an account yet, you can register here</p>
+
+                <div className="register-button" onClick={goToRegister()}>
+                    <p>REGISTER</p>
+                </div>
+
             </div>
         </div>
-        <div className="hook-form-buttonArea">
-            <input type="submit" />
-        </div>
-        </form>
     );
 };
 

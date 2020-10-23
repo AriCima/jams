@@ -1,29 +1,55 @@
+@import '../../variables.scss';
+
 .dashboard{
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    .login-board{
+        width: 100%;
+        margin-top: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .jams-list{
+        position: fixed;
+        top: 40px;
+        left: 0;
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .jam-screen{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 40px;
+        left: 20%;
+        width: 80%;
+        overflow-y: scroll;
+        height: 80%;
+        .select-jam{
+            width: 60%;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $lightGray;
+            color: $darkGray;
+            border-radius: 15px;
+            p{
+                margin: 0;
+            }
+        }
+    }
+    h1{
+        color: black;
+    }
 }
 
-.jams-list{
-    position: fixed;
-    top: 40px;
-    left: 0;
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
 
-.jam-screen{
-    position: fixed;
-    top: 40px;
-    left: 20%;
-    width: 80%;
-    overflow-y: scroll
-}
 
-h1{
-    color: black;
-}

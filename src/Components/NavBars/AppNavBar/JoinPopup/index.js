@@ -13,7 +13,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const JoinPopup = ({ userId, email, firstName, lastName }) => {
  

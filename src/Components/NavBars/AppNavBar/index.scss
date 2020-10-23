@@ -6,7 +6,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: $prim;   
     .navBar-item{
         margin: 0 5px;
         font-size: 18px;
@@ -25,12 +24,12 @@
 }
 
 .signOut-icon-style{
-    color:white;
+    color:  rgba(61,158,247, 0.6);
     padding: 0;
-    margin: 0 10px;
     font-size: 18px;
     transition: 0.066s;
+    color: $lightGray
 }
 .signOut-icon-style:hover{
-    color: rgb(61,158,247);
+    color: rgba(61,158,247, 1);
 }

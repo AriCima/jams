@@ -10,8 +10,8 @@ export default class AuthService {
             firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) =>{                
                 resolve(result);
-                console.log('result: ', result);
-                console.log('El result del LOGIN en Auth es: ', result)
+                // console.log('result: ', result);
+                // console.log('El result del LOGIN en Auth es: ', result)
             })
 
             .catch((error) => {
@@ -93,5 +93,6 @@ export default class AuthService {
             })
         });
     };
+
 };
 
