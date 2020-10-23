@@ -302,12 +302,10 @@ export default class Calculations {
     static organizeFlatmates = (tenants, userId) => {
 
         let flatMates = [];
-        const userIndex = tenants.map(function(e) { 
-            return e.userId; 
-        }).indexOf(userId);
+        const userIndex = tenants.map(function(e) { return e.userId }).indexOf(userId);
 
-        const userCheckInDate = tenants[userIndex].checkIn;
-        const userCheckOutDate = tenants[userIndex].checkOut;
+        const userCheckInDate = new Date (tenants[userIndex].checkIn);
+        const userCheckOutDate = new Date (tenants[userIndex].checkOut);
 
         tenants.forEach(e => {
             const cIn = new Date(e.checkIn);
@@ -317,7 +315,10 @@ export default class Calculations {
             };
         });
         return flatMates
-    }
+    };
+
+
+
 
     static checkOverlapping(checkIn, checkOut, bookings){
         
@@ -351,7 +352,6 @@ export default class Calculations {
         return validationResult
        
     };
-
     // FLAT INFO
     static getOnwStudentsFlats = (userJams = [], userId = '') => {
         let result = []
@@ -362,7 +362,6 @@ export default class Calculations {
         }
         return result
     }
-
 
     static mergeCompleteFlatInfo = (flats = [], rooms = []) => {
         for (let i = 0; i < flats.length; i++){

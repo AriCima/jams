@@ -54,7 +54,7 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
     }
 
     const goToRegister = () => {
-
+        history.push('/register');
     }
     return (
         <div className="login-wrapper">

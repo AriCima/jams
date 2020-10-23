@@ -63,6 +63,7 @@ const Dashboard = ({
     };
 
     const renderJam = jamId && !isEmpty(jamInfo);
+    const renderJamsList = jamsList.length > 0;
 
     return (
         <div className="dashboard">
@@ -73,13 +74,7 @@ const Dashboard = ({
             ):(
                 <>
                 <aside className="jams-list">
-                    {jamsList ?  
-                        <JamsList
-                            userJams={jamsList}
-                        /> 
-                        : 
-                        <div><p>no jams yet</p></div>
-                    }
+                    {renderJamsList && <JamsList userJams={jamsList} /> }
                 </aside>
                 <div className="jam-screen">
                     {renderJam ? 
@@ -90,7 +85,7 @@ const Dashboard = ({
                         /> 
                         :
                         <div className="select-jam">
-                            <p>select a Jam</p>
+                            {renderJamsList ? <p>select a Jam</p> :  <p>You have no Jams yet, Create or Join</p>}
                         </div>
                     }
                 </div>
