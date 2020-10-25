@@ -41,9 +41,13 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
     }
   };
 
-
+  const showDisabled = userId === '';
+  
   const onCreatenewJam = (e) => {
     e.preventDefault();
+    
+
+
     const createdAt = new Date();
     const jamCode = Calculations.generateCode();
     const updatedAt = '';
@@ -68,6 +72,8 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
   };
 
   const handleClickOpen = () => {
+    console.log('showDisabled: ', showDisabled);
+    if(showDisabled) return;
     setOpen(true);
   };
 
@@ -77,9 +83,9 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
 
   return (
       <div>
-          <button type="submit" className="create-button" onClick={handleClickOpen}>
-              <FontAwesomeIcon className="create-icon-style" icon={faPlus} />
-          </button>
+          <div type="submit" className="create-button" onClick={handleClickOpen}>
+              <FontAwesomeIcon className={`create-icon-style${showDisabled ? '-disabled':''}`} icon={faPlus} />
+          </div>
 
           <Dialog
               open={open}

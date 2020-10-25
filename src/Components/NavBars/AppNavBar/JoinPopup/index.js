@@ -25,7 +25,13 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
     setjamCode(event.target.value);
   };
 
+  const showDisabled = userId === '';
+
   const handleClickOpen = () => {
+
+    console.log('showDisabled: ', showDisabled);
+    if(showDisabled) return;
+
     // CHECK IF ALREADY JOINED IN THIS JAM
     DataService.getUserJams(userId)
     .then(result =>{
@@ -44,28 +50,33 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
     setOpen(false);
   };
 
+
+
   const onJoinJam = (e) => {
     e.preventDefault();
 
     DataService.getJamInfoByCode(jamCode)
     .then(result =>{
       
-      let jam = result.data;
-      let jamId = result.id;
-      let joinedAt = new Date();
-      let jamCode = jam.jamCode;
+      const jamId = result.id;
+      const joinedAt = new Date();
+
+      const {jamName, jamType, jamDesc, jamAdminId, jamAdminName} = result;
 
       const jamInfo = {
-        jamCode : jamCode,
-        jamName : jam.jamName,
-        jamId   : jamId,
-        jamDesc : jam.jamDesc,
-        joinedAt : joinedAt
+        jamCode,
+        jamName,
+        jamId,
+        jamDesc,
+        joinedAt,
+        jamType,
+        jamAdminId,
+        jamAdminName
       }
       
       console.log('jamInfo: ', jamInfo);
 
-      if( jamIds.includes(jamId) ) {
+      if(jamIds.includes(jamId) ) {
         alert(`You are already jammer in ${jamInfo.jamName}`)
         return
       }
@@ -92,11 +103,12 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
     setOpen(false);
   };
 
+  console.log('showDisabled: ', showDisabled);
   return ( 
     <div>
-      <button  className="join-button" onClick={handleClickOpen}>
-        <FontAwesomeIcon className="join-icon-style" icon={faCheck} />
-      </button>
+      <div  className="join-button" onClick={handleClickOpen}>
+        <FontAwesomeIcon className={`join-icon-style${showDisabled ? '-disabled':''}`} icon={faCheck} />
+      </div>
       
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Join</DialogTitle>

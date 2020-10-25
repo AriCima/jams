@@ -25,12 +25,16 @@ const useRegisterForm = ({setUserId, setUserFirstName, setUserLastName}) => {
       } else {
         AuthService.register(firstName, lastName, email, password)
         .then(res => {
-          console.log('res: ', res);
           const userId = res;
           setUserId(userId);
           setUserFirstName(firstName);
           setUserLastName(lastName);
-          history.push(`/`);
+
+          localStorage.setItem('userId', userId);
+          localStorage.setItem('email', email);
+          localStorage.setItem('firstName', firstName);
+          localStorage.setItem('lastName', lastName);
+          history.push('/');
         })
       }
     })

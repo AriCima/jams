@@ -4,18 +4,28 @@
     height: 100%;
     border: none;
     background-color: transparent;
+    cursor: default;
+
+    .join-icon-style{
+        padding: 0;
+        font-size: 18px;
+        transition: 0.066s;
+        color: $buttonPrimary;
+
+        &-disabled{
+            color:  $lightGray;
+            &:hover{
+                color:  $lightGray;
+                cursor: default;
+            }
+        }
+    }
+
+    .join-icon-style:hover{
+        color: $secondary;
+    }
 }
 
-.join-icon-style{
-    padding: 0;
-    font-size: 18px;
-    transition: 0.066s;
-    color: $lightGray
-
-}
-.join-icon-style:hover{
-    color: rgba(61,158,247, 1);
-}
 
 .popup {
     position: fixed;

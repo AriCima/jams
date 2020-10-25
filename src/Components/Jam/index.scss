@@ -11,11 +11,13 @@ height: 40px;
 display: flex;
 justify-content: flex-start;
 align-items: center;
-border-bottom: 1px solid grey;
-border-left: 1px solid grey;
+// border-bottom: 1px solid grey;
+// border-left: 1px solid grey;
+box-shadow: $shadow;
 }
 .jam-body{
 width: 100%;
+margin-top: 80px;
 height: calc(100vh - 80px); // 40px header + 40px footer
 border-bottom: 1px solid $lightGray;
 display: flex;

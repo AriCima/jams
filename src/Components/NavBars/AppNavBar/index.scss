@@ -6,16 +6,17 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    cursor: default;
     .navBar-item{
         margin: 0 5px;
         font-size: 18px;
         color: white;
+        cursor: default;
         .navBar-menu-style{
             color:white;
             padding: 0;
             font-size: 18px;
             transition: 0.066s;
-            fill: red;
             &:hover{
                 color: rgb(61,158,247);
             }
@@ -28,8 +29,8 @@
     padding: 0;
     font-size: 18px;
     transition: 0.066s;
-    color: $lightGray
+    color: $buttonPrimary
 }
 .signOut-icon-style:hover{
-    color: rgba(61,158,247, 1);
+    color: $secondary;
 }

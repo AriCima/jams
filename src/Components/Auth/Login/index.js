@@ -53,7 +53,8 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
         })
     }
 
-    const goToRegister = () => {
+    const goToRegister = (e) => {
+        e.preventDefault();
         history.push('/register');
     }
     return (
@@ -102,7 +103,7 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
             <div className="login-register-area">
                 <p>Or if you don't have an account yet, you can register here</p>
 
-                <div className="register-button" onClick={goToRegister()}>
+                <div className="register-button" onClick={(e) => goToRegister(e)}>
                     <p>REGISTER</p>
                 </div>
 

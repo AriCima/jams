@@ -19,6 +19,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        text-overflow: ellipsis;
         h4{
             font-size: 16px;
             font-weight: 700;
@@ -26,7 +27,7 @@
             margin: 0 20px;;
         }
         p{
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 400;
             color: black∫;
             margin: 0 20px;;

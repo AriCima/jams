@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react';
+import { useHistory } from "react-router-dom";
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 
@@ -18,14 +19,15 @@ import './index.scss';
 
 const AppNavBar = ({ userId, setUserId, setUserEmail, setJamId, setUserFirstName, setUserLastName }) => {
     
-    
+    let history = useHistory();
 
     const signOut = (e) => {
         e.preventDefault();
         firebase.auth().signOut()
         .then(() => {
             alert('See you later');
-            resetUser()
+            resetUser();
+            history.push('/');
         })
         .catch(() => {
             this.props.alert.error("Ups! Seems you'll have to stay longer")// An error happened.
@@ -49,15 +51,11 @@ const AppNavBar = ({ userId, setUserId, setUserEmail, setJamId, setUserFirstName
         <div className="navBar-icons">
 
             <div className="navBar-item">
-                <CreatePopup
-                    user={ userId }
-                />
+                <CreatePopup/>
             </div>
 
             <div className="navBar-item">
-                <JoinPopup
-                    user={ userId }
-                />
+                <JoinPopup/>
             </div>
 
             { userId && (

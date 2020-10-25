@@ -137,7 +137,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         button[type="submit"], input[type="submit"] {
-            background: $button;
+            background: $buttonPrimary;
             color: white;
             text-transform: uppercase;
             border: none;
@@ -148,7 +148,7 @@
             border-radius: 5px;;
         }
         button[type="submit"]:hover, input[type="submit"]:hover {
-            background:$button-hover;
+            background:$buttonPrimary-hover;
         }
       }
   }
@@ -173,7 +173,7 @@
           margin: 0;
         }
         &:hover{
-          background: $purple;
+          background: $secondary;
           color: white;
         }
     }
