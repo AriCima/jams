@@ -29,7 +29,6 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
 
   const handleClickOpen = () => {
 
-    console.log('showDisabled: ', showDisabled);
     if(showDisabled) return;
 
     // CHECK IF ALREADY JOINED IN THIS JAM
@@ -73,8 +72,6 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
         jamAdminId,
         jamAdminName
       }
-      
-      console.log('jamInfo: ', jamInfo);
 
       if(jamIds.includes(jamId) ) {
         alert(`You are already jammer in ${jamInfo.jamName}`)
@@ -103,7 +100,6 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
     setOpen(false);
   };
 
-  console.log('showDisabled: ', showDisabled);
   return ( 
     <div>
       <div  className="join-button" onClick={handleClickOpen}>

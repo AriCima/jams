@@ -46,7 +46,6 @@ const AppNavBar = ({ userId, setUserId, setUserEmail, setJamId, setUserFirstName
         setUserLastName('');
     };
     
-    console.log('userId: ', userId);
     return (
         <div className="navBar-icons">
 

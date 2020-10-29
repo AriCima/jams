@@ -23,7 +23,6 @@ const JamNavBar = ({
 }) => {
 
     const [jamSections, setJamSections] = useState([]);
-    console.log('jamSections: ', jamSections);
 
     const onsetJamSection = (section) => {
         setSection(section);
@@ -49,10 +48,6 @@ const JamNavBar = ({
         return jamSections.map((section, id) => {
 
             const sectionAactive = section === currentSection;
-            console.log('sectionAactive: ', sectionAactive);
-    
-            console.log('currentSection: ', currentSection);
-
             return jamType === 'Chat' ?
                 (
                     <div

@@ -387,7 +387,7 @@ export default class DataService {
     // MESSAGES
 
     static saveMessage(jamId, section, messageInfo) {
-        // console.log('save message launched with: ', jamId,' / ', section, ' / ',messageInfo)
+        console.log('save message launched with: ', jamId,' / ', section, ' / ',messageInfo)
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams').doc(jamId).collection(section)
                 .add(messageInfo)
