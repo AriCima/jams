@@ -34,7 +34,14 @@
         }
     }
     &:hover{
-        background-color: rgba(245,245,245, 1) ;
+        background-color: $lightGray;
+    }
+}
+
+.jamActive{
+    background-color:$buttonPrimary;
+    &:hover{
+        background-color: $buttonPrimary;
     }
 }
 

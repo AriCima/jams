@@ -7,17 +7,34 @@ import { setJamId, setSection, setSubSection } from '../../../../redux/actions/n
 // CSS
 import "./index.scss";
 
- const JamCover = ({ jamName, jamId, jamType, jamDesc, user2Name = '', setJamId, setSection, setSubSection }) => {
+ const JamCover = ({
+   jamName,
+   jamId,
+   currentJamId,
+   jamType,
+   jamDesc,
+   user2Name = '',
+   setJamId,
+   setSection,
+   setSubSection
+  }) => {
 
   const onsetJam = (jamId) => {
+    console.log('jamId: ', jamId);
     setJamId(jamId);
     setSection('Overview');
     setSubSection('');
   };
 
+
+  const itemIsActive = currentJamId === jamId;
+
   return (
 
-    <div className="jamsList-jamCover-container" onClick={()=> onsetJam(jamId)}>
+    <div
+      className={`jamsList-jamCover-container ${itemIsActive ? 'jamActive':''}`}
+      onClick={()=> onsetJam(jamId)}
+    >
       
       <div className="jams-list-container-line">
         { jamType === 'chat' ?
@@ -41,5 +58,9 @@ import "./index.scss";
   
 }
 
+const mapStateToProps = state => {
+  const jamId = state.nav.jamId;
+  return { currentJamId: jamId };
+};
 
-export default connect(null, { setJamId, setSection, setSubSection })(JamCover)
+export default connect(mapStateToProps, { setJamId, setSection, setSubSection })(JamCover)

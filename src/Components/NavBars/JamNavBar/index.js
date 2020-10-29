@@ -10,9 +10,20 @@ import { setDocType, setDocId, setEditable } from '../../../redux/actions/docsAc
 
 import './index.scss';
 
-const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, setEditable, jamName, jamType}) => {
+const JamNavBar = ({
+    userRole,
+    setSection,
+    setSubSection,
+    setDocType,
+    setDocId,
+    setEditable,
+    jamName,
+    jamType,
+    currentSection
+}) => {
 
     const [jamSections, setJamSections] = useState([]);
+    console.log('jamSections: ', jamSections);
 
     const onsetJamSection = (section) => {
         setSection(section);
@@ -33,8 +44,15 @@ const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, 
     }, [jamType, userRole]);
 
 
-    const renderLandlordNavBar = () => {
+    const renderNavBar = () => {
+
         return jamSections.map((section, id) => {
+
+            const sectionAactive = section === currentSection;
+            console.log('sectionAactive: ', sectionAactive);
+    
+            console.log('currentSection: ', currentSection);
+
             return jamType === 'Chat' ?
                 (
                     <div
@@ -46,7 +64,7 @@ const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, 
                     </div>
                 ):(
                     <div
-                        className="jamNavBar-item"
+                        className={`jamNavBar-item ${sectionAactive ? 'sectionActive' : ''}`}
                         key={id}
                         onClick={() => onsetJamSection(`${section}`)}
                     >
@@ -63,18 +81,18 @@ const JamNavBar = ({ userRole, setSection, setSubSection, setDocType, setDocId, 
                     {jamType !== 'chat' ?
                         (
                             <>
-                                <div className="jamNavBar-left">
+                                {/* <div className="jamNavBar-left">
                                     <div className="jamNavBar-jamName">
                                         <p>{jamName}</p>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="jamNavBar-right">
-                                    {renderLandlordNavBar()}
+                                    {renderNavBar()}
                                 </div>
                             </>
                         ) : (
                             <div className="jamNavBar-chat">
-                                {renderLandlordNavBar()}
+                                Chat
                             </div>
                         )
                     }
@@ -89,7 +107,7 @@ const mapStateToProps = (state) => {
     const { section, subSection } = state.nav;
     const { userRole } = state.userInfo;
     const { jamName, jamType } = state.jamInfo;
-    return { section, subSection, userRole, jamName, jamType }
+    return { currentSection: section, subSection, userRole, jamName, jamType }
 };
 
 export default connect(mapStateToProps, { setSection, setSubSection, setDocType, setDocId, setEditable })(JamNavBar);
