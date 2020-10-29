@@ -20,8 +20,10 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            border-bottom: 1px solid gray;
             h3{
-                font-size: 18px;
+                font-size: 14px;
+                font-style: italic;
                 color: $fBlue;
                 margin: 0;
                 span{
@@ -30,30 +32,137 @@
                     font-style: italic;
                 }
             }
+
         };
+        .jam-info-line{
+            width: 100%;
+            margin: 10px 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .jam-info-label{
+                width: 20%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                p{
+                    margin: 0;
+                    font-size: 14px;
+                    font-weight: 700;
+                    span{
+                        margin-left: 20px;
+                        font-style: italic;
+                    }
+                }
+            }
+            .jam-info-value{
+                margin-left: 20px;
+                width: 80%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                p{
+                    font-size: $midFont;
+                    margin: 0;
+                    span{
+                        margin-left: 20px;
+                        font-style: italic;
+                    }
+                }
+            }
+            .jammer-overview-adminInfo{
+                width: 80%;
+                margin-left: 20px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .overview-adminInfo{
+                    p{
+                        font-size: $midFont;
+                        color: black;
+                        margin: 0;
+                        span{
+                            font-weight: 700;
+                        }
+                    }
+                }
+                .startChat-button{
+                    margin-left: 60px;
+                }
+            };
+        }
+        .jam-description{
+            width: 100%;
+            p{ 
+                font-size: $midFont;
+            }
+        }
         .contract-section{
             width: 100%;
             display: flex;
             justify-content: flex-start;
-            align-items: center;
-            .congract-pic{
+            align-items: space-between;
+            .contract-versions{
                 margin: 0;
-                
+                width: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+ 
+                .contract-img{
+                    width: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    .contract-icon{
+                        font-size: 50px;
+                    }
+                    p{
+                        font-size: 14px;
+                        margin: 5px 0 0 0;
+                    }
+                    &:hover{
+                        color: $secondary;
+                    }
+                }
             }
-            .contract-info{
+            .contract-summary{
+                width: 50%;
+                padding: 15px;
+                border-radius: 15px;
                 margin-left: 40px;
                 display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                .contract-info-line{
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                box-shadow: $shadow;
+
+                .contract-summary-line{
                     width: 100%;
+                    margin: 10px 0;
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
-                    .contract-info-block{
-                        margin: 10px;
+                    .contract-block-label{
+                        width: 40%;
+                        p{
+                            margin: 0;
+                            font-size: 14px;
+                            font-weight: 700;
+                            span{
+                                margin-left: 20px;
+                                font-style: italic;
+                            }
+                        }
+                    }
+                    .contract-block-value{
+                        margin-left: 20px;
+                        width: 60%;
                         p{
                             font-size: 14px;
+                            margin: 0;
                             span{
                                 margin-left: 20px;
                                 font-style: italic;
@@ -64,24 +173,5 @@
             }
         }
     };
-    .jammer-overview-adminInfo{
-        width: 100%;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        .overview-adminInfo{
-            h3{
-                font-size: 18px;
-                color: $fBlue;
-                margin: 0;
-                span{
-                    font-weight: 700;
-                }
-            }
-        }
-    };
-    .startChat-button{
-        margin-left: 60px;
-    }
+
 }

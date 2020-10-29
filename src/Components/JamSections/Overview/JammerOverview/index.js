@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile } from '@fortawesome/free-regular-svg-icons'
+
 import DataService from '../../../services/DataService';
 import StartChatButton from '../../../UI/Buttons/StartChatButton';
 
@@ -25,52 +28,105 @@ const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, adminName,
 
             <div className="jammer-overview-serction">
                 <div className="jammer-overview-serction-title">
-                    <h3>Jam Description: <span>"{jamDesc}"</span></h3>
+                    <h3>Jam Info</h3>
+                </div>
+
+                <div className="jam-info-line">
+                    <div className="jam-info-label">
+                        <p>Description:</p>
+                    </div>
+                    <div className="jam-info-value">
+                        <p>"{jamDesc}"</p>
+                    </div>
+                </div>
+
+                <div className="jam-info-line">
+                    <div className="jam-info-label">
+                        <p>Admin:</p>
+                    </div>
+                    <div className="jammer-overview-adminInfo">
+                        <div className="overview-adminInfo">
+                            <p>{adminName}</p>
+                        </div>
+                        <div className="startChat-button">
+                            <StartChatButton 
+                                user1Name={firstName}
+                                user1Id={userId}
+                                user2Name={adminName}
+                                user2Id={adminId}
+                                jamName={jamName}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="jammer-overview-adminInfo">
-                <div className="overview-adminInfo">
-                    <h3>Jam Admin:<span>{adminName}</span></h3>
-                </div>
-                <div className="startChat-button">
-                    <StartChatButton 
-                        user1Name={firstName}
-                        user1Id={userId}
-                        user2Name={adminName}
-                        user2Id={adminId}
-                        jamName={jamName}
-                    />
-                </div>
-            </div>
+
            
             <div className="jammer-overview-serction">
                 <div className="jammer-overview-serction-title">
-                    <h3>This is your contract Info</h3>
+                    <h3>Contract Info</h3>
                 </div>
 
                 <div className="contract-section">
-                    <div className="contract-pic">
-                        <img alt="contrct"/>
+
+                    <div className="contract-versions">
+                        <div className="contract-img">
+                            <FontAwesomeIcon
+                                className="contract-icon"
+                                icon={faFile}
+                            />
+                            <p>ESP</p>
+                        </div>
+
+                        <div className="contract-img" >
+                            <FontAwesomeIcon
+                                icon={faFile}
+                                className="contract-icon"
+                            />
+                            <p>ENG</p>
+                        </div>
                     </div>
-                    <div className="contract-info">
-                        <div className="congtract-info-line">
-                            <div className="contract-info-block">
-                                <p>Check-In: <span>{moment(contractInfo.checkIn).format('DD-MMM-YYYY')}</span></p>
+
+                    <div className="contract-summary">
+                        <div className="contract-summary-line">
+                            <div className="contract-block-label">
+                                <p>Check-In:</p>
                             </div>
-                            <div className="contract-info-block">
-                                <p>Check-Out: <span>{moment(contractInfo.checkOut).format('DD-MMM-YYYY')}</span></p>
-                            </div>
-                            <div className="contract-info-block">
-                                <p>Room Nr: <span>{contractInfo.roomNr}</span></p>
+                            <div className="contract-block-value">
+                                <p>{moment(contractInfo.checkIn).format('DD-MMM-YYYY')}</p>
                             </div>
                         </div>
-                        <div className="congtract-info-line">
-                            <div className="contract-info-block">
-                                <p>Rent: <span>{contractInfo.rent}</span></p>
+                        <div className="contract-summary-line">
+                            <div className="contract-block-label">
+                                <p>Check-Out: </p>
                             </div>
-                            <div className="contract-info-block">
-                                <p>Deposit: <span>{contractInfo.deposit}</span></p>
+                            <div className="contract-block-value">
+                                <p>{moment(contractInfo.checkOut).format('DD-MMM-YYYY')}</p>
+                            </div>
+                        </div>
+                        <div className="contract-summary-line">
+                            <div className="contract-block-label">
+                                <p>Room Nr:</p>
+                            </div>
+                            <div className="contract-block-value">
+                                <p>{contractInfo.roomNr}</p>
+                            </div>
+                        </div>
+                        <div className="contract-summary-line">
+                            <div className="contract-block-label">
+                                <p>Rent €/Mo:</p>
+                            </div>
+                            <div className="contract-block-value">
+                                <p>{contractInfo.rent}</p>
+                            </div>
+                        </div>
+                        <div className="contract-summary-line">
+                            <div className="contract-block-label">
+                                <p>Deposit:</p>
+                            </div>
+                            <div className="contract-block-value">
+                                <p>{contractInfo.deposit}</p>
                             </div>
                         </div>
                     </div>
