@@ -248,7 +248,6 @@ export default class Calculations {
             currentBooking: {}, 
             dueBookings: [],
             futureBookings: [],
-            nextBooking: {}
         };
         
         const currentDate = new Date();
@@ -278,9 +277,9 @@ export default class Calculations {
     static organizeAdminTenants = (tenants) => {
 
         let result = {
-            currentTenants: [], 
+            currentTenants: [],
             formerTenants: [],
-            futureTenants: []
+            futureTenants: [],
         };
         
         const currentDate = new Date();
@@ -296,7 +295,31 @@ export default class Calculations {
                 result.currentTenants.push(e);
             }
         });
+
         return result
+    }
+
+    static getRoomsOccupancy = (tenants, rooms) => {
+
+        let roomsOccupancy = [];
+        const numberOfRooms = parseInt(rooms);
+
+        for (let i = 1; i <= numberOfRooms; i++) {
+           
+            const roomNr = i;
+            let tenantsInRoom = [];
+            for (let j = 0; j < tenants.length; j++){
+                const tenantsRoom = parseInt(tenants[j].roomNr);
+                if (tenantsRoom === roomNr) {
+                    tenantsInRoom.push(tenants[j]);
+                }
+            }
+            const orderedTenants = this.organizeAdminTenants(tenantsInRoom);
+
+            roomsOccupancy.push(orderedTenants);
+        }
+
+        return roomsOccupancy
     }
 
     static organizeFlatmates = (tenants, userId) => {

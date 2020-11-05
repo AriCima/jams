@@ -10,10 +10,9 @@ import BoardContent from './BoardContent';
 // REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
-const Board = ({ jamId, userId, userRole }) => {
+const Board = ({ jamId, userId, adminName, userRole }) => {
 
     const isAdmin = userRole === 'Admin';
-
     const [boardInfo, setBoardInfo] = useState([]);
    
     useEffect(() => {
@@ -39,15 +38,13 @@ const Board = ({ jamId, userId, userRole }) => {
 
     const { register, errors, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
-        console.log('data: ', data);
-
-        
+    const onSubmit = (data) => {        
         const date = new Date()
 
         const messageInfo = {
             messageText: data.message,
             userId: userId,
+            adminName: adminName,
             jamId: jamId,
             section: 'board',
             createdAt: date,
@@ -92,8 +89,9 @@ const Board = ({ jamId, userId, userRole }) => {
 const mapStateToProps = state => {
     const { jamId } = state.nav;
     const { userId, userName, userRole } = state.userInfo;
+    const { adminName } = state.jamInfo
 
-    return { jamId, userId, userName, userRole };
+    return { jamId, userId, userName, userRole, adminName  };
 };
 
 export default connect(mapStateToProps)(Board);

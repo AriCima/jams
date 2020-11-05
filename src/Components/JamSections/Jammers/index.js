@@ -28,9 +28,7 @@ const Jammers = ({ jamId, docType, docId, userRole }) => {
 
     return (
         <div className="jammers">
-
             {renderJammersScreen()}
-            
         </div>
 
     );

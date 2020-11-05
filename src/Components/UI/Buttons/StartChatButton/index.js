@@ -10,41 +10,39 @@ import { setJamId } from '../../../../redux/actions/navigateActions.js';
 import "./index.scss";
 
 const StartChatButton = ({ userJams, user1Name, user1Id, user2Name, user2Id, jamName}) => {
-  console.log('user1Id: ', user1Id);
-  console.log('user2Id: ', user2Id);
 
-    const launchChat = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+  const launchChat = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-        console.log('launchChat: ', user1Id, ' / ', user2Id);
+      console.log('launchChat: ', user1Id, ' / ', user2Id);
 
-        const chatId = user1Id + user2Id;
-        const reverseChatId = user2Id + user1Id;
+      const chatId = user1Id + user2Id;
+      const reverseChatId = user2Id + user1Id;
 
-        if(userJams.includes(chatId)){
-        return setJamId(chatId)
-        };
-        
-        if(userJams.includes(reverseChatId)){
-        return setJamId(reverseChatId)
-        }
+      if(userJams.includes(chatId)){
+      return setJamId(chatId)
+      };
+      
+      if(userJams.includes(reverseChatId)){
+      return setJamId(reverseChatId)
+      }
 
-        const chatInfo = { 
-            createdAt: new Date(), 
-            adminId: user1Id,
-            adminName: user1Name, 
-            user2Id: user2Id,
-            user2Name: user2Name,
-            jamId: chatId, 
-            jamType: 'chat', 
-            messages: [],
-            jamName: jamName,
-        }
+      const chatInfo = { 
+          createdAt: new Date(), 
+          adminId: user1Id,
+          adminName: user1Name, 
+          user2Id: user2Id,
+          user2Name: user2Name,
+          jamId: chatId, 
+          jamType: 'chat', 
+          messages: [],
+          jamName: jamName,
+      }
 
-        console.log('justo antes 1 / 2: ', user1Id, ' / ', user2Id)
-        DataService.startChat(chatId, chatInfo, user1Id, user2Id);
-    }
+      console.log('justo antes 1 / 2: ', user1Id, ' / ', user2Id)
+      DataService.startChat(chatId, chatInfo, user1Id, user2Id);
+  };
 
   return (
 

@@ -2,24 +2,25 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { setSubSection } from '../../../../redux/actions/navigateActions';
+import isEmpty from 'lodash/isEmpty';
 
 import './index.scss';
 
-const LandlordRoomCard = ({ rI, roomId, setSubSection }) => {
+const LandlordRoomCard = ({ jI, roomId, roomNr, setSubSection }) => {
 
-    const onShowRoomInfo = (roomId) => {
-        setSubSection(roomId)
+    const onShowRoomInfo = (roomNr) => {
+        setSubSection(roomNr)
     };
     
-    const isVacant = rI.bookings.currentBooking.jammerName === undefined;
+    const isVacant = isEmpty(jI.currentTenants);
     
     return (
         <div
-            className={`landlord-room-card-container ${roomId === rI.roomId && 'roomActive'}`}
-            onClick={() => onShowRoomInfo(rI.roomId)}
+            className={`landlord-room-card-container ${roomId === jI.roomId && 'roomActive'}`}
+            onClick={() => onShowRoomInfo(roomNr)}
         >
             <div className="landlord-room-card-roomNr">
-                <p>{rI.roomNr}</p>
+                <p>{roomNr}</p>
             </div>
 
             {isVacant ? (
@@ -29,10 +30,10 @@ const LandlordRoomCard = ({ rI, roomId, setSubSection }) => {
             ) : (
                 <div className="landlord-room-card-info">
                     <div className="landlord-room-card-upperline">
-                        <p>{rI.bookings.currentBooking.jammerName}</p>
+                        <p>{jI.currentTenants.firstName}</p>
                     </div>
                     <div className="landlord-room-card-lowerline">
-                        <p>{rI.bookings.currentBooking.jammerCountry}</p>
+                        <p>{jI.currentTenants.jammerCountry}</p>
                     </div>
                 </div>
 

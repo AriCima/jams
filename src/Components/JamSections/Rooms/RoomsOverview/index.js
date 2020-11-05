@@ -4,17 +4,17 @@ import isEmpty from 'lodash/isEmpty';
 
 import './index.css';
 
-const RoomsOverview = ({ roomsBookings }) => {
+const RoomsOverview = ({ rooms }) => {
 
-    const renderRoomsChart = () => roomsBookings.map((room, i) => (
+    const renderRoomsChart = () => rooms.map((room, i) => (
         <div className="rooms-charts-wrapper" key={i}>
             <div className="room-info-line">
-                {isEmpty(room.bookings.currentBooking)
+                {isEmpty(room.currentTenants)
                     ? (
                         <div className="vacant-row">
                             <div className="vacant-row-roomName">
                                 <div className="vacant-info-block">
-                                    <p>{room.roomNr}</p>
+                                    <p>{i + 1}</p>
                                 </div>
                             </div>
                             <div className="room-info-vacant-row">
@@ -27,25 +27,25 @@ const RoomsOverview = ({ roomsBookings }) => {
                     : (
                         <>
                             <div className="room-info-block-center">
-                                <p>{room.roomNr}</p>
+                                <p>{i + 1}</p>
+                            </div>
+                            {/* <div className="room-info-block">
+                                <p>{room.currentTenants.bookingId}</p>
+                            </div> */}
+                            <div className="room-info-block">
+                                <p>{room.bookings.currentTenants.firstName}</p>
                             </div>
                             <div className="room-info-block">
-                                <p>{room.bookings.currentBooking.bookingId}</p>
+                                <p>{moment(room.bookings.currentTenants.checkIn).format('DD-MMM-YYYY')}</p>
                             </div>
                             <div className="room-info-block">
-                                <p>{room.bookings.currentBooking.jammerName}</p>
+                                <p>{moment(room.bookings.currentTenants.checkOut).format('DD-MMM-YYYY')}</p>
                             </div>
                             <div className="room-info-block">
-                                <p>{moment(room.bookings.currentBooking.checkIn).format('DD-MMM-YYYY')}</p>
+                                <p>{room.bookings.currentTenants.rent}</p>
                             </div>
                             <div className="room-info-block">
-                                <p>{moment(room.bookings.currentBooking.checkOut).format('DD-MMM-YYYY')}</p>
-                            </div>
-                            <div className="room-info-block">
-                                <p>{room.bookings.currentBooking.rent}</p>
-                            </div>
-                            <div className="room-info-block">
-                                <p>{room.bookings.currentBooking.deposit}</p>
+                                <p>{room.bookings.currentTenants.deposit}</p>
                             </div>
                         </>
 
@@ -61,9 +61,9 @@ const RoomsOverview = ({ roomsBookings }) => {
                     <div className="room-info-chart-header-block">
                         <p>Room Name</p>
                     </div>
-                    <div className="room-info-chart-header-block">
+                    {/* <div className="room-info-chart-header-block">
                         <p>Booking ID</p>
-                    </div>
+                    </div> */}
                     <div className="room-info-chart-header-block">
                         <p>Tenant Name</p>
                     </div>
@@ -80,7 +80,7 @@ const RoomsOverview = ({ roomsBookings }) => {
                         <p>Deposit €</p>
                     </div>
                 </div>
-                {roomsBookings.length !== 0 && renderRoomsChart()}
+                {rooms.length !== 0 && renderRoomsChart()}
             </div>
         </div>
     );

@@ -171,4 +171,4 @@ const RegisterWithInvitation = ({
 };
 
 
-export default connect (null, {setUserId, setUserFirstName, setUserLastName, setJamId, setSection, setSubSection, setDocId })(RegisterWithInvitation);
+export default connect (null, {setUserId, setDocType, setUserFirstName, setUserLastName, setJamId, setSection, setSubSection, setDocId })(RegisterWithInvitation);

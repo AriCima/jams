@@ -60,7 +60,8 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       jamName,
       jamDesc,
       jamType,
-      nrOfRooms,
+      jamDetails: {nrOfRooms},
+      // nrOfRooms,
       createdAt,
       updatedAt,
     };

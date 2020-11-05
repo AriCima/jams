@@ -20,7 +20,6 @@ import "./index.scss";
   }) => {
 
   const onsetJam = (jamId) => {
-    console.log('jamId: ', jamId);
     setJamId(jamId);
     setSection('Overview');
     setSubSection('');

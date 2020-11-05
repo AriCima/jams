@@ -18,7 +18,6 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
         const userFirstNameInLocalStorage = localStorage.getItem('firstName') || '';
         const userLastNameInLocalStorage = localStorage.getItem('lastName') || '';
         const email = localStorage.getItem('email') || '';
-        console.log('email: ', email);
 
         if (userIdInLocalStorage !== '') {
             setUserId(userIdInLocalStorage);

@@ -37,7 +37,7 @@ const BoardContent = ({ boardContent}) => {
                         </div>
                         <div className="board-message-info">
                             <div className="board-message-time">
-                                <p>Ariel - {messageTime}</p>
+                                <p>{boardContent.adminName} - {messageTime}</p>
                             </div>
                         </div>
                     </div>

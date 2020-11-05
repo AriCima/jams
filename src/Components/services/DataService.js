@@ -485,7 +485,6 @@ export default class DataService {
                 .doc(jammerId)
                 .get()
                 .then((doc) => {
-                    console.log('doc: ', doc);
                     if (doc.exists) {
                         const res = doc.data();
                         resolve(res);
@@ -588,6 +587,7 @@ export default class DataService {
 
     //  * * * * * * * INVITATIONS * * * * * * * 
     static newTenantInvitation(jId, data) {
+        console.log('data: ', data);
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
@@ -596,6 +596,7 @@ export default class DataService {
                 .add(data)
                 .then((docRef) => {
                     resolve(docRef);
+                    console.log('docRef: ', docRef);
                 })
                 .catch((error) => {
                     const errorCode = error.code;

@@ -8,14 +8,17 @@ import Calculations from '../../services/Calculations';
 // CSS
 import './index.scss';
 
-const LandlordRoomsList = ({ roomsBookings }) => {
-    const orderedRooms = Calculations.sortAscRooms(roomsBookings)
+const LandlordRoomsList = ({ rooms }) => {
+    console.log('rooms: ', rooms);
+
+    // const orderedRooms = Calculations.sortAscRooms(roomsBookings)
     const renderRoomsList = () => {
-        return orderedRooms.map((rI, i) => {
+        return rooms.map((jI, i) => {
             return (
                 <React.Fragment key={i}>
                     <RoomCard
-                        rI={rI} 
+                        jI={jI}
+                        roomNr={ i + 1 }
                     />
                 </React.Fragment>
             )
@@ -26,7 +29,7 @@ const LandlordRoomsList = ({ roomsBookings }) => {
 
         <>
             <div className="rooms-list">
-                { roomsBookings ? renderRoomsList() : <p>Loading</p>}
+                { rooms ? renderRoomsList() : <p>Loading</p>}
             </div>
         </>
 

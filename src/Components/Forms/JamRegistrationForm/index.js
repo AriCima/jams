@@ -29,7 +29,7 @@ const JamRegistrationForm = ({
                 setInvInfo(res)
             })
         }
-    }, [invId])
+    }, [])
 
     const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
