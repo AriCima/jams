@@ -11,7 +11,6 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 import './index.css';
 
 const LandlordRoomInfo = ({ roomInfo, roomJammers, subSection}) => {
-    console.log('jammers: ', roomJammers);
 
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;

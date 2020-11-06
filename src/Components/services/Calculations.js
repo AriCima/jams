@@ -299,7 +299,6 @@ export default class Calculations {
     }
 
     static getRoomsOccupancy = (tenants, rooms) => {
-
         let roomsOccupancy = [];
         const numberOfRooms = parseInt(rooms);
 
