@@ -298,6 +298,107 @@ export default class Calculations {
         return result
     }
 
+    static getCurrentOccupancy = (tenants, rooms) => {
+        const today = moment(new Date()).format("YYYY-MM");
+        const currentMonth = moment(today).month()
+        const days = moment(today, "YYYY-MM").daysInMonth();
+        const totalOfDays = days * parseInt(rooms);
+
+        const numberOfRooms = parseInt(rooms);
+        let occupancyPerRoom = [];
+
+        for (let j=0; j<numberOfRooms; j++) {
+            occupancyPerRoom[j] = 0;
+        };
+
+        for (let i = 0; i < tenants.length; i++) {
+            const roomNr = tenants[i].roomNr;
+            const inDay = tenants[i].checkIn;
+            let inDate; //día del mes 
+            if(inDay) {
+                inDate = parseInt(inDay.substring(8));
+            }
+            const inMonth = moment(inDay).month();
+            const todayIsAfterIn = moment(today).isSameOrAfter(inDay);
+            const outDay = tenants[i].checkOut;
+            let outDate;
+            if(outDay) {
+                outDate = parseInt(outDay.substring(8));
+            }
+            const outMonth = moment(outDay).month();
+            const todayisBeforeOut = moment(today).isSameOrBefore(outDay);
+
+            const isCurrent = todayIsAfterIn && todayisBeforeOut;
+            if (isCurrent) {
+                if(inMonth !== currentMonth && outMonth !== currentMonth) {
+                    occupancyPerRoom[roomNr-1] =  occupancyPerRoom[roomNr-1] + days;
+                } else if (inMonth === currentMonth && outMonth === currentMonth) {
+                    const totalDays = outDate - inDate;
+                    occupancyPerRoom[roomNr-1] =  occupancyPerRoom[roomNr-1] + totalDays;
+                } else if (inMonth === currentMonth && outMonth !== currentMonth) {
+                    occupancyPerRoom[roomNr-1] = days - inDate;
+                } else if (inMonth !== currentMonth && outMonth === currentMonth){
+                    occupancyPerRoom[roomNr-1] = outDate;
+                }
+            }
+        }
+        
+        let count = 0;
+        for (let r = 0; r < numberOfRooms; r++){
+            count = count + occupancyPerRoom[r]
+        };
+
+        const result = (count / totalOfDays) * 100;
+
+        return result;
+    };
+
+    static getCurrentTenants = (tenants) => {
+
+        const today = moment(new Date()).format("YYYY-MM");
+
+        let currentTenants = [];
+        for (let i = 0; i < tenants.length; i++) {
+
+            const inDay = tenants[i].checkIn;
+            let inDate; //día del mes 
+            if(inDay) {
+                inDate = parseInt(inDay.substring(8));
+            }
+            const inMonth = moment(inDay).month();
+            const todayIsAfterIn = moment(today).isSameOrAfter(inDay);
+            const outDay = tenants[i].checkOut;
+            let outDate;
+            if(outDay) {
+                outDate = parseInt(outDay.substring(8));
+            }
+            const outMonth = moment(outDay).month();
+            const todayisBeforeOut = moment(today).isSameOrBefore(outDay);
+
+            const isCurrent = todayIsAfterIn && todayisBeforeOut;
+
+            if(isCurrent) currentTenants.push(tenants[i]);
+        }
+
+        return currentTenants;
+    };
+
+    static getCurrentIncomes = (tenants) => {
+
+        const currentTenants = this.getCurrentTenants(tenants)
+        
+        let incomes = 0;
+        for (let r = 0; r < currentTenants.length; r++){
+            console.log('currentTenants[r].rent: ', parseInt(currentTenants[r].rent));
+            incomes = incomes + parseInt(currentTenants[r].rent);
+        };
+
+        const result = incomes;
+
+        return result;
+    };
+
+
     static getRoomsOccupancy = (tenants, rooms) => {
         let roomsOccupancy = [];
         const numberOfRooms = parseInt(rooms);

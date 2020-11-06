@@ -9,19 +9,21 @@ import './index.scss';
 
 const AdminOverview = ({ jamId, jamDetails }) => {    
     
-    const [jammers, setJammers ] = useState([]);
+    const [occupancy, setOccupancy ] = useState(0);
+    const [incomes, setIncomes ] = useState(0);
 
     useEffect(() => {
         DataService.getJammers(jamId)
         .then((res) => {
-            console.log('jammers = ', res)
             const nrOfRooms = jamDetails.nrOfRooms;
             const currentOccupancy = Calculations.getCurrentOccupancy(res, nrOfRooms);
+            setOccupancy(currentOccupancy);
 
-            setJammers(res)
+            const currentIncomes = Calculations.getCurrentIncomes(res)
+            setIncomes( currentIncomes)
         })
 
-    }, [jamId])
+    }, [jamId, jamDetails])
 
 
     const rate = 10;
@@ -46,14 +48,15 @@ const AdminOverview = ({ jamId, jamDetails }) => {
                </div>
                <div className="overview-section-content">
                     <div className="ocupacion">
-                        <OccupancyGraph rate={rate}/>
+                        <p>Occupancy: {Math.floor(occupancy)}%</p>
+                        <OccupancyGraph occupancy={occupancy}/>
                     </div>
                     <div className="incomes">
                         <div className="incomse-label">
                             <p>Month Incomes [€]</p>
                         </div>
                         <div className="incomes-value">
-                            <p>5.800</p>
+                            <p>{incomes}</p>
                         </div>
                     </div>
                </div>
