@@ -4,10 +4,7 @@ import moment from 'moment';
 // CSS
 import './index.css';
 
-const CurrentTenant = ({ orderedBookings }) => {
-    const openBookingForm = () => {
-        alert('BOOKING FORM WILL OPEN');
-    };
+const CurrentTenant = ({ currentTenant }) => {
 
     return (
         <div className="current-tenant-wrapper">
@@ -20,16 +17,16 @@ const CurrentTenant = ({ orderedBookings }) => {
 
                 <div className="current-tenant-header-info">
                     <div className="current-tenant-name">
-                        <p>{orderedBookings.currentBooking.jammerName}</p>
+                        <p>{currentTenant.firstName} {currentTenant.lastName}</p>
                     </div>
-                    <div className="current-tenant-bookingId">
+                    {/* <div className="current-tenant-bookingId">
                         <div className="current-bookingId-field">
                             <p>Booking Ref:</p>
                         </div>
                         <div className="current-bookingId-value" onClick={openBookingForm}>
-                            <p>{orderedBookings.currentBooking.bookingId}</p>
+                            <p>{currentTenant.bookingId}</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>
@@ -46,7 +43,7 @@ const CurrentTenant = ({ orderedBookings }) => {
                                 <p>Check-In: </p>
                             </div>
                             <div className="contract-line-value">
-                                <p>{moment(orderedBookings.currentBooking.checkIn).format('DD MMM YYYY')}</p>
+                                <p>{moment(currentTenant.checkIn).format('DD MMM YYYY')}</p>
                             </div>
                         </div>
                         <div className="contract-line-block">
@@ -54,7 +51,7 @@ const CurrentTenant = ({ orderedBookings }) => {
                                 <p>Check-Out: </p>
                             </div>
                             <div className="contract-line-value">
-                                <p>{moment(orderedBookings.currentBooking.checkOut).format('DD MMM YYYY')}</p>
+                                <p>{moment(currentTenant.checkOut).format('DD MMM YYYY')}</p>
                             </div>
                         </div>
                     </div>
@@ -65,7 +62,7 @@ const CurrentTenant = ({ orderedBookings }) => {
                                 <p>Rent:</p>
                             </div>
                             <div className="contract-line-value">
-                                <p>{orderedBookings.currentBooking.rent}</p>
+                                <p>{currentTenant.rent}</p>
                             </div>
                         </div>
                     </div>
@@ -76,7 +73,7 @@ const CurrentTenant = ({ orderedBookings }) => {
                                 <p>Deposit:</p>
                             </div>
                             <div className="contract-line-value">
-                                <p>{orderedBookings.currentBooking.deposit}</p>
+                                <p>{currentTenant.deposit}</p>
                             </div>
                         </div>
                     </div>

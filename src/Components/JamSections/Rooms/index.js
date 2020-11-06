@@ -60,34 +60,22 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
 
     useEffect(() => {
         if (subSection !== '') {
-            // getRoomInfo(jamId, subSection);
+            getRoomInfo(jamId, subSection);
         }
     }, [subSection]);
 
-    // const getRoomInfo = async (jamId) => {
-    //     const res = await DataService.getRoomInfo(jamId, subSection);
-    //     setRoomInfo(res);
-    //     setShowRoomInfo(true);
-    // };
+    const getRoomInfo = async (jamId) => {
+        const stringRoomNr = toString(subSection);
+        const res = await DataService.getRoomInfo(jamId, stringRoomNr);
+        setRoomInfo(res);
+        setShowRoomInfo(true);
+    };
 
     const showOverview = subSection === '';
     const bookingsAlreadyOrdered = jammers.length > 0;
 
     return (
         <div className="landlord-rooms">
-
-            <div className="landlord-rooms-list">
-                {showRoomsList ? 
-                    (
-                        <RoomsList
-                            jamId={jamId}
-                            jamRoomsInfo={jamRoomsInfo}
-                            rooms={jammers}
-                        />
-                    )
-                    : <p>Loading</p>
-                }
-            </div>
 
             <div className="landlord-room-info">
                 {showOverview ?
@@ -97,7 +85,11 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
                         <p>Loading</p>
                     :
                     showRoomInfo ?
-                        <LandlordRoomInfo roomInfo={roomInfo} />
+                        <LandlordRoomInfo
+                            roomInfo={roomInfo}
+                            roomJammers={jammers[subSection]}
+                            roomNr={subSection}
+                        />
                         :
                         <p>Loading Room Info</p>
                 }

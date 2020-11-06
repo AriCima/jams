@@ -9,9 +9,7 @@ import Calculations from '../../services/Calculations';
 import './index.scss';
 
 const LandlordRoomsList = ({ rooms }) => {
-    console.log('rooms: ', rooms);
 
-    // const orderedRooms = Calculations.sortAscRooms(roomsBookings)
     const renderRoomsList = () => {
         return rooms.map((jI, i) => {
             return (

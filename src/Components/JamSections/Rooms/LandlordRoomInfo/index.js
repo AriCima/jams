@@ -3,25 +3,31 @@ import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 
 import CurrentTenant from './CurrentTenant';
-import RoomBookings from './RoomBookings';
+import RoomTenants from './RoomTenants';
 import BookingsGraphic from '../../../Bookings/BkgsGraphic';
-import Calculations from '../../../services/Calculations';
+
 
 // CSS
 import './index.css';
 
-const LandlordRoomInfo = ({ roomInfo }) => {
+const LandlordRoomInfo = ({ roomInfo, roomJammers, subSection}) => {
+    console.log('jammers: ', roomJammers);
 
+    const currentTenant = roomJammers.currentTenants;
+    const futureTenants = roomJammers.futureTenants;
+    const formerTenants = roomJammers.formerTenants;
+    const nextTenant = roomJammers.futureTenants[0];
 
-    const orderedBookings = Calculations.organizeBookings(roomInfo.bookingsSummary);
-    const noNextBooking = isEmpty(orderedBookings.nextBooking);
-    const noCurrentTenant = isEmpty(orderedBookings.currentBooking);
+    const noNextTenant = undefined;
+    const noCurrentTenant = isEmpty(currentTenant);
+    const noFormerTenants = isEmpty(formerTenants);
+    
+    let tenantsList = [currentTenant[0]]
 
-    const { bookingsSummary } = roomInfo;
-
-    // const onNewInvitation = (roomId) => {
-    //     alert('NEW INVITATION');
-    // };
+    for (let i = 0; i < futureTenants.length; i++) {
+        tenantsList.push(futureTenants[i])
+    }
+    console.log('tenantsList: ', tenantsList);
 
     return (
         <div className="room-info-wrapper">
@@ -32,7 +38,7 @@ const LandlordRoomInfo = ({ roomInfo }) => {
                         <h4>
                             Room Nr
                             {' '}
-                            {roomInfo.roomNr}
+                            {subSection}
                         </h4>
                     </div>
 
@@ -47,24 +53,23 @@ const LandlordRoomInfo = ({ roomInfo }) => {
                 </div>
 
                 <div className="bookings-graphic">
-                    <BookingsGraphic bookingsSummary={bookingsSummary} />
-
+                    <BookingsGraphic bookingsSummary={tenantsList} />
                 </div>
 
                 { !noCurrentTenant ? (
                     <div className="room-section">
-                        <CurrentTenant orderedBookings={orderedBookings} />
+                        <CurrentTenant currentTenant={currentTenant[0]} />
                     </div>
                 )
                     : (
                         <div className="room-section">
-                            {!noNextBooking
+                            {!noNextTenant
                                 ? (
                                     <div className="no-current-tenant-line">
                                         <p>
                                             Vacant until
                                             {' '}
-                                            <span>{moment(orderedBookings.nextBooking.checkIn).format('DD MMM YYYY')}</span>
+                                            <span>{moment(nextTenant.checkIn).format('DD MMM YYYY')}</span>
                                         </p>
                                     </div>
                                 )
@@ -81,7 +86,12 @@ const LandlordRoomInfo = ({ roomInfo }) => {
                     )}
 
                 <div className="room-section">
-                    <RoomBookings orderedBookings={orderedBookings} />
+                    <RoomTenants
+                        futureTenants={futureTenants}
+                        formerTenants={formerTenants}
+                        nextTenant={nextTenant}
+                        noCurrentTenant={noCurrentTenant}
+                    />
                 </div>
 
             </div>

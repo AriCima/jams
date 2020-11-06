@@ -275,7 +275,6 @@ export default class Calculations {
     // - - - - - - - - JAMMERS - - - - - - - - 
 
     static organizeAdminTenants = (tenants) => {
-
         let result = {
             currentTenants: [],
             formerTenants: [],

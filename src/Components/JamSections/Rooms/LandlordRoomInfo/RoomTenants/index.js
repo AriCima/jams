@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 
-import Calculations from '../../../../services/Calculations';
 import BookingsList from './BookingsList';
-import BookingCard from './BookingsList/BookingCard';
+
 // CSS
 import './index.css';
 
 
-const RoomBookings = ({ orderedBookings }) => {
+const RoomTenants = ({ 
+    futureTenants,
+    formerTenants,
+    nextTenant,
+    noCurrentTenant
+}) => {
 
-    const existsDueContracts = orderedBookings.dueBookings.length;
-    const existsNextBooking = isEmpty(orderedBookings.nextBooking);
-    const existsFutureBookings = orderedBookings.futureBookings.length;
+    const noFutureTenants = isEmpty(futureTenants);
+    const noFormerTenants = isEmpty(formerTenants);
+    const noNextTenant = isEmpty(nextTenant);
+
+    const noRooms = noFutureTenants && noFormerTenants && noNextTenant && noCurrentTenant;
 
     return (
         <>
-            {!Object.keys(orderedBookings).length
+            {noRooms
                 ? <h1>no rooms</h1>
                 : (
                     <div className="room-bookings-wrapper">
@@ -27,8 +32,8 @@ const RoomBookings = ({ orderedBookings }) => {
                                 <p>Next Booking</p>
                             </div>
                             <div className="room-booking-section-content">
-                                {!existsNextBooking ?
-                                    <BookingsList bookings={orderedBookings.nextBooking} />
+                                {!noNextTenant ?
+                                    <BookingsList bookings={nextTenant} />
                                     : <p>There are no future bookings for this room yet</p>}
                             </div>
                         </div>
@@ -38,8 +43,8 @@ const RoomBookings = ({ orderedBookings }) => {
                                 <p>Future Bookings</p>
                             </div>
                             <div className="room-booking-section-content">
-                                {existsFutureBookings > 1 ?
-                                    <BookingsList bookings={orderedBookings.futureBookings} />
+                                {!noFutureTenants > 1 ?
+                                    <BookingsList bookings={futureTenants} />
                                     : <p>There are no future bookings for this room yet</p>}
                             </div>
                         </div>
@@ -48,8 +53,8 @@ const RoomBookings = ({ orderedBookings }) => {
                             <div className="room-section-title">
                                 <p>Due contracts</p>
                             </div>
-                            {existsDueContracts >= 1 ?
-                                <BookingsList bookings={orderedBookings.dueBookings} />
+                            {!noFormerTenants >= 1 ?
+                                <BookingsList bookings={formerTenants} />
                                 : <p>There are contracts history this room yet</p>}
                         </div>
 
@@ -61,4 +66,4 @@ const RoomBookings = ({ orderedBookings }) => {
     );
 };
 
-export default RoomBookings;
+export default RoomTenants;

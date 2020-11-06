@@ -1,58 +1,78 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
+import { setSubSection } from '../../../../redux/actions/navigateActions';
 
 import './index.css';
 
-const RoomsOverview = ({ rooms }) => {
+const RoomsOverview = ({ rooms, setSubSection }) => {
+    
 
-    const renderRoomsChart = () => rooms.map((room, i) => (
-        <div className="rooms-charts-wrapper" key={i}>
-            <div className="room-info-line">
-                {isEmpty(room.currentTenants)
-                    ? (
-                        <div className="vacant-row">
-                            <div className="vacant-row-roomName">
-                                <div className="vacant-info-block">
-                                    <p>{i + 1}</p>
+    const showRoomInfo = (roomNr) => {
+        console.log('roomNr: ', roomNr);
+        setSubSection(roomNr)
+    };
+
+    const renderRoomsChart = () => rooms.map((room, i) => {
+        const currentTenant = room.currentTenants[0];
+        const roomNr = i;
+        return(
+            <div className="rooms-charts-wrapper" key={i}>
+                <div className="room-info-line"
+                    onClick={() => {
+                        showRoomInfo(roomNr)
+                    }}
+                >
+                    {isEmpty(currentTenant)
+                        ? (
+                            <div className="vacant-row">
+                                <div className="vacant-row-roomName">
+                                    <div className="vacant-info-block">
+                                        <p>{roomNr+1}</p>
+                                    </div>
+                                </div>
+                                <div className="room-info-vacant-row">
+                                    <div className="vacant-sign">
+                                        <p>CURRENTLY VACANT</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="room-info-vacant-row">
-                                <div className="vacant-sign">
-                                    <p>CURRENTLY VACANT</p>
+                        )
+                        : (
+                            <>
+                                <div className="room-info-block-center">
+                                    <p>{currentTenant.roomNr}</p>
                                 </div>
-                            </div>
-                        </div>
-                    )
-                    : (
-                        <>
-                            <div className="room-info-block-center">
-                                <p>{i + 1}</p>
-                            </div>
-                            {/* <div className="room-info-block">
-                                <p>{room.currentTenants.bookingId}</p>
-                            </div> */}
-                            <div className="room-info-block">
-                                <p>{room.bookings.currentTenants.firstName}</p>
-                            </div>
-                            <div className="room-info-block">
-                                <p>{moment(room.bookings.currentTenants.checkIn).format('DD-MMM-YYYY')}</p>
-                            </div>
-                            <div className="room-info-block">
-                                <p>{moment(room.bookings.currentTenants.checkOut).format('DD-MMM-YYYY')}</p>
-                            </div>
-                            <div className="room-info-block">
-                                <p>{room.bookings.currentTenants.rent}</p>
-                            </div>
-                            <div className="room-info-block">
-                                <p>{room.bookings.currentTenants.deposit}</p>
-                            </div>
-                        </>
+                                <div className="room-info-block">
+                                    <p>{currentTenant.firstName}</p>
+                                </div>
+                                <div className="room-info-block">
+                                    {/* <p>{currentTenant.checkIn}</p> */}
 
-                    )}
+                                    <p>{moment(currentTenant.checkIn).format('DD-MMM-YYYY')}</p>
+                                </div>
+                                <div className="room-info-block">
+                                    {/* <p>{currentTenant.checkOut}</p> */}
+
+                                    <p>{moment(currentTenant.checkOut).format('DD-MMM-YYYY')}</p>
+                                </div>
+                                <div className="room-info-block">
+                                    <p>{currentTenant.rent}</p>
+                                </div>
+                                <div className="room-info-block">
+                                    <p>{currentTenant.deposit}</p>
+                                </div>
+                            </>
+    
+                        )}
+                </div>
             </div>
-        </div>
-    ));
+        )
+
+    }
+    );
 
     return (
         <div className="rooms-overview-wrapper">
@@ -61,9 +81,6 @@ const RoomsOverview = ({ rooms }) => {
                     <div className="room-info-chart-header-block">
                         <p>Room Name</p>
                     </div>
-                    {/* <div className="room-info-chart-header-block">
-                        <p>Booking ID</p>
-                    </div> */}
                     <div className="room-info-chart-header-block">
                         <p>Tenant Name</p>
                     </div>
@@ -86,4 +103,4 @@ const RoomsOverview = ({ rooms }) => {
     );
 };
 
-export default RoomsOverview;
+export default connect(null, { setSubSection })(RoomsOverview);

@@ -47,6 +47,7 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
                         </div>
                         <div className="subsection-wrapper">
                             <JammersList jammersList={jammers.currentTenants} />
+                            
                         </div>
                     </div>
 

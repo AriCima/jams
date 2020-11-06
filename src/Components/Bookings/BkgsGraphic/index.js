@@ -4,6 +4,8 @@ import React from 'react';
 import './index.css';
 
 const BookingsGraphic = ({ bookingsSummary }) => {
+    console.log('bookingsSummary: ', bookingsSummary);
+
     const generateGraphicsMonths = () => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

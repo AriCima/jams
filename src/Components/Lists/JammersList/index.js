@@ -6,7 +6,6 @@ import JammerCard from './JammerCard';
 import './index.scss';
 
 const JammersList = ({ jammersList }) => {
-
     const renderJammersList = () => {
         return jammersList.map((tL, i) => {
             return (

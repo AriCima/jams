@@ -7,9 +7,6 @@ import "./index.scss";
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 
 const JammerCard = ({ userId, firstName, jamName, tL, setDocType, setDocId, setEditable }) => {
-  console.log('userId: ', userId);
-  console.log('jammerId: ', tL.userId);
-  console.log('jammerName: ', tL.firstName);
 
   const showJammerForm = (e) => {
     e.preventDefault();
