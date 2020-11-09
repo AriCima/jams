@@ -2,7 +2,8 @@ import React from 'react';
 
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
-import values from 'lodash/values';
+import orderBy from 'lodash/orderBy';
+import findIndex from 'lodash/findIndex';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChalkboard, faComments, faUsers, faUserLock, faCog} from '@fortawesome/free-solid-svg-icons'
@@ -123,6 +124,7 @@ export default class Calculations {
 
         return x.sort(compare)
     };
+
     static sortByDateDesc(x){
 
         function compare(a,b){
@@ -296,62 +298,15 @@ export default class Calculations {
         });
 
         return result
-    }
-
-    static getCurrentOccupancy = (tenants, rooms) => {
-        const today = moment(new Date()).format("YYYY-MM");
-        const currentMonth = moment(today).month()
-        const days = moment(today, "YYYY-MM").daysInMonth();
-        const totalOfDays = days * parseInt(rooms);
-
-        const numberOfRooms = parseInt(rooms);
-        let occupancyPerRoom = [];
-
-        for (let j=0; j<numberOfRooms; j++) {
-            occupancyPerRoom[j] = 0;
-        };
-
-        for (let i = 0; i < tenants.length; i++) {
-            const roomNr = tenants[i].roomNr;
-            const inDay = tenants[i].checkIn;
-            let inDate; //día del mes 
-            if(inDay) {
-                inDate = parseInt(inDay.substring(8));
-            }
-            const inMonth = moment(inDay).month();
-            const todayIsAfterIn = moment(today).isSameOrAfter(inDay);
-            const outDay = tenants[i].checkOut;
-            let outDate;
-            if(outDay) {
-                outDate = parseInt(outDay.substring(8));
-            }
-            const outMonth = moment(outDay).month();
-            const todayisBeforeOut = moment(today).isSameOrBefore(outDay);
-
-            const isCurrent = todayIsAfterIn && todayisBeforeOut;
-            if (isCurrent) {
-                if(inMonth !== currentMonth && outMonth !== currentMonth) {
-                    occupancyPerRoom[roomNr-1] =  occupancyPerRoom[roomNr-1] + days;
-                } else if (inMonth === currentMonth && outMonth === currentMonth) {
-                    const totalDays = outDate - inDate;
-                    occupancyPerRoom[roomNr-1] =  occupancyPerRoom[roomNr-1] + totalDays;
-                } else if (inMonth === currentMonth && outMonth !== currentMonth) {
-                    occupancyPerRoom[roomNr-1] = days - inDate;
-                } else if (inMonth !== currentMonth && outMonth === currentMonth){
-                    occupancyPerRoom[roomNr-1] = outDate;
-                }
-            }
-        }
-        
-        let count = 0;
-        for (let r = 0; r < numberOfRooms; r++){
-            count = count + occupancyPerRoom[r]
-        };
-
-        const result = (count / totalOfDays) * 100;
-
-        return result;
     };
+
+    static removeAmdinFromJammers = (tenants) => {
+        const noAdmin = tenants.filter(function( obj ) { 
+            return obj.checkIn !== undefined;
+        })
+
+        return noAdmin
+    }
 
     static getCurrentTenants = (tenants) => {
 
@@ -383,13 +338,81 @@ export default class Calculations {
         return currentTenants;
     };
 
+    static getCurrentAndFutureTenants = (tenants) => {
+        const today = moment(new Date())
+        let newArray = [];
+        for(let i = 0; i < tenants.length; i++) {
+            const outDate = moment(new Date(tenants[i].checkOut))
+            const isCurrentOrFuture = moment(today).isSameOrBefore(outDate);
+
+            if(isCurrentOrFuture) {
+                newArray.push(tenants[i])
+            }
+        }
+        return newArray;
+    }
+
+ // - - - - - - - - STATISTICS - - - - - - - - 
+
+    static getCurrentOccupancy = (tenants, rooms) => {
+        
+        const currentTenants = this.getCurrentTenants(tenants)
+        
+        const today = moment(new Date()).format("YYYY-MM");
+        const currentMonth = moment(today).month()
+        const days = moment(today, "YYYY-MM").daysInMonth();
+        const totalOfDays = days * parseInt(rooms);
+
+        const numberOfRooms = parseInt(rooms);
+        let occupancyPerRoom = [];
+        for (let j=0; j<numberOfRooms; j++) {
+            occupancyPerRoom[j] = 0;
+        };
+
+        for (let i = 0; i < currentTenants.length; i++){
+            const roomNr = tenants[i].roomNr;
+            const inDay = tenants[i].checkIn;
+            let inDate; //día del mes 
+            if(inDay) {
+                inDate = parseInt(inDay.substring(8));
+            }
+            const inMonth = moment(inDay).month();
+            const outDay = tenants[i].checkOut;
+            let outDate;
+            if(outDay) {
+                outDate = parseInt(outDay.substring(8));
+            }
+            const outMonth = moment(outDay).month();
+
+            if(inMonth !== currentMonth && outMonth !== currentMonth) {
+                occupancyPerRoom[roomNr-1] =  occupancyPerRoom[roomNr-1] + days;
+            } else if (inMonth === currentMonth && outMonth === currentMonth) {
+                const totalDays = outDate - inDate;
+                occupancyPerRoom[roomNr-1] =  occupancyPerRoom[roomNr-1] + totalDays;
+            } else if (inMonth === currentMonth && outMonth !== currentMonth) {
+                occupancyPerRoom[roomNr-1] = days - inDate;
+            } else if (inMonth !== currentMonth && outMonth === currentMonth){
+                occupancyPerRoom[roomNr-1] = outDate;
+            }
+        }
+        
+        
+        let count = 0;
+        for (let r = 0; r < numberOfRooms; r++){
+            count = count + occupancyPerRoom[r]
+        };
+
+        const result = (count / totalOfDays) * 100;
+
+        return result;
+    };
+
     static getCurrentIncomes = (tenants) => {
 
         const currentTenants = this.getCurrentTenants(tenants)
         
         let incomes = 0;
         for (let r = 0; r < currentTenants.length; r++){
-            console.log('currentTenants[r].rent: ', parseInt(currentTenants[r].rent));
             incomes = incomes + parseInt(currentTenants[r].rent);
         };
 
@@ -398,6 +421,42 @@ export default class Calculations {
         return result;
     };
 
+    static getFutureChecks(tenants){
+        const today = moment(new Date())
+        const currentAndFutureTenants = this.getCurrentAndFutureTenants(tenants);
+        const orderedIns = orderBy(currentAndFutureTenants,['checkIn'], ['asc']);
+        const arrLength = orderedIns.length;
+        const orderedOuts = orderBy(currentAndFutureTenants,['checkOut'], ['asc']);
+
+        const newArray = [];
+
+        for (let i = 0; i < arrLength; i++) {
+            const outDate = moment(new Date(orderedIns[i].checkOut));
+            // console.log('outDate: ', moment(outDate).format('DD-MMM-YYYY'));
+
+            for (let j = 0; j < arrLength; j++) {
+                const inDate = moment(new Date(orderedIns[j].checkIn));
+                // console.log('inDate: ', moment(inDate).format('DD-MMM-YYYY'));
+                const alreadyIn = moment(inDate).isSameOrBefore(today);
+
+                if(!alreadyIn) {
+                    
+                    const inBeforeOut = moment(inDate).isSameOrBefore(outDate);
+                    
+                    if (inBeforeOut) {
+                        orderedIns[j].type = 'chkIn'
+                        newArray[i] = orderedIns[j];
+                    } else {
+                        orderedOuts[i].type = 'chkOut'
+                        newArray[i] = orderedOuts[i];
+                    }
+
+                }
+            }
+        }
+
+        return  newArray
+    };
 
     static getRoomsOccupancy = (tenants, rooms) => {
         let roomsOccupancy = [];
@@ -419,7 +478,8 @@ export default class Calculations {
         }
 
         return roomsOccupancy
-    }
+    };
+
 
     static organizeFlatmates = (tenants, userId) => {
 

@@ -462,7 +462,7 @@ export default class DataService {
                     const jammers = [];
                     result.docs.forEach((d) => {
                         const j = d.data();
-                        j.id = d.id;
+                        j.userId = d.id;
                         jammers.push(j);
                     });
                     resolve(jammers);

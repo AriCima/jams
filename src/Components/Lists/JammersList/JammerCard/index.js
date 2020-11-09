@@ -11,7 +11,7 @@ const JammerCard = ({ userId, firstName, jamName, tL, setDocType, setDocId, setE
   const showJammerForm = (e) => {
     e.preventDefault();
     setDocType('TENANT-FORM');
-    setDocId(tL.id); // tenant's userId
+    setDocId(tL.userId); // tenant's userId
     setEditable('true');
   }
 
