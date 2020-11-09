@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWalking } from '@fortawesome/free-solid-svg-icons'
+import { faWalking, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
 
 import OccupancyGraph from './OccupancyGraph';
@@ -57,6 +57,10 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
                         <FontAwesomeIcon
                             className={`walking-icon${isOut ? '-isOut':''}`}
                             icon={faWalking}
+                        />
+                        <FontAwesomeIcon
+                            className={`door-icon${isOut ? '-isOut':''}`}
+                            icon={faDoorOpen}
                         />
                     </div>
                     <div className="activity-info">

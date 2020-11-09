@@ -49,29 +49,43 @@
                 } 
 
                 .activity-img{
-                    width: 5%;
+                    width: 15%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     .walking-icon{
+                        width: 50%;
                         color: green;
                         font-size: 25px;
                     }
+                    .door-icon{
+                        width: 50%;
+                        color: green;
+                        font-size: 25px;
+                        transform: scaleX(-1);
+                    }
                 }
                 .activity-img-isOut{
-                    width: 5%;
+                    width: 15%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     .walking-icon-isOut{
+                        width: 50%;
                         color: red;
                         font-size: 25px;
                         transform: scaleX(-1);
                         
                     }
+                    .door-icon-isOut{
+                        width: 50%;
+                        color: red;
+                        font-size: 25px;
+                        transform: scaleX(-1);
+                    }
                 }
                 .activity-info{
-                    width: 95%;
+                    width: 85%;
                     margin-left: 20px;
                     display: flex;
                     justify-content: flex-start;
