@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
+
+import DataService from '../../../services/DataService';
+import Calculations from '../../../services/Calculations';
 
 import CurrentTenant from './CurrentTenant';
 import RoomTenants from './RoomTenants';
@@ -10,7 +15,7 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.css';
 
-const LandlordRoomInfo = ({ roomInfo, roomJammers, roomNr}) => {
+const LandlordRoomInfo = ({ roomJammers, roomInfo, roomNr}) => {
 
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;
@@ -22,9 +27,10 @@ const LandlordRoomInfo = ({ roomInfo, roomJammers, roomNr}) => {
     const noFormerTenants = isEmpty(formerTenants);
     
     let tenantsList = currentTenant
+    console.log('tenantsList: ', tenantsList);
 
     for (let i = 0; i < futureTenants.length; i++) {
-        tenantsList[i] = futureTenants[i];
+        tenantsList.push(futureTenants[i]);
     }
     
     return (

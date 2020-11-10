@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import DataService from '../../../services/DataService';
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 
@@ -11,7 +10,6 @@ import './index.css';
 const RoomsOverview = ({ rooms, setSubSection }) => {
     
     const showRoomInfo = (roomNr) => {
-        console.log('roomNr: ', roomNr);
         setSubSection(roomNr)
     };
 

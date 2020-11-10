@@ -14,48 +14,50 @@ import RoomsOverview from './RoomsOverview';
 import './index.scss';
 
 const Rooms = ({ jamId, nrOfRooms, subSection }) => {
-    const [showRoomInfo, setShowRoomInfo] = useState(false);
+    const [roomInfo, setRoomInfo] = useState(false);
     const [jammers, setJammers] = useState([]);
+    const [roomJammers, setRoomJammers] = useState([]);
+    
     
 
-    // useEffect(() => {
-    //     // getJamRoomsInfo(jamId);
-    //     console.log('launched')
-    //     getJammersList(jamId);
-    // }, [subsection]);
-
+    useEffect(() => {
+        if (subSection === '') {
+            getJammersList(jamId);
+        } else {
+            getRoomInfo(jamId);
+            getRoomJammersList(jamId);
+        }
+    }, [subSection]);
 
     const getJammersList = async (jamId) => {
         const res = await DataService.getJammers(jamId);
         if(res.length > 0) {
             let jammersByRooms = [];
             jammersByRooms = Calculations.getRoomsOccupancy(res, nrOfRooms);
-            console.log('jammersByRooms: ', jammersByRooms);
             setJammers(jammersByRooms);
         };
     };
 
-    useEffect(() => {
-        if (subSection !== '') {
-            getRoomInfo(jamId, subSection);
-        } else {
-            getJammersList(jamId);
-        }
-    }, [subSection]);
+    const getRoomJammersList = async (jamId) => {
+        const res = await DataService.getJammers(jamId);
+        if(res.length > 0) {
+            let jammersByRooms = [];
+            jammersByRooms = Calculations.getRoomsOccupancy(res, nrOfRooms);
+            setRoomJammers(jammersByRooms[subSection]);
+        };
+    };
 
     const getRoomInfo = async (jamId) => {
         const stringRoomNr = toString(subSection);
         const res = await DataService.getRoomInfo(jamId, stringRoomNr);
-        console.log('res: ', res);
-        // setRoomInfo(res);
-        setShowRoomInfo(true);
+        setRoomInfo(res);
     };
     
 
-
-
     const showOverview = subSection === '';
     const bookingsAlreadyOrdered = jammers.length > 0;
+    const showRoomInfo = !isEmpty(roomJammers);
+
     return (
         <div className="landlord-rooms">
 
@@ -68,7 +70,7 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
                     :
                     showRoomInfo ?
                         <LandlordRoomInfo
-                            roomJammers={jammers[subSection]}
+                            roomJammers={roomJammers}
                             roomNr={subSection}
                         />
                         :
