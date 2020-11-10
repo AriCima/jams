@@ -277,6 +277,7 @@ export default class Calculations {
     // - - - - - - - - JAMMERS - - - - - - - - 
 
     static organizeAdminTenants = (tenants) => {
+        console.log('organizeAdminTenants: ');
         let result = {
             currentTenants: [],
             formerTenants: [],
@@ -355,6 +356,7 @@ export default class Calculations {
  // - - - - - - - - STATISTICS - - - - - - - - 
 
     static getCurrentOccupancy = (tenants, rooms) => {
+        console.log('getCurrentOccupancy: ');
         
         const currentTenants = this.getCurrentTenants(tenants)
         

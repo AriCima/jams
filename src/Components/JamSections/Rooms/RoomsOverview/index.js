@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 
+import DataService from '../../../services/DataService';
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
-import { setSubSection } from '../../../../redux/actions/navigateActions';
 
+import {setSubSection } from '../../../../redux/actions/navigateActions';
 import './index.css';
 
 const RoomsOverview = ({ rooms, setSubSection }) => {
     
-
     const showRoomInfo = (roomNr) => {
         console.log('roomNr: ', roomNr);
         setSubSection(roomNr)
@@ -19,7 +19,6 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
         const currentTenant = room.currentTenants[0];
         const roomNr =i+1;
         const stringNr = roomNr.toString();
-        console.log('roomNr: ', roomNr);
         return(
             <div className="rooms-charts-wrapper" key={i}>
                 <div className="room-info-line"
@@ -48,7 +47,7 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
                                     <p>{stringNr}</p>
                                 </div>
                                 <div className="room-info-block">
-                                    <p>{currentTenant.firstName}</p>
+                                    <p>{currentTenant.firstName} {currentTenant.lastName}</p>
                                 </div>
                                 <div className="room-info-block">
                                     {/* <p>{currentTenant.checkIn}</p> */}
@@ -104,5 +103,9 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
         </div>
     );
 };
-
-export default connect(null, { setSubSection })(RoomsOverview);
+const mapStateToProps = (state) => {
+    const { jamId } = state.nav;
+    return { jamId }
+    
+};
+export default connect(mapStateToProps, { setSubSection })(RoomsOverview);

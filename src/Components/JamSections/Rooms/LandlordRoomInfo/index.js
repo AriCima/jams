@@ -21,12 +21,12 @@ const LandlordRoomInfo = ({ roomInfo, roomJammers, roomNr}) => {
     const noCurrentTenant = isEmpty(currentTenant);
     const noFormerTenants = isEmpty(formerTenants);
     
-    let tenantsList = [currentTenant[0]]
+    let tenantsList = currentTenant
 
     for (let i = 0; i < futureTenants.length; i++) {
         tenantsList[i] = futureTenants[i];
     }
-
+    
     return (
         <div className="room-info-wrapper">
             <div className="room-sections-wrapper">
@@ -52,6 +52,7 @@ const LandlordRoomInfo = ({ roomInfo, roomJammers, roomNr}) => {
 
                 <div className="bookings-graphic">
                     <BookingsGraphic bookingsSummary={tenantsList} />
+                    
                 </div>
 
                 { !noCurrentTenant ? (
