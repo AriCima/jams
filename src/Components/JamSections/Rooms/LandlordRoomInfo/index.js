@@ -10,7 +10,7 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.css';
 
-const LandlordRoomInfo = ({ roomInfo, roomJammers, subSection}) => {
+const LandlordRoomInfo = ({ roomInfo, roomJammers, roomNr}) => {
 
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;
@@ -24,9 +24,8 @@ const LandlordRoomInfo = ({ roomInfo, roomJammers, subSection}) => {
     let tenantsList = [currentTenant[0]]
 
     for (let i = 0; i < futureTenants.length; i++) {
-        tenantsList.push(futureTenants[i])
+        tenantsList[i] = futureTenants[i];
     }
-    console.log('tenantsList: ', tenantsList);
 
     return (
         <div className="room-info-wrapper">
@@ -37,7 +36,7 @@ const LandlordRoomInfo = ({ roomInfo, roomJammers, subSection}) => {
                         <h4>
                             Room Nr
                             {' '}
-                            {subSection}
+                            {roomNr+1}
                         </h4>
                     </div>
 

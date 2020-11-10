@@ -17,12 +17,14 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
 
     const renderRoomsChart = () => rooms.map((room, i) => {
         const currentTenant = room.currentTenants[0];
-        const roomNr = i;
+        const roomNr =i+1;
+        const stringNr = roomNr.toString();
+        console.log('roomNr: ', roomNr);
         return(
             <div className="rooms-charts-wrapper" key={i}>
                 <div className="room-info-line"
                     onClick={() => {
-                        showRoomInfo(roomNr)
+                        showRoomInfo(i)
                     }}
                 >
                     {isEmpty(currentTenant)
@@ -30,7 +32,7 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
                             <div className="vacant-row">
                                 <div className="vacant-row-roomName">
                                     <div className="vacant-info-block">
-                                        <p>{roomNr+1}</p>
+                                        <p>{stringNr}</p>
                                     </div>
                                 </div>
                                 <div className="room-info-vacant-row">
@@ -43,7 +45,7 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
                         : (
                             <>
                                 <div className="room-info-block-center">
-                                    <p>{currentTenant.roomNr}</p>
+                                    <p>{stringNr}</p>
                                 </div>
                                 <div className="room-info-block">
                                     <p>{currentTenant.firstName}</p>

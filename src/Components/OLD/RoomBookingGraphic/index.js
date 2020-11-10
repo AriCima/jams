@@ -1,7 +1,7 @@
 import React from 'react';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const RoomBookingsGraphic  = (bookings) => {
 
@@ -65,7 +65,7 @@ const RoomBookingsGraphic  = (bookings) => {
       oneDay.year= yy;
 
       // default days style
-      oneDay.background = 'rgba(124,252,0,0.6)';
+      oneDay.background = ' rgb(244,245,246)';
       oneDay.width = (100 / nrDays) + 'px';
 
       let dateToCompare = new Date(d+1 + '-' + mm + '-' + yy);
@@ -78,7 +78,7 @@ const RoomBookingsGraphic  = (bookings) => {
 
 
         if ( dateToCompare >= checkin && dateToCompare <= checkout){  // styling BOOKED days
-          oneDay.background = 'red'
+          oneDay.background = ' rgb(163, 37, 164)'
         }
       };
 

@@ -1,7 +1,8 @@
 import React from 'react';
+import moment from 'moment';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const BookingsGraphic = ({ bookingsSummary }) => {
 
@@ -23,29 +24,29 @@ const BookingsGraphic = ({ bookingsSummary }) => {
         }
 
 
-        return oneYearArray.map((months, i) => (
-            <div className="graphic-container">
+        return oneYearArray.map((months, i) => {
 
-                <div className="month-container" key={i}>
-
+            const isCurrent = i === 0; 
+            return(
+                <div className={`month-container ${isCurrent ? 'currentMonth' : ''}`} key={i}>
                     <div className="month-name">
                         <p>{months[0]}</p>
                     </div>
                     <div className="days-container">
                         {generateDays(months[0], months[1])}
                     </div>
-
+    
                 </div>
+            )
 
-            </div>
-        ));
+        });
     };
+
 
     const generateDays = (mm, yy) => { // x = 'Mes' y = yyyy
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         const oneMonthArray = [];
-
         const today = new Date();
 
         const nrDays = daysOfMonth[months.indexOf(mm)];
@@ -57,8 +58,9 @@ const BookingsGraphic = ({ bookingsSummary }) => {
             oneDay.month = mm;
             oneDay.year = yy;
             // default days style
-            oneDay.background = 'rgba(124,252,0,0.6)';
+            oneDay.dayType = 'vacant';
             oneDay.width = `${100 / nrDays}px`;
+            oneDay.isToday = '';
 
             const dateToCompare = new Date(`${d + 1}-${mm}-${yy}`);
 
@@ -69,9 +71,14 @@ const BookingsGraphic = ({ bookingsSummary }) => {
 
 
                 if (dateToCompare >= checkin && dateToCompare <= checkout) { // styling BOOKED days
-                    oneDay.background = 'red';
+                    oneDay.dayType = 'booked'
                 }
             }
+
+            const dayFormat = moment(dateToCompare).format('DD');
+
+            if (dayFormat === '01') oneDay.firstDay = 'isFirstDay';
+            
             // STYLING "TODAY"
             const hoy = {};
             hoy.day = today.getDate();
@@ -80,19 +87,20 @@ const BookingsGraphic = ({ bookingsSummary }) => {
 
             if (oneDay.day === hoy.day && oneDay.month === hoy.month && oneDay.year === hoy.year) {
                 oneDay.background = 'rgb(255,255,0)';
+                oneDay.isToday = 'today'
             }
 
             oneMonthArray.push(oneDay);
         }
 
 
+
         return oneMonthArray.map((days, i) => (
             <div className="days-container">
-
                 <div
-                    className="single-day"
+                    className={`single-day ${days.dayType} ${days.firstDay} ${days.isToday}`}
                     key={i}
-                    style={{ background: days.background, width: days.width }}
+                    style={{width: days.width }}
                 />
 
             </div>

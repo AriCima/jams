@@ -79,7 +79,7 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
 
            <div className="overview-activity">
                <div className="overview-section-title">
-                   <h2>Coming Ins &amp; Outs</h2>
+                   <h2>Ins &amp; Outs</h2>
                </div>
                <div className="overview-section-activity">
                     {showActivity && renderActivity()}
@@ -97,10 +97,10 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
 
             <div className="overview-incomes">
                 <div className="incomes-label">
-                    <p>Month Incomes [€]</p>
+                    <p>Month Incomes:</p>
                 </div>
                 <div className="incomes-value">
-                    <p>{incomes}</p>
+                    <p>{incomes} €</p>
                 </div>
             </div>
 
