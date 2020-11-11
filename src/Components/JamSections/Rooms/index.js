@@ -71,7 +71,7 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
                     showRoomInfo ?
                         <LandlordRoomInfo
                             roomJammers={roomJammers}
-                            roomNr={subSection}
+                            subSection={subSection}
                         />
                         :
                         <p>Loading Room Info</p>

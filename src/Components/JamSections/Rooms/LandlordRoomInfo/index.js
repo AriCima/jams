@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 
-import DataService from '../../../services/DataService';
-import Calculations from '../../../services/Calculations';
-
+import InviteJammerButton from '../../../UI/Buttons/InviteJammerButton';
 import CurrentTenant from './CurrentTenant';
 import RoomTenants from './RoomTenants';
 import BookingsGraphic from '../../../Bookings/BkgsGraphic';
@@ -15,7 +13,7 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.css';
 
-const LandlordRoomInfo = ({ roomJammers, roomInfo, roomNr}) => {
+const LandlordRoomInfo = ({ roomJammers, jamId, subSection}) => {
 
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;
@@ -27,33 +25,32 @@ const LandlordRoomInfo = ({ roomJammers, roomInfo, roomNr}) => {
     const noFormerTenants = isEmpty(formerTenants);
     
     let tenantsList = currentTenant
-    console.log('tenantsList: ', tenantsList);
 
     for (let i = 0; i < futureTenants.length; i++) {
         tenantsList.push(futureTenants[i]);
     }
     
+    const roomNr = subSection + 1;
+    roomNr.toString();
+
     return (
         <div className="room-info-wrapper">
             <div className="room-sections-wrapper">
 
                 <div className="room-header">
+                    <div className="room-buttons-area">
+                        <div className="jammers-button">
+                            <InviteJammerButton jamId={jamId} roomNr={roomNr}/>                
+                        </div>
+                    </div>
                     <div className="room-header-title">
                         <h4>
                             Room Nr
                             {' '}
-                            {roomNr+1}
+                            {roomNr}
                         </h4>
                     </div>
 
-                    <div className="room-buttons-area">
-                        <div className="room-button-block">
-                            <p>Acá estaba el preBooking Form</p>
-                        </div>
-                        <div className="room-button-block">
-                            
-                        </div>
-                    </div>
                 </div>
 
                 <div className="bookings-graphic">
@@ -105,4 +102,10 @@ const LandlordRoomInfo = ({ roomJammers, roomInfo, roomNr}) => {
     );
 };
 
-export default LandlordRoomInfo;
+
+const mapStateToProps = (state) => {
+    const { jamId } = state.nav;
+    return { jamId }
+    
+};
+export default connect(mapStateToProps, null)(LandlordRoomInfo);
