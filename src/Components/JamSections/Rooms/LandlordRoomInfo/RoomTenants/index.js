@@ -13,11 +13,11 @@ const RoomTenants = ({
     nextTenant,
     noCurrentTenant
 }) => {
-
     const noFutureTenants = isEmpty(futureTenants);
     const noFormerTenants = isEmpty(formerTenants);
     const noNextTenant = isEmpty(nextTenant);
-
+    
+    console.log('formerTenants: ', formerTenants);
     const noRooms = noFutureTenants && noFormerTenants && noNextTenant && noCurrentTenant;
 
     return (
@@ -43,7 +43,7 @@ const RoomTenants = ({
                                 <p>Future Bookings</p>
                             </div>
                             <div className="room-booking-section-content">
-                                {!noFutureTenants > 1 ?
+                                {!noFutureTenants ?
                                     <BookingsList bookings={futureTenants} />
                                     : <p>There are no future bookings for this room yet</p>}
                             </div>
@@ -53,7 +53,7 @@ const RoomTenants = ({
                             <div className="room-section-title">
                                 <p>Due contracts</p>
                             </div>
-                            {!noFormerTenants >= 1 ?
+                            {!noFormerTenants  ?
                                 <BookingsList bookings={formerTenants} />
                                 : <p>There are contracts history this room yet</p>}
                         </div>

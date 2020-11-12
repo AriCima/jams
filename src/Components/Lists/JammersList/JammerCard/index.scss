@@ -103,10 +103,13 @@
         width: 20%;
         height: 100%;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
-        box-shadow: $shadow;
         padding: 5px;
+        .userCircle-icon{
+            font-size: 60px;
+            color: $buttonPrimary;
+        }
     }
     .landlord-tenant-info{
         width: 80%;
@@ -142,23 +145,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                // .contactButton{
-                //     display: flex;
-                //     justify-content: center;
-                //     align-items: center;
-                //     height: 40px;
-                //     width: 95%;
-                //     background-color: $buttonPrimary;
-                //     border-radius: 4px;;
-                //     p{ 
-                //         color: white;
-                //         margin: 0;
-                //     }
-                //     &:hover{
-                //         cursor: pointer;
-                //         background-color: $buttonPrimary-hover;
-                //     }
-                // }
             }
 
         }
@@ -176,37 +162,64 @@
             }
         }
     }
-
 }
 
+.tenant-tenant-wrapper{
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: $shadow;
 
+    .tenant-tenant-picture{
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        box-shadow: $shadow;
+        padding: 5px;
+    }
+    .tenant-tenant-picture{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .userCircle-icon{
+            font-size: 40px;
+            color: $buttonPrimary;
+        }
+    }
+    .tenant-tenant-info-line{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 5px;
+        .line-name{
+            width: 80%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            p{ 
+                color: gray;
+                font-size: $smallFont;
+                margin: 0;
+            }
+            h4{
+                font-size: $smallFont;
+                font-weight: 700px;
+                margin: 0 5px 0 0;
+            }
+        }
+        .tenant-tenant-contact{
+            width: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-// .landlord-student-info-upperLine-block{
-//     max-width: 100%;
-//     margin-left: 2%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center
-// }
-
-// .landlord-student-info-lowerLine-block{
-//     max-width: 100%;
-//     margin-left: 2%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     overflow: hidden;
-// }
-
-// .landlord-student-info-upperLine-block p{
-//     margin: 0;
-//     padding: 0;
-//     font-size: 14px;
-//     font-weight: 600
-// }
-// .landlord-student-info-lowerLine-block p{
-//     margin: 0;
-//     padding: 0;
-//     font-size: 14px;
-//     font-weight: 600;
-// }
+    }
+    
+}

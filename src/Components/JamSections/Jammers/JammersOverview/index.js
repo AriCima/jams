@@ -7,6 +7,8 @@ import DataService from '../../../services/DataService';
 import Calculations from '../../../services/Calculations';
 import JammersList from '../../../Lists/JammersList';
 import InviteJammerButton from '../../../UI/Buttons/InviteJammerButton';
+import Board from '../../Board';
+
 import './index.scss';
 
 const JammersOverview = ({ jamId, userRole, userId }) => {
@@ -72,11 +74,12 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
             )
         } else {
             return(
-                <div className="jammers-section">
-                    <div className="subSection-title">
-                        <p>These are your flatmates !</p>
+                <div className="guest-jammers-section">
+                    <div className="guest-jammers-board">
+                        <Board section={'Flatmates'} />
                     </div>
-                    <div className="subsection-wrapper">
+
+                    <div className="guest-jammers-list">
                         <JammersList jammersList={jammers} />
                     </div>
                 </div>

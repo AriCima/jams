@@ -480,7 +480,6 @@ export default class Calculations {
         return roomsOccupancy
     };
 
-
     static organizeFlatmates = (tenants, userId) => {
 
         let flatMates = [];
@@ -492,15 +491,12 @@ export default class Calculations {
         tenants.forEach(e => {
             const cIn = new Date(e.checkIn);
             const cOut = new Date(e.checkOut);
-            if ((cIn > userCheckInDate && cIn < userCheckOutDate) || (cOut > userCheckInDate && cOut < userCheckOutDate)) {
+            if ((cIn >= userCheckInDate && cIn <= userCheckOutDate) || (cOut >= userCheckInDate && cOut <= userCheckOutDate)) {
                 flatMates.push(e)
             };
         });
         return flatMates
     };
-
-
-
 
     static checkOverlapping(checkIn, checkOut, bookings){
         

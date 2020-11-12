@@ -10,7 +10,7 @@ import BoardContent from './BoardContent';
 // REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
-const Board = ({ jamId, userId, adminName, userRole }) => {
+const Board = ({ jamId, userId, adminName, userRole, section }) => {
 
     const isAdmin = userRole === 'Admin';
     const [boardInfo, setBoardInfo] = useState([]);
@@ -21,7 +21,7 @@ const Board = ({ jamId, userId, adminName, userRole }) => {
 
 
     const getBoardContent = async (jamId) => {
-        const res = await DataService.getBoardInfo(jamId, 'board');
+        const res = await DataService.getBoardInfo(jamId, section);
         setBoardInfo(res);
     }
 
@@ -46,20 +46,22 @@ const Board = ({ jamId, userId, adminName, userRole }) => {
             userId: userId,
             adminName: adminName,
             jamId: jamId,
-            section: 'board',
+            section: section,
             createdAt: date,
             messageType: 'message'
         }
 
-        DataService.saveMessage(jamId, 'board', messageInfo)
+        DataService.saveMessage(jamId, section, messageInfo)
     };
+
+    const showSenMessageForm = userRole === 'Admin' || section === 'Flatmates'
     
     return (
         <div className="landlord-board-wrapper">
             <div className="landlord-board">
                 {renderBoardContent()}
             </div>
-            {isAdmin && 
+            {showSenMessageForm && 
                 <div className="landlord-board-form">
                     <form
                         className="board-form"
@@ -75,10 +77,14 @@ const Board = ({ jamId, userId, adminName, userRole }) => {
                         <div className="board-buttonArea">
                             <button type="submit">Send</button>
                         </div>
-
                     </form>
                 </div>
             }
+            {section === 'Flatmates' && (
+                <div className="flatmates-board-message">
+                    <p>Send messages to all your flatmates</p>
+                </div>
+            )}
         </div>
 
     );   

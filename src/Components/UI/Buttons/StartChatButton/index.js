@@ -36,7 +36,6 @@ const StartChatButton = ({ userJams, user1Name, user1Id, user2Name, user2Id, jam
           user2Name: user2Name,
           jamId: chatId, 
           jamType: 'chat', 
-          messages: [],
           jamName: jamName,
       }
 

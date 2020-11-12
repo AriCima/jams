@@ -8,26 +8,14 @@ const BookingCard = (props) => {
   const { bI  } = props;
 
   return (
-    <div className="booking-chart-row">
-      <div className="booking-chart-row-block">
-        <p>{bI.bookingCode}</p>
-      </div>
-      <div className="booking-chart-row-block">
-        <p>{bI.jammerName}</p>
-      </div>
-      <div className="booking-chart-row-block">
-        <p>{bI.checkIn}</p>
-      </div>
-      <div className="booking-chart-row-block">
-        <p>{bI.checkOut}</p>
-      </div>
-      <div className="booking-chart-row-block">
-        <p>{bI.rent}</p>
-      </div>
-      <div className="booking-chart-row-block">
-        <p>{bI.deposit}</p>
-      </div>
-  </div>
+    <tr>
+      <td id="number-column">{bI.roomNr}</td>
+      <td>{bI.firstName} {bI.lastName}</td>
+      <td>{bI.checkIn}</td>
+      <td>{bI.checkOut}</td>
+      <td>{bI.rent}</td>
+      <td>{bI.deposit}</td>
+  </tr>
 
 
   )

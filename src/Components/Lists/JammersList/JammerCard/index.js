@@ -2,11 +2,13 @@ import React from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import StartChatButton from '../../../UI/Buttons/StartChatButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
-import "./index.scss";
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 
-const JammerCard = ({ userId, firstName, jamName, tL, setDocType, setDocId, setEditable }) => {
+import "./index.scss";
+const JammerCard = ({ userId, userRole, firstName, jamName, tL, setDocType, setDocId, setEditable }) => {
 
   const showJammerForm = (e) => {
     e.preventDefault();
@@ -16,12 +18,16 @@ const JammerCard = ({ userId, firstName, jamName, tL, setDocType, setDocId, setE
   }
 
   return (
-
-    <div className="landlord-tenant-wrapper"
+    <>
+    {userRole === 'Admin' ? (
+      <div className="landlord-tenant-wrapper"
       onClick={e => showJammerForm(e)}
     >
       <div className="landlord-tenant-picture">
-        <img></img>
+        <FontAwesomeIcon
+          className="userCircle-icon"
+          icon={faUserCircle}
+        />
       </div>
       <div className="landlord-tenant-info">
         <div className="landlord-tenant-info-line">
@@ -47,6 +53,32 @@ const JammerCard = ({ userId, firstName, jamName, tL, setDocType, setDocId, setE
         </div>
       </div>
     </div>
+    ) :(
+      <div className="tenant-tenant-wrapper">
+        <div className="tenant-tenant-picture">
+          <FontAwesomeIcon
+            className="userCircle-icon"
+            icon={faUserCircle}
+          />
+        </div>
+        <div className="tenant-tenant-info-line">
+          <div className="line-name">
+            <h4>{tL.firstName} {tL.lastName}</h4> <p>- {tL.city}, {tL.country}</p>
+          </div>
+          <div className="tenant-tenant-contact">
+            <StartChatButton 
+              user1Name={firstName}
+              user1Id={userId}
+              user2Name={tL.firstName}
+              user2Id={tL.userId}
+              jamName={jamName}
+            />
+          </div>
+        </div>
+    </div>
+    ) }
+    
+    </>
   )
   
 }

@@ -6,10 +6,10 @@ import moment from 'moment';
 import BookingCard from './BookingCard';
 
 // CSS
-import './index.css';
+import './index.scss';
 
-const BookingsList = (props) => {
-    const { bookings } = props;
+const BookingsList = ({bookings}) => {
+
     const bookingsLength = bookings.length;
     const isArray = bookingsLength > 0;
 
@@ -22,66 +22,33 @@ const BookingsList = (props) => {
     ));
 
     const renderBooking = () => (
-        <div className="booking-chart-row">
-            <div className="booking-chart-row-block">
-                <p>{bookings.bookingId}</p>
-            </div>
-            {/* <div className="booking-chart-row-block">
-                    <p>{bookings.bookingCode}</p>
-                </div> */}
-            <div className="booking-chart-row-block">
-                <p>
-                    {bookings.jammerName}
-                    {' '}
-                    {bookings.jammerSurname}
-                </p>
-            </div>
-            <div className="booking-chart-row-block">
-                <p>{moment(bookings.checkIn).format('DD MMM YYYY')}</p>
-            </div>
-            <div className="booking-chart-row-block">
-                <p>{moment(bookings.checkOut).format('DD MMM YYYY')}</p>
-            </div>
-            <div className="booking-chart-row-block">
-                <p>{bookings.rent}</p>
-            </div>
-            <div className="booking-chart-row-block">
-                <p>{bookings.deposit}</p>
-            </div>
-        </div>
+        <tr>
+            <td id="number-column">{bookings.roomNr}</td>
+            <td>{bookings.firstName} {bookings.LastName}</td>
+            <td>{moment(bookings.checkIn).format('DD MMM YYYY')}</td>
+            <td>{moment(bookings.checkOut).format('DD MMM YYYY')}</td>
+            <td>{bookings.rent}</td>
+            <td>{bookings.deposit}</td>
+        </tr>
     );
+
     return (
         <>
             { bookings
                 ? (
-                    <div className="bookings-chart">
-                        <div className="booking-chart-header">
-                            {/* <div className="booking-chart-block">
-                            <p>Room</p>
-                        </div> */}
-                            <div className="booking-chart-block">
-                                <p>ID</p>
-                            </div>
-                            <div className="booking-chart-block">
-                                <p>Tenant</p>
-                            </div>
-                            <div className="booking-chart-block">
-                                <p>Check-In</p>
-                            </div>
-                            <div className="booking-chart-block">
-                                <p>Check-Out</p>
-                            </div>
-                            <div className="booking-chart-block">
-                                <p>Rent €</p>
-                            </div>
-                            <div className="booking-chart-block">
-                                <p>Deposit €</p>
-                            </div>
-                        </div>
+                    <table id="bookings-chart">
+                        <tr>
+                            <th id="number-column">Room Nr</th>
+                            <th>Tenant Name</th>
+                            <th>Check-In</th>
+                            <th>Check-Out</th>
+                            <th>Rent €</th>
+                            <th>Deposit €</th>
+                        </tr>
                         { isArray
                             ? renderBookingsList()
                             : renderBooking()}
-                    </div>
+                    </table>
                 )
                 : <p>Loading</p>}
         </>

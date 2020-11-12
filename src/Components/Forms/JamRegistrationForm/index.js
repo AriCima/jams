@@ -47,11 +47,17 @@ const JamRegistrationForm = ({
     const onSubmit = (data) => {
         data.registeredUser = true;
         data.userId = userId;
-        DataService.saveJammerInfoInJam(jamId, userId, data)
+        data.userAccepted = false;
+        DataService.saveInvitationReply(jamId, invId, data)
         .then(() => {
             setRegisteredUser(true);
             showForm(false);
         })
+        // DataService.saveJammerInfoInJam(jamId, userId, data)
+        // .then(() => {
+        //     setRegisteredUser(true);
+        //     showForm(false);
+        // })
     };
 
     const editableFields = isEmpty.invInfo ? true : false;

@@ -42,7 +42,6 @@ const JamNavBar = ({
         setJamSections(sections);
     }, [jamType, userRole]);
 
-
     const renderNavBar = () => {
 
         return jamSections.map((section, id) => {

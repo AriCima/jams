@@ -80,11 +80,7 @@ const Dashboard = ({
                 </aside>
                 <div className="jam-screen">
                     {renderJam ? 
-                        <Jam
-                            // userId={userId}
-                            // jamId={jamId}
-                            // jamInfo={jamInfo}
-                        /> 
+                        <Jam /> 
                         :
                         <div className="select-jam">
                             {renderJamsList ? <p>select a Jam</p> :  <p>You have no Jams yet, Create or Join</p>}

@@ -11,6 +11,7 @@ import './index.scss';
 const Jammers = ({ jamId, docType, docId, userRole }) => {
 
     const renderJammersScreen = () => {
+        console.log('userRole: ', userRole);
 
         if(userRole === 'Admin') {
             switch (docType) {

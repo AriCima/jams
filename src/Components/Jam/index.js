@@ -5,6 +5,7 @@ import DataService from '../services/DataService'
 
 import JamNavBar from '../NavBars/JamNavBar';
 import Overview from '../JamSections/Overview';
+import Chat from '../JamSections/Chat';
 import Board from '../JamSections/Board';
 import Rooms from '../JamSections/Rooms';
 import Jammers from '../JamSections/Jammers';
@@ -13,9 +14,8 @@ import { setRegisteredUser } from  '../../redux/actions/userActions';
 import JamRegistrationForm from '../Forms/JamRegistrationForm';
 
 import './index.scss';
-import { setDocId } from '../../redux/actions/docsActions';
 
-const Jam = ({ jamId, userId, section, userRole } ) => {
+const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
 
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [invId, setInvId] = useState('')
@@ -49,10 +49,12 @@ const Jam = ({ jamId, userId, section, userRole } ) => {
             case 'Overview':
                 return <Overview />;
             case 'Board':
-                return <Board/>;
+                return <Board section={'board'}/>;
             case 'Rooms':
                 return <Rooms />;
             case 'Tenants':
+                return <Jammers />;
+            case 'Flatmates':
                 return <Jammers />;
             case 'Settings':
                 return <Settings />;
@@ -73,7 +75,12 @@ const Jam = ({ jamId, userId, section, userRole } ) => {
         </div>
 
         <div className="jam-body">
-            {renderSection(section)}
+
+            { jamType === 'chat' ? (
+                <Chat />
+            ): (
+                renderSection(section))
+            }
         </div>
 
         { showRegisterForm && (
@@ -96,7 +103,9 @@ const Jam = ({ jamId, userId, section, userRole } ) => {
 const mapStateToProps = state => {
     const { jamId, section } = state.nav;
     const { userId, userRole } = state.userInfo;
-    return { section, jamId, userId, userRole };
+    const {jamType } = state.jamInfo;
+
+    return { section, jamId, jamType, userId, userRole };
 };
 
 export default connect(mapStateToProps)(Jam);

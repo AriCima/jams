@@ -1,0 +1,77 @@
+@import '../../../../variables.scss'; 
+
+.board-message-item{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    background-color: $messBack;
+    color: black;
+    font-family: arial;
+    .board-message{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 10px 10px 16px 20px;
+        p{
+        font-size: 14px;
+        }
+    }
+    .board-message-info{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px;
+        border-bottom: 1px solid rgba(197, 208, 212, 0.2);
+        .board-message-time{
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p{
+                color: $messCol;
+                margin: 0 0 0 20px;
+                padding: 0;
+                font-size: 14px;
+                font-style: italic; 
+            }
+        };
+    }
+}
+
+.board-publi-item{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    background-color: $messBack;
+    color: $messCol;
+    font-family: arial;
+    .publi-img{
+
+    };
+    .publi-info{
+        .publi-title{
+
+        };
+        .publi-text{
+
+        };
+        .publi-time{
+
+        }
+    }
+
+}
+
+
+
+
+
