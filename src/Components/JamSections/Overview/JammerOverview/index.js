@@ -12,7 +12,7 @@ import './index.scss';
 
 // Esta es la info que ve el inquilino en su Jam/Overview
 
-const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, adminName, adminId}) => {
+const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, lastName, adminName, adminLastName, adminId}) => {
     
     const [contractInfo, setContractInfo] = useState({})
    
@@ -51,8 +51,10 @@ const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, adminName,
                         <div className="startChat-button">
                             <StartChatButton 
                                 user1Name={firstName}
+                                user1LastName={lastName}
                                 user1Id={userId}
                                 user2Name={adminName}
+                                user2LastName={adminLastName}
                                 user2Id={adminId}
                                 jamName={jamName}
                             />
@@ -138,10 +140,10 @@ const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, adminName,
 
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
-    const { userId, userRole, firstName } = state.userInfo;
-    const { jamName, jamDesc, adminName, adminId } = state.jamInfo
+    const { userId, userRole, firstName, lastName } = state.userInfo;
+    const { jamName, jamDesc, adminName, adminId, adminLastName } = state.jamInfo
     
-    return {jamId, userId, userRole, jamName, jamDesc, firstName, adminName, adminId};
+    return {jamId, userId, userRole, jamName, jamDesc, firstName, lastName, adminName, adminLastName, adminId};
 };
 export default connect(mapStateToProps, null)(JammerOverview);
 

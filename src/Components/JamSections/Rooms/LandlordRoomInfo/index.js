@@ -18,12 +18,18 @@ const LandlordRoomInfo = ({ roomJammers, jamId, subSection}) => {
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;
     const formerTenants = roomJammers.formerTenants;
-    const nextTenant = roomJammers.futureTenants[0];
+    let nextTenant = [];
 
-    const noNextTenant = undefined;
+    const noFutureTenants = isEmpty(futureTenants);
     const noCurrentTenant = isEmpty(currentTenant);
     const noFormerTenants = isEmpty(formerTenants);
     
+    if(!noFutureTenants) {
+        nextTenant = roomJammers.futureTenants[0];
+    }
+    
+    const noNextTenant = nextTenant.length === 0;
+
     let tenantsList = currentTenant
 
     for (let i = 0; i < futureTenants.length; i++) {

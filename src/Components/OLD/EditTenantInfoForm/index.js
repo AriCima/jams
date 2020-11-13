@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
 import DataService from '../../services/DataService';
 import StartChatButton from '../../UI/Buttons/StartChatButton';
@@ -10,7 +11,7 @@ import CustomInputFieldWithLabel from '../../UI/CustomInputFieldWithLabel';
 // CSS
 import './index.scss';
 
-const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
+const EditTenantInfoForm = ({ jamId, userId, userRole, firstName, lastName, jamName, tenantInfo, docId, jamId }) => {
     const [editedTenantInfo, setEditedTenantInfo] = useState({tenantInfo});
     const [editedForm, setEditedForm] = useState(false);
 
@@ -75,7 +76,15 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
                     <h4>{name} {surname}</h4>
                     { !newTenant && (
                         <div className="section-button">
-                            <StartChatButton />
+                            <StartChatButton
+                                user1Name={firstName}
+                                user1LastName={lastName}
+                                user1Id={userId}
+                                user2Name={tenantInfo.firstName}
+                                user2LastName={tenantInfo.LastName}
+                                user2Id={tenantInfo.userId}
+                                jamName={jamName}
+                            />
                         </div>
                     )}
                 </div>
@@ -334,4 +343,15 @@ const EditTenantInfoForm = ({ tenantInfo, docId, jamId }) => {
     );
 };
 
-export default EditTenantInfoForm;
+const mapStateToProps = state => {
+
+    const jamId = state.nav.jamId;
+    const { userId, userRole, firstName, lastName } = state.userInfo;
+    const { jamName } = state.jamInfo
+  
+    return { jamId, userId, userRole, firstName, lastName, jamName };
+  };
+  
+  
+  export default connect(mapStateToProps, null)(EditTenantInfoForm);
+  

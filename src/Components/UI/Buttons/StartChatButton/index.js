@@ -9,7 +9,7 @@ import { setJamId } from '../../../../redux/actions/navigateActions.js';
 
 import "./index.scss";
 
-const StartChatButton = ({ userJams, user1Name, user1Id, user2Name, user2Id, jamName}) => {
+const StartChatButton = ({ userJams, user1Name, user1Id, user2Name, user2LastName, user2Id, jamName}) => {
 
   const launchChat = (e) => {
       e.preventDefault();
@@ -34,6 +34,7 @@ const StartChatButton = ({ userJams, user1Name, user1Id, user2Name, user2Id, jam
           adminName: user1Name, 
           user2Id: user2Id,
           user2Name: user2Name,
+          user2LastName: user2LastName,
           jamId: chatId, 
           jamType: 'chat', 
           jamName: jamName,

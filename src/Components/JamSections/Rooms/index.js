@@ -31,9 +31,11 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
 
     const getJammersList = async (jamId) => {
         const res = await DataService.getJammers(jamId);
-        if(res.length > 0) {
+        const jammers = Calculations.removeAmdinFromJammers(res);
+        
+        if(jammers.length > 0) {
             let jammersByRooms = [];
-            jammersByRooms = Calculations.getRoomsOccupancy(res, nrOfRooms);
+            jammersByRooms = Calculations.getRoomsOccupancy(jammers, nrOfRooms);
             setJammers(jammersByRooms);
         };
     };

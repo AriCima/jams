@@ -21,7 +21,7 @@ const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
     const [invId, setInvId] = useState('')
     
     useEffect(() => {
-        if(userRole) {
+        if(userRole && jamType !== 'chat') {
             const isAdmin = userRole === 'Admin';
             setShowRegisterForm(false);
             if(!isAdmin) {

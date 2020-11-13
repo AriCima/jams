@@ -2,6 +2,7 @@ export const JAM_NAME = 'JAM_NAME';
 export const JAM_DESC = 'JAM_DESC';
 export const JAM_TYPE = 'JAM_NAME';
 export const JAM_ADMIN_NAME = 'JAM_ADMIN_NAME';
+export const JAM_ADMIN_LAST_NAME = 'JAM_ADMIN_LAST_NAME';
 export const JAM_ADMIN_ID = 'JAM_ADMIN_ID';
 export const JAM_DETAILS = 'JAM_DETAILS';
 // export const JAMMERS = 'JAMMERS'
@@ -44,6 +45,13 @@ export const setJamAdminName = (adminName = '') => ({
   type: JAM_ADMIN_NAME,
   payload: {
     adminName
+  }
+});
+
+export const setJamAdminLastName = (adminLastName = '') => ({
+  type: JAM_ADMIN_NAME,
+  payload: {
+    adminLastName
   }
 });
 

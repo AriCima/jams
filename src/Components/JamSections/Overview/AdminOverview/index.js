@@ -64,7 +64,7 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
                         />
                     </div>
                     <div className="activity-info">
-                        <p>On <span>{isOut ? moment(check.checkOut).format("DD-MMM-YYYY"): moment(check.checkIn).format("DD-MMM-YYYY")}</span> {check.firstName} {check.lastName} checks {isOut ? 'out' : 'in'}</p> 
+                        <p>On <span>{isOut ? moment(check.date).format("DD-MMM-YYYY"): moment(check.date).format("DD-MMM-YYYY")}</span> {check.firstName} {check.lastName} checks {isOut ? 'out' : 'in'}</p> 
                     </div>
                 </div>
             )

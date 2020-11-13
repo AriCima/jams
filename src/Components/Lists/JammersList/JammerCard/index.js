@@ -8,7 +8,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 
 import "./index.scss";
-const JammerCard = ({ userId, userRole, firstName, jamName, tL, setDocType, setDocId, setEditable }) => {
+const JammerCard = ({ userId, userRole, firstName, lastName, jamName, tL, setDocType, setDocId, setEditable }) => {
 
   const showJammerForm = (e) => {
     e.preventDefault();
@@ -37,8 +37,10 @@ const JammerCard = ({ userId, userRole, firstName, jamName, tL, setDocType, setD
           <div className="landlord-tenant-contact">
             <StartChatButton 
               user1Name={firstName}
+              user1LastName={lastName}
               user1Id={userId}
               user2Name={tL.firstName}
+              user2LastName={tL.LastName}
               user2Id={tL.userId}
               jamName={jamName}
             />
@@ -68,8 +70,10 @@ const JammerCard = ({ userId, userRole, firstName, jamName, tL, setDocType, setD
           <div className="tenant-tenant-contact">
             <StartChatButton 
               user1Name={firstName}
+              user1LastName={lastName}
               user1Id={userId}
               user2Name={tL.firstName}
+              user2LastName={tL.LastName}
               user2Id={tL.userId}
               jamName={jamName}
             />
@@ -86,10 +90,10 @@ const JammerCard = ({ userId, userRole, firstName, jamName, tL, setDocType, setD
 const mapStateToProps = state => {
 
   const jamId = state.nav.jamId;
-  const { userId, userRole, firstName } = state.userInfo;
+  const { userId, userRole, firstName, lastName } = state.userInfo;
   const { jamName } = state.jamInfo
 
-  return { jamId, userId, userRole, firstName, jamName };
+  return { jamId, userId, userRole, firstName, lastName, jamName };
 };
 
 

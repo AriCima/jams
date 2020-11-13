@@ -205,7 +205,8 @@ export default class Calculations {
         return icon
     };
 
-    // - - - - - - - CONTRATO
+    // - - - - - - - CONTRATO - - - - - - - - 
+
     static getApartmentDivisions = (totalRooms) => {
         let divisions = {eng: '', esp:''}
         switch (totalRooms){
@@ -243,7 +244,7 @@ export default class Calculations {
         return divisions
     };
 
-    // - - - - - - - - BOOKINGS
+    // - - - - - - - - BOOKINGS - - - - - - - - 
 
     static organizeBookings = (bookings) => {
         const result = {
@@ -338,6 +339,9 @@ export default class Calculations {
         return currentTenants;
     };
 
+    
+    // - - - - - - - - STATISTICS - - - - - - - - 
+    
     static getCurrentAndFutureTenants = (tenants) => {
         const today = moment(new Date())
         let newArray = [];
@@ -350,9 +354,7 @@ export default class Calculations {
             }
         }
         return newArray;
-    }
-
- // - - - - - - - - STATISTICS - - - - - - - - 
+    };
 
     static getCurrentOccupancy = (tenants, rooms) => {
         
@@ -408,11 +410,11 @@ export default class Calculations {
     };
 
     static getCurrentIncomes = (tenants) => {
-
         const currentTenants = this.getCurrentTenants(tenants)
         
         let incomes = 0;
         for (let r = 0; r < currentTenants.length; r++){
+            const cT = currentTenants[r];
             incomes = incomes + parseInt(currentTenants[r].rent);
         };
 
@@ -424,38 +426,30 @@ export default class Calculations {
     static getFutureChecks(tenants){
         const today = moment(new Date())
         const currentAndFutureTenants = this.getCurrentAndFutureTenants(tenants);
-        const orderedIns = orderBy(currentAndFutureTenants,['checkIn'], ['asc']);
-        const arrLength = orderedIns.length;
-        const orderedOuts = orderBy(currentAndFutureTenants,['checkOut'], ['asc']);
+        const arrLength = currentAndFutureTenants.length;
 
-        const newArray = [];
+        const testArr = [];
 
         for (let i = 0; i < arrLength; i++) {
-            const outDate = moment(new Date(orderedIns[i].checkOut));
-            // console.log('outDate: ', moment(outDate).format('DD-MMM-YYYY'));
 
-            for (let j = 0; j < arrLength; j++) {
-                const inDate = moment(new Date(orderedIns[j].checkIn));
-                // console.log('inDate: ', moment(inDate).format('DD-MMM-YYYY'));
-                const alreadyIn = moment(inDate).isSameOrBefore(today);
+            const { checkIn, userId, firstName, lastName } = currentAndFutureTenants[i];
+            const { checkOut } = currentAndFutureTenants[i];
+            
+            const alreadyIn = moment(checkIn).isSameOrBefore(today)
+            
+            const outs = {date: checkOut, userId, firstName, lastName, type: 'chkOut'};
+            
+            if(!alreadyIn) {
+                const ins = {date: checkIn, firstName, lastName, userId, type: 'chkIn'};
+                testArr.push(ins)
+            };
 
-                if(!alreadyIn) {
-                    
-                    const inBeforeOut = moment(inDate).isSameOrBefore(outDate);
-                    
-                    if (inBeforeOut) {
-                        orderedIns[j].type = 'chkIn'
-                        newArray[i] = orderedIns[j];
-                    } else {
-                        orderedOuts[i].type = 'chkOut'
-                        newArray[i] = orderedOuts[i];
-                    }
-
-                }
-            }
+            testArr.push(outs)
         }
 
-        return  newArray
+        const res = orderBy(testArr,['date'], ['asc']);
+
+        return  res
     };
 
     static getRoomsOccupancy = (tenants, rooms) => {
@@ -530,23 +524,10 @@ export default class Calculations {
         return validationResult
        
     };
-    // FLAT INFO
-    static getOnwStudentsFlats = (userJams = [], userId = '') => {
-        let result = []
-        for ( let i = 0; i < userJams.length; i++ ){
-            if ( userJams[i].adminId === userId && userJams[i].jamType === 'studentsFlat') {
-              result.push(userJams[i])
-            }
-        }
-        return result
-    }
-
-    static mergeCompleteFlatInfo = (flats = [], rooms = []) => {
-        for (let i = 0; i < flats.length; i++){
-            flats[i].rooms=(rooms[i])
-        };
-        return flats
-    }
+    
+    
+    
+    // - - - - - - - - ROOMS  - - - - - - - - - - - 
 
     static getCompleteRoomsInfo = (roomsInfo) => {
         const rsL = roomsInfo.length

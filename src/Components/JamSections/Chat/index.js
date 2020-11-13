@@ -13,7 +13,7 @@ import './index.scss';
 const Chat = ({ jamId, userId, adminName, userRole }) => {
 
     const isAdmin = userRole === 'Admin';
-    const [ChatInfo, setChatInfo] = useState([]);
+    const [chatInfo, setChatInfo] = useState([]);
    
     useEffect(() => {
         jamId && getChatContent(jamId)
@@ -21,12 +21,12 @@ const Chat = ({ jamId, userId, adminName, userRole }) => {
 
 
     const getChatContent = async (jamId) => {
-        const res = await DataService.getChatInfo(jamId);
+        const res = await DataService.getChatMessages(jamId);
         setChatInfo(res);
     }
 
     const renderChatContent = () => {
-        return ChatInfo.map((bC, i) => {
+        return chatInfo.map((bC, i) => {
             return (
                 <ChatContent 
                     key={i} 

@@ -315,6 +315,24 @@ export default class DataService {
 
     /* * * * * * * *  CHAT * * * * * * * * * * * * * * * */
 
+    static getChatInfo(jamId) {
+        console.log('jamId: ', jamId);
+        return new Promise((resolve, reject) => {
+            // //console.log('jamInfoBIS  ID de la jam = ', jamId)
+            firebase.firestore()
+                .collection('jams')
+                .doc(jamId)
+                .get()
+                .then((doc) => {
+                    resolve(doc.data());
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // console.log('Error al cargar la info de ', section, errorMessage);
+                });
+        });
+    };
 
     static saveChatMessage(jamId, messageInfo) {
         return new Promise((resolve, reject) => {
@@ -335,7 +353,8 @@ export default class DataService {
         });
     }
 
-    static getChatInfo(jamId) {
+    static getChatMessages(jamId) {
+        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore()
@@ -361,7 +380,7 @@ export default class DataService {
                     // console.log('Error al cargar la info de ', section, errorMessage);
                 });
         });
-    }
+    };
 
 
 
@@ -473,8 +492,6 @@ export default class DataService {
     }
 
     static getJammerInfo(jamId, jammerId) {
-        // console.log('jamId: ', jamId);
-        // console.log('jammerId: ', jammerId);
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')

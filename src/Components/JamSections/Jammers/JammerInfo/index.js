@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 // CSS
 import './index.scss';
 
-const JammerInfo = ({jamId, jamName, userRole, firstName, userId, docId }) => {
+const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docId }) => {
   
   const [tenantInfo, setTenantInfo] = useState([]);
 
@@ -23,7 +23,7 @@ const JammerInfo = ({jamId, jamName, userRole, firstName, userId, docId }) => {
     }
     DataService.getJammerInfo(jamId, documentId)
     .then(result => {
-      console.log('result: ', result);
+
       setTenantInfo(result)
     })
   }, [jamId, docId])
@@ -35,8 +35,10 @@ const JammerInfo = ({jamId, jamName, userRole, firstName, userId, docId }) => {
           <div className="start-chatButton">
             <StartChatButton 
               user1Name={firstName}
+              user1LastName={lastName}
               user1Id={userId}
               user2Name={tenantInfo.firstName}
+              user2LastName={tenantInfo.lastName}
               user2Id={docId}
               jamName={jamName}
             />
@@ -60,9 +62,9 @@ const mapStateToProps = state => {
   const { jamId } = state.nav;
   const { docId } = state.doc;
   const { jamName } = state.jamInfo;
-  const { userId , firstName, userRole } = state.userInfo
+  const { userId , firstName, lastName, userRole } = state.userInfo
 
-  return { jamId, jamName, docId, userId, userRole, firstName }
+  return { jamId, jamName, docId, userId, userRole, firstName, lastName }
 };
   
 export default connect(mapStateToProps, null) (JammerInfo);
