@@ -83,7 +83,7 @@ const JamNavBar = ({
 
                         ) : (
                             <div className="jamNavBar-chat">
-                                You jammed with XXXX in {chatInfo.jamName}
+                                <p>You jammed with <span>Jean Claude VanDam</span> in <span>{chatInfo.jamName}</span></p>
                             </div>
                         )
                     }

@@ -73,7 +73,7 @@ const JammerCard = ({ userId, userRole, firstName, lastName, jamName, tL, setDoc
               user1LastName={lastName}
               user1Id={userId}
               user2Name={tL.firstName}
-              user2LastName={tL.LastName}
+              user2LastName={tL.lastName}
               user2Id={tL.userId}
               jamName={jamName}
             />

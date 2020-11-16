@@ -94,8 +94,6 @@ export default class DataService {
                 .doc(userId)
                 .collection('userJams')
                 .onSnapshot(function(doc) {
-                    // console.log('doc: ', doc);
-                    // console.log("Current data: ", doc.docs);
                     const jams = [];
                     doc.docs.forEach(d => {
                         const j = d.data();
