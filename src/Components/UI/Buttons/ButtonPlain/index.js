@@ -3,10 +3,10 @@ import React from 'react';
 // CSS
 import './index.scss';
 
-const ButtonPlain = (props) => {
+const ButtonPlain = ({text, fn}) => {
 
   const handleClick = () => {
-    props.clickHandle()
+    fn()
   }
 
   return (
@@ -14,10 +14,10 @@ const ButtonPlain = (props) => {
       className="plain-button"
       onClick={(e) => {
         e.preventDefault(); 
-        handleClick()
+        handleClick();
       }}
     >
-      <p>{props.text}</p>
+      <p>{text}</p>
     </div>
   );
   

@@ -70,7 +70,12 @@
                 ::placeholder{
                     color: $lightGray;
                 }
+                
+                &.shortBlock{
+                    width: 10%;
+                }
             }
+
         }
     }
     .hook-form-buttonArea{

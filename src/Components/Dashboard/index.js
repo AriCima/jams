@@ -6,6 +6,7 @@ import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
+import Modal from '../Modal';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
@@ -14,6 +15,7 @@ import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
 const Dashboard = ({ 
     jamId,
+    modalState,
     setJamAdminId,
     setJamAdminName,
     setJamDesc,
@@ -66,7 +68,7 @@ const Dashboard = ({
 
     const renderJam = jamId && !isEmpty(jamInfo);
     const renderJamsList = jamsList.length > 0;
-
+    const showModal = modalState === 'open'
     return (
         <div className="dashboard">
             { !userId ? (
@@ -79,6 +81,7 @@ const Dashboard = ({
                     {renderJamsList && <JamsList userJams={jamsList} /> }
                 </aside>
                 <div className="jam-screen">
+                    {showModal && <Modal />}
                     {renderJam ? 
                         <Jam /> 
                         :
@@ -99,8 +102,9 @@ const Dashboard = ({
 const mapStateToProps = state => {
     const jamId = state.nav.jamId;
     const { userId, userRole } = state.userInfo;
+    const { modalState, } = state.modal;
 
-    return { jamId, userId, userRole, userJams: state.userJams };
+    return { jamId, userId, modalState, userRole, userJams: state.userJams };
 };
 
 export default connect(mapStateToProps, {

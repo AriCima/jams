@@ -70,12 +70,12 @@ const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
 
   return (
     <>
+        
         <div className="jam-navBar">
             <JamNavBar/>
         </div>
 
         <div className="jam-body">
-
             { jamType === 'chat' ? (
                 <Chat />
             ): (
@@ -84,15 +84,15 @@ const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
         </div>
 
         { showRegisterForm && (
-                <div className="jamRegistration-Form-wrapper">
-                    <JamRegistrationForm
-                        showForm={showForm}
-                        userId={userId}
-                        invId={invId}
-                    />
-                    <div className="form-bg"></div>
-                </div>
-            )}
+            <div className="jamRegistration-Form-wrapper">
+                <JamRegistrationForm
+                    showForm={showForm}
+                    userId={userId}
+                    invId={invId}
+                />
+                <div className="form-bg"></div>
+            </div>
+        )}
     </>
   );
 

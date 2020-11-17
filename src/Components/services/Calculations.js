@@ -10,15 +10,6 @@ import { faChalkboard, faComments, faUsers, faUserLock, faCog} from '@fortawesom
 
 export default class Calculations {
 
-    static getCurrentMonth(){
-        let months  =  ['Januay', 'February', 'March', 'April','May', 'June', 'July', 'August','September', 'October', 'November', 'December'];
-        const date = new Date();
-        let monthNr = date.getMonth()
-        let currentMonth = months[monthNr]
-       
-        return currentMonth
-    };
-
     static getMessageDate(timestamp){
         const currentDate = moment(new Date()).format('DD/MM/YYYY');
         const messageDate =  moment(timestamp.toDate()).format('DD/MM/YYYY');
@@ -32,7 +23,7 @@ export default class Calculations {
         return messageTime
     }
     static generateCode(){ 
-     // GENERATE BOOKING CODE  type: 4aG-89n --> 14.776.336 combinations
+     // GENERATE CONTRACT CODE  type: 4aG-89n --> 14.776.336 combinations
 
      const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
      let codeArray = [];
@@ -492,25 +483,27 @@ export default class Calculations {
         return flatMates
     };
 
-    static checkOverlapping(checkIn, checkOut, bookings){
+    static checkOverlapping(checkIn, checkOut, jammers){
         
-        for (let k=0; k < bookings.length; k++){
-            const bIn = new Date (bookings[k].checkIn);
-            const bOut = new Date (bookings[k].checkOut);
-            const bId = bookings[k].bookingId;
-            const bName = bookings[k].jammerName;
+        for (let k=0; k < jammers.length; k++){
+            const bIn = new Date (jammers[k].checkIn);
+            const bOut = new Date (jammers[k].checkOut);
+            const uId = jammers[k].userId;
+            const bName = jammers[k].firstName + jammers[k].lastName;
 
             if(checkOut >= bIn && checkOut <= bOut){
                 let validationResult = {
                     error : true,
-                    message : `The range overlaps with ${bName}'s booking, booking-ID =${bId}`
+                    message : `The range overlaps with ${bName}`,
+                    userId: uId
                 }
                 return validationResult 
             };
             if(checkIn >= bIn && checkIn <= bOut){
                 let validationResult = {
                     error : true,
-                    message : `The range overlaps with ${bName}'s booking, booking-ID =${bId}`
+                    message : `The range overlaps with ${bName}`,
+                    userId: uId
                 }
                 return validationResult 
             };

@@ -2,16 +2,18 @@ import { firestoreReducer } from 'redux-firestore';
 import { firebaseReducer } from 'react-redux-firebase';
 import { combineReducers } from 'redux';
 
-import navReducers from './navReducer';
-import docReducers from './docReducer';
-import userReducers from './userReducer';
-import jamReducers from './jamReducer';
+import navReducer from './navReducer';
+import docReducer from './docReducer';
+import userReducer from './userReducer';
+import jamReducer from './jamReducer';
+import modalReducer from './modalReducer';
 
 const rootReducer = combineReducers({
-    doc: docReducers,
-    jamInfo: jamReducers,
-    userInfo: userReducers,
-    nav: navReducers,
+    doc: docReducer,
+    jamInfo: jamReducer,
+    userInfo: userReducer,
+    nav: navReducer,
+    modal: modalReducer,
 
     // sincronizador del auth state de firebase con
     // nuestro redux state en app y lo almacenará en el
