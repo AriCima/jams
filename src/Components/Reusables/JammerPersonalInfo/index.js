@@ -2,9 +2,6 @@ import React  from 'react';
 
 import PersonalInfoBlock from '../../UI/PersonalInfoBlock';
 
-// CSS
-import './index.scss';
-
 const JammerContractInfo = ({ personalInfo }) => {
 
     const { 
@@ -22,6 +19,7 @@ const JammerContractInfo = ({ personalInfo }) => {
         homeTel, 
         zipCode, 
     } = personalInfo
+    console.log('personalInfo: ', personalInfo);
 
     const complAdd = {address: street+' '+houseNr+', '+`${floor !== '' && (floor+' floor')}`+`${door !== '' && (', door '+door) }`, 
         city: zipCode+' - '+city,
@@ -30,9 +28,12 @@ const JammerContractInfo = ({ personalInfo }) => {
   return(
     
     <div className="jammer-info-section">
-        <div className="jammer-info-section-title">
-            <p>Personal Info</p>
-        </div>
+            <div className="jammer-info-section-title">
+                <div className="backLine"/>
+                <dic className="title">
+                    <p>PERSONAL INFO</p>
+                </dic>
+            </div>
         <div className="jammer-info-section-personalInfo">
             <PersonalInfoBlock
                 info={'Email'}

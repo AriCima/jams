@@ -5,10 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import DataService from '../../../services/DataService';
-// import useInviteJammerForm from '../../../Forms/InviteJammerForm';
-// import PersonalInfoBlock from '../../../UI/PersonalInfoBlock';
-// import EditJammerForm from '../../../Forms/EditJammerForm';
 import StartChatButton from '../../../UI/Buttons/StartChatButton';
+import ButtonPlain from '../../../UI/Buttons/ButtonPlain';
 import JammerContractInfo from '../../../Reusables/JammerContractInfo';
 import JammerPersonalInfo from '../../../Reusables/JammerPersonalInfo';
 
@@ -20,7 +18,6 @@ import './index.scss';
 const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docId }) => {
   
   const [tenantInfo, setTenantInfo] = useState([]);
-  // const [ address, setAddress ] = useState('');
 
   useEffect(() => {
     let documentId;
@@ -32,13 +29,14 @@ const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docI
     DataService.getJammerInfo(jamId, documentId)
     .then(res => {
       setTenantInfo(res)
-      // const complAdd = {address: res.street+' '+`${res.houseNr}`+', '+`${res.floor !== '' && (res.floor+' floor')}`+`${res.door !== '' && (', door '+res.door) }`, 
-      //   city: res.zipCode+' - '+res.city,
-      //   country: res.country
-      // };
-      // setAddress(complAdd);
     })
   }, [jamId, docId])
+
+
+  const openTenantForm = () => {
+    alert('open modal');
+  }
+
 
   return(
     <div className="jammer-info-wrapper">
@@ -65,91 +63,18 @@ const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docI
                 jamName={jamName}
               />
             </div>
-          </div>
-          <JammerPersonalInfo personalInfo={tenantInfo}/>
-          <JammerContractInfo contractInfo={tenantInfo}/>
-          {/* <div className="jammer-info-section">
-            <div className="jammer-info-section-title">
-              <p>Personal Info</p>
-            </div>
-            <div className="jammer-info-section-personalInfo">
-              <PersonalInfoBlock
-                info={'Email'}
-                data={tenantInfo.email}
-                backColor={'buttonPrimary'}
-              />
-              <PersonalInfoBlock
-                info={'Passport'}
-                data={tenantInfo.passport}
-                backColor={'buttonPrimary'}
-              />
-              <PersonalInfoBlock
-                info={'Address'}
-                data={address.address}
-                backColor={'buttonPrimary'}
-              />
-               <PersonalInfoBlock
-                info={'City'}
-                data={address.city}
-                backColor={'buttonPrimary'}
-              />
-              <PersonalInfoBlock
-                info={'Country'}
-                data={address.country}
-                backColor={'buttonPrimary'}
-              />
-              <PersonalInfoBlock
-                info={'Phone'}
-                data={tenantInfo.homeTel}
-                backColor={'buttonPrimary'}
-              />
-              <PersonalInfoBlock
-                info={'Mobile'}
-                data={tenantInfo.mobile}
-                backColor={'buttonPrimary'}
-              />
-
+            <div className="editInfo-button">
+              <ButtonPlain text={'Edit Info'} fn={openTenantForm}/>
             </div>
           </div>
-
-          <div className="jammer-info-section">
-            <div className="jammer-info-section-title">
-              <p>Contract Info</p>
-            </div>
-            <div className="jammer-info-section-contractInfo">
-              <PersonalInfoBlock
-                info={'Check-In'}
-                data={moment(tenantInfo.checkIn).format('DD-MMM-YYYY')}
-                backColor={'checkIn'}
-              />
-              <PersonalInfoBlock
-                info={'Check-Out'}
-                data={moment(tenantInfo.checkOut).format('DD-MMM-YYYY')}
-                backColor={'checkOut'}
-              />
-              <PersonalInfoBlock
-                info={'Room Nr'}
-                data={tenantInfo.roomNr}
-                backColor={'secondary'}
-              />
-              <PersonalInfoBlock
-                info={'Rent'}
-                data={tenantInfo.rent}
-                backColor={'secondary'}
-              />
-              <PersonalInfoBlock
-                info={'Deposit'}
-                data={tenantInfo.deposit}
-                backColor={'secondary'}
-              />
-            </div>
-          </div> */}
-
-          {/* <EditJammerForm 
-            tenantInfo={tenantInfo}
-            docId={docId}
-            jamId={jamId}
-          /> */}
+          <JammerPersonalInfo
+            personalInfo={tenantInfo}
+          />
+          <JammerContractInfo 
+            contractInfo={tenantInfo}
+            look={'negative'}
+          />
+         
         </>
       ):(
         <useInviteJammerForm 

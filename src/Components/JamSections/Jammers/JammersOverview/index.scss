@@ -11,19 +11,26 @@
     }
 }
 
-.jammersSection{
+.jammers-section{
+    width: 95%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 40px;
     .subSection-title{
+        width: 100%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         p{
-            font-size: $midFont;
+
+            font-size: $bigFont;
             margin: 0;
         }
+    }
+    .subsection-wrapper{
+        width: 100%
     }
 }
 

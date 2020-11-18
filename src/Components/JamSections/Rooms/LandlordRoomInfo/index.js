@@ -11,7 +11,7 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 
 
 // CSS
-import './index.css';
+import './index.scss';
 
 const LandlordRoomInfo = ({ roomJammers, jamId, subSection}) => {
 

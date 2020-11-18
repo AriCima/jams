@@ -4,9 +4,9 @@ import moment from 'moment';
 import PersonalInfoBlock from '../../UI/PersonalInfoBlock';
 
 // CSS
-import './index.scss';
+// import './index.scss';
 
-const JammerContractInfo = ({ contractInfo }) => {
+const JammerContractInfo = ({ contractInfo}) => {
 
     const { checkIn, checkOut, roomNr, rent, deposit } = contractInfo;
     
@@ -14,13 +14,17 @@ const JammerContractInfo = ({ contractInfo }) => {
 
         <div className="jammer-info-section">
             <div className="jammer-info-section-title">
-            <p>Contract Info</p>
+                <div className="backLine"/>
+                <dic className="title">
+                    <p>CONTRACT INFO</p>
+                </dic>
             </div>
             <div className="jammer-info-section-contractInfo">
             <PersonalInfoBlock
                 info={'Check-In'}
                 data={moment(checkIn).format('DD-MMM-YYYY')}
-                backColor={'checkIn'}
+                backColor={'secondary'}
+
             />
             <PersonalInfoBlock
                 info={'Check-Out'}

@@ -1,3 +1,5 @@
+@import '../../../../../variables.scss';
+
 .current-tenant-wrapper{
     margin: 20px 0;
     padding-left: 20px;
@@ -6,197 +8,73 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-}
+    .current-tenant-header{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 10px;
+        border-bottom: 1px solid $grayBack;
+        h4{
+            margin: 0;
+            margin-right: 20px;
+            font-size: $bigFont;
+            color: $primary;
+            font-weight: 700;
+        }
+        .current-tenant-name{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            border-radius: 5px;
+            margin-right: 10px;
+            padding: 0 15px;
 
-.current-tenant-header{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgb(79, 86,109);
-}
+            p{
+                margin: 0;
+                font-size: $bigFont;
+                color: $primary;
+            }
+            &:hover {
+                
+            }
+            .start-chatButton{
+                margin-left: 20px;
+            }
+            &:hover{
+                cursor: pointer;
+                box-shadow: $shadow;
+            }
+        } 
 
-.current-tenant-header-title {
-    width: 20%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-right: 20px;
-}
-.current-tenant-header-title p {
-    font-size: 16px;
-    color: rgb(79, 86,109);
-    font-weight: 700;
-    margin-right: 20px;
-}
+    }
+    .jammer-info-section{
+        width: 95%;
+        margin: 0px 0 20px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .jammer-info-section-title{
+            display: none;
+        }
+    
+        .jammer-info-section-contractInfo{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .jammer-info-section-personalInfo{
+            width: 100%;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+    }
 
-.current-tenant-header-info{
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.current-tenant-name{
-    width: 50%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-} 
-
-.current-tenant-bookingId{
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-.current-bookingId-field{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-right: 10px;
-}
-
-.current-bookingId-value{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.current-bookingId-value p{
-    color: blue;
-    cursor: pointer;
-}
-
-.current-bookingId-value p:hover{
-    text-decoration: underline;
-}
- 
-.current-tenant-title-value p{
-    font-size: 16px;
-    color: rgb(79, 86,109);
-    font-weight: 700;
-}
-
-.current-tenant-info{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.current-tenant-info-header{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.tenant-img{
-    width: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 15px;
-}
-.current-tenant-personal-info{
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.current-tenant-personal-info-lowerline{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.current-tenant-personal-info-lowerline p{
-    font-size: 14px;
-    color: black;
-    font-weight: 400;
-}
-.current-tenant-info-contract{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.current-tenant-info-contract-line{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-.contract-line-block{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.contract-line-field{
-    width: 120px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 10px 5px;
-}
-.contract-line-field p{
-    font-size: 14px;
-    color: gray;
-    font-weight: 400;
-}
-.contract-line-value{
-    width: 180px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: rgb(246, 244, 244);
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin: 10px 0px;
-    padding: 5px;
-}
-
-.contract-line-value p{
-    font-size: 14px;
-    color: darkgray;
-    font-weight: 400;
-    margin-left: 5px;
-}
-
-
-.current-tenant-info-comments{
-    width: 100%;    
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.current-tenant-info-comments p{
-    font-size: 14px;
-    color: rgb(79, 86,109);
-}
-
-.no-current-booking{
-    width: 100%;    
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.no-current-booking p {
-    font-size: 16px;
-    color: black;
-    font-weight: 400;
-}
-
-.no-current-booking p span {
-    font-weight: 700;   
-}
+};
