@@ -1,0 +1,37 @@
+@import '../../../variables.scss';
+
+.jammer-info-section{
+    width: 80%;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .jammer-info-section-title{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 10px 0;
+        p{
+            margin: 0 ;
+            color: $primary;
+            font-size: $midFont;
+        }
+    }
+    .jammer-info-section-personalInfo{
+        width: 100%;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .jammer-info-section-contractInfo{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}

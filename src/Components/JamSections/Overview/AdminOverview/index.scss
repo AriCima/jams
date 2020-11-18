@@ -55,12 +55,12 @@
                     align-items: center;
                     .walking-icon{
                         width: 50%;
-                        color: green;
+                        color: $checkIn;
                         font-size: 25px;
                     }
                     .door-icon{
                         width: 50%;
-                        color: green;
+                        color: $checkIn;
                         font-size: 25px;
                         transform: scaleX(-1);
                     }
@@ -72,14 +72,14 @@
                     align-items: center;
                     .walking-icon-isOut{
                         width: 50%;
-                        color: red;
+                        color: $checkOut;
                         font-size: 25px;
                         transform: scaleX(-1);
                         
                     }
                     .door-icon-isOut{
                         width: 50%;
-                        color: red;
+                        color: $checkOut;
                         font-size: 25px;
                         transform: scaleX(-1);
                     }

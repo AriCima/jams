@@ -1,10 +1,12 @@
 import React from 'react';
-import moment from 'moment';
+import { connect } from 'react-redux';
 
+import JammerContractInfo from '../../../../Reusables/JammerContractInfo';
+import StartChatButton from '../../../../UI/Buttons/StartChatButton';
 // CSS
-import './index.css';
+import './index.scss';
 
-const CurrentTenant = ({ currentTenant }) => {
+const CurrentTenant = ({ jamName, docId, userId, firstName, lastName, currentTenant }) => {
 
     return (
         <div className="current-tenant-wrapper">
@@ -15,23 +17,28 @@ const CurrentTenant = ({ currentTenant }) => {
                     <p>Current Tenant</p>
                 </div>
 
-                <div className="current-tenant-header-info">
-                    <div className="current-tenant-name">
-                        <p>{currentTenant.firstName} {currentTenant.lastName}</p>
-                    </div>
-                    {/* <div className="current-tenant-bookingId">
-                        <div className="current-bookingId-field">
-                            <p>Booking Ref:</p>
-                        </div>
-                        <div className="current-bookingId-value" onClick={openBookingForm}>
-                            <p>{currentTenant.bookingId}</p>
-                        </div>
-                    </div> */}
+
+                <div className="current-tenant-name">
+                    <p>{currentTenant.firstName} {currentTenant.lastName}</p>
                 </div>
+
+                <div className="start-chatButton">
+                    <StartChatButton 
+                        user1Name={firstName}
+                        user1LastName={lastName}
+                        user1Id={userId}
+                        user2Name={currentTenant.firstName}
+                        user2LastName={currentTenant.lastName}
+                        user2Id={docId}
+                        jamName={jamName}
+                    />
+                </div>
+
 
             </div>
 
-            <div className="current-tenant-info">
+            <JammerContractInfo contractInfo={currentTenant} />
+            {/* <div className="current-tenant-info">
 
                 <div className="current-tenant-personal-info" />
 
@@ -84,11 +91,20 @@ const CurrentTenant = ({ currentTenant }) => {
                     <p>Comments area</p>
                 </div>
 
-            </div>
+            </div> */}
 
         </div>
 
     );
 };
 
-export default CurrentTenant;
+const mapStateToProps = (state) => {
+    const { userId, firstName, lastName } = state.userInfo;
+    const { jamName } = state.jamInfo;
+    const { docId } = state.doc;
+
+    return { jamName, userId, firstName, lastName, docId }
+    
+};
+export default connect(mapStateToProps, null)(CurrentTenant);
+

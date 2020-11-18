@@ -1,42 +1,18 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPassport, faAt, faPhone, faMobile, faMapMarkerAlt, faLocationArrow, faGlobeAmericas  } from '@fortawesome/free-solid-svg-icons'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import IconsStore from '../../services/IconsStore';
 // CSS
 import './index.scss';
 
-const PersonalInfoBlock = ({info, data}) => {
+const PersonalInfoBlock = ({info, data, backColor}) => {
   
-    let icon;
-    switch (info) {
-        case 'Email':
-            icon = faAt
-        break;
-        case 'Passport':
-            icon = faPassport
-        break;
-        case 'Phone':
-            icon = faPhone
-        break;
-        case 'Mobile':
-            icon = faMobile
-        break;
-        case 'Address':
-            icon = faMapMarkerAlt
-        break;
-        case 'City':
-            icon = faLocationArrow
-        break;
-        case 'Country':
-            icon = faGlobeAmericas
-        break;
-        default:
-            icon = ''
-    };
+    const icon = IconsStore.getIcon(info);
 
     return(
         <div className="jammer-info-block">
-            <div className="info-block-icon">
+            <div className={`info-block-icon ${backColor}`}>
                 <FontAwesomeIcon
                     className="info-icon"
                     icon={icon}
@@ -44,7 +20,7 @@ const PersonalInfoBlock = ({info, data}) => {
             </div>
             <div className="info-block-data">
                 <div className="info-line">
-                    <p>{info}</p>
+                    <h4>{info}</h4>
                 </div>
                 <div className="info-line">
                     {info === 'Email' ? <a href={`mailto: ${data}`}>{data}</a> : <p>{data}</p>}
@@ -52,7 +28,6 @@ const PersonalInfoBlock = ({info, data}) => {
 
             </div>
         </div>
-
     )
 }
   

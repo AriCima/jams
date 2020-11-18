@@ -6,18 +6,34 @@
     justify-content: flex-start;
     margin: 10px;
     .info-block-icon{
-        width: 40px;
-        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: $buttonPrimary;
         border-radius: 5px;
         .info-icon{
             color: white;
         }
 
     }
+    .buttonPrimary{
+        background-color: $buttonPrimary;
+    }
+    .primary{
+        background-color: $primary;
+    }
+    .secondary{
+        background-color: $secondary;
+    }
+    .checkIn{
+        background-color: $secondary;
+    }
+    .checkOut{
+        background-color: $secondary;
+        transform: scaleX(-1);
+    }
+
     .info-block-data{
         width: 80%;
         display: flex;
@@ -29,11 +45,19 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            white-space: nowrap;
             p, a{
                 color: $grayText;
                 margin: 0;
                 font-size: $smallFont;
                 margin-left: 15px;
+            }
+            h4{
+                color: $grayText;
+                margin: 0;
+                font-size: $smallFont;
+                margin-left: 15px;
+                font-weight: 700;
             }
         }
     }
