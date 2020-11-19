@@ -1,0 +1,23 @@
+@import '../../../variables.scss';
+
+
+#label-value-chart{
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 15px;
+    tr{
+        width: 100%;
+        td {
+    
+            padding: 8px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border: none;
+        }
+        #label-column{
+            color: $secondary;
+            font-weight: 700;
+            border: none;
+        }
+    }
+}

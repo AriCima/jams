@@ -26,6 +26,7 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
   const [jamDesc, setJamDesc] = useState('');
   const [jamType, setJamType] = useState('');
   const [nrOfRooms, setNrOfRooms] = useState('');
+  const [jamAddress, setJamAddress] = useState('');
 
   const handleChange = (field) => event => {
     if (field === 'jamName') {
@@ -34,10 +35,10 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       setJamDesc(event.target.value);
     } else if (field === 'jamType') {
       setJamType(event.target.value);
-      console.log('jamType = ', event.target.value);
+    } else if (field === 'jamAddress') {
+      setJamAddress(event.target.value);
     } else {
       setNrOfRooms(event.target.value);
-      console.log('roomsNr = ', nrOfRooms);
     }
   };
 
@@ -56,12 +57,12 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       adminId: userId,
       adminName: firstName, 
       adminLastName: lastName,
+      email: email,
       jamCode,
       jamName,
       jamDesc,
       jamType,
-      jamDetails: {nrOfRooms},
-      // nrOfRooms,
+      jamDetails: {nrOfRooms, jamAddress},
       createdAt,
       updatedAt,
     };
@@ -134,8 +135,19 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
                       {jamType === 'rooms-rental'
                         && (
                         <div className="input-group mb-3">
+                           <div className="input-group mb-3">
+                              <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="apartment address"
+                                  label="address"
+                                  onChange={handleChange('address')}
+                              />
+                          </div>
                             <div className="input-group-prepend">
-                                <label className="input-group-text" htmlFor="inputGroupSelect01">Nr of Rooms</label>
+                                <label
+                                  className="input-group-text"
+                                  htmlFor="inputGroupSelect01">Nr of Rooms</label>
                             </div>
                             <select
                                 className="custom-select"

@@ -1,49 +1,83 @@
 
-import React, { useState, useEffect } from 'react';
-
-// COMPONENTS
+import React from 'react';
 import { connect } from 'react-redux';
 
-// CSS
+import LabelValueChart from '../../UI/LabelValueChart';
+import HouseRules from '../../Forms/HouseRules';
+
 import './index.scss';
 
-const Settings = (props) => {
+const Settings = ({
+    email,
+    firstName,
+    jamDesc,
+    jamDetails,
+    jamId,
+    jamName,
+    lastName
+}) => {
 
- 
 
-    return (
+    const infoArr = [
+        {label: 'Jam Name:', value: jamName},
+        {label: 'Jam Description:', value: jamDesc},
+        {label: 'Address:', value: jamDetails.address},
+        {label: 'Nr of Rooms:', value: jamDetails.nrOfRooms},
 
-        <div className="settings">
+    ];
+        
+    return(
+
+        <div className="settings-wrapper">
+
             <div className="settings-section">
                 <div className="settings-section-title">
-                    <h2>Jam Info</h2>
+                    <div className="backLine"/>
+                    <dic className="title">
+                        <p>JAM INFO</p>
+                    </dic>
+                </div>
+                <div className="settings-content">
+                    <LabelValueChart info={infoArr} />
                 </div>
             </div>
+
             <div className="settings-section">
                 <div className="settings-section-title">
-                    <h2>Apartment Info</h2>
-                    <p>
-                        We
-                        <span> strongly </span>
-                        recomend you to fill the information about the apartment location in order to be able to automaticallyprint a contract upon a reception of a booking
-                    </p>
+                    <div className="backLine"/>
+                    <dic className="title">
+                        <p>HOUSE RULES</p>
+                    </dic>
+                </div>
+                <div className="settings-content rules">
+                    <HouseRules />
                 </div>
             </div>
-            <div className="settings-section">
-                <div className="settings-section-title">
-                    <h2>Landlord Info</h2>
-                </div>
-            </div>
+
         </div>
-    );
+
+    )
+
 };
 
 
 
 const mapStateToProps = (state) => {
+
+    const { jamId } = state.nav;
+    const jamInfo = state.jamInfo;
+    const { jamName, jamDesc, jamDetails } = state.jamInfo;
+    const { firstName, lastName, email } = state.userInfo
+
     return {
-        user: state.userInfo.usereId,
-        jamId: state.nav.jamId,
+        email,
+        firstName,
+        jamDesc,
+        jamDetails,
+        jamId,
+        jamInfo,
+        jamName,
+        lastName,
     };
 };
 export default connect(mapStateToProps, null)(Settings);
