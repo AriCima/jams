@@ -143,6 +143,66 @@ export default class DataService {
         });
     }
 
+    static editJamMainInfo(jamId, info) {
+        return new Promise(() => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .update(info)
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        });
+    };
+    static editJamDetails(jamId, info) {
+        return new Promise(() => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .update({ 
+                'jamDetails.roomNr': info.roomNr,
+                'jamDetails.address': info.address,
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        });
+    };
+    static editJamHouseRules(jamId, info) {
+        return new Promise(() => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .update({ 
+                "jamDetails.houseRules.checkInFrom": info.checkInFrom,
+                "jamDetails.houseRules.checkInProcess":info.checkInProcess,
+                "jamDetails.houseRules.checkInTo":info.checkInTo,
+                "jamDetails.houseRules.checkOutBefore":info.checkOutBefore,
+                "jamDetails.houseRules.checkOutProcess":info.checkOutProcess,
+                "jamDetails.houseRules.overnight":info.overnight,
+                "jamDetails.houseRules.parties":info.parties,
+                "jamDetails.houseRules.pets":info.pets,
+                "jamDetails.houseRules.smoking":info.smoking,
+                "jamDetails.houseRules.smokingBalcony":info.smokingBalcony,
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        });
+    };
+
     static startChat(chatId, chatInfo, user1Id, user2Id) {
         return new Promise((resolve, reject) => {
             firebase.firestore()

@@ -8,19 +8,13 @@ import DataService from '../../services/DataService';
 import './index.scss';
 
 const Settings = ({
-    email,
-    firstName,
     jamDesc,
     jamDetails,
     jamId,
     jamName,
-    lastName
 }) => {
     const defaultValues = {
-        firstName: firstName,
-        lastName: lastName,
         jamName: jamName,
-        email: email,
         jamDesc: jamDesc,
         checkInProcess: jamDetails.houseRules.checkInProcess,
         checkOutProcess: jamDetails.houseRules.checkOutProcess,
@@ -41,7 +35,62 @@ const Settings = ({
 
     const onSubmit = (data) => {
         console.log(data)
-        // DataService.EditHouseRules(jamId, data);
+        
+        const {
+            address,
+            checkInFrom,
+            checkInProcess,
+            checkInTo,
+            checkOutBefore,
+            checkOutProcess,
+            jamDesc,
+            jamName,
+            nrOfRooms,
+            overnight,
+            parties,
+            pets,
+            smoking,
+            smokingBalcony,
+        } = data;
+
+        const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
+
+        const editJamDetails = address !== defaultValues.address || nrOfRooms !== defaultValues.nrOfRooms;
+
+        const editHouseRules = (
+            checkInProcess !== defaultValues.checkInProcess || checkOutProcess !== defaultValues.checkOutProcess || 
+            checkInFrom !== defaultValues.checkInFrom || checkInTo !== defaultValues.checkInTo || 
+            checkOutBefore !== defaultValues.checkOutBefore || pets !== defaultValues.pets || 
+            parties !== defaultValues.parties || overnight !== defaultValues.overnight || 
+            smokingBalcony !== defaultValues.smokingBalcony || smoking !== defaultValues.smoking
+        );
+
+        
+        if(editJamMainInfo) {
+            const info = {jamName, jamDesc};
+            DataService.editJamMainInfo(jamId, info);
+        };
+        if(editJamDetails) {
+            const info = {address, nrOfRooms};
+            DataService.editJamDetails(jamId, info);
+        };
+        if(editHouseRules) {
+            const info = {
+                checkInFrom,
+                checkInProcess,
+                checkInTo,
+                checkOutBefore,
+                checkOutProcess,
+                overnight,
+                parties,
+                pets,
+                smoking,
+                smokingBalcony
+            };
+            DataService.editJamHouseRules(jamId, info);
+        };
+        
+        
     };
         
     return(
@@ -303,17 +352,14 @@ const mapStateToProps = state => {
     const { section } = state.nav;
     const { jamName, jamDesc, jamType, jamDetails } = state.jamInfo;
     const { jamId } = state.nav;
-    const { userId, firstName, lastName, email } = state.userInfo;
+    const { userId } = state.userInfo;
 
     return {
-        email,
-        firstName,
         jamDesc,
         jamDetails,
         jamId,
         jamName,
         jamType,
-        lastName,
         section,
         userId,
     };
