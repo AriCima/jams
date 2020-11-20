@@ -1,7 +1,7 @@
 import React from 'react';
-
-import {useForm} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { connect } from 'react-redux';
+import { RadioGroup, FormControlLabel, Switch } from "@material-ui/core";
 import { setRegisteredUser } from '../../../redux/actions/userActions.js'
 
 import DataService from '../../services/DataService';
@@ -19,7 +19,7 @@ const EditJamInfo = ({
     userId,
 }) => {
 
-    const { register, errors, handleSubmit } = useForm({
+    const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
             firstName: firstName,
             lastName: lastName,
@@ -31,6 +31,7 @@ const EditJamInfo = ({
             checkInFrom: jamDetails.houseRules.checkInFrom,
             checkInTo: jamDetails.houseRules.checkInTo,
             checkOutBefore: jamDetails.houseRules.checkOutBefore,
+            pets: true
         }
     });
 
@@ -57,22 +58,33 @@ const EditJamInfo = ({
                                 <label>Are pets allowed in the flat ?</label>
                             </td>
                             <td id="rules-value">
-                                <input
+                                <section>
+                                    {/* <label>MUI Switch</label> */}
+                                    <Controller
+                                        as={Switch}
+                                        type="checkbox"
+                                        name="pets"
+                                        color='primary'
+                                        checked={defaultValues.pets}
+                                        control={control}
+                                    />
+                                </section>
+                                {/* <input
                                     name="pets"
                                     type="radio"
                                     value="Yes"
                                     onChange={handleSubmit(onSubmit)}
-                                    ref={register({ required: true })}
-                                />
+                                    // ref={register({ required: true })}
+                                /> */}
                             </td>
                             <td>
-                                <input
+                                {/* <input
                                     name="pets"
                                     type="radio"
                                     value="No"
                                     onChange={handleSubmit(onSubmit)}
                                     ref={register({ required: true })}
-                                />
+                                /> */}
                             </td>
                         </tr>
                         <tr>
@@ -85,7 +97,7 @@ const EditJamInfo = ({
                                     type="radio"
                                     value="Yes"
                                     onChange={handleSubmit(onSubmit)}
-                                    ref={register({ required: true })}
+                                    // ref={register({ required: true })}
                                 />
                             </td>
                             <td>
@@ -108,7 +120,7 @@ const EditJamInfo = ({
                                     type="radio"
                                     value="Yes"
                                     onChange={handleSubmit(onSubmit)}
-                                    ref={register({ required: true })}
+                                    // ref={register({ required: true })}
                                 />
                             </td>
                             <td>
@@ -130,7 +142,7 @@ const EditJamInfo = ({
                                     type="radio"
                                     value="Yes"
                                     onChange={handleSubmit(onSubmit)}
-                                    ref={register({ required: true })}
+                                    // ref={register({ required: true })}
                                 />
                             </td>
                             <td>

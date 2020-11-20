@@ -159,6 +159,35 @@ export default class Calculations {
         return re.test(String(email).toLowerCase());
     }
 
+    static getJamRules(type){
+        //console.log('get Jam Sections launched')
+        let rules = [];
+        switch (type) {
+            case 'accommodation':
+              rules = ['Board', 'Jammers', 'MyJam', 'Settings']
+              break;
+            case 'rooms-rental':
+                rules = {
+                    smokingBalcony: false,
+                    pets: false,
+                    smoking: false,
+                    overnight: false,
+                    checkInProcess: '',
+                    checkOutProcess: '',
+                    checkInFrom: '2pm',
+                    checkInTo: '10pm',
+                    checkOutBefore: '10am'
+                }
+                break;
+            case 'chat': 
+                rules = ['Chat']
+                break;
+            default:
+              //console.log('no reconoce tipo')
+        }
+       return rules;
+    };
+
     // - - - - - SORTING FUNCTIONS 
 
     // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/

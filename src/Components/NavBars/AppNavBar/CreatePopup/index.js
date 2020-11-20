@@ -47,7 +47,7 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
   const onCreatenewJam = (e) => {
     e.preventDefault();
     
-
+    const houseRules = Calculations.getJamRules(jamType);
 
     const createdAt = new Date();
     const jamCode = Calculations.generateCode();
@@ -62,7 +62,7 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       jamName,
       jamDesc,
       jamType,
-      jamDetails: {nrOfRooms, jamAddress},
+      jamDetails: {nrOfRooms, jamAddress, houseRules},
       createdAt,
       updatedAt,
     };

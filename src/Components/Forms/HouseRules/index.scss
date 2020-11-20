@@ -75,6 +75,11 @@
                         font-size: $smallFont;
                         padding: 8px;
                         white-space: nowrap;
+                        #pirulo{
+                            display:flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
                     }
         
                     #rules-text{
