@@ -40,6 +40,7 @@ export default class Calculations {
         }
         return messageTime
     }
+    
     static generateCode(){ 
      // GENERATE CONTRACT CODE  type: 4aG-89n --> 14.776.336 combinations
 

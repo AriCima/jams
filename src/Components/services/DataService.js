@@ -374,7 +374,6 @@ export default class DataService {
     /* * * * * * * *  CHAT * * * * * * * * * * * * * * * */
 
     static getChatInfo(jamId) {
-        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore()
@@ -412,7 +411,6 @@ export default class DataService {
     }
 
     static getChatMessages(jamId) {
-        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore()

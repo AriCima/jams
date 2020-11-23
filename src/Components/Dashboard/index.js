@@ -51,7 +51,6 @@ const Dashboard = ({
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails } = res;
-        console.log('jamDetails: ', jamDetails);
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
        
         // Info en el state

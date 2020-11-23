@@ -30,7 +30,7 @@ const Chat = ({ jamId, userId, adminName, userRole }) => {
             return (
                 <ChatContent 
                     key={i} 
-                    ChatContent={bC}
+                    chatContent={bC}
                 />
             )
         })
@@ -53,7 +53,6 @@ const Chat = ({ jamId, userId, adminName, userRole }) => {
         DataService.saveChatMessage(jamId, messageInfo)
     };
 
-    
     return (
         <div className="landlord-chat-wrapper">
             <div className="landlord-Chat">

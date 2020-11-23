@@ -40,7 +40,6 @@ const JamNavBar = ({
         if (jamType === 'chat') {
             DataService.getChatInfo(jamId)
             .then((res) => {
-                console.log('res: ', res);
                 setChatInfo(res)
             })
         }

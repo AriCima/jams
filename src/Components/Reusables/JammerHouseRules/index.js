@@ -30,10 +30,7 @@ const JammerHouseRules = ({ houseRules }) => {
         }
     }, [houseRules])
 
-    const renderIcon = (ok) => {
-
-        console.log(ok)
-    
+    const renderIcon = (ok) => {    
         if (!ok) {
             return (
                 <FontAwesomeIcon

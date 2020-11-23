@@ -5,9 +5,10 @@ import moment from 'moment';
 
 import './index.scss';
 
-const BoardContent = ({ boardContent}) => {
+const ChatContent = ({ chatContent}) => {
 
-    const messageTime = Calculations.getMessageDate(boardContent.createdAt)
+
+    const messageTime = Calculations.getMessageDate(chatContent.createdAt)
 
     const renderMessage = (messageType) => { 
         switch (messageType){
@@ -33,11 +34,11 @@ const BoardContent = ({ boardContent}) => {
                 return (
                     <div className="board-message-item">
                         <div className="board-message">
-                            <p>{boardContent.messageText}</p>
+                            <p>{chatContent.messageText}</p>
                         </div>
                         <div className="board-message-info">
                             <div className="board-message-time">
-                                <p>{boardContent.adminName} - {messageTime}</p>
+                                <p>{chatContent.adminName} - {messageTime}</p>
                             </div>
                         </div>
                     </div>
@@ -49,8 +50,8 @@ const BoardContent = ({ boardContent}) => {
 
     return (
         <>
-            {renderMessage(boardContent.messageType)}
+            {renderMessage(chatContent.messageType)}
         </>
     );   
 };
-export default BoardContent;
+export default ChatContent;
