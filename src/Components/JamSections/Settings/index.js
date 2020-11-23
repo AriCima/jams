@@ -59,6 +59,7 @@ const Settings = ({
         overnight: jamDetails.houseRules.overnight,
         parties: jamDetails.houseRules.parties,
         address: jamDetails.address,
+        inviteFriends: jamDetails.houseRules.inviteFriends
         // nrOfRooms: jamDetails.nrOfRooms,
     };
 
@@ -66,61 +67,62 @@ const Settings = ({
     const { register, errors, handleSubmit, control } = useForm({defaultValues});
 
     const onSubmit = (data) => {
-        console.log(data)
+
+        const {
+            address,
+            checkInFrom,
+            checkInProcess,
+            checkInTo,
+            checkOutBefore,
+            checkOutProcess,
+            jamDesc,
+            jamName,
+            // nrOfRooms,
+            overnight,
+            parties,
+            pets,
+            smoking,
+            smokingBalcony,
+            inviteFriends
+        } = data;
+
+        const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
+
+        const editJamDetails = address !== defaultValues.address;
+
+        const editHouseRules = (
+            checkInProcess !== defaultValues.checkInProcess || checkOutProcess !== defaultValues.checkOutProcess || 
+            checkInFrom !== defaultValues.checkInFrom || checkInTo !== defaultValues.checkInTo || 
+            checkOutBefore !== defaultValues.checkOutBefore || pets !== defaultValues.pets || 
+            parties !== defaultValues.parties || overnight !== defaultValues.overnight || 
+            smokingBalcony !== defaultValues.smokingBalcony || smoking !== defaultValues.smoking || inviteFriends !== defaultValues.inviteFriends
+        );
+
         
-        // const {
-        //     address,
-        //     checkInFrom,
-        //     checkInProcess,
-        //     checkInTo,
-        //     checkOutBefore,
-        //     checkOutProcess,
-        //     jamDesc,
-        //     jamName,
-        //     // nrOfRooms,
-        //     overnight,
-        //     parties,
-        //     pets,
-        //     smoking,
-        //     smokingBalcony,
-        // } = data;
-
-        // const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
-
-        // const editJamDetails = address !== defaultValues.address;
-
-        // const editHouseRules = (
-        //     checkInProcess !== defaultValues.checkInProcess || checkOutProcess !== defaultValues.checkOutProcess || 
-        //     checkInFrom !== defaultValues.checkInFrom || checkInTo !== defaultValues.checkInTo || 
-        //     checkOutBefore !== defaultValues.checkOutBefore || pets !== defaultValues.pets || 
-        //     parties !== defaultValues.parties || overnight !== defaultValues.overnight || 
-        //     smokingBalcony !== defaultValues.smokingBalcony || smoking !== defaultValues.smoking
-        // );
-
-        
-        // if(editJamMainInfo) {
-        //     const info = {jamName, jamDesc};
-        //     DataService.editJamMainInfo(jamId, info);
-        // };
-        // if(editJamDetails) {
-        //     const info = {address};
-        //     DataService.editJamDetails(jamId, info);
-        // };
-        // if(editHouseRules) {
-        //     const info = {
-        //         checkInFrom,
-        //         checkInProcess,
-        //         checkInTo,
-        //         checkOutBefore,
-        //         checkOutProcess,
-        //         overnight,
-        //         parties,
-        //         pets,
-        //         smoking,
-        //         smokingBalcony
-        //     };
-        //     DataService.editJamHouseRules(jamId, info);
-        // };
+        if(editJamMainInfo) {
+            const info = {jamName, jamDesc};
+            DataService.editJamMainInfo(jamId, info);
+        };
+        if(editJamDetails) {
+            const info = {address};
+            DataService.editJamDetails(jamId, info);
+        };
+        if(editHouseRules) {
+            const info = {
+                checkInFrom,
+                checkInProcess,
+                checkInTo,
+                checkOutBefore,
+                checkOutProcess,
+                overnight,
+                parties,
+                pets,
+                smoking,
+                smokingBalcony,
+                inviteFriends
+            };
+            DataService.editJamHouseRules(jamId, info);
+        };
         
         
     };
@@ -293,6 +295,7 @@ const Settings = ({
                                             <Controller
                                                 name="pets"
                                                 control={control}
+                                                defaultValue={defaultValues.pets}
                                                 as={
                                                     <RadioGroup aria-label="pets">
                                                         <div className="radios-wrapper">
