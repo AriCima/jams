@@ -2,176 +2,200 @@
 
 .overview-wrapper{
     width: 100%;
-    padding: 40px;
+    padding: 0 40px 40px 40px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-
-    .jammer-overview-serction{
+    .jamInfo-wrapper{
         width: 100%;
-        margin-bottom: 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        .jammer-overview-serction-title{
-            width: 100%;
+        .jamInfo-section{
+            width: 95%;
+            margin: 0px 0 20px 20px;
             display: flex;
+            flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
-            border-bottom: 1px solid gray;
-            h3{
-                font-size: 14px;
-                font-style: italic;
-                color: $fBlue;
-                margin: 0;
-                span{
-                    font-size: 14px;
-                    color: $fBlue;
-                    font-style: italic;
-                }
-            }
-
-        };
-        .jam-info-line{
-            width: 100%;
-            margin: 10px 0;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            .jam-info-label{
-                width: 20%;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                p{
-                    margin: 0;
-                    font-size: 14px;
-                    font-weight: 700;
-                    span{
-                        margin-left: 20px;
-                        font-style: italic;
-                    }
-                }
-            }
-            .jam-info-value{
-                margin-left: 20px;
-                width: 80%;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                p{
-                    font-size: $midFont;
-                    margin: 0;
-                    span{
-                        margin-left: 20px;
-                        font-style: italic;
-                    }
-                }
-            }
-            .jammer-overview-adminInfo{
-                width: 80%;
-                margin-left: 20px;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                .overview-adminInfo{
-                    p{
-                        font-size: $midFont;
-                        color: black;
-                        margin: 0;
-                        span{
-                            font-weight: 700;
-                        }
-                    }
-                }
-                .startChat-button{
-                    margin-left: 60px;
-                }
-            };
-        }
-        .jam-description{
-            width: 100%;
-            p{ 
-                font-size: $midFont;
-            }
-        }
-        .contract-section{
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: space-between;
-            .contract-versions{
-                margin: 0;
-                width: 50%;
+            align-items: flex-start;
+            
+            .jamInfo-section-title{
+                width: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
- 
-                .contract-img{
-                    width: 50%;
+                margin: 10px 0;
+                .backLine{
+                    width: 95%;
+                    height: 3px;
+                    background-color: $lightGray;
+                    position: absolute;
+                }
+                .title{
                     display: flex;
-                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    cursor: pointer;
-                    .contract-icon{
-                        font-size: 50px;
-                    }
+                    margin: 10px 0;
+                    padding: 10px;
+                    border: 2px solid $secondary;
+                    background-color: white;
+                    z-index: 1;
                     p{
-                        font-size: 14px;
-                        margin: 5px 0 0 0;
-                    }
-                    &:hover{
-                        color: $secondary;
+                        margin: 0 ;
+                        color: $primary;
+                        font-size: $smallFont;
+                        font-weight: 700;
                     }
                 }
             }
-            .contract-summary{
-                width: 50%;
-                padding: 15px;
-                border-radius: 15px;
-                margin-left: 40px;
+        
+            .jamInfo-adminInfo{
+                width: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                p{
+                    margin: 0;
+                    font-size: $midFont;
+                    span{
+                        font-weight: 700;
+                        margin: 0 20px;
+                    }
+                }
+            }
+
+            .jamInfo-info{
+                width: 100%;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: flex-start;
-                box-shadow: $shadow;
-
-                .contract-summary-line{
+                font-size: $midFont;
+                .name-desc-block{
                     width: 100%;
-                    margin: 10px 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    .jamInfo-jamName{
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        margin-bottom: 10px;
+                        p{
+                            margin: 0;
+                            font-weight: 700;
+                        }
+                    }
+                    .jamInfo-jamDesc{
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        min-height: 80px;
+                        border-radius: 5px;
+                        background-color: $backCream;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                        p{
+                            margin: 0 0 0 20px;
+                            font-style: italic;
+                            font-weight: 400;
+                        }
+                    }
+                    .jamInfo-line{
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        margin: 10px 0;
+                        p{
+                            margin: 0;
+
+                            span{
+                                margin-left: 20px;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+
+                .jamInfo-jamName{
                     display: flex;
                     justify-content: flex-start;
-                    align-items: center;
-                    .contract-block-label{
-                        width: 40%;
-                        p{
-                            margin: 0;
-                            font-size: 14px;
-                            font-weight: 700;
-                            span{
-                                margin-left: 20px;
-                                font-style: italic;
-                            }
-                        }
+                    align-items: flex-start;
+                    p{
+                        font-weight: 700;
                     }
-                    .contract-block-value{
-                        margin-left: 20px;
-                        width: 60%;
-                        p{
-                            font-size: 14px;
-                            margin: 0;
-                            span{
-                                margin-left: 20px;
-                                font-style: italic;
-                            }
-                        }
+                }
+                .jamInfo-jamDesc{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    p{
+                        font-weight: 700;
                     }
+                }
+            }
+
+        }
+    }
+    .jammer-info-section{
+        width: 95%;
+        margin: 0px 0 20px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        position: relative;
+        .jammer-info-section-title{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+            .backLine{
+                width: 95%;
+                height: 3px;
+                background-color: $lightGray;
+                position: absolute;
+            }
+            .title{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 10px 0;
+                padding: 10px;
+                border: 2px solid $secondary;
+                background-color: white;
+                z-index: 1;
+                p{
+                    margin: 0 ;
+                    color: $primary;
+                    font-size: $smallFont;
+                    font-weight: 700;
                 }
             }
         }
-    };
-
+    
+        .jammer-info-section-contractInfo{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .jammer-info-section-personalInfo{
+            width: 100%;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+    }
 }

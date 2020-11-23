@@ -177,17 +177,46 @@
                                     text-align: left;
                                     background-color: $buttonPrimary;
                                     color: white;
+
+                                    .header-values-wrapper{
+                                        display:flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        .value-box{
+                                            display:flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            height: 40px;
+                                            width: 80px;
+                                            p{
+                                                margin: 0;
+                                            }
+                                        }
+                                    }
+
+                                    p{
+                                        font-weight: 700;
+                                        margin: 0 0 0 20px;
+                                    }
                                 }
             
                                 td {
                                     font-size: $smallFont;
                                     padding: 8px;
                                     white-space: nowrap;
-                                    #pirulo{
+                                    .radios-wrapper{
                                         display:flex;
                                         justify-content: center;
                                         align-items: center;
+                                        .radio-box{
+                                            display:flex;
+                                            justify-content: flex-end;
+                                            align-items: center;
+                                            height: 40px;
+                                            width: 80px;
+                                        }
                                     }
+
                                 }
                     
                                 #rules-text{
@@ -249,6 +278,7 @@
                                 margin-bottom: 10px;
                                 font-size: 14px;
                                 width: 100%;
+                                background-color: $backCream;
                             }
                             ::placeholder{
                                 color: $lightGray;
@@ -314,6 +344,7 @@
                         margin-bottom: 10px;
                         font-size: 14px;
                         width: 100%;
+                        background-color: $backCream;
                     }
                     ::placeholder{
                         color: $lightGray;
@@ -321,7 +352,7 @@
                 }
                 .textAreaBlock{
                     flex-direction: column;
-                    textarea{
+                    textarea {
                         display: block;
                         box-sizing: border-box;
                         width: 100%;
@@ -332,6 +363,7 @@
                         margin-bottom: 10px;
                         font-size: 14px;
                         width: 100%;
+                        background-color: $backCream;
                     }
                 }
                 .shortWidth{
@@ -344,6 +376,7 @@
                     input{
                         width: 10%;
                         margin: 10px;
+                        background-color: $backCream;
                     }
                 }
                 .midWidth{

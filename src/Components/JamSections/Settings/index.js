@@ -2,10 +2,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useForm, Controller } from "react-hook-form";
-import Switch from '@material-ui/core/Switch';
+// import Switch from '@material-ui/core/Switch';
+
+import { withStyles } from '@material-ui/core/styles';
+import { green, red } from '@material-ui/core/colors';
+
+import {
+    Switch,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+} from "@material-ui/core";
+
 import DataService from '../../services/DataService';
 
 import './index.scss';
+
+
+const GreenRadio = withStyles({
+    root: {
+      color: green[400],
+      '&$checked': {
+        color: green[600],
+      },
+    },
+    checked: {},
+  })((props) => <Radio color="default" {...props} />);
+
+const RedRadio = withStyles({
+root: {
+    color: red[400],
+    '&$checked': {
+    color: red[600],
+    },
+},
+checked: {},
+})((props) => <Radio color="default" {...props} />);
 
 const Settings = ({
     jamDesc,
@@ -27,7 +59,7 @@ const Settings = ({
         overnight: jamDetails.houseRules.overnight,
         parties: jamDetails.houseRules.parties,
         address: jamDetails.address,
-        nrOfRooms: jamDetails.nrOfRooms,
+        // nrOfRooms: jamDetails.nrOfRooms,
     };
 
 
@@ -36,59 +68,59 @@ const Settings = ({
     const onSubmit = (data) => {
         console.log(data)
         
-        const {
-            address,
-            checkInFrom,
-            checkInProcess,
-            checkInTo,
-            checkOutBefore,
-            checkOutProcess,
-            jamDesc,
-            jamName,
-            nrOfRooms,
-            overnight,
-            parties,
-            pets,
-            smoking,
-            smokingBalcony,
-        } = data;
+        // const {
+        //     address,
+        //     checkInFrom,
+        //     checkInProcess,
+        //     checkInTo,
+        //     checkOutBefore,
+        //     checkOutProcess,
+        //     jamDesc,
+        //     jamName,
+        //     // nrOfRooms,
+        //     overnight,
+        //     parties,
+        //     pets,
+        //     smoking,
+        //     smokingBalcony,
+        // } = data;
 
-        const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
+        // const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
 
-        const editJamDetails = address !== defaultValues.address || nrOfRooms !== defaultValues.nrOfRooms;
+        // const editJamDetails = address !== defaultValues.address;
 
-        const editHouseRules = (
-            checkInProcess !== defaultValues.checkInProcess || checkOutProcess !== defaultValues.checkOutProcess || 
-            checkInFrom !== defaultValues.checkInFrom || checkInTo !== defaultValues.checkInTo || 
-            checkOutBefore !== defaultValues.checkOutBefore || pets !== defaultValues.pets || 
-            parties !== defaultValues.parties || overnight !== defaultValues.overnight || 
-            smokingBalcony !== defaultValues.smokingBalcony || smoking !== defaultValues.smoking
-        );
+        // const editHouseRules = (
+        //     checkInProcess !== defaultValues.checkInProcess || checkOutProcess !== defaultValues.checkOutProcess || 
+        //     checkInFrom !== defaultValues.checkInFrom || checkInTo !== defaultValues.checkInTo || 
+        //     checkOutBefore !== defaultValues.checkOutBefore || pets !== defaultValues.pets || 
+        //     parties !== defaultValues.parties || overnight !== defaultValues.overnight || 
+        //     smokingBalcony !== defaultValues.smokingBalcony || smoking !== defaultValues.smoking
+        // );
 
         
-        if(editJamMainInfo) {
-            const info = {jamName, jamDesc};
-            DataService.editJamMainInfo(jamId, info);
-        };
-        if(editJamDetails) {
-            const info = {address, nrOfRooms};
-            DataService.editJamDetails(jamId, info);
-        };
-        if(editHouseRules) {
-            const info = {
-                checkInFrom,
-                checkInProcess,
-                checkInTo,
-                checkOutBefore,
-                checkOutProcess,
-                overnight,
-                parties,
-                pets,
-                smoking,
-                smokingBalcony
-            };
-            DataService.editJamHouseRules(jamId, info);
-        };
+        // if(editJamMainInfo) {
+        //     const info = {jamName, jamDesc};
+        //     DataService.editJamMainInfo(jamId, info);
+        // };
+        // if(editJamDetails) {
+        //     const info = {address};
+        //     DataService.editJamDetails(jamId, info);
+        // };
+        // if(editHouseRules) {
+        //     const info = {
+        //         checkInFrom,
+        //         checkInProcess,
+        //         checkInTo,
+        //         checkOutBefore,
+        //         checkOutProcess,
+        //         overnight,
+        //         parties,
+        //         pets,
+        //         smoking,
+        //         smokingBalcony
+        //     };
+        //     DataService.editJamHouseRules(jamId, info);
+        // };
         
         
     };
@@ -102,7 +134,7 @@ const Settings = ({
             >
                 <div className="settings-form-header">
 
-                    <h4>Manage all the information about your <span>{jamName}</span> here</h4>
+                    <h4>Manage all the information about <span>{jamName}</span> here</h4>
 
                     <div className="settings-buttonArea">
                         <input type="submit"/>
@@ -139,13 +171,13 @@ const Settings = ({
                             </div>
                             <input name="address" placeholder="Street, hosue nr, floor, door, city, zipCode, country" ref={register({required: true})}/>
                         </div>
-                        <div className="rules-custom-input-block shortWidth">
-                        <div className="block-label">
-                            <label>Nr of rooms</label>
-                            {errors.nrOfRooms && <div className="field-error">Required</div>}
-                        </div>
-                        <input name="nrOfRooms" ref={register({required: true})}/>
-                    </div>
+                        {/* <div className="rules-custom-input-block shortWidth">
+                            <div className="block-label">
+                                <label>Nr of rooms</label>
+                                {errors.nrOfRooms && <div className="field-error">Required</div>}
+                            </div>
+                            <input name="nrOfRooms" ref={register({required: true})}/>
+                        </div> */}
                     </div>
                 </div>
 
@@ -238,96 +270,202 @@ const Settings = ({
                                 </div>
                                 <table id="houseRules-table">
                                     <tr>
+                                        <th>
+                                            <p>Rule</p>
+                                        </th>
+                                        <th className="rules-value">
+                                            <div className="header-values-wrapper">
+                                                <div className="value-box">
+                                                    <p>YES</p>
+                                                </div>
+                                                <div className="value-box">
+                                                    <p>NO</p>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
                                         <td id="rules-text">
-                                            <label>Pets are not allowed in the flat</label>
+                                            <label>Are pets allowed in the flat ?</label>
                                         </td>
                                         <td id="rules-value">
                                         <section>
-                                                <Controller
+                                            <Controller
                                                 name="pets"
                                                 control={control}
-                                                render={(props) => (
-                                                    <Switch
-                                                    onChange={(e) => props.onChange(e.target.checked)}
-                                                    checked={props.value}
-                                                    />
-                                                )}
+                                                as={
+                                                    <RadioGroup aria-label="pets">
+                                                        <div className="radios-wrapper">
+                                                            <div className="radio-box">
+                                                                <FormControlLabel
+                                                                    value="yes"
+                                                                    control={<GreenRadio />}
+                                                                />
+                                                            </div>
+                                                            <div className="radio-box">
+                                                                <FormControlLabel
+                                                                    value="no"
+                                                                    control={<RedRadio />}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </RadioGroup>
+                                                }
                                             />
                                         </section>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td id="rules-text">
-                                            <label>Smoking is not allowed</label>
+                                            <label>Can tenants smoke in the apartment ?</label>
                                         </td>
                                         <td id="rules-value">
                                             <section>
                                                 <Controller
                                                     name="smoking"
                                                     control={control}
-                                                    render={(props) => (
-                                                        <Switch
-                                                        onChange={(e) => props.onChange(e.target.checked)}
-                                                        checked={props.value}
-                                                        />
-                                                    )}
+                                                    as={
+                                                        <RadioGroup aria-label="smoking">
+                                                            <div className="radios-wrapper">
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="yes"
+                                                                        control={<GreenRadio />}
+                                                                    />
+                                                                </div>
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="no"
+                                                                        control={<RedRadio />}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    }
                                                 />
                                             </section>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td id="rules-text">
-                                            <label>Smoking is only allowed in balconies </label>
+                                            <label>Can tenants smoke in balconies or terraces ?</label>
                                         </td>
                                         <td id="rules-value">
                                             <section>
                                                 <Controller
-                                                name="smokingBalcony"
-                                                control={control}
-                                                    render={(props) => (
-                                                        <Switch
-                                                        onChange={(e) => props.onChange(e.target.checked)}
-                                                        checked={props.value}
-                                                        />
-                                                    )}
+                                                    name="smokingBalcony"
+                                                    control={control}
+                                                    as={
+                                                        <RadioGroup aria-label="smokingBalcony">
+                                                            <div className="radios-wrapper">
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="yes"
+                                                                        control={<GreenRadio />}
+                                                                    />
+                                                                </div>
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="no"
+                                                                        control={<RedRadio />}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    }
                                                 />
                                             </section>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td id="rules-text">
-                                            <label>Guest to overnight are not allowed </label>
+                                            <label>Can tenants invite firends to the apartment ? </label>
+                                        </td>
+                                        <td id="rules-value">
+                                            <section>
+                                                <Controller
+                                                    name="inviteFriends"
+                                                    control={control}
+                                                    as={
+                                                        <RadioGroup aria-label="inviteFriends">
+                                                            <div className="radios-wrapper">
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="yes"
+                                                                        control={<GreenRadio />}
+                                                                    />
+                                                                </div>
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="no"
+                                                                        control={<RedRadio />}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    }
+                                                />
+                                            </section>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td id="rules-text">
+                                            <label>Can tenants have guest to overnight in the apartment ?</label>
                                         </td>
                                         <td id="rules-value">
                                             <section>
                                                 <Controller
                                                     name="overnight"
                                                     control={control}
-                                                        render={(props) => (
-                                                            <Switch
-                                                            onChange={(e) => props.onChange(e.target.checked)}
-                                                            checked={props.value}
-                                                            />
-                                                        )}
+                                                    as={
+                                                        <RadioGroup aria-label="overnight">
+                                                            <div className="radios-wrapper">
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="yes"
+                                                                        control={<GreenRadio />}
+                                                                    />
+                                                                </div>
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="no"
+                                                                        control={<RedRadio />}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    }
                                                 />
                                             </section>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td id="rules-text">
-                                            <label>Parties are not allowed in the flat </label>
+                                            <label>Can tenants organize or participate in parties in the apartment ? </label>
                                         </td>
                                         <td id="rules-value">
                                             <section>
                                                 <Controller
                                                     name="parties"
                                                     control={control}
-                                                        render={(props) => (
-                                                            <Switch
-                                                            onChange={(e) => props.onChange(e.target.checked)}
-                                                            checked={props.value}
-                                                            />
-                                                        )}
+                                                    as={
+                                                        <RadioGroup aria-label="parties">
+                                                            <div className="radios-wrapper">
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="yes"
+                                                                        control={<GreenRadio />}
+                                                                    />
+                                                                </div>
+                                                                <div className="radio-box">
+                                                                    <FormControlLabel
+                                                                        value="no"
+                                                                        control={<RedRadio />}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    }
                                                 />
                                             </section>
                                         </td>

@@ -142,6 +142,7 @@
                         margin-bottom: 10px;
                         font-size: 14px;
                         width: 100%;
+                        background-color: $backCream;
                     }
                     ::placeholder{
                         color: $lightGray;
@@ -149,7 +150,7 @@
                 }
                 .textAreaBlock{
                     flex-direction: column;
-                    textarea{
+                    textarea {
                         display: block;
                         box-sizing: border-box;
                         width: 100%;
@@ -159,6 +160,7 @@
                         margin-bottom: 10px;
                         font-size: 14px;
                         width: 100%;
+                        background-color: $backCream;
                     }
                 }
                 .checkIn{
@@ -171,6 +173,7 @@
                     input{
                         width: 10%;
                         margin: 10px;
+                        background-color: $backCream;
                     }
                 }
             }
@@ -221,6 +224,7 @@
                     margin-bottom: 10px;
                     font-size: 14px;
                     width: 100%;
+                    background-color: $backCream;
                 }
                 ::placeholder{
                     color: $lightGray;

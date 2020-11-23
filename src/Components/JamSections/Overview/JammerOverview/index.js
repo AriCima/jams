@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
 
 import DataService from '../../../services/DataService';
-import StartChatButton from '../../../UI/Buttons/StartChatButton';
+import JamInfo from '../../../Reusables/JamInfo';
+import JammerContractInfo from '../../../Reusables/JammerContractInfo';
+import JammerHouseRules from '../../../Reusables/JammerHouseRules';
+
 
 import './index.scss';
 
@@ -26,114 +29,33 @@ const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, lastName, 
     return (
         <div className="overview-wrapper">
 
-            <div className="jammer-overview-serction">
-                <div className="jammer-overview-serction-title">
-                    <h3>Jam Info</h3>
-                </div>
+           <JamInfo />
 
-                <div className="jam-info-line">
-                    <div className="jam-info-label">
-                        <p>Description:</p>
-                    </div>
-                    <div className="jam-info-value">
-                        <p>"{jamDesc}"</p>
-                    </div>
-                </div>
+            <JammerContractInfo
+                contractInfo={contractInfo}
+            />
 
-                <div className="jam-info-line">
-                    <div className="jam-info-label">
-                        <p>Admin:</p>
-                    </div>
-                    <div className="jammer-overview-adminInfo">
-                        <div className="overview-adminInfo">
-                            <p>{adminName}</p>
-                        </div>
-                        <div className="startChat-button">
-                            <StartChatButton 
-                                user1Name={firstName}
-                                user1LastName={lastName}
-                                user1Id={userId}
-                                user2Name={adminName}
-                                user2LastName={adminLastName}
-                                user2Id={adminId}
-                                jamName={jamName}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            <JammerHouseRules />
            
-            <div className="jammer-overview-serction">
-                <div className="jammer-overview-serction-title">
-                    <h3>Contract Info</h3>
+            <div className="contract-versions">
+                <div className="contract-img">
+                    <FontAwesomeIcon
+                        className="contract-icon"
+                        icon={faFile}
+                    />
+                    <p>ESP</p>
                 </div>
 
-                <div className="contract-section">
-
-                    <div className="contract-versions">
-                        <div className="contract-img">
-                            <FontAwesomeIcon
-                                className="contract-icon"
-                                icon={faFile}
-                            />
-                            <p>ESP</p>
-                        </div>
-
-                        <div className="contract-img" >
-                            <FontAwesomeIcon
-                                icon={faFile}
-                                className="contract-icon"
-                            />
-                            <p>ENG</p>
-                        </div>
-                    </div>
-
-                    <div className="contract-summary">
-                        <div className="contract-summary-line">
-                            <div className="contract-block-label">
-                                <p>Check-In:</p>
-                            </div>
-                            <div className="contract-block-value">
-                                <p>{moment(contractInfo.checkIn).format('DD-MMM-YYYY')}</p>
-                            </div>
-                        </div>
-                        <div className="contract-summary-line">
-                            <div className="contract-block-label">
-                                <p>Check-Out: </p>
-                            </div>
-                            <div className="contract-block-value">
-                                <p>{moment(contractInfo.checkOut).format('DD-MMM-YYYY')}</p>
-                            </div>
-                        </div>
-                        <div className="contract-summary-line">
-                            <div className="contract-block-label">
-                                <p>Room Nr:</p>
-                            </div>
-                            <div className="contract-block-value">
-                                <p>{contractInfo.roomNr}</p>
-                            </div>
-                        </div>
-                        <div className="contract-summary-line">
-                            <div className="contract-block-label">
-                                <p>Rent €/Mo:</p>
-                            </div>
-                            <div className="contract-block-value">
-                                <p>{contractInfo.rent}</p>
-                            </div>
-                        </div>
-                        <div className="contract-summary-line">
-                            <div className="contract-block-label">
-                                <p>Deposit:</p>
-                            </div>
-                            <div className="contract-block-value">
-                                <p>{contractInfo.deposit}</p>
-                            </div>
-                        </div>
-                    </div>
+                <div className="contract-img" >
+                    <FontAwesomeIcon
+                        icon={faFile}
+                        className="contract-icon"
+                    />
+                    <p>ENG</p>
                 </div>
             </div>
+
+
         </div>
     );
 };
