@@ -110,7 +110,7 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
         <DialogTitle id="form-dialog-title">Join</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Input the JamCode.{userId}
+            Input the JamCode
           </DialogContentText>
           <TextField
             autoFocus

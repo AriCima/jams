@@ -44,6 +44,7 @@ const Settings = ({
     jamDetails,
     jamId,
     jamName,
+    jamCode,
 }) => {
     const defaultValues = {
         jamName: jamName,
@@ -172,6 +173,14 @@ const Settings = ({
                                 {errors.address && <div className="field-error">Required</div>}
                             </div>
                             <input name="address" placeholder="Street, hosue nr, floor, door, city, zipCode, country" ref={register({required: true})}/>
+                        </div>
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>Jam code</label>
+                            </div>
+                            <div className="input-styled short-input">
+                                 <p>{jamCode}</p>
+                            </div>
                         </div>
                         {/* <div className="rules-custom-input-block shortWidth">
                             <div className="block-label">
@@ -491,7 +500,7 @@ const Settings = ({
 
 const mapStateToProps = state => {
     const { section } = state.nav;
-    const { jamName, jamDesc, jamType, jamDetails } = state.jamInfo;
+    const { jamName, jamDesc, jamType, jamDetails, jamCode } = state.jamInfo;
     const { jamId } = state.nav;
     const { userId } = state.userInfo;
 
@@ -503,6 +512,7 @@ const mapStateToProps = state => {
         jamType,
         section,
         userId,
+        jamCode
     };
 };
 

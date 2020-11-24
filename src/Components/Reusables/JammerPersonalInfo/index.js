@@ -19,7 +19,6 @@ const JammerContractInfo = ({ personalInfo }) => {
         homeTel, 
         zipCode, 
     } = personalInfo
-    console.log('personalInfo: ', personalInfo);
 
     const complAdd = {address: street+' '+houseNr+', '+`${floor !== '' && (floor+' floor')}`+`${door !== '' && (', door '+door) }`, 
         city: zipCode+' - '+city,

@@ -17,7 +17,6 @@ const RoomTenants = ({
     const noFormerTenants = isEmpty(formerTenants);
     const noNextTenant = isEmpty(nextTenant);
     
-    console.log('formerTenants: ', formerTenants);
     const noRooms = noFutureTenants && noFormerTenants && noNextTenant && noCurrentTenant;
 
     return (

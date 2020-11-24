@@ -1,14 +1,25 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
+
 import moment from 'moment';
 
 // COMPONENTS
 import BookingCard from './BookingCard';
+import { setDocType, setDocId, setEditable } from "../../../../../../redux/actions/docsActions";
+import { setSection } from '../../../../../../redux/actions/navigateActions';
+
 
 // CSS
 import './index.scss';
 
-const BookingsList = ({bookings}) => {
+const BookingsList = ({
+        bookings,
+        setDocType,
+        setSection,
+        setDocId,
+        setEditable
+    }) => {
 
     const bookingsLength = bookings.length;
     const isArray = bookingsLength > 0;
@@ -22,7 +33,9 @@ const BookingsList = ({bookings}) => {
     ));
 
     const renderBooking = () => (
-        <tr>
+        <tr
+            onClick={(e) => takeMeToTenantInfo(e, bookings.userId)}
+        >
             <td id="number-column">{bookings.roomNr}</td>
             <td>{bookings.firstName} {bookings.LastName}</td>
             <td>{moment(bookings.checkIn).format('DD MMM YYYY')}</td>
@@ -31,6 +44,14 @@ const BookingsList = ({bookings}) => {
             <td>{bookings.deposit}</td>
         </tr>
     );
+
+    const takeMeToTenantInfo = (e, userId) => {
+        e.preventDefault();
+        setSection('Tenants')
+        setDocType('TENANT-FORM');
+        setDocId(userId); // tenant's userId
+        setEditable('true');
+    };
 
     return (
         <>
@@ -57,4 +78,11 @@ const BookingsList = ({bookings}) => {
 };
 
 
-export default BookingsList;
+const mapStateToProps = state => {
+    const jamId = state.nav.jamId;
+    const { userId } = state.userInfo;
+    const { jamDetails } = state.jamInfo
+
+    return { jamId, jamDetails, userId };
+};
+export default connect(mapStateToProps, { setDocType, setSection, setDocId, setEditable })(BookingsList);

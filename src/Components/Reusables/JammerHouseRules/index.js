@@ -30,8 +30,8 @@ const JammerHouseRules = ({ houseRules }) => {
         }
     }, [houseRules])
 
-    const renderIcon = (ok) => {    
-        if (!ok) {
+    const renderIcon = (x) => {    
+        if (x !== 'no') {
             return (
                 <FontAwesomeIcon
                     className="ok-rule"

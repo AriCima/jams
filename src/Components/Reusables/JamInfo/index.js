@@ -8,6 +8,7 @@ const JamInfo = ({
     adminLastName,
     adminName,
     firstName,
+    jamCode,
     jamDesc,
     jamDetails,
     jamId,
@@ -37,6 +38,9 @@ const JamInfo = ({
                     <div className="jamInfo-line">
                         <p>Jam address: <span>{jamDetails.address}</span></p>
                     </div>
+                    <div className="jamInfo-line">
+                        <p>Jam code: <span>{jamCode}</span></p>
+                    </div>
                 </div>
             </div>
 
@@ -65,13 +69,14 @@ const JamInfo = ({
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
     const { userId , firstName, lastName } = state.userInfo
-    const { jamName, jamDesc, jamDetails, adminName, adminId, adminLastName, jamType } = state.jamInfo
+    const { jamName, jamDesc, jamDetails, jamCode, adminName, adminId, adminLastName, jamType } = state.jamInfo
     
     return {
         adminId,
         adminLastName,
         adminName,
         firstName,
+        jamCode,
         jamDesc,
         jamDetails,
         jamId,
