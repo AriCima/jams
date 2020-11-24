@@ -1,14 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm, Controller } from "react-hook-form";
-// import Switch from '@material-ui/core/Switch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 import { withStyles } from '@material-ui/core/styles';
 import { green, red } from '@material-ui/core/colors';
 
 import {
-    Switch,
     RadioGroup,
     FormControlLabel,
     Radio,
@@ -46,9 +46,18 @@ const Settings = ({
     jamName,
     jamCode,
 }) => {
+
+    const [disabled, setDisabled] = useState(true);
+
+
+    const enableEditForm = (x) => {
+        setDisabled(!x)
+    };
+
     const defaultValues = {
         jamName: jamName,
         jamDesc: jamDesc,
+        jamCode: jamCode,
         checkInProcess: jamDetails.houseRules.checkInProcess,
         checkOutProcess: jamDetails.houseRules.checkOutProcess,
         checkInFrom: jamDetails.houseRules.checkInFrom,
@@ -136,51 +145,69 @@ const Settings = ({
                 onSubmit={ handleSubmit(onSubmit) }
             >
                 <div className="settings-form-header">
-
-                    <h4>Manage all the information about <span>{jamName}</span> here</h4>
+                    <div className="settings-header-title">
+                        <h4>Manage all the information about <span>{jamName}</span> here</h4>
+                    </div>
 
                     <div className="settings-buttonArea">
-                        <input type="submit"/>
+                        { disabled ? (
+                            <div 
+                                className="edit-button"
+                                onClick={(e) => {enableEditForm(true)}}
+                            >
+                                Edit Info
+                            </div>
+                            ) : (
+                            <>
+                                <input type="submit"/>
+                                <div 
+                                    className="cancel-button"
+                                    onClick={(e) => {enableEditForm(false)}}
+                                >
+                                    Cancel
+                                </div>
+                            </>
+                        )}
                     </div>
+                   
                 </div>
 
 
                 <div className="settings-section">
-                    <div className="settings-section-title">
+                    {/* <div className="settings-section-title">
                         <div className="backLine"/>
                         <dic className="title">
                             <p>JAM INFO</p>
                         </dic>
-                    </div>
+                    </div> */}
                     <div className="settings-section-info">
                         <div className="rules-custom-input-block midWidth">
                             <div className="block-label">
                                 <label>Jam Name</label>
                                 {errors.jamName && <div className="field-error">Required</div>}
                             </div>
-                            <input name="jamName" ref={register({required: true})}/>
+                            <input name="jamName" ref={register({required: true})} disabled={disabled} />
                         </div>
                         <div className="rules-custom-input-block textAreaBlock">
                             <div className="block-label">
                                 <label>Jam Description</label>
                                 {errors.jamDesc && <div className="field-error">Required</div>}
                             </div>
-                            <textarea name="jamDesc" ref={register({required: true})}/>
+                            <textarea name="jamDesc" ref={register({required: true})} disabled={disabled}/>
                         </div>
                         <div className="rules-custom-input-block">
                             <div className="block-label">
                                 <label>Apartment location</label>
                                 {errors.address && <div className="field-error">Required</div>}
                             </div>
-                            <input name="address" placeholder="Street, hosue nr, floor, door, city, zipCode, country" ref={register({required: true})}/>
+                            <input name="address" placeholder="Street, hosue nr, floor, door, city, zipCode, country" ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
-                            <div className="block-label">
+                        <div className="rules-custom-input-block short-block">
+                            <div className="block-label ">
                                 <label>Jam code</label>
                             </div>
-                            <div className="input-styled short-input">
-                                 <p>{jamCode}</p>
-                            </div>
+                            <input name="jamCode" ref={register({required: true})} disabled />
+
                         </div>
                         {/* <div className="rules-custom-input-block shortWidth">
                             <div className="block-label">
@@ -194,12 +221,12 @@ const Settings = ({
 
                 <div className="settings-section">
 
-                    <div className="settings-section-title">
+                    {/* <div className="settings-section-title">
                         <div className="backLine"/>
                         <dic className="title">
                             <p>CHECK-IN / CHECK-OUT </p>
                         </dic>
-                    </div>
+                    </div> */}
                     <div className="settings-section-info">
                         <div className="rules-custom-input-block textAreaBlock">
                             <div className="block-label">
@@ -211,6 +238,7 @@ const Settings = ({
                                 ref={register({
                                     required: true,
                                 })}
+                                disabled={disabled}
                             />
                         </div>
                         <div className="rules-custom-input-block textAreaBlock">
@@ -223,6 +251,7 @@ const Settings = ({
                                 ref={register({
                                     required: true,
                                 })}
+                                disabled={disabled}
                             />
                         </div>
                         <div className="rules-custom-input-block shortWidth">
@@ -235,6 +264,7 @@ const Settings = ({
                                 ref={register({
                                     required: true,
                                 })}
+                                disabled={disabled}
                             />
                             <div className="block-label">
                                 <label> to</label>
@@ -245,6 +275,7 @@ const Settings = ({
                                 ref={register({
                                     required: true,
                                 })}
+                                disabled={disabled}
                             />
                         </div>
                         <div className="rules-custom-input-block shortWidth">
@@ -257,6 +288,7 @@ const Settings = ({
                                 ref={register({
                                     required: true,
                                 })}
+                                disabled={disabled}
                             />
                         </div>
                     </div>
@@ -264,25 +296,25 @@ const Settings = ({
 
                 <div className="settings-section">
 
-                    <div className="settings-section-title">
+                    {/* <div className="settings-section-title">
                         <div className="backLine"/>
                         <dic className="title">
                             <p>HOUSE RULES</p>
                         </dic>
-                    </div>
+                    </div> */}
 
                     <div className="settings-content rules">
 
                         <div className="houseRules-form-section">
                             <div className="form-col">
-                                <div className="houseRules-text">
+                                {/* <div className="houseRules-text">
                                     <p>Please activate the rules you want to apply to your apartment</p>
                                     <p>Activated rules will be shown in your tenant's <span>"Overview"</span> page</p>
-                                </div>
+                                </div> */}
                                 <table id="houseRules-table">
                                     <tr>
                                         <th>
-                                            <p>Rule</p>
+                                            <p>House rules</p>
                                         </th>
                                         <th className="rules-value">
                                             <div className="header-values-wrapper">
@@ -305,6 +337,7 @@ const Settings = ({
                                                 name="pets"
                                                 control={control}
                                                 defaultValue={defaultValues.pets}
+                                                disabled={disabled}
                                                 as={
                                                     <RadioGroup aria-label="pets">
                                                         <div className="radios-wrapper">
@@ -336,6 +369,8 @@ const Settings = ({
                                                 <Controller
                                                     name="smoking"
                                                     control={control}
+                                                    defaultValue={defaultValues.smoking}
+                                                    disabled={disabled}
                                                     as={
                                                         <RadioGroup aria-label="smoking">
                                                             <div className="radios-wrapper">
@@ -367,6 +402,8 @@ const Settings = ({
                                                 <Controller
                                                     name="smokingBalcony"
                                                     control={control}
+                                                    defaultValue={defaultValues.smokingBalcony}
+                                                    disabled={disabled}
                                                     as={
                                                         <RadioGroup aria-label="smokingBalcony">
                                                             <div className="radios-wrapper">
@@ -398,6 +435,8 @@ const Settings = ({
                                                 <Controller
                                                     name="inviteFriends"
                                                     control={control}
+                                                    defaultValue={defaultValues.inviteFriends}
+                                                    disabled={disabled}
                                                     as={
                                                         <RadioGroup aria-label="inviteFriends">
                                                             <div className="radios-wrapper">
@@ -429,6 +468,8 @@ const Settings = ({
                                                 <Controller
                                                     name="overnight"
                                                     control={control}
+                                                    defaultValue={defaultValues.overnight}
+                                                    disabled={disabled}
                                                     as={
                                                         <RadioGroup aria-label="overnight">
                                                             <div className="radios-wrapper">
@@ -460,6 +501,8 @@ const Settings = ({
                                                 <Controller
                                                     name="parties"
                                                     control={control}
+                                                    defaultValue={defaultValues.parties}
+                                                    disabled={disabled}
                                                     as={
                                                         <RadioGroup aria-label="parties">
                                                             <div className="radios-wrapper">

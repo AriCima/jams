@@ -9,7 +9,7 @@ export const setModalState = (modalState = 'closed') => ({
 });
 
 // modalType = referencia del documento que se está abriendo, por lo gral === userId
-export const setModalType = (modalType = 'none') => ({
+export const setModalContent = (modalType = 'none') => ({
   type: MODAL_TYPE,
   payload: {
     modalType

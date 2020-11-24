@@ -25,7 +25,7 @@ const Modal = ({ jamId, jamName, adminName, modalType, invitationInfo, modalStat
     };
 
     const Cancel = () => {
-        modalState(false);
+        console.log('close');
     };
 
     return (

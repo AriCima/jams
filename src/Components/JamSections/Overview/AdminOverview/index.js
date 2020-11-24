@@ -6,7 +6,6 @@ import moment from 'moment';
 
 import OccupancyGraph from './OccupancyGraph';
 import DataService from '../../../services/DataService';
-import Navigation from '../../../services/Navigation';
 import Calculations from '../../../services/Calculations';
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 import { setSection } from '../../../../redux/actions/navigateActions';

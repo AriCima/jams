@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,15 +10,25 @@ import StartChatButton from '../../../UI/Buttons/StartChatButton';
 import ButtonPlain from '../../../UI/Buttons/ButtonPlain';
 import JammerContractInfo from '../../../Reusables/JammerContractInfo';
 import JammerPersonalInfo from '../../../Reusables/JammerPersonalInfo';
-
-import { connect } from 'react-redux';
+import { setModalContent, setModalState } from '../../../../redux/actions/modalActions';
 
 // CSS
 import './index.scss';
 
-const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docId }) => {
+const JammerInfo = ({
+    jamId,
+    jamName,
+    lastName,
+    userRole,
+    firstName,
+    userId,
+    docId,
+    setModalState,
+    setModalContent
+  }) => {
   
   const [tenantInfo, setTenantInfo] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     let documentId;
@@ -33,8 +44,8 @@ const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docI
   }, [jamId, docId])
 
 
-  const openTenantForm = () => {
-    alert('open modal');
+  const enableForm = () => {
+    setDisabled(false)
   }
 
 
@@ -64,15 +75,16 @@ const JammerInfo = ({jamId, jamName, lastName, userRole, firstName, userId, docI
               />
             </div>
             <div className="editInfo-button">
-              <ButtonPlain text={'Edit Info'} fn={openTenantForm}/>
+              <ButtonPlain text={'Edit Info'} fn={enableForm}/>
             </div>
           </div>
           <JammerPersonalInfo
             personalInfo={tenantInfo}
+            disabled={disabled}
           />
           <JammerContractInfo 
             contractInfo={tenantInfo}
-            look={'negative'}
+            disabled={disabled}
           />
          
         </>
@@ -94,4 +106,4 @@ const mapStateToProps = state => {
   return { jamId, jamName, docId, userId, userRole, firstName, lastName }
 };
   
-export default connect(mapStateToProps, null) (JammerInfo);
+export default connect(mapStateToProps, { setModalContent, setModalState }) (JammerInfo);
