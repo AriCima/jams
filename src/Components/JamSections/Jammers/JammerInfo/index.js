@@ -240,7 +240,7 @@ const JammerInfo = ({
                             <input name="zipCode" ref={register({required: true})} disabled={disabled} />
                         </div>
 
-                        <div className="tenant-info-input-block short-block">
+                        <div className="tenant-info-input-block midWidth">
                             <div className="block-label ">
                                 <label>City</label>
                                 {errors.city && <div className="field-error">Required</div>}
@@ -248,7 +248,7 @@ const JammerInfo = ({
                             <input name="city" ref={register({required: true})} disabled={disabled} />
                         </div>
 
-                        <div className="tenant-info-input-block short-block">
+                        <div className="tenant-info-input-block midWidth">
                             <div className="block-label ">
                                 <label>Country</label>
                                 {errors.city && <div className="field-error">Required</div>}
