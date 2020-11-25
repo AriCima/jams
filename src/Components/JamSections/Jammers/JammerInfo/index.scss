@@ -181,6 +181,9 @@
                         margin: 0;
                     }
                 }
+                .inputDisabled {
+                    color: $disabled;
+                }
 
                 ::placeholder{
                     color: $lightGray;
@@ -205,19 +208,7 @@
                     // background-color: $backCream;
                 }
             }
-            .shortWidth{
-                flex-direction: row;
-                align-items: center;
-                .block-label{
-                    width: auto;
-                    margin-right: 10px;
-                }
-                input {
-                    width: 10%;
-                    margin: 10px;
-                    // background-color: $backCream;
-                }
-            }
+
             .midWidth{
                 width: 30%;
             }

@@ -33,7 +33,6 @@ const JammerInfo = ({
   const [tenantInfo, setTenantInfo] = useState([]);
   const [disabled, setDisabled] = useState(true);
 
-
   useEffect(() => {
     let documentId;
     if (userRole === 'Admin'){
@@ -45,13 +44,9 @@ const JammerInfo = ({
     .then(res => {
       console.log('res: ', res);
       setTenantInfo(res)
+      
     })
   }, [jamId, docId])
-
-
-  const enableForm = () => {
-    setDisabled(false)
-  }
 
   const enableEditForm = (x) => {
     setDisabled(!x)
@@ -60,24 +55,28 @@ const JammerInfo = ({
   const defaultValues = {
     city: tenantInfo.city,
     country: tenantInfo.country,
-    door: tenantInfo.door, 
     email: tenantInfo.email, 
     firstName: tenantInfo.firstName, 
-    floor: tenantInfo.floor,
-    houseNr: tenantInfo.houseNr,
     lastName: tenantInfo.lastName, 
     mobile: tenantInfo.mobile,
-    passpor: tenantInfo.passport, 
-    street: tenantInfo.street, 
+    passport: tenantInfo.passport, 
+    homeAddress: tenantInfo.homeAddress, 
     homeTel: tenantInfo.homeTel, 
     zipCode: tenantInfo.zipCode, 
     checkIn: tenantInfo.checkIn,
-    checkOut: tenantInfo.checkOut
-  };
+    checkOut: tenantInfo.checkOut,
+    roomNr: tenantInfo.roomNr,
+    rent: tenantInfo.rent,
+    deposit: tenantInfo.deposit,
+  }
+  
+  console.log('defaultValues: ', defaultValues);
   const { register, errors, handleSubmit, control } = useForm({defaultValues});
 
   const onSubmit = (data) => {
-    console.log(data)
+
+    const chkIn = moment(data.checkIn).format("DD-MMM-YYYY");
+    console.log(chkIn)
   };
 
   return(
@@ -85,9 +84,10 @@ const JammerInfo = ({
       {docId && tenantInfo.length !== 0 ? (
 
         <form
-                className="tenant-info-form"
-                onSubmit={ handleSubmit(onSubmit) }
-            >
+          autocomplete="off"
+          className="tenant-info-form"
+          onSubmit={ handleSubmit(onSubmit) }
+        >
                 <div className="tenant-info-form-header">
                   
                   <div className="tenant-info-header-left">
@@ -143,14 +143,14 @@ const JammerInfo = ({
                 <div className="tenant-info-section">
 
                     {/* * * * * * * PERSONAL INFO * * * * * * */}
-                    <div className="tenant-info-section sectionRow">
+                     <div className="tenant-info-section sectionRow">
 
                         <div className="tenant-info-input-block midWidth">
                             <div className="block-label">
                                 <label>Name</label>
                                 {errors.firstName && <div className="field-error">Required</div>}
                             </div>
-                            <input name="firstName" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.firstName} name="firstName" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -158,7 +158,13 @@ const JammerInfo = ({
                                 <label>Last name</label>
                                 {errors.lastName && <div className="field-error">Required</div>}
                             </div>
-                            <input name="lastName" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              defaultValue={defaultValues.lastName}
+                              name="lastName"
+                              ref={register({required: true})}
+                              disabled={disabled}
+                              />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -166,7 +172,7 @@ const JammerInfo = ({
                                 <label>Email</label>
                                 {errors.email && <div className="field-error">Required</div>}
                             </div>
-                            <input name="email" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.email} name="email" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -174,7 +180,7 @@ const JammerInfo = ({
                                 <label>Passport Nr</label>
                                 {errors.passport && <div className="field-error">Required</div>}
                             </div>
-                            <input name="passport" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.passport} name="passport" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -182,7 +188,7 @@ const JammerInfo = ({
                                 <label>Home Telephone</label>
                                 {errors.homeTel && <div className="field-error">Required</div>}
                             </div>
-                            <input name="homeTel" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.homeTel} name="homeTel" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -190,7 +196,7 @@ const JammerInfo = ({
                                 <label>Mobile</label>
                                 {errors.mobile && <div className="field-error">Required</div>}
                             </div>
-                            <input name="mobile" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.mobile} name="mobile" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                     </div>
@@ -202,34 +208,14 @@ const JammerInfo = ({
 
                         <div className="tenant-info-input-block">
                             <div className="block-label">
-                                <label>Home Street</label>
-                                {errors.street && <div className="field-error">Required</div>}
+                                <label>Home address (Street, house nr, floor, door)</label>
+                                {errors.homeAddress && <div className="field-error">Required</div>}
                             </div>
-                            <input name="street"  ref={register({required: true})} disabled={disabled}/>
-                        </div>
-
-                        <div className="tenant-info-input-block short-block">
-                            <div className="block-label ">
-                                <label>House Nr</label>
-                                {errors.houseNr && <div className="field-error">Required</div>}
-                            </div>
-                            <input name="houseNr" ref={register({required: true})} disabled={disabled} />
-                        </div>
-
-                        <div className="tenant-info-input-block short-block">
-                            <div className="block-label ">
-                                <label>Floor</label>
-                                {errors.floor && <div className="field-error">Required</div>}
-                            </div>
-                            <input name="floor" ref={register({required: true})} disabled={disabled} />
-                        </div>
-
-                        <div className="tenant-info-input-block short-block">
-                            <div className="block-label ">
-                                <label>Door</label>
-                                {errors.door && <div className="field-error">Required</div>}
-                            </div>
-                            <input name="door" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              name="homeAddress"
+                              defaultValue={defaultValues.homeAddress}
+                              ref={register({required: true})}
+                              disabled={disabled}/>
                         </div>
 
                         <div className="tenant-info-input-block short-block">
@@ -237,7 +223,7 @@ const JammerInfo = ({
                                 <label>Zip Code</label>
                                 {errors.zipCode && <div className="field-error">Required</div>}
                             </div>
-                            <input name="zipCode" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.zipCode} name="zipCode" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -245,7 +231,7 @@ const JammerInfo = ({
                                 <label>City</label>
                                 {errors.city && <div className="field-error">Required</div>}
                             </div>
-                            <input name="city" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.city} name="city" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -253,7 +239,7 @@ const JammerInfo = ({
                                 <label>Country</label>
                                 {errors.city && <div className="field-error">Required</div>}
                             </div>
-                            <input name="city" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.country} name="city" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                     </div>
@@ -264,35 +250,39 @@ const JammerInfo = ({
                     <div className="tenant-info-section sectionRow">
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label ">
-                                <label>Check In</label>
-                                {errors.checkIn && <div className="field-error">Required</div>}
-                                    <Controller
-                                        as={ReactDatePicker}
-                                        control={control}
-                                        valueName="selected" // DateSelect value's name is selected
-                                        onChange={([selected]) => selected}
-                                        name="checkIn"
-                                        className="input"
-                                        placeholderText="Check-In"
-                                    />
-                            </div>
+                          <div className="block-label ">
+                            <label>Check In</label>
+                            {errors.checkIn && <div className="field-error">Required</div>}
+                          </div>
+                          <Controller
+                              as={ReactDatePicker}
+                              control={control}
+                              disabled={disabled}
+                              valueName="checkIn" // DateSelect value's name is selected
+                              onChange={([checkIn]) => checkIn}
+                              dateFormat="dd/MMMyyyy"
+                              name="checkIn"
+                              className="input"
+                              defaultValue={moment(defaultValues.checkIn).format('DD-MMM-YYYY')}
+                          />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label ">
-                                <label>Check Out</label>
-                                {errors.checkOut && <div className="field-error">Required</div>}
-                                    <Controller
-                                        as={ReactDatePicker}
-                                        control={control}
-                                        valueName="selected" // DateSelect value's name is selected
-                                        onChange={([selected]) => selected}
-                                        name="checkOut"
-                                        className="input"
-                                        // placeholderText="Check-Out"
-                                    />
-                            </div>
+                          <div className="block-label ">
+                            <label>Check Out</label>
+                            {errors.checkOut && <div className="field-error">Required</div>}
+                          </div>        
+                          <Controller
+                              as={ReactDatePicker}
+                              control={control}
+                              disabled={disabled}
+                              valueName="selected" // DateSelect value's name is selected
+                              onChange={([selected]) => selected}
+                              dateFormat="dd/MMMyyyy"
+                              name="checkOut"
+                              className="input"
+                              defaultValue={moment(defaultValues.checkOut).format('DD-MMM-YYYY')}
+                          />
                         </div>
 
                         <div className="tenant-info-input-block short-block">
@@ -300,7 +290,7 @@ const JammerInfo = ({
                                 <label>Room Nr</label>
                                 {errors.roomNr && <div className="field-error">Required</div>}
                             </div>
-                            <input name="roomNr" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.roomNr} name="roomNr" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block short-block">
@@ -308,7 +298,7 @@ const JammerInfo = ({
                                 <label>Rent €/Mo</label>
                                 {errors.rent && <div className="field-error">Required</div>}
                             </div>
-                            <input name="rent" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.rent} name="rent" ref={register({required: true})} disabled={disabled} />
                         </div>
 
                         <div className="tenant-info-input-block short-block">
@@ -316,7 +306,7 @@ const JammerInfo = ({
                                 <label>Depoist €</label>
                                 {errors.deposit && <div className="field-error">Required</div>}
                             </div>
-                            <input name="deposit" ref={register({required: true})} disabled={disabled} />
+                            <input defaultValue={defaultValues.deposit} name="deposit" ref={register({required: true})} disabled={disabled} />
                         </div>
 
 

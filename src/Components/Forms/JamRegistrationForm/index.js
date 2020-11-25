@@ -1,6 +1,6 @@
 import React,  { useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { connect } from 'react-redux';
 import { setRegisteredUser } from '../../../redux/actions/userActions.js'
 
@@ -25,7 +25,6 @@ const JamRegistrationForm = ({
         if (invId) {
             DataService.getInvitationInfo(jamId, invId)
             .then(res => {
-                console.log('res: ', res);
                 setInvInfo(res)
             })
         }
@@ -59,8 +58,6 @@ const JamRegistrationForm = ({
         //     showForm(false);
         // })
     };
-
-    const editableFields = isEmpty.invInfo ? true : false;
 
     return ( 
         <form
@@ -226,22 +223,22 @@ const JamRegistrationForm = ({
             
             <div className="form-section">
                 <div className="form-section-title">
-                    <p>Home Address</p>
+                    <p>Home Address (Street, house nr, floor, door)</p>
                 </div>
                 <div className="form-line">
                     <div className="custom-input-block-street">
                         <div className="block-label">
                             <label>Street</label>
-                            {errors.street && <div className="field-error">Non valid address</div>}
+                            {errors.homeAddress && <div className="field-error">Non valid address</div>}
                         </div>
                         <input
-                            name="street"
+                            name="homeAddress"
                             ref={register({ 
                                 required: true,
                             })}
                         />
                     </div>
-                    <div className="custom-input-block">
+                    {/* <div className="custom-input-block">
                         <div className="block-label">
                             <label>House Nr</label>
                             {errors.houseNr && <div className="field-error">Required</div>}
@@ -276,7 +273,7 @@ const JamRegistrationForm = ({
                                 required: true,
                             })}
                         />
-                    </div>
+                    </div> */}
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>ZipCode</label>

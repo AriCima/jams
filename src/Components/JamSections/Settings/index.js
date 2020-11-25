@@ -141,6 +141,7 @@ const Settings = ({
 
         <div className="settings-wrapper">
             <form
+                autocomplete="off"
                 className="settings-form"
                 onSubmit={ handleSubmit(onSubmit) }
             >
