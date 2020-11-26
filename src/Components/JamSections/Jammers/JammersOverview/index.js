@@ -8,6 +8,7 @@ import Calculations from '../../../services/Calculations';
 import JammersList from '../../../Lists/JammersList';
 import InviteJammerButton from '../../../UI/Buttons/InviteJammerButton';
 import Board from '../../Board';
+import TenantsChart from '../../../Reusables/TenantsChart';
 
 import './index.scss';
 
@@ -16,6 +17,7 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
     
     
     useEffect(() => {
+        console.log('jamId: ', jamId);
         getJammersList(jamId)
     }, [jamId]);
 
@@ -86,10 +88,11 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
             )
         }
     };
-
+    
     return (
         <>
-            { !isEmpty(jammers) && renderJammersList() }
+            {/* { !isEmpty(jammers) && renderJammersList() } */}
+            { !isEmpty(jammers) && <TenantsChart jammers={jammers}/> }
         </>
     );
 };

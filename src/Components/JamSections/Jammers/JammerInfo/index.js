@@ -20,31 +20,29 @@ import StartChatButton from '../../../UI/Buttons/StartChatButton';
 import './index.scss';
 
 const JammerInfo = ({
-    jamId,
-    jamName,
-    lastName,
-    userRole,
-    firstName,
-    userId,
-    docId,
+  jamId,
+  jamName,
+  lastName,
+  // userRole,
+  firstName,
+  userId,
+  docId,
 
-  }) => {
+}) => {
   
   const [tenantInfo, setTenantInfo] = useState([]);
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    let documentId;
-    if (userRole === 'Admin'){
-      documentId = docId;
-    } else {
-      documentId = userId
-    }
-    DataService.getJammerInfo(jamId, documentId)
+    // let documentId;
+    // if (userRole === 'Admin'){
+    //   documentId = docId;
+    // } else {
+    //   documentId = userId
+    // }
+    DataService.getJammerInfo(jamId, docId)
     .then(res => {
-      console.log('res: ', res);
       setTenantInfo(res)
-      
     })
   }, [jamId, docId])
 
@@ -70,13 +68,12 @@ const JammerInfo = ({
     deposit: tenantInfo.deposit,
   }
   
-  console.log('defaultValues: ', defaultValues);
   const { register, errors, handleSubmit, control } = useForm({defaultValues});
 
   const onSubmit = (data) => {
 
-    const chkIn = moment(data.checkIn).format("DD-MMM-YYYY");
-    console.log(chkIn)
+    DataService.editJammerInfo(jamId, docId, data)
+
   };
 
   return(

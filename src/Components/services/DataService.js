@@ -278,8 +278,6 @@ export default class DataService {
         });
     }
 
-
-
     // GET INFO
     static getJamToJoin(jamCode) {
         // console.log('JamCode recibido en el join del Data =', jamCode);
@@ -438,8 +436,6 @@ export default class DataService {
         });
     };
 
-
-
     static updateJamInfo(jamId, jamField, newInfo) {
         return new Promise((resolve, reject) => {
             // //console.log('inputs en el dataservice ', jamCode, jammers);
@@ -488,7 +484,6 @@ export default class DataService {
                 console.log('Jam Rooms error : ', error);
             });
     }
-
 
     // MESSAGES
 
@@ -569,6 +564,33 @@ export default class DataService {
                 });
         });
     }
+
+    static editJammerInfo(jamId, jammerId, info) {
+        return new Promise(() => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .update({ 
+                "jamDetails.houseRules.checkInFrom": info.checkInFrom,
+                "jamDetails.houseRules.checkInProcess":info.checkInProcess,
+                "jamDetails.houseRules.checkInTo":info.checkInTo,
+                "jamDetails.houseRules.checkOutBefore":info.checkOutBefore,
+                "jamDetails.houseRules.checkOutProcess":info.checkOutProcess,
+                "jamDetails.houseRules.overnight":info.overnight,
+                "jamDetails.houseRules.parties":info.parties,
+                "jamDetails.houseRules.pets":info.pets,
+                "jamDetails.houseRules.smoking":info.smoking,
+                "jamDetails.houseRules.smokingBalcony":info.smokingBalcony,
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        });
+    };
 
     static getJammersMessages(jamId) {
         return new Promise((resolve, reject) => {
@@ -657,23 +679,6 @@ export default class DataService {
         });
     }
 
-    static editenantInfo(jamId, jammerId, editedTenantInfo) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams')
-                .doc(jamId)
-                .collection('jammers')
-                .doc(jammerId)
-                .set(editedTenantInfo)
-                .then((res) => {
-                    console.log("Document written with ID: ", res);
-                    resolve(res);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    console.log('Tenant info could not be saved: ', errorCode);
-                });
-        });
-    }
 
     //  * * * * * * * INVITATIONS * * * * * * * 
     static newTenantInvitation(jId, data) {

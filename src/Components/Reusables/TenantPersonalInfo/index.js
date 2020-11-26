@@ -9,7 +9,6 @@ import DataService from '../../services/DataService';
 import './index.scss';
 
 const TenantPersonalInfo = ({ tenantInfo }) => {
-    console.log('tenantInfo: ', tenantInfo);
 
     const { 
         city,
