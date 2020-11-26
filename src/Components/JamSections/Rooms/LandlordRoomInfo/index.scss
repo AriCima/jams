@@ -1,3 +1,5 @@
+@import'../../../../variables.scss';
+
 .room-info-wrapper{
     width: 100%;
     padding: 0 10px;
@@ -12,7 +14,7 @@
 .room-header{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 .room-header-title{
@@ -23,7 +25,7 @@
 .room-header-title h4{
     font-size: 16px;
     font-weight: 700;
-    color: rgb(79, 86,109);
+    color: $buttonPrimary;
     margin: 0 20px;;
 }
 .room-buttons-area{

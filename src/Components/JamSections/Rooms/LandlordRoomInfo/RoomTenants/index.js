@@ -2,16 +2,18 @@ import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import BookingsList from './BookingsList';
+import TenantsChart from '../../../../Reusables/TenantsChart';
 
 // CSS
-import './index.css';
+import './index.scss';
 
 
 const RoomTenants = ({ 
     futureTenants,
     formerTenants,
     nextTenant,
-    noCurrentTenant
+    noCurrentTenant,
+    jammers
 }) => {
     const noFutureTenants = isEmpty(futureTenants);
     const noFormerTenants = isEmpty(formerTenants);
@@ -20,6 +22,8 @@ const RoomTenants = ({
     const noRooms = noFutureTenants && noFormerTenants && noNextTenant && noCurrentTenant;
 
     return (
+
+
 
         <div className="room-bookings-wrapper">
 
@@ -34,28 +38,8 @@ const RoomTenants = ({
                 </div>
             </div>
 
-            <div className="room-booking-section">
-                <div className="room-section-title">
-                    <p>Future Bookings</p>
-                </div>
-                <div className="room-booking-section-content">
-                    {!noFutureTenants ?
-                        <BookingsList bookings={futureTenants} />
-                        : <p>There are no future bookings for this room yet</p>}
-                </div>
-            </div>
+            <TenantsChart rooms jammers={jammers}/>
 
-            <div className="room-booking-section">
-                <div className="room-section-title">
-                    <p>Due contracts</p>
-                </div>
-                <div className="room-booking-section-content">
-                    {!noFormerTenants  ?
-                        <BookingsList bookings={formerTenants} />
-                        : <p>There are contracts history this room yet</p>
-                    }
-                </div>
-            </div>
 
         </div>
     );

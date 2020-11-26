@@ -143,25 +143,31 @@ const JammerInfo = ({
                      <div className="tenant-info-section sectionRow">
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label">
-                                <label>Name</label>
-                                {errors.firstName && <div className="field-error">Required</div>}
-                            </div>
-                            <input defaultValue={defaultValues.firstName} name="firstName" ref={register({required: true})} disabled={disabled} />
+                          <div className="block-label">
+                              <label>Name</label>
+                              {errors.firstName && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.firstName}
+                            name="firstName"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                            />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label">
-                                <label>Last name</label>
-                                {errors.lastName && <div className="field-error">Required</div>}
-                            </div>
-                            <input
-                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
-                              defaultValue={defaultValues.lastName}
-                              name="lastName"
-                              ref={register({required: true})}
-                              disabled={disabled}
-                              />
+                          <div className="block-label">
+                              <label>Last name</label>
+                              {errors.lastName && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.lastName}
+                            name="lastName"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                            />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -169,31 +175,55 @@ const JammerInfo = ({
                                 <label>Email</label>
                                 {errors.email && <div className="field-error">Required</div>}
                             </div>
-                            <input defaultValue={defaultValues.email} name="email" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              defaultValue={defaultValues.email}
+                              name="email"
+                              ref={register({required: true})}
+                              disabled={disabled}
+                            />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label">
-                                <label>Passport Nr</label>
-                                {errors.passport && <div className="field-error">Required</div>}
-                            </div>
-                            <input defaultValue={defaultValues.passport} name="passport" ref={register({required: true})} disabled={disabled} />
+                          <div className="block-label">
+                              <label>Passport Nr</label>
+                              {errors.passport && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.passport}
+                            name="passport"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                          />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label">
-                                <label>Home Telephone</label>
-                                {errors.homeTel && <div className="field-error">Required</div>}
-                            </div>
-                            <input defaultValue={defaultValues.homeTel} name="homeTel" ref={register({required: true})} disabled={disabled} />
+                          <div className="block-label">
+                              <label>Home Telephone</label>
+                              {errors.homeTel && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.homeTel}
+                            name="homeTel"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                          />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label">
-                                <label>Mobile</label>
-                                {errors.mobile && <div className="field-error">Required</div>}
-                            </div>
-                            <input defaultValue={defaultValues.mobile} name="mobile" ref={register({required: true})} disabled={disabled} />
+                          <div className="block-label">
+                              <label>Mobile</label>
+                              {errors.mobile && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.mobile}
+                            name="mobile"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                          />
                         </div>
 
                     </div>
@@ -209,6 +239,7 @@ const JammerInfo = ({
                                 {errors.homeAddress && <div className="field-error">Required</div>}
                             </div>
                             <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
                               name="homeAddress"
                               defaultValue={defaultValues.homeAddress}
                               ref={register({required: true})}
@@ -216,19 +247,31 @@ const JammerInfo = ({
                         </div>
 
                         <div className="tenant-info-input-block short-block">
-                            <div className="block-label ">
-                                <label>Zip Code</label>
-                                {errors.zipCode && <div className="field-error">Required</div>}
-                            </div>
-                            <input defaultValue={defaultValues.zipCode} name="zipCode" ref={register({required: true})} disabled={disabled} />
+                          <div className="block-label ">
+                              <label>Zip Code</label>
+                              {errors.zipCode && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.zipCode}
+                            name="zipCode"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                          />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
-                            <div className="block-label ">
-                                <label>City</label>
-                                {errors.city && <div className="field-error">Required</div>}
-                            </div>
-                            <input defaultValue={defaultValues.city} name="city" ref={register({required: true})} disabled={disabled} />
+                          <div className="block-label ">
+                              <label>City</label>
+                              {errors.city && <div className="field-error">Required</div>}
+                          </div>
+                          <input
+                            className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                            defaultValue={defaultValues.city}
+                            name="city"
+                            ref={register({required: true})}
+                            disabled={disabled}
+                          />
                         </div>
 
                         <div className="tenant-info-input-block midWidth">
@@ -236,7 +279,13 @@ const JammerInfo = ({
                                 <label>Country</label>
                                 {errors.city && <div className="field-error">Required</div>}
                             </div>
-                            <input defaultValue={defaultValues.country} name="city" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              defaultValue={defaultValues.country}
+                              name="city"
+                              ref={register({required: true})}
+                              disabled={disabled}
+                            />
                         </div>
 
                     </div>
@@ -259,7 +308,8 @@ const JammerInfo = ({
                               onChange={([checkIn]) => checkIn}
                               dateFormat="dd/MMMyyyy"
                               name="checkIn"
-                              className="input"
+                              // className="input"
+                              className={`input ${disabled ? "inputDisabled" : "inputEnabled"}`}
                               defaultValue={moment(defaultValues.checkIn).format('DD-MMM-YYYY')}
                           />
                         </div>
@@ -277,7 +327,8 @@ const JammerInfo = ({
                               onChange={([selected]) => selected}
                               dateFormat="dd/MMMyyyy"
                               name="checkOut"
-                              className="input"
+                              className={`input ${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              // className="input"
                               defaultValue={moment(defaultValues.checkOut).format('DD-MMM-YYYY')}
                           />
                         </div>
@@ -287,7 +338,13 @@ const JammerInfo = ({
                                 <label>Room Nr</label>
                                 {errors.roomNr && <div className="field-error">Required</div>}
                             </div>
-                            <input defaultValue={defaultValues.roomNr} name="roomNr" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              defaultValue={defaultValues.roomNr}
+                              name="roomNr"
+                              ref={register({required: true})}
+                              disabled={disabled}
+                            />
                         </div>
 
                         <div className="tenant-info-input-block short-block">
@@ -295,7 +352,13 @@ const JammerInfo = ({
                                 <label>Rent €/Mo</label>
                                 {errors.rent && <div className="field-error">Required</div>}
                             </div>
-                            <input defaultValue={defaultValues.rent} name="rent" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              defaultValue={defaultValues.rent}
+                              name="rent"
+                              ref={register({required: true})}
+                              disabled={disabled}
+                            />
                         </div>
 
                         <div className="tenant-info-input-block short-block">
@@ -303,7 +366,13 @@ const JammerInfo = ({
                                 <label>Depoist €</label>
                                 {errors.deposit && <div className="field-error">Required</div>}
                             </div>
-                            <input defaultValue={defaultValues.deposit} name="deposit" ref={register({required: true})} disabled={disabled} />
+                            <input
+                              className={`${disabled ? "inputDisabled" : "inputEnabled"}`}
+                              defaultValue={defaultValues.deposit}
+                              name="deposit"
+                              ref={register({required: true})}
+                              disabled={disabled}
+                            />
                         </div>
 
 

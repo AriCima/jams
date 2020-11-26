@@ -17,7 +17,6 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
     
     
     useEffect(() => {
-        console.log('jamId: ', jamId);
         getJammersList(jamId)
     }, [jamId]);
 

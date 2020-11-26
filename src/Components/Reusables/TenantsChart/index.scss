@@ -40,10 +40,13 @@
 
             .activeTab {
                 background-color: $buttonPrimary;
-                border-bottom: none;
+                border: 1px solid $buttonPrimary;
+                // border-bottom: none;
+
                 p{
                     color: white; 
                     font-weight: 700;
+                    margin: 0;
                 }
                 &:hover{
                     background-color: $buttonPrimary;
@@ -56,7 +59,7 @@
 
 
 
-    #tenants-rows{
+    #tenants-rows-table{
         border-collapse: collapse;
         width: 100%;
         box-shadow: $shadow;
@@ -68,22 +71,45 @@
             background-color:$buttonPrimary;
             color: white;
             font-size: $midFont;
+            
+            th{
+                padding: 10px 0;
+                text-align: center;
+                p { 
+                    margin: 0px;
+                }
+            }
+            .firstTitle {
+                p { 
+                    text-align: left;
+                    margin-left: 20px;
+                }
+            }
+            .lastTitle {
+                border-top-right-radius: 10px;
+            }
          
         }
 
-        .tenants-values{
+        .tenants-values-row {
 
-            .tenants-values-row{
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            td {
+            .tenant-values{
                 font-size: $smallFont;
-                padding: 8px;
+                padding: 8px 0;
                 border-top: 1px solid #ddd;
                 border-bottom: 1px solid #ddd;
                 font-size: $smallFont;
+                p { 
+                    text-align: center;
+                    margin: 0px;
+                }
+
+            }
+            .firstTitle {
+                p { 
+                    text-align: left;
+                    margin-left: 20px;
+                }
             }
             
             &:hover {
@@ -91,7 +117,7 @@
                 cursor: pointer;
             }
     
-            tr:nth-child(even){background-color: #f2f2f2;}
         }
+        tr:nth-child(even){background-color: #f2f2f2;}
     }
 }

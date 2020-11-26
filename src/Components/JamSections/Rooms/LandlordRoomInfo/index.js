@@ -99,6 +99,7 @@ const LandlordRoomInfo = ({ roomJammers, jamId, subSection}) => {
                         formerTenants={formerTenants}
                         nextTenant={nextTenant}
                         noCurrentTenant={noCurrentTenant}
+                        jammers={roomJammers}
                     />
                 </div>
 

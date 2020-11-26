@@ -1,11 +1,23 @@
-import React, { useEffect, useState }  from 'react';
-import isEmpty from 'lodash/isEmpty';
+import React, { useState }  from 'react';
+import {connect} from 'react-redux';
+import moment from 'moment';
+
+import { setDocType, setDocId, setEditable } from "../../../redux/actions/docsActions";
+import { setSection } from '../../../redux/actions/navigateActions';
 
 import './index.scss';
 
-const TenantsChart = ({ jammers }) => {
+const TenantsChart = ({ jammers, rooms, setDocType, setSection, setDocId, setEditable}) => {
 
     const [ activeTab, setActiveTab ] = useState('current');
+    
+    const takeMeToTenantInfo = (e, userId) => {
+        e.preventDefault();
+        setSection('Tenants')
+        setDocType('TENANT-FORM');
+        setDocId(userId); // tenant's userId
+        setEditable('true');
+    };
 
     const renderTenantsRow = () => {
         
@@ -24,13 +36,16 @@ const TenantsChart = ({ jammers }) => {
 
         return filteredTenants.map((ft, i) => {
             return (
-                <tr className="tenants-values-row">
-                    <th>{ft.firstName} {ft.lastName}</th>
-                    <th>{ft.roomNr}</th>
-                    <th>{ft.checkIn}</th>
-                    <th>{ft.checkOut}</th>
-                    <th>{ft.rent}</th>
-                    <th>{ft.deposit}</th>
+                <tr
+                    className="tenants-values-row"
+                    onClick={(e) => {takeMeToTenantInfo(e, ft.userId)}}
+                >
+                    <td className="tenant-values firstTitle"><p>{ft.firstName} {ft.lastName}</p></td>
+                    {!rooms && <td className="tenant-values"><p>{ft.roomNr}</p></td>}
+                    <td className="tenant-values"><p>{moment(ft.checkIn).format('DD-MMM-YYYY')}</p></td>
+                    <td className="tenant-values"><p>{moment(ft.checkOut).format('DD-MMM-YYYY')}</p></td>
+                    <td className="tenant-values"><p>{ft.rent} €</p></td>
+                    <td className="tenant-values"><p>{ft.deposit} €/Mo</p></td>
                 </tr>
             )
         })
@@ -63,14 +78,14 @@ const TenantsChart = ({ jammers }) => {
                         </td>
                     </tr>
                 </table>
-                <table id="tenants-rows">
+                <table id="tenants-rows-table">
                     <tr id="titles-row">
-                        <th className="row-title"><p>Name</p></th>
-                        <th className="row-title"><p>Room Nr</p></th>
+                        <th className="row-title firstTitle" ><p>Name</p></th>
+                        {!rooms && <th className="row-title"><p>Room Nr</p></th>}
                         <th className="row-title"><p>Check-In</p></th>
                         <th className="row-title"><p>Check-Out</p></th>
                         <th className="row-title"><p>Rent</p></th>
-                        <th className="row-title"><p>Deposit</p></th>
+                        <th className="row-title lastTitle"><p>Deposit</p></th>
                     </tr>
 
                     {renderTenantsRow()}
@@ -81,5 +96,4 @@ const TenantsChart = ({ jammers }) => {
   )
 }
 
-
-export default TenantsChart;
+export default connect(null, { setDocType, setSection, setDocId, setEditable })(TenantsChart);
