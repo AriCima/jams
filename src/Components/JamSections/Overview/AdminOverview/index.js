@@ -7,6 +7,7 @@ import moment from 'moment';
 import OccupancyGraph from './OccupancyGraph';
 import DataService from '../../../services/DataService';
 import Calculations from '../../../services/Calculations';
+import CustomDialog from '../../../Modal/CustomDialog';
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 import { setSection } from '../../../../redux/actions/navigateActions';
 import './index.scss';
@@ -16,6 +17,8 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
     const [occupancy, setOccupancy ] = useState(0);
     const [incomes, setIncomes ] = useState(0);
     const [activity, setActivity ] = useState([]);
+    const [showMissingInfo, setShowMissingInfo ] = useState(false);
+    const [missingInfoArr, setMissingInfoArr] = useState([]);
 
     useEffect(() => {
         const nrOfRooms = jamDetails.nrOfRooms;
@@ -33,6 +36,9 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
             setActivity(futureChecks)
         })
 
+        // TO CHECK IF ALL ROOMS INFO HAS BEEN FILLED
+        getAllRoomsInfo(jamId);
+
     }, [jamId, jamDetails])
 
     const takeMeToTenantInfo = (e, userId) => {
@@ -43,6 +49,14 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
         setEditable('true');
     };
 
+    const getAllRoomsInfo = async (jamId) => {
+        const res = await DataService.getJamRooms(jamId);
+        const roomsInfoStatus = Calculations.missingRoomsInfo(res);
+        if (roomsInfoStatus.missingInfo) {
+            setShowMissingInfo(true);
+            setMissingInfoArr(roomsInfoStatus.missingArr);
+        }
+    };
 
     const renderActivity = () => {
         return activity.map((check, i) => {
@@ -69,10 +83,9 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
             )
 
         })
-    }
+    };
 
     const showActivity = activity.length !== 0;
-
     return (
         <div className="admin-overview-wrapper">
 
@@ -85,7 +98,12 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
                </div>
            </div>
 
-
+            <CustomDialog
+                mustOpen={showMissingInfo}
+                info={missingInfoArr}
+                dialogType="pending-room-info"
+                actionMessage="Take me to rooms form"
+            />
 
             <div className="overview-ocupation">
                 <div className="ocupation-label">
@@ -102,8 +120,6 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
                     <p>{incomes} €</p>
                 </div>
             </div>
-
-
 
         </div>
     );

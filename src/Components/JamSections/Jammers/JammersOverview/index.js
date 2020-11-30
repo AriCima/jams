@@ -32,66 +32,24 @@ const JammersOverview = ({ jamId, userRole, userId }) => {
             setJammers(organizedJammers);
         };
     };
-
-
-    const renderJammersList = () => {
-        if(userRole === 'Admin') {
-            return(
-                <>
-                    <div className="jammers-buttonsArea">
-                        <div className="jammers-button">
-                            <InviteJammerButton jamId={jamId} />                
-                        </div>
-                    </div>
-
-                    <div className="jammers-section">
-                        <div className="subSection-title">
-                            <p>Current Tenants</p>
-                        </div>
-                        <div className="subsection-wrapper">
-                            <JammersList jammersList={jammers.currentTenants} />
-                            
-                        </div>
-                    </div>
-
-                    <div className="jammers-section">
-                        <div className="subSection-title">
-                            <p>Future Tenants</p>
-                        </div>
-                        <div className="subsection-wrapper">
-                            <JammersList jammersList={jammers.futureTenants} />
-                        </div>
-                    </div>
-
-                    <div className="jammers-section">
-                        <div className="subSection-title">
-                            <p>Former Tenants</p>
-                        </div>
-                        <div className="subsection-wrapper">
-                            <JammersList jammersList={jammers.formerTenants} />
-                        </div>
-                    </div>
-                </>
-            )
-        } else {
-            return(
-                <div className="guest-jammers-section">
-                    <div className="guest-jammers-board">
-                        <Board section={'Flatmates'} />
-                    </div>
-
-                    <div className="guest-jammers-list">
-                        <JammersList jammersList={jammers} />
-                    </div>
-                </div>
-            )
-        }
-    };
     
     return (
         <>
-            {/* { !isEmpty(jammers) && renderJammersList() } */}
-            { !isEmpty(jammers) && <TenantsChart jammers={jammers}/> }
+            { !isEmpty(jammers) && (
+                userRole === 'Admin' ? 
+                <TenantsChart jammers={jammers}/>
+                : (
+                    <div className="guest-jammers-section">
+                        <div className="guest-jammers-board">
+                            <Board section={'Flatmates'} />
+                        </div>
+
+                        <div className="guest-jammers-list">
+                            <JammersList jammersList={jammers} />
+                        </div>
+                    </div>
+                )
+            ) }
         </>
     );
 };

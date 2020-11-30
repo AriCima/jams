@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
+import forEach from 'lodash/forEach';
 import findIndex from 'lodash/findIndex';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -633,6 +634,28 @@ export default class Calculations {
         return orderedRooms;
     }
 
+    static missingRoomsInfo = (roomsInfo) => {
+        const rL = roomsInfo.length
+        let missingInfo = false;
+        let missingArr = [];
 
+        for (let i = 0; i < rL; i++) {
+            const room = roomsInfo[i];
+            let missingObj = {roomNr: room.roomNr};
+            let pushObj = false;
+            forEach(room, function(value, key) {
+                if(value === '') {
+                    missingInfo = true;
+                    pushObj = true;
+                    missingObj[key]=value;
+                }
+            })
+            if(pushObj) {
+                missingArr.push(missingObj)
+            }
+        };
+        const result = {missingInfo, missingArr}
+        return result;
+    }
 
 }

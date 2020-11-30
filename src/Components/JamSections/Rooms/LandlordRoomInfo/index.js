@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import moment from 'moment';
@@ -13,7 +13,8 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.scss';
 
-const LandlordRoomInfo = ({ roomJammers, jamId, subSection}) => {
+const LandlordRoomInfo = ({ roomJammers, jamId, roomDetails, subSection}) => {
+
 
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;

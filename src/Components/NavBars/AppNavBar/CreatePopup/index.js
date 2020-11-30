@@ -67,7 +67,6 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       updatedAt,
     };
 
-
     DataService.createJam(newJam, userId, email, firstName, lastName)
 
     setOpen(false);

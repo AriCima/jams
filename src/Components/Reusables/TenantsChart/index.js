@@ -51,7 +51,6 @@ const TenantsChart = ({ jammers, rooms, setDocType, setSection, setDocId, setEdi
         })
     }
     
-    console.log('activeTab: ', activeTab);
     return(
     
     <div className="tenants-chart-wrapper">

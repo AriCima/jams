@@ -12,7 +12,6 @@ import './index.scss';
 
 const Board = ({ jamId, userId, adminName, userRole, section }) => {
 
-    const isAdmin = userRole === 'Admin';
     const [boardInfo, setBoardInfo] = useState([]);
    
     useEffect(() => {

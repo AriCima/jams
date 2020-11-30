@@ -46,6 +46,7 @@ function App() {
                 </div>
                 <div className="footer"><Footer /></div>
             </div>
+            
         </BrowserRouter>
     );
 }

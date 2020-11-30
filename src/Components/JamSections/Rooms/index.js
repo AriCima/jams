@@ -14,20 +14,23 @@ import RoomsOverview from './RoomsOverview';
 import './index.scss';
 
 const Rooms = ({ jamId, nrOfRooms, subSection }) => {
-    const [roomInfo, setRoomInfo] = useState(false);
+    // const [roomInfo, setRoomInfo] = useState(false);
     const [jammers, setJammers] = useState([]);
+    // const [allRoomsInfo, setAllRoomsInfo] = useState([]);
+    const [roomInfo, setRoomInfo] = useState({});
     const [roomJammers, setRoomJammers] = useState([]);
     
-    
+
 
     useEffect(() => {
         if (subSection === '') {
             getJammersList(jamId);
+            getAllRoomsInfo(jamId);
         } else {
-            getRoomInfo(jamId);
+            getSingleRoomInfo(jamId);
             getRoomJammersList(jamId);
         }
-    }, [subSection]);
+    }, [subSection, jamId]);
 
     const getJammersList = async (jamId) => {
         const res = await DataService.getJammers(jamId);
@@ -49,12 +52,17 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
         };
     };
 
-    const getRoomInfo = async (jamId) => {
+    const getSingleRoomInfo = async (jamId) => {
         const stringRoomNr = toString(subSection);
-        const res = await DataService.getRoomInfo(jamId, stringRoomNr);
+        const res = await DataService.getSingleRoomInfo(jamId, stringRoomNr);
         setRoomInfo(res);
     };
     
+    const getAllRoomsInfo = async (jamId) => {
+        const res = await DataService.getJamRooms(jamId);
+        const roomsInfoStatus = Calculations.missingRoomsInfo(res);
+        console.log('roomsInfoStatus: ', roomsInfoStatus);
+    };
 
     const showOverview = subSection === '';
     const bookingsAlreadyOrdered = jammers.length > 0;
@@ -64,9 +72,11 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
         <div className="landlord-rooms">
 
             <div className="landlord-room-info">
+
                 {showOverview ?
                     bookingsAlreadyOrdered ?
                         <RoomsOverview rooms={jammers} />
+
                         :
                         <p>Loading</p>
                     :
@@ -74,11 +84,14 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
                         <LandlordRoomInfo
                             roomJammers={roomJammers}
                             subSection={subSection}
+                            roomInfo={roomInfo}
                         />
                         :
                         <p>Loading Room Info</p>
                 }
+
             </div>
+
         </div>
     );
 };

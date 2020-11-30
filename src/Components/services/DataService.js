@@ -126,7 +126,13 @@ export default class DataService {
                         for (let i = 0; i < rooms; i++) {
                           const roomNr = i + 1;
                           const roomInfo = {
+                            balcony: "",
+                            deposit: "",
+                            exterior: "",
+                            price: "",
+                            privBath: "",
                             roomNr,
+                            sqm: "",
                           };
                           DataService.addNewRoom(jamId, roomInfo);
                         }
@@ -452,6 +458,9 @@ export default class DataService {
                 });
         });
     }
+
+    /* * * * * * * *  CHAT * * * * * * * * * * * * * * * */
+
 
     static getJamRooms(jamId) {
         return new Promise((resolve, reject) => {
