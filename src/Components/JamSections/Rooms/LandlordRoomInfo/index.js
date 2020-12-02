@@ -13,29 +13,15 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.scss';
 
-const LandlordRoomInfo = ({ roomJammers, jamId, roomDetails, subSection}) => {
+const LandlordRoomInfo = ({ jamJammers, jamId, roomDetails, subSection}) => {
 
+    const roomJammers = jamJammers[subSection];
 
     const currentTenant = roomJammers.currentTenants;
     const futureTenants = roomJammers.futureTenants;
     const formerTenants = roomJammers.formerTenants;
-    let nextTenant = [];
-
-    const noFutureTenants = isEmpty(futureTenants);
+    const nextTenant = roomJammers.nextTenant
     const noCurrentTenant = isEmpty(currentTenant);
-    const noFormerTenants = isEmpty(formerTenants);
-    
-    if(!noFutureTenants) {
-        nextTenant = roomJammers.futureTenants[0];
-    }
-    
-    const noNextTenant = nextTenant.length === 0;
-
-    let tenantsList = currentTenant
-
-    for (let i = 0; i < futureTenants.length; i++) {
-        tenantsList.push(futureTenants[i]);
-    }
     
     const roomNr = subSection + 1;
     roomNr.toString();
@@ -61,43 +47,25 @@ const LandlordRoomInfo = ({ roomJammers, jamId, roomDetails, subSection}) => {
                 </div>
 
                 <div className="bookings-graphic">
-                    <BookingsGraphic bookingsSummary={tenantsList} />
+                    <BookingsGraphic
+                        tenants={roomJammers}
+                    />
                     
                 </div>
 
-                { !noCurrentTenant ? (
+                { !noCurrentTenant && (
                     <div className="room-section">
-                        <CurrentTenant currentTenant={currentTenant[0]} />
+                        <CurrentTenant
+                            currentTenant={currentTenant}
+                        />
                     </div>
-                )
-                    : (
-                        <div className="room-section">
-                            {!noNextTenant
-                                ? (
-                                    <div className="no-current-tenant-line">
-                                        <p>
-                                            Vacant until
-                                            {' '}
-                                            <span>{moment(nextTenant.checkIn).format('DD MMM YYYY')}</span>
-                                        </p>
-                                    </div>
-                                )
-                                : (
-                                    <div className="no-current-tenant-line">
-                                        <p>
-                                          This room is currently
-                                            {' '}
-                                            <span>VACANT</span>
-                                        </p>
-                                    </div>
-                                )}
-                        </div>
-                    )}
+                )}
 
                 <div className="room-section">
                     <RoomTenants
                         futureTenants={futureTenants}
                         formerTenants={formerTenants}
+                        currentTenant={currentTenant}
                         nextTenant={nextTenant}
                         noCurrentTenant={noCurrentTenant}
                         jammers={roomJammers}
@@ -110,10 +78,11 @@ const LandlordRoomInfo = ({ roomJammers, jamId, roomDetails, subSection}) => {
     );
 };
 
-
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
-    return { jamId }
+    const { jamJammers } = state.jamInfo;
+    const { subSection } = state.nav
+    return { jamId, jamJammers, subSection }
     
 };
 export default connect(mapStateToProps, null)(LandlordRoomInfo);

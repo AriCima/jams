@@ -60,7 +60,11 @@ const CheckAvailability = ({ jamId, roomId, roomNr }) => {
             >
                 {open === '' ? <p>Check Availability</p> : <p>Close Form</p>}
             </div>
-            <form onSubmit={onSubmit} className={`availability-form ${open}`}>
+            <form 
+                autocomplete="off"
+                onSubmit={onSubmit}
+                className={`availability-form ${open}`}
+            >
                 <div className="form-row">
                     <CustomInputFieldWithLabel
                         type="text"

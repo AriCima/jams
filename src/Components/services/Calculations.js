@@ -363,29 +363,7 @@ export default class Calculations {
 
     // - - - - - - - - JAMMERS - - - - - - - - 
 
-    static organizeAdminTenants = (tenants) => {
-        let result = {
-            currentTenants: [],
-            formerTenants: [],
-            futureTenants: [],
-        };
-        
-        const currentDate = new Date();
 
-        tenants.forEach(e => {
-            const cOut = new Date(e.checkOut);
-            const cIn = new Date(e.checkIn);
-            if ( currentDate > cOut ) {
-                result.formerTenants.push(e)
-            } else if ( currentDate < cIn) {
-                result.futureTenants.push(e);
-            } else if ( (currentDate >= cIn) && (currentDate <= cOut) ) {
-                result.currentTenants.push(e);
-            }
-        });
-
-        return result
-    };
 
     static removeAmdinFromJammers = (tenants) => {
         const noAdmin = tenants.filter(function( obj ) { 
@@ -558,6 +536,166 @@ export default class Calculations {
         }
 
         return roomsOccupancy
+    };
+
+    static getTenantsByRooms = (tenants, rooms) => { // separa los tenants por habitaciones
+        const tenantsByRooms = [];
+        const numberOfRooms = parseInt(rooms);
+        
+        for (let i = 1; i <= numberOfRooms; i++) {
+            
+            const roomNr = i;
+            let tenantsInOneRoom = [];
+
+            for (let j = 0; j < tenants.length; j++){
+                const tenantsRoom = parseInt(tenants[j].roomNr);
+                
+                if (tenantsRoom === roomNr) {
+                    tenantsInOneRoom.push(tenants[j]);
+                }
+
+            };
+
+            tenantsByRooms.push(tenantsInOneRoom);
+        };
+
+        return tenantsByRooms
+    }
+
+    static getOrganizedTenants = (tenantsByRooms) => { // Organiza los inquilinos de cada room
+        
+        const result = [];
+        const today = new Date();
+        const tRL = tenantsByRooms.length;
+        
+        for (let i = 0; i < tRL; i++) {
+
+            const tenants = tenantsByRooms[i];
+            const tL = tenants.length;
+
+            let organizedTenants = {
+                currentTenant: {},
+                // nextTenant: {},
+                formerTenants: [],
+                futureTenants: [],
+            };
+
+            for (let j = 0; j < tL; j++) {
+
+                const tenant = tenants[j];
+
+                const cOut = new Date(tenant.checkOut);
+                const cIn = new Date (tenant.checkIn)
+    
+                if (cIn < today && cOut > today) {
+                    organizedTenants.currentTenant = tenant;
+                } else if ( cIn < today && cOut < today) {
+                    organizedTenants.formerTenants.push(tenant);
+                } else if (cIn > today) {
+                    organizedTenants.futureTenants.push(tenant);
+                }
+
+            };
+
+            result.push(organizedTenants);
+        }
+        
+        return result  // Array length = nro habs 
+    }
+
+    static sortByCheckInAsc(x){
+        function compare(a,b){
+            const varA = new Date(a.checkIn);
+            const varB = new Date(b.checkIn);
+        
+            let comparison = 0;
+            if (varA < varB) {
+            comparison = -1;
+            } else if (varA > varB) {
+            comparison = 1;
+            }
+            return comparison;
+        }
+
+        return x.sort(compare)
+    };
+
+    static sortByChecOutDesc(x){
+        //console.log('info received :', x);
+        function compare(a,b){
+            const varA = new Date(a.checkOut);
+            const varB = new Date(b.checkOut);
+        
+            let comparison = 0;
+            if (varA > varB) {
+            comparison = -1;
+            } else if (varA < varB) {
+            comparison = 1;
+            }
+            return comparison;
+        }
+
+        return x.sort(compare)
+    };
+
+    static orderTenantsDesc = (tenants) => {
+        console.log('tenants FORMER: ', tenants);
+        tenants.sort(function compare(a, b) {
+            var dateA = new Date(a.checkOut);
+            var dateB = new Date(b.checkOut);
+            return dateB - dateA;
+        });
+        return tenants
+    };
+
+
+    static getAllTenantsInOneRoom = (tenants) => {
+
+        let allTenants = [tenants.currentTenant];
+
+        const forT = tenants.formerTenants;
+        const futT = tenants.futureTenants
+        const forL = forT.length;
+        const futL = futT.length;
+
+        if (forL > 0) {
+            for (let i = 0; i < forL; i++) {
+                allTenants.push(forT[i])
+            }
+        }
+
+        if (futL > 0) {
+            for (let i = 0; i < futL; i++) {
+                allTenants.push(futT[i])
+            }
+        }
+
+        return allTenants
+    }
+
+    // * * * * * ** * * ** *  to visualize tenants
+    static organizeAdminTenants = (tenants) => {
+        let result = {
+            currentTenants: [],
+            formerTenants: [],
+            futureTenants: [],
+        };
+        
+        const currentDate = new Date();
+
+        tenants.forEach(e => {
+            const cOut = new Date(e.checkOut);
+            const cIn = new Date(e.checkIn);
+            if ( currentDate > cOut ) {
+                result.formerTenants.push(e)
+            } else if ( currentDate < cIn) {
+                result.futureTenants.push(e);
+            } else if ( (currentDate >= cIn) && (currentDate <= cOut) ) {
+                result.currentTenants.push(e);
+            }
+        });
+
+        return result
     };
 
     static organizeFlatmates = (tenants, userId) => {

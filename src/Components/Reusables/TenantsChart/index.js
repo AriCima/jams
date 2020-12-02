@@ -1,14 +1,23 @@
 import React, { useState }  from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
 import { setDocType, setDocId, setEditable } from "../../../redux/actions/docsActions";
 import { setSection } from '../../../redux/actions/navigateActions';
+import Calculations from '../../services/Calculations';
 
 import './index.scss';
 
-const TenantsChart = ({ jammers, rooms, setDocType, setSection, setDocId, setEditable}) => {
-
+const TenantsChart = ({
+    jamJammers,
+    subSection,
+    rooms,
+    setDocType,
+    setSection,
+    setDocId,
+    setEditable}) => {
+        
     const [ activeTab, setActiveTab ] = useState('current');
     
     const takeMeToTenantInfo = (e, userId) => {
@@ -19,36 +28,52 @@ const TenantsChart = ({ jammers, rooms, setDocType, setSection, setDocId, setEdi
         setEditable('true');
     };
 
+    const jammersInRoom = jamJammers[subSection];
+
     const renderTenantsRow = () => {
         
-        let filteredTenants;
+        let filteredTenants = [];
 
         switch (activeTab) {
             case 'future':
-                filteredTenants = jammers.futureTenants;
+                const orderedFut = Calculations.sortByCheckInAsc(jammersInRoom.futureTenants)
+                filteredTenants = orderedFut;
                 break;
             case 'former':
-                filteredTenants = jammers.formerTenants;
+                filteredTenants = jammersInRoom.formerTenants;
                 break;
             default:
-                filteredTenants = jammers.currentTenants;
+                if (!isEmpty(jammersInRoom.currentTenant)) {
+                    filteredTenants = [jammersInRoom.currentTenant];
+                }
+        }
+        
+
+        if ( filteredTenants.length > 0 ) {
+            return filteredTenants.map((ft, i) => {
+                return (
+                    <tr
+                        className="tenants-values-row"
+                        onClick={(e) => {takeMeToTenantInfo(e, ft.userId)}}
+                    >
+                        <td className="tenant-values firstTitle"><p>{ft.firstName} {ft.lastName}</p></td>
+                        {!rooms && <td className="tenant-values"><p>{ft.roomNr}</p></td>}
+                        <td className="tenant-values"><p>{moment(ft.checkIn).format('DD-MMM-YYYY')}</p></td>
+                        <td className="tenant-values"><p>{moment(ft.checkOut).format('DD-MMM-YYYY')}</p></td>
+                        <td className="tenant-values"><p>{ft.rent} €</p></td>
+                        <td className="tenant-values"><p>{ft.deposit} €/Mo</p></td>
+                    </tr>
+                )
+            })
+        } else {
+            return (
+                <tr className="tenants-values-row">
+                    <td className="no-tenants-row" colspan="6"><p>NO TENANTS</p></td>
+                </tr>
+
+            )
         }
 
-        return filteredTenants.map((ft, i) => {
-            return (
-                <tr
-                    className="tenants-values-row"
-                    onClick={(e) => {takeMeToTenantInfo(e, ft.userId)}}
-                >
-                    <td className="tenant-values firstTitle"><p>{ft.firstName} {ft.lastName}</p></td>
-                    {!rooms && <td className="tenant-values"><p>{ft.roomNr}</p></td>}
-                    <td className="tenant-values"><p>{moment(ft.checkIn).format('DD-MMM-YYYY')}</p></td>
-                    <td className="tenant-values"><p>{moment(ft.checkOut).format('DD-MMM-YYYY')}</p></td>
-                    <td className="tenant-values"><p>{ft.rent} €</p></td>
-                    <td className="tenant-values"><p>{ft.deposit} €/Mo</p></td>
-                </tr>
-            )
-        })
     }
     
     return(
@@ -95,4 +120,13 @@ const TenantsChart = ({ jammers, rooms, setDocType, setSection, setDocId, setEdi
   )
 }
 
-export default connect(null, { setDocType, setSection, setDocId, setEditable })(TenantsChart);
+const mapStateToProps = (state) => {
+    const { jamId, subSection } = state.nav;
+    const { jamJammers } = state.jamInfo
+    const { nrOfRooms } = state.jamInfo.jamDetails;
+
+    return { jamId, subSection, nrOfRooms, jamJammers }
+    
+};
+
+export default connect(mapStateToProps, { setDocType, setSection, setDocId, setEditable })(TenantsChart);

@@ -11,6 +11,7 @@ import './index.scss';
 const RoomTenants = ({ 
     futureTenants,
     formerTenants,
+    currentTenant,
     nextTenant,
     noCurrentTenant,
     jammers
@@ -23,11 +24,9 @@ const RoomTenants = ({
 
     return (
 
-
-
         <div className="room-bookings-wrapper">
 
-            <div className="room-booking-section">
+            {/* <div className="room-booking-section">
                 <div className="room-section-title">
                     <p>Next Booking</p>
                 </div>
@@ -36,9 +35,16 @@ const RoomTenants = ({
                         <BookingsList bookings={nextTenant} />
                         : <p>There are no future bookings for this room yet</p>}
                 </div>
-            </div>
+            </div> */}
 
-            <TenantsChart rooms jammers={jammers}/>
+            <TenantsChart
+                futureTenants={futureTenants}
+                formerTenants={formerTenants}
+                currentTenant={currentTenant}
+                // nextTenant={nextTenant}
+                noCurrentTenant={noCurrentTenant}
+                jammers={jammers}
+            />
 
 
         </div>

@@ -63,6 +63,7 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
             {showSenMessageForm && 
                 <div className="landlord-board-form">
                     <form
+                        autocomplete="off"
                         className="board-form"
                         onSubmit={handleSubmit(onSubmit)}
                     >

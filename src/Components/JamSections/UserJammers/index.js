@@ -88,7 +88,9 @@ const StudentJammers = (props) => {
                     {renderStudentJammersContent()}
                 </div>
 
-                <form className="student-jammers-input-form" onSubmit={onSubmit}>
+                <form
+                    autocomplete="off"
+                    className="student-jammers-input-form" onSubmit={onSubmit}>
                 
                     <div className="student-jammers-input-field">
                             <CustomInputField

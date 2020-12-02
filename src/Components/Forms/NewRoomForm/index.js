@@ -39,7 +39,11 @@ const NewRoomForm = ({ changeRoomId, jamId }) => {
     };
 
     return (
-        <form className="new-apartment-form" onSubmit={submitNewRoom}>
+        <form
+            autocomplete="off"
+            className="new-apartment-form"
+            onSubmit={submitNewRoom}
+        >
 
             <div className="form-header">
                 <div className="form-header-line">

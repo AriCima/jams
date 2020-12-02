@@ -9,26 +9,21 @@ import isEmpty from 'lodash/isEmpty';
 
 import LandlordRoomInfo from './LandlordRoomInfo';
 import RoomsOverview from './RoomsOverview';
+import { setJamJammers } from '../../../redux/actions/jamActions';
 
 // CSS
 import './index.scss';
 
-const Rooms = ({ jamId, nrOfRooms, subSection }) => {
-    // const [roomInfo, setRoomInfo] = useState(false);
+const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jamJammers }) => {
     const [jammers, setJammers] = useState([]);
-    // const [allRoomsInfo, setAllRoomsInfo] = useState([]);
     const [roomInfo, setRoomInfo] = useState({});
-    const [roomJammers, setRoomJammers] = useState([]);
-    
-
 
     useEffect(() => {
+        getJammersList(jamId);
         if (subSection === '') {
-            getJammersList(jamId);
             getAllRoomsInfo(jamId);
         } else {
-            getSingleRoomInfo(jamId);
-            getRoomJammersList(jamId);
+            getOneRoomInfo(jamId);
         }
     }, [subSection, jamId]);
 
@@ -36,23 +31,20 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
         const res = await DataService.getJammers(jamId);
         const jammers = Calculations.removeAmdinFromJammers(res);
         
+        setJammers(jammers)
+
         if(jammers.length > 0) {
-            let jammersByRooms = [];
-            jammersByRooms = Calculations.getRoomsOccupancy(jammers, nrOfRooms);
-            setJammers(jammersByRooms);
+
+            const tenantsByRooms = Calculations.getTenantsByRooms(jammers, nrOfRooms)
+            const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms)
+            
+            setJamJammers(organizedTenantsByRoom);
+        
         };
     };
 
-    const getRoomJammersList = async (jamId) => {
-        const res = await DataService.getJammers(jamId);
-        if(res.length > 0) {
-            let jammersByRooms = [];
-            jammersByRooms = Calculations.getRoomsOccupancy(res, nrOfRooms);
-            setRoomJammers(jammersByRooms[subSection]);
-        };
-    };
 
-    const getSingleRoomInfo = async (jamId) => {
+    const getOneRoomInfo = async (jamId) => {
         const stringRoomNr = toString(subSection);
         const res = await DataService.getSingleRoomInfo(jamId, stringRoomNr);
         setRoomInfo(res);
@@ -61,13 +53,11 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
     const getAllRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
         const roomsInfoStatus = Calculations.missingRoomsInfo(res);
-        console.log('roomsInfoStatus: ', roomsInfoStatus);
     };
 
     const showOverview = subSection === '';
     const bookingsAlreadyOrdered = jammers.length > 0;
-    const showRoomInfo = !isEmpty(roomJammers);
-
+    const showRoomInfo = jamJammers.length > 0;
     return (
         <div className="landlord-rooms">
 
@@ -75,15 +65,14 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
 
                 {showOverview ?
                     bookingsAlreadyOrdered ?
-                        <RoomsOverview rooms={jammers} />
-
+                        <RoomsOverview
+                            rooms={jammers}
+                        />
                         :
                         <p>Loading</p>
                     :
                     showRoomInfo ?
                         <LandlordRoomInfo
-                            roomJammers={roomJammers}
-                            subSection={subSection}
                             roomInfo={roomInfo}
                         />
                         :
@@ -101,8 +90,9 @@ const Rooms = ({ jamId, nrOfRooms, subSection }) => {
 const mapStateToProps = (state) => {
     const { jamId, subSection } = state.nav;
     const { nrOfRooms } = state.jamInfo.jamDetails;
+    const { jamJammers } = state.jamInfo;
 
-    return { jamId, subSection, nrOfRooms }
+    return { jamId, subSection, nrOfRooms, jamJammers }
     
 };
-export default connect(mapStateToProps, null)(Rooms);
+export default connect(mapStateToProps, { setJamJammers })(Rooms);

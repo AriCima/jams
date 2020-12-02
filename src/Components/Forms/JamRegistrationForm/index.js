@@ -61,6 +61,7 @@ const JamRegistrationForm = ({
 
     return ( 
         <form
+            autocomplete="off"
             className="jamRegister-form"
             onSubmit={ handleSubmit(onSubmit) }
         >

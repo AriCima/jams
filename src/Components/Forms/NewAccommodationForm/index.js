@@ -27,7 +27,10 @@ const NewAccommodationForm = (props) => {
     };
 
     return (
-        <form className="new-apartment-form" onSubmit={handleSubmit}>
+        <form
+            autocomplete="off"
+            className="new-apartment-form"
+            onSubmit={handleSubmit}>
 
             <div className="form-header">
                 <div className="form-header-line">

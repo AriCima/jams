@@ -6,9 +6,7 @@ import JamCover from './JamCover'
 // CSS
 import "./index.scss";
 
-const JamsList = (props) => {
-
-  const { userJams } = props;
+const JamsList = ({ userJams }) => {
   
   const _renderJams = () => {
     return userJams.map((jam, j) => {
@@ -26,6 +24,7 @@ const JamsList = (props) => {
       )
     });
   };
+
 
   return (
     <div className="jams-list-wrapper">

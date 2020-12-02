@@ -59,6 +59,7 @@ const useLoginForm = ({ setUserId, setUserEmail, setUserFirstName, setUserLastNa
     return (
         <div className="login-wrapper">
             <form
+                autocomplete="off"
                 className="login-hook-form"
                 onSubmit={handleSubmit(onLogin)}
             >

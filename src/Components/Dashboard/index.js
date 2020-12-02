@@ -16,6 +16,7 @@ import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 const Dashboard = ({ 
     jamId,
     modalState,
+    userJams,
     setJamAdminId,
     setJamAdminName,
     setJamDesc,
@@ -29,18 +30,21 @@ const Dashboard = ({
 }) => {
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({});
-    const [uJams, setUJams] = useState([]);
 
     useEffect(() => {
         if (userId) {
-            DataService.getUserJams(userId)
+            // DataService.getUserJams(userId)
+            DataService.getSnapShotUserJams(userId, userJams)
             .then(result => {
+                // console.log('result: ', result);
+                // userJams in redux
                 setUserJams(result);
-                setUJams(result);
+                // userJams state
                 setJamsList(result);
             })
             .catch(err => console.log(err));
         }       
+    // }, [userId, userJams]); // CHAPUZAA   VER POR QUÉ ENTRA EN LOOP
     }, [userId]);
 
 
@@ -80,7 +84,9 @@ const Dashboard = ({
             ):(
                 <>
                 <aside className="jams-list">
-                    {renderJamsList && <JamsList userJams={jamsList} /> }
+                    {renderJamsList && <JamsList
+                        userJams={jamsList}
+                    /> }
                 </aside>
                 <div className="jam-screen">
                     {showModal && <Modal />}
@@ -103,10 +109,10 @@ const Dashboard = ({
 
 const mapStateToProps = state => {
     const jamId = state.nav.jamId;
-    const { userId, userRole } = state.userInfo;
+    const { userId, userRole, userJams } = state.userInfo;
     const { modalState, } = state.modal;
 
-    return { jamId, userId, modalState, userRole, userJams: state.userJams };
+    return { jamId, userId, modalState, userRole, userJams };
 };
 
 export default connect(mapStateToProps, {

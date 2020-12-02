@@ -32,6 +32,7 @@ const useBoardForm = ({jamId, userId}) => {
     return (
 
         <form
+            autocomplete="off"
             className="board-form"
             onSubmit={handleSubmit(onSubmit)}
         >

@@ -32,7 +32,9 @@ const ContractInfoForm = (props) => {
             <div className="contract-info-form-section">
                 <div className="contract-info-form-section-title">
                     <h2>Jam Info</h2>
-                    <form onSubmit={saveCotnractInfo}>
+                    <form
+                        autocomplete="off"
+                        onSubmit={saveCotnractInfo}>
                         <div className="form-row">
                             <CustomInputFieldWithLabel
                                 type="text"
@@ -65,7 +67,9 @@ const ContractInfoForm = (props) => {
                         <span> strongly </span>
                         recomend you to fill the information about the apartment location in order to be able to automaticallyprint a contract upon a reception of a booking
                     </p>
-                    <form onSubmit={updateAccInfo}>
+                    <form
+                        autocomplete="off"
+                        onSubmit={updateAccInfo}>
                         <div className="form-row">
                             <CustomInputFieldWithLabel
                                 type="text"
@@ -118,7 +122,9 @@ const ContractInfoForm = (props) => {
                         <span>`&quote;`landlord`&quote;`</span>
                         is the person who will sing the rent contract
                     </p>
-                    <form onSubmit={updateLandlordInfo}>
+                    <form
+                        autocomplete="off"
+                        onSubmit={updateLandlordInfo}>
                         <div className="form-row">
                             <CustomInputFieldWithLabel
                                 type="text"

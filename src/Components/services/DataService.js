@@ -67,46 +67,73 @@ export default class DataService {
             });
     }
 
-    // static getUserJams(userId) {
-    //     return new Promise((resolve, reject) => {
-    //         firebase.firestore().collection('users').doc(userId).collection('userJams')
-    //             .get()
-    //             .then(result => {
-    //                 const jams = [];
-    //                 result.docs.forEach(d => {
-    //                     const j = d.data();
-    //                     j.id = d.id;
-    //                     jams.push(j);
-    //                 });
-    //                 resolve(jams);
-    //             });
-    //     })
-    //         .catch((error) => {
-    //             const errorCode = error.code;
-    //             // console.log('Usuario No Existe : ', errorCode);
-    //         });
-    // }
-
     static getUserJams(userId) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
-                .collection('users')
-                .doc(userId)
-                .collection('userJams')
-                .onSnapshot(function(doc) {
-                    const jams = [];
-                    doc.docs.forEach(d => {
-                        const j = d.data();
-                        j.id = d.id;
-                        jams.push(j);
-                    });
-                    resolve(jams);
+            .collection('users')
+            .doc(userId)
+            .collection('userJams')
+            .get()
+            .then(result => {
+                const jams = [];
+                result.docs.forEach(d => {
+                    const j = d.data();
+                    j.id = d.id;
+                    jams.push(j);
                 });
+                resolve(jams);
+            });
         })
             .catch((error) => {
                 const errorCode = error.code;
                 // console.log('Usuario No Existe : ', errorCode);
             });
+    }
+
+    static getSnapShotUserJams(userId, userJams) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('users')
+                .doc(userId)
+                .collection('userJams')
+                .onSnapshot(function(querySnapshot) {
+                    const jams = [];
+                    querySnapshot.forEach(function(doc) {
+                        const jam = doc.data();
+                        jam.id = doc.id;
+                        jams.push(jam);
+                    });
+
+                    resolve(jams);
+
+                }, function(error) {
+                    console.log('There was an error : ', error)
+                });
+        })
+
+        .catch((error) => {
+            const errorCode = error.code;
+            // console.log('Usuario No Existe : ', errorCode);
+        });
+    }
+
+    static unsubscribeUserJams(userId) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('users')
+                .doc(userId)
+                .collection('userJams')
+                .onSnapshot(function (){
+                    console.log('unsubscribed')
+                });
+
+                
+
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            // console.log('Usuario No Existe : ', errorCode);
+        });
     }
 
     // JAMS
@@ -129,7 +156,7 @@ export default class DataService {
                             balcony: "",
                             deposit: "",
                             exterior: "",
-                            price: "",
+                            rent: "",
                             privBath: "",
                             roomNr,
                             sqm: "",
@@ -288,7 +315,9 @@ export default class DataService {
     static getJamToJoin(jamCode) {
         // console.log('JamCode recibido en el join del Data =', jamCode);
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams').where('jamCode', '==', jamCode).get()
+            firebase.firestore().collection('jams')
+            .where('jamCode', '==', jamCode)
+            .get()
             // .then((result) => {
             //     //console.log('el result del join = ', result);
             //     resolve(result.data());
@@ -314,7 +343,8 @@ export default class DataService {
     static getJamInfoByCode(jamCode) {
         return new Promise((resolve, reject) => {
             // console.log('el ID con el que se pide la info de la jam = ', jamCode)
-            firebase.firestore().collection('jams').where('jamCode', '==', jamCode)
+            firebase.firestore().collection('jams')
+                .where('jamCode', '==', jamCode)
                 .get()
                 .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
@@ -459,7 +489,7 @@ export default class DataService {
         });
     }
 
-    /* * * * * * * *  CHAT * * * * * * * * * * * * * * * */
+    /* * * * * * * *  ROOMS  * * * * * * * * * * * * * * * */
 
 
     static getJamRooms(jamId) {
@@ -492,6 +522,26 @@ export default class DataService {
                 const errorCode = error.code;
                 console.log('Jam Rooms error : ', error);
             });
+    }
+    static getSingleRoomInfo(jamId, roomNr) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('jams')
+                .doc(jamId)
+                .collection('rooms')
+                .where('roomNr', '==', roomNr)
+                .get()
+                .then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        const info = doc.data()
+                        resolve(info)
+                    });
+                })
+                .catch(function(error) {
+                    console.log("Error getting documents: ", error);
+                });
+        })
+
     }
 
     // MESSAGES

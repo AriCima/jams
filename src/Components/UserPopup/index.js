@@ -109,7 +109,11 @@ export default class UserPopup extends Component {
             <h1>CREATE YOUR OWN JAM IN ONE STEP !</h1>
           </div>
           
-        <form className="createJam-form-container" onSubmit={this.onCreateNewJam}>
+        <form
+          autocomplete="off"
+          className="createJam-form-container"
+          onSubmit={this.onCreateNewJam}
+        >
 
           <label id="label-short">
               <h5>Name</h5>

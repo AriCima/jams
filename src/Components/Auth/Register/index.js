@@ -43,8 +43,9 @@ const useRegisterForm = ({setUserId, setUserFirstName, setUserLastName}) => {
   return (
 
     <form
-        className="register-hook-form"
-        onSubmit={handleSubmit(onRegister)}
+      autocomplete="off"
+      className="register-hook-form"
+      onSubmit={handleSubmit(onRegister)}
     >
       <div className="register-form-section">
           <div className="form-section-title">

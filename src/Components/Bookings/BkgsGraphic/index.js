@@ -1,11 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 
+import Calculations from '../../services/Calculations';
+
 // CSS
 import './index.scss';
 
-const BookingsGraphic = ({ bookingsSummary }) => {
-
+const BookingsGraphic = ({ tenants }) => {
+    const allTenants = Calculations.getAllTenantsInOneRoom(tenants) // all tenants in this room
+   
     const generateGraphicsMonths = () => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -65,9 +68,9 @@ const BookingsGraphic = ({ bookingsSummary }) => {
             const dateToCompare = new Date(`${d + 1}-${mm}-${yy}`);
 
             // VERIFY: is oneDay between any check-in and check-out date ?
-            for (let r = 0; r < bookingsSummary.length; r++) {
-                const checkin = new Date(bookingsSummary[r].checkIn);
-                const checkout = new Date(bookingsSummary[r].checkOut);
+            for (let r = 0; r < allTenants.length; r++) {
+                const checkin = new Date(allTenants[r].checkIn);
+                const checkout = new Date(allTenants[r].checkOut);
 
 
                 if (dateToCompare >= checkin && dateToCompare <= checkout) { // styling BOOKED days

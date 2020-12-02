@@ -65,8 +65,6 @@ const CustomdDialog = ({
   
 
   useEffect(() => {
-    console.log('mustOpen: ', mustOpen);
-
     if(mustOpen) {
       setTimeout(() => setOpen(true), 3000);
     }
