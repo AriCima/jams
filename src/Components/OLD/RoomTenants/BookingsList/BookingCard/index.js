@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import moment from 'moment';
 
-import { setDocType, setDocId, setEditable } from "../../../../../../../redux/actions/docsActions";
-import { setSection } from '../../../../../../../redux/actions/navigateActions';
+import { setDocType, setDocId, setEditable } from "../../../../../redux/actions/docsActions";
+import { setSection } from '../../../../../redux/actions/navigateActions';
 
 // CSS
 import "./index.css";

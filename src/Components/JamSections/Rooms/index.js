@@ -14,35 +14,21 @@ import { setJamJammers } from '../../../redux/actions/jamActions';
 // CSS
 import './index.scss';
 
-const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jamJammers }) => {
-    const [jammers, setJammers] = useState([]);
+const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jammers, jamJammers }) => {
     const [roomInfo, setRoomInfo] = useState({});
-
+    const [roomsTenants, setRoomsTenants] = useState([]);
     useEffect(() => {
-        getJammersList(jamId);
+        const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+        const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms)
+        setRoomsTenants(organizedTenantsByRoom);
+
         if (subSection === '') {
             getAllRoomsInfo(jamId);
         } else {
             getOneRoomInfo(jamId);
         }
     }, [subSection, jamId]);
-
-    const getJammersList = async (jamId) => {
-        const res = await DataService.getJammers(jamId);
-        const jammers = Calculations.removeAmdinFromJammers(res);
-        
-        setJammers(jammers)
-
-        if(jammers.length > 0) {
-
-            const tenantsByRooms = Calculations.getTenantsByRooms(jammers, nrOfRooms)
-            const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms)
-            
-            setJamJammers(organizedTenantsByRoom);
-        
-        };
-    };
-
 
     const getOneRoomInfo = async (jamId) => {
         const stringRoomNr = toString(subSection);
@@ -52,12 +38,12 @@ const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jamJammers }) => {
     
     const getAllRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
-        const roomsInfoStatus = Calculations.missingRoomsInfo(res);
+        // const roomsInfoStatus = Calculations.missingRoomsInfo(res);   PARA CUANDO FALTE INFO DE LA HAB
     };
 
     const showOverview = subSection === '';
-    const bookingsAlreadyOrdered = jammers.length > 0;
-    const showRoomInfo = jamJammers.length > 0;
+    const bookingsAlreadyOrdered = roomsTenants.length > 0;
+    const showRoomInfo = roomsTenants.length > 0;
     return (
         <div className="landlord-rooms">
 
@@ -65,15 +51,14 @@ const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jamJammers }) => {
 
                 {showOverview ?
                     bookingsAlreadyOrdered ?
-                        <RoomsOverview
-                            rooms={jammers}
-                        />
+                        <RoomsOverview roomsTenants={roomsTenants}/>
                         :
                         <p>Loading</p>
                     :
                     showRoomInfo ?
                         <LandlordRoomInfo
                             roomInfo={roomInfo}
+                            roomsTenants={roomsTenants}
                         />
                         :
                         <p>Loading Room Info</p>
@@ -90,9 +75,9 @@ const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jamJammers }) => {
 const mapStateToProps = (state) => {
     const { jamId, subSection } = state.nav;
     const { nrOfRooms } = state.jamInfo.jamDetails;
-    const { jamJammers } = state.jamInfo;
+    const { jamJammers, jammers } = state.jamInfo;
 
-    return { jamId, subSection, nrOfRooms, jamJammers }
+    return { jamId, subSection, nrOfRooms, jamJammers, jammers }
     
 };
 export default connect(mapStateToProps, { setJamJammers })(Rooms);

@@ -1,16 +1,13 @@
 import React from "react";
-
 import DataService from "../../../../services/DataService";
-
 import { connect } from 'react-redux';
 
 
 // CSS
 import "./index.css";
 import { setJamId } from "../../../../../redux/actions/navigateActions.js";
-import {setJamSection} from "../../../../../redux/actions/jamSection";
 
-const StudentJammerCard = ({ userId, userJams, jI, jamInfo }) => {
+const StudentJammerCard = ({ userId, userJams, jI, setSection }) => {
 
   const jammerId = jI.userId;
   const jammerName= jI.userName;
@@ -38,19 +35,14 @@ const StudentJammerCard = ({ userId, userJams, jI, jamInfo }) => {
       messages: [] 
     }
 
-    DataService.startChat(chatId, chatInfo)
-    .then(res => {
-      //console.log('res del startChat = ', res)
-    })
-    DataService.addJamToUser(userId, chatInfo);
-    DataService.addJamToUser(jammerId, chatInfo);
-    props.setJamSection('chat')
-  }
+    DataService.startChat(chatId, chatInfo);
+  };
 
   return (
 
-    <button className="student-jammer-card-container" onClick={()=> onContactJammer(user.id, jammerId)}>
-
+    <button
+      className="student-jammer-card-container"
+      onClick={()=> onContactJammer(userId, jammerId)}>
       <div className="student-jammer-img">
         <img src={"/"} alt="img" />
       </div>
@@ -71,16 +63,7 @@ const StudentJammerCard = ({ userId, userJams, jI, jamInfo }) => {
 
     </button>
   )
-  
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // nombre de la función que paso como prop: (arg) => dispatch(nombre del action creator(argumento))
-    setJamSection: () => dispatch(setJamSection('chat'))
-  }
-}
-
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -89,4 +72,4 @@ const mapStateToProps = (state) => {
       userJams: state.userJams,
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(StudentJammerCard);
+export default connect(mapStateToProps, { setJamId })(StudentJammerCard);

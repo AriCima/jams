@@ -6,8 +6,8 @@ import moment from 'moment';
 
 // COMPONENTS
 import BookingCard from './BookingCard';
-import { setDocType, setDocId, setEditable } from "../../../../../../redux/actions/docsActions";
-import { setSection } from '../../../../../../redux/actions/navigateActions';
+import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
+import { setSection } from '../../../../redux/actions/navigateActions';
 
 
 // CSS

@@ -10,23 +10,24 @@ import Modal from '../Modal';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
-import { setJamName, setJamType, setJamAdminId, setJamAdminName, setJamDesc, setJamCode, setJamDetails } from '../../redux/actions/jamActions.js';
+import { setJamName, setJamType, setJammers, setJamAdminId, setJamAdminName, setJamDesc, setJamCode, setJamDetails } from '../../redux/actions/jamActions.js';
 import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
 const Dashboard = ({ 
     jamId,
     modalState,
-    userJams,
     setJamAdminId,
     setJamAdminName,
+    setJamCode,
     setJamDesc,
     setJamDetails,
+    setJammers,
     setJamName,
     setJamType,
     setUserJams,
     setUserRole,
-    setJamCode,
     userId,
+    userJams,
 }) => {
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({});
@@ -55,6 +56,7 @@ const Dashboard = ({
 
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
+        const jammers = await DataService.getJammers(jamId);
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
        
@@ -70,6 +72,7 @@ const Dashboard = ({
         setJamType(jamType)
         setJamDetails(jamDetails)
         setJamCode(jamCode)
+        setJammers(jammers)
     };
 
     const renderJam = jamId && !isEmpty(jamInfo);
@@ -125,6 +128,7 @@ export default connect(mapStateToProps, {
     setJamType,
     setUserJams,
     setUserRole,
-    setJamCode
+    setJamCode,
+    setJammers
 }) (Dashboard);
 

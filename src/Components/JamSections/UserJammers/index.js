@@ -13,29 +13,32 @@ import CustomInputField from '../../UI/CustomInputField'
 // CSS
 import './index.css';
 
-const StudentJammers = (props) => {
+const StudentJammers = ({jamId, jammers, userId}) => {
     
-
-    const {jamId, jamInfo} = props
-    const userId = props.user.uid;
-    // const [jamAdmin, setJamAdmin] = useState('');
-    const [jammers, setJammers] = useState([])
     const [jammersMessages, setJammersMessages] = useState([]);
     const [messageText, setMessageText ] = useState('');
-
     
     useEffect(() => {
-        DataService.getJammers(jamId)
-        .then((res) => {
-            console.log('jammers = ', res)
-            setJammers(res)
-        })
+
         DataService.getJammersMessages(jamId)
         .then((res) => {
             //console.log('jammers msgs = ', res)
             setJammersMessages(res)
         })
     }, [jamId])
+    
+    // useEffect(() => {
+    //     DataService.getJammers(jamId)
+    //     .then((res) => {
+    //         console.log('jammers = ', res)
+    //         setJammers(res)
+    //     })
+    //     DataService.getJammersMessages(jamId)
+    //     .then((res) => {
+    //         //console.log('jammers msgs = ', res)
+    //         setJammersMessages(res)
+    //     })
+    // }, [jamId])
 
 
     const renderStudentJammersContent = () => {
@@ -136,4 +139,12 @@ const mapStateToProps = (state) => {
         jamActiveSection: state.jamSection,
     }
 }
+
+const mapStateToProps = (state) => {
+    const { userId } = state.userInfo;
+    const { jamId, section, subSection } = state.nav;
+
+    return { userId, jamId, section, subSection, jammers }
+    
+};
 export default connect(mapStateToProps)(StudentJammers);

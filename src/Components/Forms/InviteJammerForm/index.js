@@ -13,8 +13,8 @@ import Calculations from '../../services/Calculations';
 
 import './index.scss';
 
-const useInviteJammerForm = ({jamId, jamName, adminName}) => {
-    const [ jammers, setJammers ] = useState([]);
+const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
+    const [ organizedJammers, setOrganizedJammers ] = useState([]);
     const [ roomsInfo, setRoomsInfo ] = useState({})
     const [ showModal, setShowModal ] = useState(false);
     const [ invitationInfo, setInvitationInfo ] = useState({});
@@ -31,17 +31,25 @@ const useInviteJammerForm = ({jamId, jamName, adminName}) => {
     });
 
     useEffect(() => {
-        getJammersList(jamId)
+        if(jammers.length > 0) {
+            const editedJammers = Calculations.organizeAdminTenants(jammers);
+            setOrganizedJammers(editedJammers);
+        };
     }, [jamId]);
 
-    const getJammersList = async (jamId) => {
-        const res = await DataService.getJammers(jamId);
-        let organizedJammers = [];
-        if(res.length > 0) {
-            organizedJammers = Calculations.organizeAdminTenants(res);
-            setJammers(organizedJammers);
-        };
-    };
+
+    // useEffect(() => {
+    //     getJammersList(jamId)
+    // }, [jamId]);
+
+    // const getJammersList = async (jamId) => {
+    //     const res = await DataService.getJammers(jamId);
+    //     let organizedJammers = [];
+    //     if(res.length > 0) {
+    //         organizedJammers = Calculations.organizeAdminTenants(res);
+    //         setJammers(organizedJammers);
+    //     };
+    // };
 
     const getRoomInfo = async () => {
         const res = await DataService.getSingleRoomInfo(jamId, nrOfTheRoom);
@@ -71,7 +79,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName}) => {
         data.adminName = adminName;
         data.contractCode = Calculations.generateCode();
 
-        const overlapStatus = Calculations.checkOverlapping(checkIn, checkOut, jammers)
+        const overlapStatus = Calculations.checkOverlapping(checkIn, checkOut, organizedJammers)
        
         if(overlapStatus.error === true) {
             setShowModal(true);
@@ -409,8 +417,8 @@ const useInviteJammerForm = ({jamId, jamName, adminName}) => {
 
 const mapStateToProps = (state) => {
     const jamId = state.nav.jamId;
-    const {jamName, adminName} = state.jamInfo
-    return { jamId, jamName, adminName }
+    const {jamName, adminName, jammers} = state.jamInfo
+    return { jamId, jamName, adminName, jammers }
 };
 
 export default connect(mapStateToProps, null)(useInviteJammerForm);

@@ -10,13 +10,15 @@ import Calculations from '../../services/Calculations';
 import './index.scss';
 
 const TenantsChart = ({
-    jamJammers,
+    jammersList,
+    section,
     subSection,
-    rooms,
     setDocType,
     setSection,
     setDocId,
-    setEditable}) => {
+    setEditable,
+    jammers
+}) => {
         
     const [ activeTab, setActiveTab ] = useState('current');
     
@@ -28,7 +30,14 @@ const TenantsChart = ({
         setEditable('true');
     };
 
-    const jammersInRoom = jamJammers[subSection];
+    if (subSection !== '') {  // then Im visualizing a single room
+
+    }
+
+    const jammersInRoom = jammersList[subSection];
+
+    const showRoomNr = section !== 'Tenants' && subSection === '';
+
 
     const renderTenantsRow = () => {
         
@@ -44,7 +53,7 @@ const TenantsChart = ({
                 break;
             default:
                 if (!isEmpty(jammersInRoom.currentTenant)) {
-                    filteredTenants = [jammersInRoom.currentTenant];
+                    filteredTenants = jammersInRoom.currentTenant;
                 }
         }
         
@@ -57,7 +66,7 @@ const TenantsChart = ({
                         onClick={(e) => {takeMeToTenantInfo(e, ft.userId)}}
                     >
                         <td className="tenant-values firstTitle"><p>{ft.firstName} {ft.lastName}</p></td>
-                        {!rooms && <td className="tenant-values"><p>{ft.roomNr}</p></td>}
+                        {showRoomNr && <td className="tenant-values"><p>{ft.roomNr}</p></td>}
                         <td className="tenant-values"><p>{moment(ft.checkIn).format('DD-MMM-YYYY')}</p></td>
                         <td className="tenant-values"><p>{moment(ft.checkOut).format('DD-MMM-YYYY')}</p></td>
                         <td className="tenant-values"><p>{ft.rent} €</p></td>
@@ -105,7 +114,7 @@ const TenantsChart = ({
                 <table id="tenants-rows-table">
                     <tr id="titles-row">
                         <th className="row-title firstTitle" ><p>Name</p></th>
-                        {!rooms && <th className="row-title"><p>Room Nr</p></th>}
+                        {showRoomNr && <th className="row-title"><p>Room Nr</p></th>}
                         <th className="row-title"><p>Check-In</p></th>
                         <th className="row-title"><p>Check-Out</p></th>
                         <th className="row-title"><p>Rent</p></th>
@@ -121,11 +130,11 @@ const TenantsChart = ({
 }
 
 const mapStateToProps = (state) => {
-    const { jamId, subSection } = state.nav;
+    const { jamId, section, subSection } = state.nav;
     const { jamJammers } = state.jamInfo
     const { nrOfRooms } = state.jamInfo.jamDetails;
 
-    return { jamId, subSection, nrOfRooms, jamJammers }
+    return { jamId, section, subSection, nrOfRooms, jamJammers }
     
 };
 

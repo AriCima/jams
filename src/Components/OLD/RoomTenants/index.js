@@ -2,7 +2,7 @@ import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import BookingsList from './BookingsList';
-import TenantsChart from '../../../../Reusables/TenantsChart';
+import TenantsChart from '../../Reusables/TenantsChart';
 
 // CSS
 import './index.scss';
@@ -37,14 +37,14 @@ const RoomTenants = ({
                 </div>
             </div> */}
 
-            <TenantsChart
+            {/* <TenantsChart
                 futureTenants={futureTenants}
                 formerTenants={formerTenants}
                 currentTenant={currentTenant}
-                // nextTenant={nextTenant}
+                nextTenant={nextTenant}
                 noCurrentTenant={noCurrentTenant}
                 jammers={jammers}
-            />
+            /> */}
 
 
         </div>

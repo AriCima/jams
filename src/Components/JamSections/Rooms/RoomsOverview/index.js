@@ -1,22 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import moment from 'moment';
-import isEmpty from 'lodash/isEmpty';
 
 import {setSubSection } from '../../../../redux/actions/navigateActions';
 import './index.scss';
 
-const RoomsOverview = ({ rooms, jamJammers, setSubSection }) => {    
+const RoomsOverview = ({ roomsTenants, setSubSection }) => {    
 
     const showRoomInfo = (roomNr) => {
         setSubSection(roomNr)
     };
 
-    const renderRoomsChart = () => jamJammers.map((jj, i) => {
-        const currentTenant = jj.currentTenant;
+    const renderRoomsChart = () => roomsTenants.map((jj, i) => {
+        const currentTenant = jj.currentTenants;
         const roomNr =i+1;
         const stringNr = roomNr.toString();
+        const isVacant = currentTenant.length === 0;
         return(
             <tr
                 onClick={() => {
@@ -24,8 +23,8 @@ const RoomsOverview = ({ rooms, jamJammers, setSubSection }) => {
                 }}
                 key={i}
             >
-                {isEmpty(currentTenant)
-                    ? (
+                {isVacant ? 
+                    (
                         <>
                             <td id="number-column">{stringNr}</td>
                             <td id="vacant-cell" colspan="5">CURRENTLY VACANT</td>
@@ -34,11 +33,11 @@ const RoomsOverview = ({ rooms, jamJammers, setSubSection }) => {
                     : (
                         <>
                             <td id="number-column">{stringNr}</td>
-                            <td className="inner">{currentTenant.firstName} {currentTenant.lastName}</td>
-                            <td>{moment(currentTenant.checkIn).format('DD-MMM-YYYY')}</td>
-                            <td>{moment(currentTenant.checkOut).format('DD-MMM-YYYY')}</td>
-                            <td>{currentTenant.rent} €</td>
-                            <td>{currentTenant.deposit} €/Mo</td>
+                            <td className="inner">{currentTenant[0].firstName} {currentTenant[0].lastName}</td>
+                            <td>{moment(currentTenant[0].checkIn).format('DD-MMM-YYYY')}</td>
+                            <td>{moment(currentTenant[0].checkOut).format('DD-MMM-YYYY')}</td>
+                            <td>{currentTenant[0].rent} €</td>
+                            <td>{currentTenant[0].deposit} €/Mo</td>
                         </>
 
                     )}
@@ -57,7 +56,7 @@ const RoomsOverview = ({ rooms, jamJammers, setSubSection }) => {
                     <th>Rent</th>
                     <th>Deposit</th>
                 </tr>
-                {rooms.length !== 0 && renderRoomsChart()}
+                {roomsTenants.length !== 0 && renderRoomsChart()}
             </table>
 
     );

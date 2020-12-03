@@ -3,24 +3,24 @@ import { connect } from 'react-redux';
 
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
-
+import Calculations from '../../../services/Calculations';
 import InviteJammerButton from '../../../UI/Buttons/InviteJammerButton';
 import CurrentTenant from './CurrentTenant';
-import RoomTenants from './RoomTenants';
+import TenantsChart from '../../../Reusables/TenantsChart';
 import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 
 
 // CSS
 import './index.scss';
 
-const LandlordRoomInfo = ({ jamJammers, jamId, roomDetails, subSection}) => {
+const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomDetails, subSection}) => {
 
-    const roomJammers = jamJammers[subSection];
+    const roomJammers = roomsTenants[subSection];
 
-    const currentTenant = roomJammers.currentTenants;
-    const futureTenants = roomJammers.futureTenants;
-    const formerTenants = roomJammers.formerTenants;
-    const nextTenant = roomJammers.nextTenant
+    const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+    const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+    const editedTenants = Calculations.getOrganizedTenants(tenantsByRooms)
+    const currentTenant = editedTenants[subSection].currentTenants;
     const noCurrentTenant = isEmpty(currentTenant);
     
     const roomNr = subSection + 1;
@@ -47,9 +47,7 @@ const LandlordRoomInfo = ({ jamJammers, jamId, roomDetails, subSection}) => {
                 </div>
 
                 <div className="bookings-graphic">
-                    <BookingsGraphic
-                        tenants={roomJammers}
-                    />
+                    <BookingsGraphic />
                     
                 </div>
 
@@ -62,13 +60,8 @@ const LandlordRoomInfo = ({ jamJammers, jamId, roomDetails, subSection}) => {
                 )}
 
                 <div className="room-section">
-                    <RoomTenants
-                        futureTenants={futureTenants}
-                        formerTenants={formerTenants}
-                        currentTenant={currentTenant}
-                        nextTenant={nextTenant}
-                        noCurrentTenant={noCurrentTenant}
-                        jammers={roomJammers}
+                    <TenantsChart
+                        jammersList={editedTenants}
                     />
                 </div>
 
@@ -80,9 +73,11 @@ const LandlordRoomInfo = ({ jamJammers, jamId, roomDetails, subSection}) => {
 
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
-    const { jamJammers } = state.jamInfo;
-    const { subSection } = state.nav
-    return { jamId, jamJammers, subSection }
+    const { subSection } = state.nav;
+    const { jammers } = state.jamInfo;
+    const { nrOfRooms } = state.jamInfo.jamDetails;
+
+    return { jamId, jammers, subSection, nrOfRooms }
     
 };
 export default connect(mapStateToProps, null)(LandlordRoomInfo);

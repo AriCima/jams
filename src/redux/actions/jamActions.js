@@ -7,6 +7,7 @@ export const JAM_ADMIN_ID = 'JAM_ADMIN_ID';
 export const JAM_DETAILS = 'JAM_DETAILS';
 export const JAM_CODE = 'JAM_CODE';
 export const JAM_JAMMERS = 'JAM_JAMMERS'
+export const JAMMERS = 'JAMMERS'
 
 export const setJamName = (jamName) => {
   return {
@@ -40,6 +41,15 @@ export const setJamJammers = (jamJammers) => {
     type: JAM_JAMMERS, 
     payload: {
       jamJammers
+    }
+  }
+};
+
+export const setJammers = (jammers) => {
+  return {
+    type: JAMMERS, 
+    payload: {
+      jammers
     }
   }
 };
@@ -80,14 +90,6 @@ export const setJamDetails = (jamDetails = {}) => ({
     jamDetails
   }
 });
-
-// export const setJammers = (jammers = []) => ({
-//   type: JAMMERS,
-//   payload: {
-//     jammers
-//   }
-// });
-
 
 
 

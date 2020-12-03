@@ -1,13 +1,17 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
 import Calculations from '../../services/Calculations';
 
 // CSS
 import './index.scss';
 
-const BookingsGraphic = ({ tenants }) => {
-    const allTenants = Calculations.getAllTenantsInOneRoom(tenants) // all tenants in this room
+const BookingsGraphic = ({ jammers, subSection, nrOfRooms }) => {
+    
+    const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+    const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+    const allTenants = tenantsByRooms[subSection]
    
     const generateGraphicsMonths = () => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -117,4 +121,15 @@ const BookingsGraphic = ({ tenants }) => {
     );
 };
 
-export default BookingsGraphic;
+
+const mapStateToProps = (state) => {
+
+    const { subSection } = state.nav;
+    const { jammers } = state.jamInfo;
+    const { nrOfRooms } = state.jamInfo.jamDetails;
+
+    return { jammers, subSection, nrOfRooms }
+    
+};
+export default connect(mapStateToProps, null)(BookingsGraphic);
+

@@ -1,22 +1,22 @@
 
 import React, { Fragment } from 'react';
 
-// COMPONENTS
 import StudentJammerCardAdmin from './StudentJammerCard';
 
+import Calculations from '../../../services/Calculations';
 
 // CSS
-import './index.css';
+import './index.scss';
 
-const StudentJammersList = (props) => {
+const StudentJammersList = ({ jammers }) => {
 
-    const { jammers, jamInfo } = props;
+    const myRoomMates = Calculations.getMyRoomMates(jammers);
 
     const renderJammersList = () => {
-        return jammers.map((jammerInfo, i) => {
+        return myRoomMates.map((rM, i) => {
             return (
                 <React.Fragment key={i}>
-                    <StudentJammerCardAdmin jamInfo={jamInfo} jI={jammerInfo} />
+                    <StudentJammerCardAdmin jI={rM} />
                 </React.Fragment>
             )
         })
