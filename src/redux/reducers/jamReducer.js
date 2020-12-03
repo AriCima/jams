@@ -8,7 +8,6 @@ import {
     JAM_DETAILS,
     JAM_CODE,
     JAMMERS,
-    JAM_JAMMERS,
 } from '../actions/jamActions';
   
 const defaultState = {
@@ -20,7 +19,6 @@ const defaultState = {
     adminLastName: '',
     jamDetails: {},
     jamCode: '',
-    jamJammers: [],
     jammers: [],
 };
 
@@ -46,7 +44,6 @@ const jamReducers = createReducer(defaultState, {
 [JAM_ADMIN_LAST_NAME]: updateVal,
 [JAM_DETAILS]: updateVal,
 [JAM_CODE]: updateVal,
-[JAM_JAMMERS]: updateVal,
 [JAMMERS]: updateVal
 });
 

@@ -502,15 +502,13 @@ export default class Calculations {
     };
 
     static getAllTenantsOrganized = (jamJammers) => { // Organiza los inquilinos en current, former y future
-        const result = [];
-        const today = new Date();
-        const jL = jamJammers.length;
-        
-        let organizedTenants = {
+        const result = {
             currentTenants: [],
             formerTenants: [],
             futureTenants: [],
         };
+        const today = new Date();
+        const jL = jamJammers.length;
 
         for (let j = 0; j < jL; j++) {
 
@@ -520,15 +518,12 @@ export default class Calculations {
             const cIn = new Date (tenant.checkIn)
 
             if (cIn < today && cOut > today) {
-                organizedTenants.currentTenants.push(tenant);
+                result.currentTenants.push(tenant);
             } else if ( cIn < today && cOut < today) {
-                organizedTenants.formerTenants.push(tenant);
+                result.formerTenants.push(tenant);
             } else if (cIn > today) {
-                organizedTenants.futureTenants.push(tenant);
+                result.futureTenants.push(tenant);
             }
-
-
-            result.push(organizedTenants);
         }
         
         return result  // Array length = nro habs 

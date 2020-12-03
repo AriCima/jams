@@ -16,10 +16,9 @@ const TenantsChart = ({
     setDocType,
     setSection,
     setDocId,
-    setEditable,
-    jammers
+    // setEditable,
 }) => {
-        
+    
     const [ activeTab, setActiveTab ] = useState('current');
     
     const takeMeToTenantInfo = (e, userId) => {
@@ -27,16 +26,10 @@ const TenantsChart = ({
         setSection('Tenants')
         setDocType('TENANT-FORM');
         setDocId(userId); // tenant's userId
-        setEditable('true');
+        // setEditable('true');
     };
 
-    if (subSection !== '') {  // then Im visualizing a single room
-
-    }
-
-    const jammersInRoom = jammersList[subSection];
-
-    const showRoomNr = section !== 'Tenants' && subSection === '';
+    const showRoomNr = section === 'Tenants' || (section === 'Rooms' && subSection === '');
 
 
     const renderTenantsRow = () => {
@@ -45,15 +38,18 @@ const TenantsChart = ({
 
         switch (activeTab) {
             case 'future':
-                const orderedFut = Calculations.sortByCheckInAsc(jammersInRoom.futureTenants)
+                let orderedFut = [];
+                if(jammersList.futureTenants.length > 0) {
+                    orderedFut = Calculations.sortByCheckInAsc(jammersList.futureTenants)
+                };
                 filteredTenants = orderedFut;
                 break;
             case 'former':
-                filteredTenants = jammersInRoom.formerTenants;
+                filteredTenants = jammersList.formerTenants;
                 break;
             default:
-                if (!isEmpty(jammersInRoom.currentTenant)) {
-                    filteredTenants = jammersInRoom.currentTenant;
+                if (!isEmpty(jammersList.currentTenants)) {
+                    filteredTenants = jammersList.currentTenants;
                 }
         }
         
@@ -131,10 +127,9 @@ const TenantsChart = ({
 
 const mapStateToProps = (state) => {
     const { jamId, section, subSection } = state.nav;
-    const { jamJammers } = state.jamInfo
     const { nrOfRooms } = state.jamInfo.jamDetails;
 
-    return { jamId, section, subSection, nrOfRooms, jamJammers }
+    return { jamId, section, subSection, nrOfRooms }
     
 };
 

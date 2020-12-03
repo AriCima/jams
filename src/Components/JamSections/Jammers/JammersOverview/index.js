@@ -13,52 +13,22 @@ import TenantsChart from '../../../Reusables/TenantsChart';
 import './index.scss';
 
 const JammersOverview = ({
-    jamId,
-    jamJammers,
+    jammers,
     userRole,
     userId,
 }) => {
 
-
-
-    // const [jammers, setJammers] = useState([]);
+    const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+    const jammersList = Calculations.getAllTenantsOrganized(editedJammers)
     
+    const showChart = !isEmpty(jammersList);
     
-    // useEffect(() => {
-    //     getJammersList(jamId)
-    // }, [jamId]);
-
-    // const getJammersList = async (jamId) => {
-    //     const res = await DataService.getJammers(jamId);
-    //     if(res.length > 0) {
-    //         let organizedJammers = [];
-    //         if (userRole === 'Admin') {
-    //             organizedJammers = Calculations.organizeAdminTenants(res);
-    //         } else {
-    //             organizedJammers = Calculations.organizeFlatmates(res, userId);
-    //         }
-    //         setJammers(organizedJammers);
-    //     };
-    // };
-
-    const organizedTenants = Calculations.getAllTenantsOrganized(jamJammers);
-    
-    const {
-        currentTenants: [],
-        formerTenants: [],
-        futureTenants: []
-    } = organizedTenants;
     return (
         <>
-            { !isEmpty(organizedTenants) && (
+            { showChart && (
                 userRole === 'Admin' ? 
                 <TenantsChart
-                    futureTenants={organizedTenants.futureTenants}
-                    formerTenants={organizedTenants.formerTenants}
-                    currentTenant={organizedTenants.currentTenant}
-                    // nextTenant={nextTenant}
-                    // noCurrentTenant={noCurrentTenant}
-                    // jammers={jammers}
+                    jammersList={jammersList}
                 />
                 : (
                     <div className="guest-jammers-section">
@@ -81,9 +51,9 @@ const mapStateToProps = (state) => {
     const { jamId } = state.nav;
     const { docType , docId } = state.doc;
     const { userRole, userId } = state.userInfo;
-    const { jamJammers } = state.jamInfo
+    const { jammers } = state.jamInfo;
 
-    return { jamId, docType, docId, userRole, userId, jamJammers }
+    return { jamId, docType, docId, userRole, userId, jammers }
     
 };
 export default connect(mapStateToProps, null)(JammersOverview);

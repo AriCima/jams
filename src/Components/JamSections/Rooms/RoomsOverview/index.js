@@ -63,8 +63,7 @@ const RoomsOverview = ({ roomsTenants, setSubSection }) => {
 };
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
-    const { jamJammers } = state.jamInfo
-    return { jamId, jamJammers }
+    return { jamId }
     
 };
 export default connect(mapStateToProps, { setSubSection })(RoomsOverview);

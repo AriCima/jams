@@ -61,7 +61,7 @@ const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomDetails
 
                 <div className="room-section">
                     <TenantsChart
-                        jammersList={editedTenants}
+                        jammersList={editedTenants[subSection]}
                     />
                 </div>
 

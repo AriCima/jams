@@ -9,12 +9,11 @@ import isEmpty from 'lodash/isEmpty';
 
 import LandlordRoomInfo from './LandlordRoomInfo';
 import RoomsOverview from './RoomsOverview';
-import { setJamJammers } from '../../../redux/actions/jamActions';
 
 // CSS
 import './index.scss';
 
-const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jammers, jamJammers }) => {
+const Rooms = ({ jamId, nrOfRooms, subSection, jammers}) => {
     const [roomInfo, setRoomInfo] = useState({});
     const [roomsTenants, setRoomsTenants] = useState([]);
     useEffect(() => {
@@ -75,9 +74,9 @@ const Rooms = ({ jamId, nrOfRooms, subSection, setJamJammers, jammers, jamJammer
 const mapStateToProps = (state) => {
     const { jamId, subSection } = state.nav;
     const { nrOfRooms } = state.jamInfo.jamDetails;
-    const { jamJammers, jammers } = state.jamInfo;
+    const { jammers } = state.jamInfo;
 
-    return { jamId, subSection, nrOfRooms, jamJammers, jammers }
+    return { jamId, subSection, nrOfRooms, jammers }
     
 };
-export default connect(mapStateToProps, { setJamJammers })(Rooms);
+export default connect(mapStateToProps, null)(Rooms);

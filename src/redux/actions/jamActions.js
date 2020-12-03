@@ -36,15 +36,6 @@ export const setJamDesc = (jamDesc) => {
   }
 };
 
-export const setJamJammers = (jamJammers) => {
-  return {
-    type: JAM_JAMMERS, 
-    payload: {
-      jamJammers
-    }
-  }
-};
-
 export const setJammers = (jammers) => {
   return {
     type: JAMMERS, 
