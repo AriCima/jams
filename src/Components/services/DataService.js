@@ -199,6 +199,34 @@ export default class DataService {
             .update({ 
                 'jamDetails.roomNr': info.roomNr,
                 'jamDetails.address': info.address,
+                'jamDetails.city': info.city,
+                'jamDetails.zipCode': info.zipCode,
+                'jamDetails.country': info.country
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        });
+    };
+
+    static editLandlordInfo(jamId, info) {
+        return new Promise(() => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .update({ 
+                'landlordInfo.name': info.name,
+                'landlordInfo.lastName': info.lastName,
+                'landlordInfo.docType': info.docType,
+                'landlordInfo.docNr': info.docNr,
+                'landlordInfo.address': info.address,
+                'landlordInfo.city': info.city,
+                'landlordInfo.zipCode': info.zipCode,
+                'landlordInfo.country': info.country
             })
             .then(function() {
                 console.log("Document successfully updated!");

@@ -1,10 +1,11 @@
 import firebase from 'firebase';
 
 export default class UploadService {
+
+
     static uploadFile(file, uploadFolder){
 
         return new Promise((resolve, reject) => {
-            
             const fileName = `${+(new Date())}-${file.name}`;
             const storageRef = firebase.storage().ref();
             const myImageRef = storageRef.child(`${uploadFolder}/${fileName}`);
@@ -32,4 +33,6 @@ export default class UploadService {
             );
         })
     }
+
+
 }

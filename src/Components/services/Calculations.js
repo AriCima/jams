@@ -293,7 +293,7 @@ export default class Calculations {
 
     // - - - - - - - CONTRATO - - - - - - - - 
 
-    static getApartmentDivisions = (totalRooms) => {
+    static getApartmentDivisions = (totalRooms, leng) => {
         let divisions = {eng: '', esp:''}
         switch (totalRooms){
             case '2':
@@ -327,7 +327,11 @@ export default class Calculations {
                 //console.log('el apartamento tiene más de 10 habitaciones')
         };
 
-        return divisions
+        if (leng == 'ES') {
+            return divisions.esp
+        } else {
+            return divisions.eng
+        }
     };
 
     // - - - - - - - - BOOKINGS - - - - - - - - 
@@ -501,18 +505,18 @@ export default class Calculations {
         return x.sort(compare)
     };
 
-    static getAllTenantsOrganized = (jamJammers) => { // Organiza los inquilinos en current, former y future
+    static getAllTenantsOrganized = (jammers) => { // Organiza los inquilinos en current, former y future
         const result = {
             currentTenants: [],
             formerTenants: [],
             futureTenants: [],
         };
         const today = new Date();
-        const jL = jamJammers.length;
+        const jL = jammers.length;
 
         for (let j = 0; j < jL; j++) {
 
-            const tenant = jamJammers[j];
+            const tenant = jammers[j];
 
             const cOut = new Date(tenant.checkOut);
             const cIn = new Date (tenant.checkIn)

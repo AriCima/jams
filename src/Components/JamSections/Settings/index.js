@@ -44,7 +44,10 @@ const Settings = ({
     jamDetails,
     jamId,
     jamName,
+    userId,
     jamCode,
+    adminName,
+    adminLastName,
 }) => {
 
     const [disabled, setDisabled] = useState(true);
@@ -58,6 +61,15 @@ const Settings = ({
         jamName: jamName,
         jamDesc: jamDesc,
         jamCode: jamCode,
+        landlordFirstName: jamDetails.landlordInfo.firstName,
+        landlordLastName: jamDetails.landlordInfo.lastName,
+        landlordDocType: jamDetails.landlordInfo.docType,
+        landlordDocNr: jamDetails.landlordInfo.docNr,
+        landlordAddress: jamDetails.landlordInfo.address,
+        landlordCity: jamDetails.landlordInfo.city,
+        landlordZipCode: jamDetails.landlordInfo.zipCode,
+        landlordCountry: jamDetails.landlordInfo.country,
+        title: jamDetails.landlordInfo.title,
         checkInProcess: jamDetails.houseRules.checkInProcess,
         checkOutProcess: jamDetails.houseRules.checkOutProcess,
         checkInFrom: jamDetails.houseRules.checkInFrom,
@@ -69,8 +81,10 @@ const Settings = ({
         overnight: jamDetails.houseRules.overnight,
         parties: jamDetails.houseRules.parties,
         address: jamDetails.address,
+        city: jamDetails.city,
+        country: jamDetails.country,
+        zipCode: jamDetails.zipCode,
         inviteFriends: jamDetails.houseRules.inviteFriends
-        // nrOfRooms: jamDetails.nrOfRooms,
     };
 
 
@@ -80,14 +94,25 @@ const Settings = ({
 
         const {
             address,
+            city,
+            zipCode,
+            country,
             checkInFrom,
             checkInProcess,
             checkInTo,
             checkOutBefore,
             checkOutProcess,
+            title,
+            landlordFirstName,
+            landlordLastName,
+            landlordDocType,
+            landlordDocNr,
+            landlordAddress,
+            landlordCity,
+            landlordZipCode,
+            landlordCountry,
             jamDesc,
             jamName,
-            // nrOfRooms,
             overnight,
             parties,
             pets,
@@ -97,8 +122,10 @@ const Settings = ({
         } = data;
 
         const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
+        const editLandlordInfo = landlordFirstName !== defaultValues.landlordFirstName || landlordLastName !== defaultValues.landlordLastName || landlordDocType !== defaultValues.landlordDocType || landlordDocNr !== defaultValues.landlordDocNr || landlordAddress !== defaultValues.landlordAddress || landlordCity !== defaultValues.landlordCity || landlordZipCode !== defaultValues.landlordZipCode || landlordCountry !== defaultValues.landlordCountry;
+        const editJamDetails = address !== defaultValues.address || city !== defaultValues.city || zipCode !== defaultValues.zipCode || country !== defaultValues.country;
 
-        const editJamDetails = address !== defaultValues.address;
+
 
         const editHouseRules = (
             checkInProcess !== defaultValues.checkInProcess || checkOutProcess !== defaultValues.checkOutProcess || 
@@ -108,13 +135,26 @@ const Settings = ({
             smokingBalcony !== defaultValues.smokingBalcony || smoking !== defaultValues.smoking || inviteFriends !== defaultValues.inviteFriends
         );
 
-        
+        if(editLandlordInfo) {
+            const info = {
+                title: title,
+                name: landlordFirstName,
+                lastName: landlordLastName,
+                docType: landlordDocType,
+                docNr: landlordDocNr,
+                address: landlordAddress,
+                city: landlordCity,
+                zipCode: landlordZipCode,
+                coutnry: landlordCountry,
+            };
+            DataService.editLandlordInfo(jamId, info);
+        };
         if(editJamMainInfo) {
             const info = {jamName, jamDesc};
             DataService.editJamMainInfo(jamId, info);
         };
         if(editJamDetails) {
-            const info = {address};
+            const info = {address, city, zipCode, country};
             DataService.editJamDetails(jamId, info);
         };
         if(editHouseRules) {
@@ -175,12 +215,12 @@ const Settings = ({
 
 
                 <div className="settings-section">
-                    {/* <div className="settings-section-title">
+                    <div className="settings-section-title">
                         <div className="backLine"/>
                         <dic className="title">
                             <p>JAM INFO</p>
                         </dic>
-                    </div> */}
+                    </div>
                     <div className="settings-section-info">
                         <div className="rules-custom-input-block midWidth">
                             <div className="block-label">
@@ -201,7 +241,37 @@ const Settings = ({
                                 <label>Apartment location</label>
                                 {errors.address && <div className="field-error">Required</div>}
                             </div>
-                            <input name="address" placeholder="Street, hosue nr, floor, door, city, zipCode, country" ref={register({required: true})} disabled={disabled}/>
+                            <input
+                                name="address"
+                                placeholder="Street, hosue nr, floor, door . . ."
+                                ref={register({required: true})} disabled={disabled}/>
+                        </div>
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>City</label>
+                                {errors.city && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="city"
+                                ref={register({required: true})} disabled={disabled}/>
+                        </div>
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>ZipCode</label>
+                                {errors.zipCode && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="zipCode"
+                                ref={register({required: true})} disabled={disabled}/>
+                        </div>
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>Country</label>
+                                {errors.country && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="country"
+                                ref={register({required: true})} disabled={disabled}/>
                         </div>
                         <div className="rules-custom-input-block short-block">
                             <div className="block-label ">
@@ -210,24 +280,13 @@ const Settings = ({
                             <input name="jamCode" ref={register({required: true})} disabled />
 
                         </div>
-                        {/* <div className="rules-custom-input-block shortWidth">
-                            <div className="block-label">
-                                <label>Nr of rooms</label>
-                                {errors.nrOfRooms && <div className="field-error">Required</div>}
-                            </div>
-                            <input name="nrOfRooms" ref={register({required: true})}/>
-                        </div> */}
+
                     </div>
                 </div>
 
+                
                 <div className="settings-section">
 
-                    {/* <div className="settings-section-title">
-                        <div className="backLine"/>
-                        <dic className="title">
-                            <p>CHECK-IN / CHECK-OUT </p>
-                        </dic>
-                    </div> */}
                     <div className="settings-section-info">
                         <div className="rules-custom-input-block textAreaBlock">
                             <div className="block-label">
@@ -295,6 +354,114 @@ const Settings = ({
                     </div>
                 </div>
 
+
+                <div className="settings-section row-section">
+
+                    <div className="settings-section-title">
+                        <div className="backLine"/>
+                        <dic className="title">
+                            <p>Landlord Info</p>
+                        </dic>
+                    </div>
+
+                    <div className="settings-section-info row-section">
+                        
+                        <div className="rules-custom-input-block midWidth">
+                            <div className="block-label">
+                                <label>Title</label>
+                                {errors.title && <div className="field-error">Required</div>}
+                            </div>
+                            <select className="input-styled" name="title" ref={register} disabled={disabled}>
+                                <option value="Mr">Don</option>
+                                <option value="Mrs">Doña</option>
+                            </select>
+                        </div>
+
+
+                        <div className="rules-custom-input-block midWidth">
+                            <div className="block-label">
+                                <label>Landlord name</label>
+                                {errors.landlordFirstName && <div className="field-error">Required</div>}
+                            </div>
+                            <input name="landlordFirstName" ref={register({required: true})} disabled={disabled} />
+                        </div>
+
+                        <div className="rules-custom-input-block midWidth">
+                            <div className="block-label">
+                                <label>Landlord lastname</label>
+                                {errors.landlordLastName && <div className="field-error">Required</div>}
+                            </div>
+                            <input name="landlordLastName" ref={register({required: true})} disabled={disabled} />
+                        </div>
+
+
+                        <div className="rules-custom-input-block midWidth">
+                            <div className="block-label">
+                                <label>Doc Type</label>
+                                {errors.title && <div className="field-error">Required</div>}
+                            </div>
+                            <select className="input-styled" name="title" ref={register} disabled={disabled}>
+                                <option value="passport">Passport</option>
+                                <option value="dni">DNI</option>
+                                <option value="dni">NIE</option>
+                            </select>
+                        </div>
+
+                        <div className="rules-custom-input-block midWidth">
+                            <div className="block-label">
+                                <label>Doc Nr</label>
+                                {errors.landlordDocNr && <div className="field-error">Required</div>}
+                            </div>
+                            <input name="landlordDocNr" ref={register({required: true})} disabled={disabled} />
+                        </div>
+
+
+                        <div className="rules-custom-input-block midWidth">
+                            <div className="block-label">
+                                <label>Landlord Address</label>
+                                {errors.landlordAddress && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="landlordAddress"
+                                ref={register({required: true})}
+                                disabled={disabled}
+                                placeholder="Street, hosue nr, floor, door . . ."
+                            />
+                        </div>
+
+
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>City</label>
+                                {errors.landlordCity && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="landlordCity"
+                                ref={register({required: true})} disabled={disabled}/>
+                        </div>
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>ZipCode</label>
+                                {errors.landlordZipCode && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="landlordZipCode"
+                                ref={register({required: true})} disabled={disabled}/>
+                        </div>
+                        <div className="rules-custom-input-block">
+                            <div className="block-label">
+                                <label>Country</label>
+                                {errors.landlordCountry && <div className="field-error">Required</div>}
+                            </div>
+                            <input
+                                name="landlordCountry"
+                                ref={register({required: true})} disabled={disabled}/>
+                        </div>
+
+                    </div>
+
+                </div>
+
                 <div className="settings-section">
 
                     {/* <div className="settings-section-title">
@@ -338,7 +505,6 @@ const Settings = ({
                                                 name="pets"
                                                 control={control}
                                                 defaultValue={defaultValues.pets}
-                                                disabled={disabled}
                                                 as={
                                                     <RadioGroup aria-label="pets">
                                                         <div className="radios-wrapper">
@@ -346,12 +512,14 @@ const Settings = ({
                                                                 <FormControlLabel
                                                                     value="yes"
                                                                     control={<GreenRadio />}
+                                                                    disabled={disabled}
                                                                 />
                                                             </div>
                                                             <div className="radio-box">
                                                                 <FormControlLabel
                                                                     value="no"
                                                                     control={<RedRadio />}
+                                                                    disabled={disabled}
                                                                 />
                                                             </div>
                                                         </div>
@@ -379,12 +547,14 @@ const Settings = ({
                                                                     <FormControlLabel
                                                                         value="yes"
                                                                         control={<GreenRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                                 <div className="radio-box">
                                                                     <FormControlLabel
                                                                         value="no"
                                                                         control={<RedRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -412,12 +582,14 @@ const Settings = ({
                                                                     <FormControlLabel
                                                                         value="yes"
                                                                         control={<GreenRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                                 <div className="radio-box">
                                                                     <FormControlLabel
                                                                         value="no"
                                                                         control={<RedRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -445,12 +617,14 @@ const Settings = ({
                                                                     <FormControlLabel
                                                                         value="yes"
                                                                         control={<GreenRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                                 <div className="radio-box">
                                                                     <FormControlLabel
                                                                         value="no"
                                                                         control={<RedRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -478,12 +652,14 @@ const Settings = ({
                                                                     <FormControlLabel
                                                                         value="yes"
                                                                         control={<GreenRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                                 <div className="radio-box">
                                                                     <FormControlLabel
                                                                         value="no"
                                                                         control={<RedRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -511,12 +687,14 @@ const Settings = ({
                                                                     <FormControlLabel
                                                                         value="yes"
                                                                         control={<GreenRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                                 <div className="radio-box">
                                                                     <FormControlLabel
                                                                         value="no"
                                                                         control={<RedRadio />}
+                                                                        disabled={disabled}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -543,10 +721,11 @@ const Settings = ({
 
 
 const mapStateToProps = state => {
+    console.log('state.jamInfo: ', state.jamInfo);
     const { section } = state.nav;
-    const { jamName, jamDesc, jamType, jamDetails, jamCode } = state.jamInfo;
+    const { jamName, jamDesc, jamType, jamDetails, jamCode, adminName, adminLastName } = state.jamInfo;
     const { jamId } = state.nav;
-    const { userId } = state.userInfo;
+    const { userId, userName, user } = state.userInfo;
 
     return {
         jamDesc,
@@ -556,7 +735,9 @@ const mapStateToProps = state => {
         jamType,
         section,
         userId,
-        jamCode
+        jamCode,
+        adminName,
+        adminLastName,
     };
 };
 

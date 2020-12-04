@@ -7,69 +7,27 @@ import './index.css';
 
 // REACT PDF: https://react-pdf.org/
 
-const ContractES = (props) => {
-
-    const {
-        jamId,
-        userId,
-        jammerInfo,
-        // jammerCity,
-        // jammerCondition,
-        // jammerCountry,
-        // jammerDocument,
-        // jammerDoor,
-        // jammerFloor,
-        // jammerHouseNr,
-        // jammerIdNr,
-        // jammerName,
-        // jammerSchool,
-        // jammerStreet,
-        // jammerSurname,
-        // jammerTitle,
-        // jammerZipCode,
-        // jammerEmail,
-        // jammerHomeTel,
-        // mobile,
-        // jammerCourse, 
-        // jammerCompany,
-        accInfo,
-        // landlordTitle,
-        // landlordName, 
-        // landlordSurname, 
-        // landlordIdNr, 
-        // landlordStreet, 
-        // landlordHouseNr, 
-        // landlordFloor,
-        // landlordDoor, 
-        // landlordZipCode, 
-        // landlordCity,
-        // accInfo.City,
-        // accInfo.Divisions,
-        // accInfo.Door,
-        // accInfo.Floor,
-        // accInfo.HouseNr,
-        // accInfo.Street,
-        // accInfo.StreetType,
-        // accInfo.ZipCode,
-        roomInfo,
-        // roomBalcony,
-        // roomLocation,
-        // roomPrivateBathroom,
-        // RoomSize
-    } = props;
-
-
-    const divisions = Calculations.getApartmentDivisions(accInfo.totalRooms);
-    const divisiones = divisions.esp;
+const ContractES = ({
+    jamId,
+    userId,
+    userRole,
+    address,
+    nrOfRooms,
+    jamName,
+    jamAdminName,
+    jamAdminLastname,
+    tenantInfo
+}) => {
+    const divisions = Calculations.getApartmentDivisions(nrOfRooms, 'ES');
 
     return (
         <div className="contract-wrapper">
-            <div className="contract-header">
+            {/* <div className="contract-header">
                 <div className="contract-header-title">
                     <h4>CONTRATO DE ARRENDAMIENTO</h4>
                 </div>
                 <div className="contract-header-date">
-                    <p>En Barcelona, a {jammerInfo.checkIn}</p>
+                    <p>En Barcelona, a {tenantInfo.checkIn}</p>
                 </div>
                 <div className="contract-header-subtitle">
                     <h4>Reunidos</h4>
@@ -79,16 +37,16 @@ const ContractES = (props) => {
             <div className="contract-body">
                 <div className="contract-body-section-content">
                     <p>De una parte,<br/>
-                    <span>{landlordTitle} {landlordName} {landlordSurname}</span>, mayor de edad, con domicilio profesional en 
-                    <span>{landlordStreet} {landlordHouseNr} {landlordFloor} {landlordDoor} {landlordZipCode}, {landlordCity}, 
+                    <span>{jamAdminName} {jamAdminLastname}</span>, mayor de edad, con domicilio profesional en 
+                    <span>{address}, 
                     provisto de DNI nº {landlordIdNr} </span> actuando en nombre e interés propios. En adelante el arrendador.<br/>
                     
                     <br/>Y de otra parte,<br/>
-                    <span>{jammerTitle} {jammerName} {jammerSurname}</span>, 
+                    <span>{tenantInfo.firstName} {tenantInfo.lastName}</span>, 
                     mayor de edad, con domicilio en 
-                    <span>{jammerStreet} {jammerHouseNr} {jammerFloor} {jammerDoor} {jammerZipCode}, {jammerCity} {jammerCountry},</span>
-                    provisto de <span>{jammerDocument} nº {jammerIdNr} </span>, email {jammerEmail}, teléfono {jammerHomeTel} y teléfono móvil {mobile} actuando en su propio nombre e interés.<br/></p>
-                    {jammerCondition === 'student' ?
+                    <span>{tenantInfo.homeAddress},</span>
+                    provisto de <span>pasaporte nº {tenantInfo.passportNr} </span>, email {tenantInfo.email}, teléfono {tenantInfo.homeTel} y teléfono móvil {tenantInfo.mobile} actuando en su propio nombre e interés.<br/></p>
+                    {/* {jammerCondition === 'student' ?
                         (
                             <p>estudiante de {jammerCourse} en {jammerSchool}.</p>
                         ) 
@@ -96,7 +54,7 @@ const ContractES = (props) => {
                         (
                             <p>practicante en la empresa {jammerCompany}.</p>
                         )
-                    } 
+                    }  
                     <p>En adelante el arrendatario.<br/>
                     <br/>Ambas partes se reconocen la capacidad legal necesaria para este acto, y de común acuerdo</p>
                 </div>
@@ -104,7 +62,7 @@ const ContractES = (props) => {
                     <br/><br/><h4>E X P O N E N</h4><br/><br/>
                 </div>
                 <div className="contract-body-section-content">
-                    <p>I.‑ Que <span>{landlordTitle} {landlordName} {landlordSurname}</span> es propietario de la finca ubicada en</p>
+                    <p>I.‑ Que <span>{jamAdminName} {jamAdminLastname}</span> es propietario de la finca ubicada en</p>
                     { jamFloor === 'principal' ? <p>el Piso Principal,</p> : <p>la planta {jamFloor},</p>} 
                     puerta {jamDoor}, 
                     de la finca sita en {jamCity}, 
@@ -133,7 +91,7 @@ const ContractES = (props) => {
                     <div className="contract-body-section-content-agreements">
                         <p>Segundo- Duración del contrato.</p>
                     </div>
-                    <p>El contrato comenzará a regir el {jammerInfo.checkIn} y finalizará el {jammerInfo.checkOut}. 
+                    <p>El contrato comenzará a regir el {tenantInfo.checkIn} y finalizará el {tenantInfo.checkOut}. 
                     Una vez finalizado el plazo pactado, podrá prorrogarse por acuerdo previo de ambas partes, 
                     si bien necesariamente deberá documentarse por escrito, entendiendo que en caso contrario no existe acuerdo con la prórroga.
                     La duración del subarrendamiento comporta que de conformidad a lo convenido en el art. 3.2 de la Ley de Arrendamientos Urbanos, 
@@ -284,20 +242,20 @@ const ContractES = (props) => {
                     concurrentes firman el presente contrato, por duplicado y a todos los efectos, en la ciudad y fecha 
                     arriba indicadas.
                 </p>
-            </div>
+            </div> */}
         </div>
     )
 }
 
 
 const mapStateToProps = state => {
-    return { 
-        userJams: state.userJams,
-        jamId: state.jamId,
-        jamInfo: state.jamInfo,
-        auth: state.firebase.auth,
-    }
+    const jamId = state.nav.jamId;
+    const { userId, userRole } = state.userInfo;
+    const { address, nrOfRooms } = state.jamInfo.jamDetails;
+    const { jamName, jamAdminName, jamAdminLastname,  } = state.jamInfo;
+
+    return { jamId, userId, userRole, address, nrOfRooms, jamName, jamAdminName, jamAdminLastname };
 };
 
-export default connect(mapStateToProps) (ContractES);
+export default connect(mapStateToProps, null)(ContractES);
 

@@ -23,6 +23,8 @@ const defaultState = {
 };
 
 const updateVal = (state, action) => {
+    console.log('action: ', action);
+
     return { ...state, ...action.payload };
 };
 
@@ -44,7 +46,7 @@ const jamReducers = createReducer(defaultState, {
 [JAM_ADMIN_LAST_NAME]: updateVal,
 [JAM_DETAILS]: updateVal,
 [JAM_CODE]: updateVal,
-[JAMMERS]: updateVal
+[JAMMERS]: updateVal,
 });
 
 export default jamReducers;

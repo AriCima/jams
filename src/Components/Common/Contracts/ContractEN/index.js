@@ -5,64 +5,64 @@ import './index.css';
 
 const ContractEN = (props) => {
 
-    const {
-        jamId,
-        userId,
-        roomNr,
-        jammerInfo,
-        landlordTitle,
-        landlordName,
-        landlordSurname,
-        landlordIdNr,
-        landlordStreet,
-        landlordHouseNr,
-        landlordFloor,
-        landlordDoor,
-        landlordZipCode,
-        landlordCity,
-        jammerCity,
-        jammerCondition,
-        jammerCountry,
-        jammerDocument,
-        jammerDoor,
-        jammerFloor,
-        jammerHouseNr,
-        jammerIdNr,
-        jammerName,
-        jammerSchool,
-        jammerStreet,
-        jammerSurname,
-        jammerTitle,
-        jammerZipCode,
-        jammerEmail,
-        jammerHomeTel,
-        mobile,
-        jammerCourse, 
-        jammerCompany,
-        jamCity,
-        jamDivisions,
-        jamDoor,
-        jamFloor,
-        jamHouseNr,
-        jamStreet,
-        jamStreetType,
-        jamZipCode,
-        roomBalcony,
-        roomLocation,
-        roomPrivateBathroom,
-        RoomSize
-    } = props;
+    // const {
+    //     jamId,
+    //     userId,
+    //     roomNr,
+    //     jammerInfo,
+    //     landlordTitle,
+    //     landlordName,
+    //     landlordSurname,
+    //     landlordIdNr,
+    //     landlordStreet,
+    //     landlordHouseNr,
+    //     landlordFloor,
+    //     landlordDoor,
+    //     landlordZipCode,
+    //     landlordCity,
+    //     jammerCity,
+    //     jammerCondition,
+    //     jammerCountry,
+    //     jammerDocument,
+    //     jammerDoor,
+    //     jammerFloor,
+    //     jammerHouseNr,
+    //     jammerIdNr,
+    //     jammerName,
+    //     jammerSchool,
+    //     jammerStreet,
+    //     jammerSurname,
+    //     jammerTitle,
+    //     jammerZipCode,
+    //     jammerEmail,
+    //     jammerHomeTel,
+    //     mobile,
+    //     jammerCourse, 
+    //     jammerCompany,
+    //     jamCity,
+    //     jamDivisions,
+    //     jamDoor,
+    //     jamFloor,
+    //     jamHouseNr,
+    //     jamStreet,
+    //     jamStreetType,
+    //     jamZipCode,
+    //     roomBalcony,
+    //     roomLocation,
+    //     roomPrivateBathroom,
+    //     RoomSize
+    // } = props;
 
-    const apartmentDivisions = {eng: '', esp:''};
-    switch (accInfo.totalRooms){
-        case '2':
-            apartmentDivisions = {eng: 'one half part (1/2)', esp: 'una media parte (1/2'}
+    // const apartmentDivisions = {eng: '', esp:''};
+    // switch (accInfo.totalRooms){
+    //     case '2':
+    //         apartmentDivisions = {eng: 'one half part (1/2)', esp: 'una media parte (1/2'}
 
-    }
+    // }
 
     return (
         <div className="contract-wrapper">
-            <div className="contract-header">
+            {/* <div className="contract-header">
                 <div className="contract-header-title">
                     <h4>LEASING AGREEMENT</h4>
                 </div>
@@ -74,7 +74,7 @@ const ContractEN = (props) => {
                 </div>
             </div>
 
-            <div className="contract-body">
+            <div className="contract-body"> 
                 <div className="contract-body-section-content">
                     <p>From one part,<br/>
                     <span>{landlordTitle} {landlordName} {landlordSurname}</span>, of legal age, with a professional domicile in, 
@@ -287,8 +287,8 @@ const ContractEN = (props) => {
                     clauses, the concurring parties sign this contract, in duplicate and for all purposes, in the city and 
                     date indicated above.
                 </p>
-            </div>
-        </div>
+            </div>*/}
+        </div> 
     )
 }
 

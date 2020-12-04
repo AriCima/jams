@@ -15,7 +15,6 @@ import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
 const Dashboard = ({ 
     jamId,
-    modalState,
     setJamAdminId,
     setJamAdminName,
     setJamCode,
@@ -77,7 +76,7 @@ const Dashboard = ({
 
     const renderJam = jamId && !isEmpty(jamInfo);
     const renderJamsList = jamsList.length > 0;
-    const showModal = modalState === 'open'
+
     return (
         <div className="dashboard">
             { !userId ? (
@@ -92,7 +91,6 @@ const Dashboard = ({
                     /> }
                 </aside>
                 <div className="jam-screen">
-                    {showModal && <Modal />}
                     {renderJam ? 
                         <Jam /> 
                         :
@@ -113,9 +111,8 @@ const Dashboard = ({
 const mapStateToProps = state => {
     const jamId = state.nav.jamId;
     const { userId, userRole, userJams } = state.userInfo;
-    const { modalState, } = state.modal;
 
-    return { jamId, userId, modalState, userRole, userJams };
+    return { jamId, userId, userRole, userJams };
 };
 
 export default connect(mapStateToProps, {

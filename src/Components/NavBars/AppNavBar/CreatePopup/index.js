@@ -52,6 +52,17 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
     const createdAt = new Date();
     const jamCode = Calculations.generateCode();
     const updatedAt = '';
+    
+    const landlordInfo = {
+      firstName: '',
+      lastName: '',
+      docType: '',
+      title: '',
+      address: '',
+      city: '',
+      zipCode: '',
+      contry: '',
+    }
 
     const newJam = {
       adminId: userId,
@@ -62,7 +73,7 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       jamName,
       jamDesc,
       jamType,
-      jamDetails: {nrOfRooms, jamAddress, houseRules},
+      jamDetails: {nrOfRooms, jamAddress, houseRules, landlordInfo},
       createdAt,
       updatedAt,
     };

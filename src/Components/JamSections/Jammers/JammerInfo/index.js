@@ -12,6 +12,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import DataService from '../../../services/DataService';
 import StartChatButton from '../../../UI/Buttons/StartChatButton';
+import ContractDialog from '../../../Reusables/ContractDialog';
 // import JammerContractInfo from '../../../Reusables/JammerContractInfo';
 // import JammerPersonalInfo from '../../../Reusables/JammerPersonalInfo';
 // import TenantPersonalInfo from '../../../Reusables/TenantPersonalInfo';
@@ -110,6 +111,10 @@ const JammerInfo = ({
                         jamName={jamName}
                       />
                     </div>
+
+                    {/* <ContractDialog
+                      tenantInfo={tenantInfo}
+                    /> */}
 
                   </div>
 
