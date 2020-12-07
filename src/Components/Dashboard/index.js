@@ -31,23 +31,26 @@ const Dashboard = ({
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({});
 
+    // Use an effect hook to subscribe to the grocery list item stream and
+    // automatically unsubscribe when the component unmounts.
     useEffect(() => {
-        if (userId) {
-            // DataService.getUserJams(userId)
-            DataService.getSnapShotUserJams(userId, userJams)
-            .then(result => {
-                // console.log('result: ', result);
-                // userJams in redux
-                setUserJams(result);
-                // userJams state
-                setJamsList(result);
-            })
-            .catch(err => console.log(err));
-        }       
-    // }, [userId, userJams]); // CHAPUZAA   VER POR QUÉ ENTRA EN LOOP
+        if(userId) {
+            const unsubscribe = DataService.getUserJams(userId, {
+                next: querySnapshot => {
+                    const jams = [];
+                    const result = querySnapshot.docs.map(docSnapshot => {
+                        const j = docSnapshot.data();
+                        j.id = docSnapshot.id;
+                        jams.push(j);
+                    });
+                    setUserJams(jams);
+                    setJamsList(jams);
+                },
+                error: () => console.log('failure')
+            });
+            return unsubscribe;
+        }
     }, [userId]);
-
-
 
     useEffect(() => {
         jamId && getJamInfo(jamId, userId);

@@ -67,74 +67,40 @@ export default class DataService {
             });
     }
 
-    static getUserJams(userId) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore()
+    // static getUserJams(userId) {
+    //     return new Promise((resolve, reject) => {
+    //         firebase.firestore()
+    //         .collection('users')
+    //         .doc(userId)
+    //         .collection('userJams')
+    //         .get()
+    //         .then(result => {
+    //             const jams = [];
+    //             result.docs.forEach(d => {
+    //                 const j = d.data();
+    //                 j.id = d.id;
+    //                 jams.push(j);
+    //             });
+
+    //             resolve(jams);
+    //         });
+    //     })
+    //         .catch((error) => {
+    //             const errorCode = error.code;
+    //             // console.log('Usuario No Existe : ', errorCode);
+    //         });
+    // }
+
+
+    static getUserJams = (userId, userJams) => {
+        return firebase.firestore()
             .collection('users')
             .doc(userId)
             .collection('userJams')
-            .get()
-            .then(result => {
-                const jams = [];
-                result.docs.forEach(d => {
-                    const j = d.data();
-                    j.id = d.id;
-                    jams.push(j);
-                });
-                resolve(jams);
-            });
-        })
-            .catch((error) => {
-                const errorCode = error.code;
-                // console.log('Usuario No Existe : ', errorCode);
-            });
+            .orderBy('createdAt')
+            .onSnapshot(userJams)
     }
 
-    static getSnapShotUserJams(userId, userJams) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore()
-                .collection('users')
-                .doc(userId)
-                .collection('userJams')
-                .onSnapshot(function(querySnapshot) {
-                    const jams = [];
-                    querySnapshot.forEach(function(doc) {
-                        const jam = doc.data();
-                        jam.id = doc.id;
-                        jams.push(jam);
-                    });
-
-                    resolve(jams);
-
-                }, function(error) {
-                    console.log('There was an error : ', error)
-                });
-        })
-
-        .catch((error) => {
-            const errorCode = error.code;
-            // console.log('Usuario No Existe : ', errorCode);
-        });
-    }
-
-    static unsubscribeUserJams(userId) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore()
-                .collection('users')
-                .doc(userId)
-                .collection('userJams')
-                .onSnapshot(function (){
-                    console.log('unsubscribed')
-                });
-
-                
-
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            // console.log('Usuario No Existe : ', errorCode);
-        });
-    }
 
     // JAMS
     // Create
@@ -406,32 +372,42 @@ export default class DataService {
         });
     }
 
-    static getBoardInfo(jamId, section) {
-        return new Promise((resolve, reject) => {
-            // //console.log('jamInfoBIS  ID de la jam = ', jamId)
-            firebase.firestore().collection('jams')
-                .doc(jamId)
-                .collection(section)
-                .orderBy('createdAt', 'asc')
-                .get()
-                .then((querySnapshot) => {
-                    const result = [];
-                    querySnapshot.forEach((doc) => {
-                        // //console.log(doc.data())
-                        const info = doc.data();
-                        result.push(info);
-                        // resolve({id: doc.id, data: doc.data()});
-                    });
-                    // console.log(`${section} content = `,result)
-                    resolve(result);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // console.log('Error al cargar la info de ', section, errorMessage);
-                });
-        });
+    // static getBoardInfo(jamId, section) {
+    //     return new Promise((resolve, reject) => {
+    //         // //console.log('jamInfoBIS  ID de la jam = ', jamId)
+    //         firebase.firestore().collection('jams')
+    //             .doc(jamId)
+    //             .collection(section)
+    //             .orderBy('createdAt', 'asc')
+    //             .get()
+    //             .then((querySnapshot) => {
+    //                 const result = [];
+    //                 querySnapshot.forEach((doc) => {
+    //                     // //console.log(doc.data())
+    //                     const info = doc.data();
+    //                     result.push(info);
+    //                     // resolve({id: doc.id, data: doc.data()});
+    //                 });
+    //                 // console.log(`${section} content = `,result)
+    //                 resolve(result);
+    //             })
+    //             .catch((error) => {
+    //                 const errorCode = error.code;
+    //                 const errorMessage = error.message;
+    //                 // console.log('Error al cargar la info de ', section, errorMessage);
+    //             });
+    //     });
+    // }
+
+    static getBoardInfo = (jamId, section) => {
+        return firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .collection('board')
+            .orderBy('createdAt', 'asc')
+            .onSnapshot(section)
     }
+
 
     /* * * * * * * *  CHAT * * * * * * * * * * * * * * * */
 
@@ -575,7 +551,6 @@ export default class DataService {
     // MESSAGES
 
     static saveMessage(jamId, section, messageInfo) {
-        console.log('save message launched with: ', jamId,' / ', section, ' / ',messageInfo)
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams').doc(jamId).collection(section)
                 .add(messageInfo)

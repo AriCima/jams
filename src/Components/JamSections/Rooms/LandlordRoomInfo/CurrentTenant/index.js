@@ -21,16 +21,14 @@ const CurrentTenant = ({
     setDocId,
     setEditable,
 }) => {
-
-    const takeMeToTenantInfo = (e) => {
-        console.log('currentTenant: ', currentTenant);
-        console.log('userId ', userId)
+        const takeMeToTenantInfo = (e) => {
         e.preventDefault();
         setSection('Tenants')
         setDocType('TENANT-FORM');
         setDocId(currentTenant.userId); // tenant's userId
         setEditable('false');
     }
+
     return (
         <div className="current-tenant-wrapper">
 
@@ -39,7 +37,7 @@ const CurrentTenant = ({
                 <div className="current-tenant-name"
                     onClick={(e)  => {takeMeToTenantInfo(e)}}
                 >
-                    <p>{currentTenant.firstName} {currentTenant.lastName}</p>
+                    <p>{currentTenant[0].firstName} {currentTenant[0].lastName}</p>
                     
                 </div>
 
@@ -48,8 +46,8 @@ const CurrentTenant = ({
                         user1Name={firstName}
                         user1LastName={lastName}
                         user1Id={userId}
-                        user2Name={currentTenant.firstName}
-                        user2LastName={currentTenant.lastName}
+                        user2Name={currentTenant[0].firstName}
+                        user2LastName={currentTenant[0].lastName}
                         user2Id={docId}
                         jamName={jamName}
                     />

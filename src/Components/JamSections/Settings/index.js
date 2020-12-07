@@ -221,7 +221,7 @@ const Settings = ({
                             <p>JAM INFO</p>
                         </dic>
                     </div>
-                    <div className="settings-section-info">
+                    <div className="settings-section-info row-section">
                         <div className="rules-custom-input-block midWidth">
                             <div className="block-label">
                                 <label>Jam Name</label>
@@ -236,7 +236,7 @@ const Settings = ({
                             </div>
                             <textarea name="jamDesc" ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block midWidth">
                             <div className="block-label">
                                 <label>Apartment location</label>
                                 {errors.address && <div className="field-error">Required</div>}
@@ -246,7 +246,7 @@ const Settings = ({
                                 placeholder="Street, hosue nr, floor, door . . ."
                                 ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block short-block">
                             <div className="block-label">
                                 <label>City</label>
                                 {errors.city && <div className="field-error">Required</div>}
@@ -255,7 +255,7 @@ const Settings = ({
                                 name="city"
                                 ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block short-block">
                             <div className="block-label">
                                 <label>ZipCode</label>
                                 {errors.zipCode && <div className="field-error">Required</div>}
@@ -264,7 +264,7 @@ const Settings = ({
                                 name="zipCode"
                                 ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block short-block">
                             <div className="block-label">
                                 <label>Country</label>
                                 {errors.country && <div className="field-error">Required</div>}
@@ -430,7 +430,7 @@ const Settings = ({
                         </div>
 
 
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block short-block">
                             <div className="block-label">
                                 <label>City</label>
                                 {errors.landlordCity && <div className="field-error">Required</div>}
@@ -439,7 +439,7 @@ const Settings = ({
                                 name="landlordCity"
                                 ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block short-block">
                             <div className="block-label">
                                 <label>ZipCode</label>
                                 {errors.landlordZipCode && <div className="field-error">Required</div>}
@@ -448,7 +448,7 @@ const Settings = ({
                                 name="landlordZipCode"
                                 ref={register({required: true})} disabled={disabled}/>
                         </div>
-                        <div className="rules-custom-input-block">
+                        <div className="rules-custom-input-block short-block">
                             <div className="block-label">
                                 <label>Country</label>
                                 {errors.landlordCountry && <div className="field-error">Required</div>}
@@ -721,7 +721,6 @@ const Settings = ({
 
 
 const mapStateToProps = state => {
-    console.log('state.jamInfo: ', state.jamInfo);
     const { section } = state.nav;
     const { jamName, jamDesc, jamType, jamDetails, jamCode, adminName, adminLastName } = state.jamInfo;
     const { jamId } = state.nav;

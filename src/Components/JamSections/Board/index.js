@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {useForm} from "react-hook-form";
 
 // COMPONENTS
@@ -13,16 +13,38 @@ import './index.scss';
 const Board = ({ jamId, userId, adminName, userRole, section }) => {
 
     const [boardInfo, setBoardInfo] = useState([]);
-   
+    const messagesEndRef = useRef(null);
+    
+    const scrollToBottom = () => {
+        // messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    };
+
     useEffect(() => {
-        jamId && getBoardContent(jamId)
+        if(boardInfo.length > 0 ) {
+            scrollToBottom()
+        }
+       
+    }, [boardInfo]);
+
+    useEffect(() => {
+        if(jamId) {
+            const unsubscribe = DataService.getBoardInfo(jamId, {
+                next: querySnapshot => {
+                    const messages = [];
+                    const result = querySnapshot.docs.map(docSnapshot => {
+                        const j = docSnapshot.data();
+                        j.id = docSnapshot.id;
+                        messages.push(j);
+                    });
+                    setBoardInfo(messages)
+                },
+                error: () => console.log('failure')
+            })
+            return unsubscribe
+        }
     }, [jamId])
 
 
-    const getBoardContent = async (jamId) => {
-        const res = await DataService.getBoardInfo(jamId, section);
-        setBoardInfo(res);
-    }
 
     const renderBoardContent = () => {
         return boardInfo.map((bC, i) => {
@@ -30,6 +52,7 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
                 <BoardContent 
                     key={i} 
                     boardContent={bC}
+                    ref={messagesEndRef}
                 />
             )
         })
@@ -37,9 +60,10 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
 
     const { register, errors, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {        
-        const date = new Date()
 
+    
+    const onSubmit = (data) => {    
+        const date = new Date()
         const messageInfo = {
             messageText: data.message,
             userId: userId,
@@ -49,8 +73,8 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
             createdAt: date,
             messageType: 'message'
         }
-
-        DataService.saveMessage(jamId, section, messageInfo)
+        DataService.saveMessage(jamId, section, messageInfo);
+        document.getElementById("board-message-form").reset();
     };
 
     const showSenMessageForm = userRole === 'Admin' || section === 'Flatmates'
@@ -66,6 +90,7 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
                         autocomplete="off"
                         className="board-form"
                         onSubmit={handleSubmit(onSubmit)}
+                        id="board-message-form"
                     >
                         <textarea
                             rows="1"
