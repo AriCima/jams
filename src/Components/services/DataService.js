@@ -93,12 +93,14 @@ export default class DataService {
 
 
     static getUserJams = (userId, userJams) => {
-        return firebase.firestore()
+        return new Promise((resolve, reject) => {
+        firebase.firestore()
             .collection('users')
             .doc(userId)
             .collection('userJams')
             .orderBy('createdAt')
             .onSnapshot(userJams)
+        });
     }
 
 

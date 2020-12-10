@@ -24,6 +24,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
     const [ third, setShowThird ] = useState(false);
     const [rent, setRent] = useState('');
     const [deposit, setDeposit] = useState('');
+
     const [defaultValues, setDefaultValues] = useState({
         nrOfTenants: 1,
         rent:"",
@@ -72,6 +73,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
 
     const onSubmit = (data) => {
         // console.log(data)
+
         setInvitationInfo(data)
         const { checkIn, checkOut, firstName, lastName } = data;
         data.registeredUser = false;
@@ -213,7 +215,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                             control={control}
                             valueName="checkIn" // DateSelect value's name is selected
                             onChange={([checkIn]) => checkIn}
-                            dateFormat="dd/MMMyyyy"
+                            dateFormat="dd/MMM/yyyy"
                             name="checkIn"
                             // className="input"
                             className="input"
@@ -230,7 +232,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                             control={control}
                             valueName="selected" // DateSelect value's name is selected
                             onChange={([selected]) => selected}
-                            dateFormat="dd/MMMyyyy"
+                            dateFormat="dd/MMM/yyyy"
                             name="checkOut"
                             className="input"
                             // className="input"

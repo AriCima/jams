@@ -25,10 +25,11 @@ const JamRegistrationForm = ({
         if (invId) {
             DataService.getInvitationInfo(jamId, invId)
             .then(res => {
+                console.log('res: ', res);
                 setInvInfo(res)
             })
         }
-    }, [])
+    }, [invId])
 
     const { register, errors, handleSubmit, control } = useForm({
         defaultValues: {
@@ -47,16 +48,16 @@ const JamRegistrationForm = ({
         data.registeredUser = true;
         data.userId = userId;
         data.userAccepted = false;
-        DataService.saveInvitationReply(jamId, invId, data)
-        .then(() => {
-            setRegisteredUser(true);
-            showForm(false);
-        })
-        // DataService.saveJammerInfoInJam(jamId, userId, data)
+        // DataService.saveInvitationReply(jamId, invId, data)
         // .then(() => {
         //     setRegisteredUser(true);
         //     showForm(false);
         // })
+        DataService.saveJammerInfoInJam(jamId, userId, data)
+        .then(() => {
+            setRegisteredUser(true);
+            showForm(false);
+        })
     };
 
     return ( 

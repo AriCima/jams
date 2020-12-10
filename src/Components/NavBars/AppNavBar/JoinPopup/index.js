@@ -57,10 +57,13 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
     DataService.getJamInfoByCode(jamCode)
     .then(result =>{
       
-      const jamId = result.id;
-      const joinedAt = new Date();
+      const {jamName, jamType, jamDesc, jamAdminId, jamAdminName, jamId} = result;
 
-      const {jamName, jamType, jamDesc, jamAdminId, jamAdminName} = result;
+      if(jamIds.includes(jamId) ) {
+        alert(`You are already jammer in ${jamName}`)
+        return
+      }
+      const joinedAt = new Date();
 
       const jamInfo = {
         jamCode,
@@ -70,13 +73,11 @@ const JoinPopup = ({ userId, email, firstName, lastName }) => {
         joinedAt,
         jamType,
         jamAdminId,
-        jamAdminName
+        jamAdminName,
+        lastActivity: joinedAt
       }
 
-      if(jamIds.includes(jamId) ) {
-        alert(`You are already jammer in ${jamInfo.jamName}`)
-        return
-      }
+
 
       DataService.addJamToUser(jamId, userId, jamInfo)
       .then(result =>{

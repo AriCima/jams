@@ -76,6 +76,7 @@ const CreatePopup = ({ userId, email, firstName, lastName }) => {
       jamDetails: {nrOfRooms, jamAddress, houseRules, landlordInfo},
       createdAt,
       updatedAt,
+      lastActivity: createdAt
     };
 
     DataService.createJam(newJam, userId, email, firstName, lastName)

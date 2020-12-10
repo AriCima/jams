@@ -11,7 +11,6 @@ import Footer from '../Footer';
 
 import './index.scss';
 
-
 function App() {
     return (
 

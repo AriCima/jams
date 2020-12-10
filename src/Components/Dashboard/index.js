@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
+import { PDFViewer } from '@react-pdf/renderer';
 
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
-import Modal from '../Modal';
+import ContractEN from '../Common/ContractEN';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
@@ -38,7 +39,7 @@ const Dashboard = ({
             const unsubscribe = DataService.getUserJams(userId, {
                 next: querySnapshot => {
                     const jams = [];
-                    const result = querySnapshot.docs.map(docSnapshot => {
+                    querySnapshot.docs.map(docSnapshot => {
                         const j = docSnapshot.data();
                         j.id = docSnapshot.id;
                         jams.push(j);
@@ -94,6 +95,9 @@ const Dashboard = ({
                     /> }
                 </aside>
                 <div className="jam-screen">
+                    <PDFViewer>
+                        <ContractEN contractInfo/>
+                    </PDFViewer>
                     {renderJam ? 
                         <Jam /> 
                         :
