@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
+import moment from 'moment';
+import { PDFViewer } from '@react-pdf/renderer';
 import { useForm, Controller } from "react-hook-form";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import DataService from '../../../services/DataService';
 import StartChatButton from '../../../UI/Buttons/StartChatButton';
-import ContractDialog from '../../../Reusables/ContractDialog';
-// import JammerContractInfo from '../../../Reusables/JammerContractInfo';
-// import JammerPersonalInfo from '../../../Reusables/JammerPersonalInfo';
-// import TenantPersonalInfo from '../../../Reusables/TenantPersonalInfo';
+import ContractES from '../../../Common/ContractES'
 
 // CSS
 import './index.scss';
@@ -24,6 +20,7 @@ const JammerInfo = ({
   jamId,
   jamName,
   lastName,
+  jamDetails,
   // userRole,
   firstName,
   userId,
@@ -33,6 +30,7 @@ const JammerInfo = ({
   
   const [tenantInfo, setTenantInfo] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [showContract, setShowContract ] = useState(false);
 
   useEffect(() => {
     // let documentId;
@@ -77,6 +75,11 @@ const JammerInfo = ({
 
   };
 
+  const manageContract = (e) => {
+    e.preventDefault();
+    setShowContract(true);
+  }
+
   return(
     <div className="tenant-info-wrapper">
       {docId && tenantInfo.length !== 0 ? (
@@ -112,9 +115,11 @@ const JammerInfo = ({
                       />
                     </div>
 
-                    {/* <ContractDialog
-                      tenantInfo={tenantInfo}
-                    /> */}
+                    <div className="contract-button"
+                      onClick={(e) => {manageContract(e)}}
+                    >
+                      show contract
+                    </div>
 
                   </div>
 
@@ -140,7 +145,15 @@ const JammerInfo = ({
                     </div>
                    
                 </div>
-
+                
+                {showContract && (
+                  <PDFViewer>
+                    <ContractES
+                      tenantInfo={tenantInfo}
+                      jamDetails={jamDetails}
+                    />
+                  </PDFViewer>
+                )}
 
                 <div className="tenant-info-section">
 
@@ -400,10 +413,10 @@ const JammerInfo = ({
 const mapStateToProps = state => {
   const { jamId } = state.nav;
   const { docId } = state.doc;
-  const { jamName } = state.jamInfo;
+  const { jamName, jamDetails } = state.jamInfo;
   const { userId , firstName, lastName, userRole } = state.userInfo
 
-  return { jamId, jamName, docId, userId, userRole, firstName, lastName }
+  return { jamId, jamDetails, jamName, docId, userId, userRole, firstName, lastName }
 };
   
 export default connect(mapStateToProps, null) (JammerInfo);

@@ -27,16 +27,16 @@ const GreenRadio = withStyles({
       },
     },
     checked: {},
-  })((props) => <Radio color="default" {...props} />);
+})((props) => <Radio color="default" {...props} />);
 
 const RedRadio = withStyles({
-root: {
-    color: red[400],
-    '&$checked': {
-    color: red[600],
+    root: {
+        color: red[400],
+        '&$checked': {
+        color: red[600],
+        },
     },
-},
-checked: {},
+    checked: {},
 })((props) => <Radio color="default" {...props} />);
 
 const Settings = ({
@@ -51,7 +51,6 @@ const Settings = ({
 }) => {
 
     const [disabled, setDisabled] = useState(true);
-
 
     const enableEditForm = (x) => {
         setDisabled(!x)

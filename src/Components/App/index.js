@@ -39,8 +39,9 @@ function App() {
                                 propsFn={props.history}
                                 jamId={props.match.params.jamId}
                                 jamName={props.match.params.jamName}
-                                invId={props.match.params.invId} />} 
-                            />
+                                invId={props.match.params.invId}
+                            />} 
+                        />
                     </Switch>
                 </div>
                 <div className="footer"><Footer /></div>

@@ -15,7 +15,7 @@ import JamRegistrationForm from '../Forms/JamRegistrationForm';
 
 import './index.scss';
 
-const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
+const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
 
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [invId, setInvId] = useState('')
@@ -25,6 +25,8 @@ const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
             const isAdmin = userRole === 'Admin';
             setShowRegisterForm(false);
             if(!isAdmin) {
+                console.log('adminName :',  adminName);
+                console.log('entró en no es Admin');
                 getJammerInfo();
             };
         };
@@ -103,9 +105,9 @@ const Jam = ({ jamId, jamType, userId, section, userRole } ) => {
 const mapStateToProps = state => {
     const { jamId, section } = state.nav;
     const { userId, userRole } = state.userInfo;
-    const {jamType } = state.jamInfo;
+    const {jamType, adminName } = state.jamInfo;
 
-    return { section, jamId, jamType, userId, userRole };
+    return { section, jamId, jamType, userId, adminName, userRole };
 };
 
 export default connect(mapStateToProps)(Jam);

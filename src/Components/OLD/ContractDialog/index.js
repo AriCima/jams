@@ -8,8 +8,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import ContractES from '../../Common/Contracts/ContractES';
-import ContractEN from '../../Common/Contracts/ContractEN';
+import ContractES from '../Contracts/ContractES';
+import ContractEN from '../Contracts/ContractEN';
 
 const ContractDialog = ({ }) => {
   const [open, setOpen] = useState(false);

@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { PDFViewer } from '@react-pdf/renderer';
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// COMPONENTS
-// import registerServiceWorker from './registerServiceWorker';
 
 // REDUX  el Middleware me permite utilizar el Thuk
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
+// import ContractES from './Components/Common/ContractES';
 // connecting Redux to Firebase: https://www.youtube.com/watch?v=gf5bVfVlNUM
 import { reduxFirestore, getFirestore } from 'redux-firestore';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
@@ -27,8 +26,8 @@ const store = createStore(rootReducer,
         reactReduxFirebase(fbConfig, { useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true }),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 
-    ));
-
+    )
+);
 
 ReactDOM.render(
     <Provider store={store}>

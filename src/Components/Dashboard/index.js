@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
-import { PDFViewer } from '@react-pdf/renderer';
 
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
-import ContractEN from '../Common/ContractEN';
+// import ContractEN from '../Common/ContractEN';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
@@ -95,9 +94,6 @@ const Dashboard = ({
                     /> }
                 </aside>
                 <div className="jam-screen">
-                    <PDFViewer>
-                        <ContractEN contractInfo/>
-                    </PDFViewer>
                     {renderJam ? 
                         <Jam /> 
                         :
