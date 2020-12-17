@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import moment from 'moment';
 
 import {setSubSection } from '../../../../redux/actions/navigateActions';
-import DataService from '../../../services/DataService';
+import NewRoomForm from '../../../Forms/NewRoomForm';
 
 import { withStyles } from '@material-ui/core/styles';
 import { green, red } from '@material-ui/core/colors';
@@ -37,14 +37,10 @@ const RedRadio = withStyles({
     checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-const RoomsOverview = ({ jamId, roomsTenants, setSubSection }) => {    
+const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {    
 
     const [ showAddRoom, setShowAddRoom ] = useState(false);
-    const [disabled, setDisabled] = useState(true);
 
-    const enableEditForm = (x) => {
-        setDisabled(!x)
-    };
 
     const showRoomInfo = (roomNr) => {
         setSubSection(roomNr)
@@ -85,16 +81,7 @@ const RoomsOverview = ({ jamId, roomsTenants, setSubSection }) => {
     }
     );
 
-    const { register, errors, handleSubmit, control } = useForm({
-        defaultValues: {
-            sqm: '1',
-        },
-    });
 
-    const onSubmit = (data) => {
-        console.log(data);
-        DataService.addRoomToJam(jamId, data)
-    };
   
     return (
 
@@ -104,14 +91,16 @@ const RoomsOverview = ({ jamId, roomsTenants, setSubSection }) => {
                 <div className="rooms-overview-header-title">
                     <h4>Roons list</h4>
                 </div>
-                <div className="rooms-overview-header-buttonsArea">
-                    <div 
-                        className="addRoom-button"
-                        onClick={(e) => {e.preventDefault(); setShowAddRoom(true)}}
-                    >
-                        Add Room
+                { !showAddRoom && (
+                    <div className="rooms-overview-header-buttonsArea">
+                        <div 
+                            className="addRoom-button"
+                            onClick={(e) => {e.preventDefault(); setShowAddRoom(true)}}
+                        >
+                            Add Room
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <table id="rooms-info-chart">
@@ -126,162 +115,13 @@ const RoomsOverview = ({ jamId, roomsTenants, setSubSection }) => {
                 {roomsTenants.length !== 0 && renderRoomsChart()}
             </table>
 
-            {/* {showAddRoom && (
-               <form
-                    autocomplete="off"
-                    className="tenant-info-form"
-                    onSubmit={ handleSubmit(onSubmit) }
-                >
-                    <div className="tenant-info-input-block shortWidth">
-                        <div className="block-label">
-                            <label>Room Nr</label>
-                        </div>
-                        <input
-                            className="inputDisabled"
-                            defaultValue={roomTenants + 1}
-                            name="rooNr"
-                            ref={register({required: true})}
-                            disabled={true}
-                        />
-                    </div>
-
-                    <div className="tenant-info-input-block shortWidth">
-                        <div className="block-label">
-                            <label>Sqm</label>
-                        </div>
-                        <input
-                            name="sqm"
-                            defaultValue={defaultValues.sqm}
-                            ref={register({required: true})}
-                        />
-                    </div>
-
-                    <table id="houseRules-table">
-                        <tr>
-                            <th>
-                                <p>Room features</p>
-                            </th>
-                            <th className="rules-value">
-                                <div className="header-values-wrapper">
-                                    <div className="value-box">
-                                        <p>YES</p>
-                                    </div>
-                                    <div className="value-box">
-                                        <p>NO</p>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td id="rules-text">
-                                <label>Is the room exterior ?</label>
-                            </td>
-                            <td id="rules-value">
-                            <section>
-                                <Controller
-                                    name="exterior"
-                                    control={control}
-                                    defaultValue={defaultValues.exterior}
-                                    as={
-                                        <RadioGroup aria-label="exterior">
-                                            <div className="radios-wrapper">
-                                                <div className="radio-box">
-                                                    <FormControlLabel
-                                                        value="yes"
-                                                        control={<GreenRadio />}
-                                                        disabled={disabled}
-                                                    />
-                                                </div>
-                                                <div className="radio-box">
-                                                    <FormControlLabel
-                                                        value="no"
-                                                        control={<RedRadio />}
-                                                        disabled={disabled}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </RadioGroup>
-                                    }
-                                />
-                            </section>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td id="rules-text">
-                                <label>Has the room balcony ?</label>
-                            </td>
-                            <td id="rules-value">
-                                <section>
-                                    <Controller
-                                        name="balcony"
-                                        control={control}
-                                        defaultValue={defaultValues.balcony}
-                                        as={
-                                            <RadioGroup aria-label="balcony">
-                                                <div className="radios-wrapper">
-                                                    <div className="radio-box">
-                                                        <FormControlLabel
-                                                            value="yes"
-                                                            control={<GreenRadio />}
-                                                            disabled={disabled}
-                                                        />
-                                                    </div>
-                                                    <div className="radio-box">
-                                                        <FormControlLabel
-                                                            value="no"
-                                                            control={<RedRadio />}
-                                                            disabled={disabled}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </RadioGroup>
-                                        }
-                                    />
-                                </section>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td id="rules-text">
-                                <label>Has the room a private bathroom ?</label>
-                            </td>
-                            <td id="rules-value">
-                                <section>
-                                    <Controller
-                                        name="privBath"
-                                        control={control}
-                                        defaultValue={defaultValues.privBath}
-                                        disabled={disabled}
-                                        as={
-                                            <RadioGroup aria-label="privBath">
-                                                <div className="radios-wrapper">
-                                                    <div className="radio-box">
-                                                        <FormControlLabel
-                                                            value="yes"
-                                                            control={<GreenRadio />}
-                                                            disabled={disabled}
-                                                        />
-                                                    </div>
-                                                    <div className="radio-box">
-                                                        <FormControlLabel
-                                                            value="no"
-                                                            control={<RedRadio />}
-                                                            disabled={disabled}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </RadioGroup>
-                                        }
-                                    />
-                                </section>
-                            </td>
-                        </tr>
-                                   
-                    </table>
-
-                </form> */}
-            )}
+            {showAddRoom &&
+                <NewRoomForm
+                    rooms={rooms}
+                    showForm={setShowAddRoom}
+                    roomNr=''
+                />
+            }
 
         </div>
 

@@ -14,8 +14,10 @@ import RoomsOverview from './RoomsOverview';
 import './index.scss';
 
 const Rooms = ({ jamId, nrOfRooms, subSection, jammers}) => {
+    const [rooms, setRooms] = useState([]);
     const [roomInfo, setRoomInfo] = useState({});
     const [roomsTenants, setRoomsTenants] = useState([]);
+
     useEffect(() => {
         const editedJammers = Calculations.removeAmdinFromJammers(jammers);
         const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
@@ -37,7 +39,9 @@ const Rooms = ({ jamId, nrOfRooms, subSection, jammers}) => {
     
     const getAllRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
-        // const roomsInfoStatus = Calculations.missingRoomsInfo(res);   PARA CUANDO FALTE INFO DE LA HAB
+        console.log('res: ', res);
+        setRooms(res)
+        const roomsInfoStatus = Calculations.missingRoomsInfo(res);   // PARA CUANDO FALTE INFO DE LA HAB
     };
 
     const showOverview = subSection === '';
@@ -50,7 +54,7 @@ const Rooms = ({ jamId, nrOfRooms, subSection, jammers}) => {
 
                 {showOverview ?
                     bookingsAlreadyOrdered ?
-                        <RoomsOverview roomsTenants={roomsTenants}/>
+                        <RoomsOverview roomsTenants={roomsTenants} rooms={rooms}/>
                         :
                         <p>Loading</p>
                     :
