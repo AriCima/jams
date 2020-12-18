@@ -5,7 +5,6 @@ import { setRegisteredUser } from '../../../redux/actions/userActions.js'
 
 import DataService from '../../services/DataService';
 
-import isEmpty from 'lodash/isEmpty';
 import { withStyles } from '@material-ui/core/styles';
 import { green, red } from '@material-ui/core/colors';
 
@@ -37,9 +36,17 @@ const RedRadio = withStyles({
     checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
+const EditRoomForm = ({ jamId, roomInfo }) => {
 
-    const [nextRoomNr, setNextRoomNr] = useState('');
+    const [disabled, setDisabled] = useState(true);
+    // const [sqm, setSqm] = useState('');
+    // const [exterior, setExterior] = useState('no');
+    // const [balcony, setBalcony] = useState('no');
+    // const [privBath, setPrivBath] = useState('no');
+    // const [nextRoomNr, setNextRoomNr] = useState('');
+    // const [rent, setRent] = useState('');
+    // const [expenses, setExpenses] = useState('');
+    // const [deposit, setDeposit] = useState('');
 
     
     // useEffect(() => {
@@ -48,15 +55,15 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
     //         setNextRoomNr(roomsNr+1);
     //         setDisabled(false);
     //     } else {
-    //         const r = rooms[roomNr];
-    //         setSqm(r.sqm);
-    //         setBalcony(r.balcony);
-    //         setPrivBath(r.privBath);
-    //         setExterior(r.exterior);
-    //         setNextRoomNr(roomNr);
-    //         setRent(r.rent);
-    //         setDeposit(r.deposit);
-    //         setExpenses(r.expenses);
+    //         // const r = rooms[roomNr];
+    //         // setSqm(r.sqm);
+    //         // setBalcony(r.balcony);
+    //         // setPrivBath(r.privBath);
+    //         // setExterior(r.exterior);
+    //         // setNextRoomNr(roomNr);
+    //         // setRent(r.rent);
+    //         // setDeposit(r.deposit);
+    //         // setExpenses(r.expenses);
     //         console.log('rooms -> : ', rooms)
     //         if (!isEmpty(rooms)) {
     //             setSqm(rooms.sqm);
@@ -71,33 +78,33 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
     //     };
     // },[roomNr, rooms])
 
-    useEffect(() => {
-        const roomsNr = rooms.length;
-        setNextRoomNr(roomsNr+1);
-    },[rooms])
-
 
     const defaultValues = {
-        roomNr: nextRoomNr,
-        sqm: '',
-        balcony: 'no',
-        exterior: 'no',
-        privBath: 'no',
-        deposit: '',
-        rent: '',
-        expenses: ''
+        roomNr: roomInfo.roomNr,
+        sqm: roomInfo.sqm,
+        balcony: roomInfo.balcony,
+        exterior: roomInfo.exterior,
+        privBath: roomInfo.privBath,
+        deposit: roomInfo.deposit,
+        rent: roomInfo.rent,
+        expenses: roomInfo.expenses
     }
+
+    const enableEditForm = (x) => {
+        setDisabled(!x)
+    };
 
     const { register, errors, handleSubmit, control } = useForm({defaultValues});
     
    
     const onSubmit = (data) => {
-        // data.roomNr = defaultValues.roomNr;
-        DataService.addRoomToJam(jamId, data);
-        showForm(false)
-    };
+        data.roomNr = defaultValues.roomNr;
+        console.log(data);
 
-   
+        const roomId = roomInfo.roomId;
+        DataService.updateRoomInfo(jamId, roomId, data)
+
+    };
 
     return ( 
         <div className="roomInfo-wrapper">
@@ -112,15 +119,26 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                     </div>
 
                     <div className="roomInfo-buttonArea">
-
-                        <input type="submit"/>
-                        <div 
-                            className="cancel-button"
-                            onClick={(e) => {e.preventDefault(); showForm(false)}}
-                        >
-                            Cancel
-                        </div>
-                       
+                        
+                        {disabled ? (
+                            <div 
+                                className="edit-button"
+                                onClick={(e) => {enableEditForm(true)}}
+                            >
+                                Edit Info
+                            </div>
+                            ) : (
+                            <>
+                                <input type="submit"/>
+                                <div 
+                                    className="cancel-button"
+                                    onClick={(e) => {e.preventDefault(); enableEditForm(false)}}
+                                >
+                                    Cancel
+                                </div>
+                            </>
+                        )}
+                  
                     </div>
                     
                 </div>
@@ -149,6 +167,7 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                             name="sqm"
                             ref={register({required: true})}
                             defaultValue={defaultValues.sqm}
+                            disabled={disabled}
                         />
                     </div>
 
@@ -161,6 +180,7 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                             name="rent"
                             ref={register({required: true})}
                             defaultValue={defaultValues.rent}
+                            disabled={disabled}
                         />
                     </div>
 
@@ -173,6 +193,7 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                             name="expenses"
                             ref={register({required: true})}
                             defaultValue={defaultValues.expenses}
+                            disabled={disabled}
                         />
                     </div>
 
@@ -185,6 +206,7 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                             name="deposit"
                             ref={register({required: true})}
                             defaultValue={defaultValues.deposit}
+                            disabled={disabled}
                         />
                     </div>
 
@@ -223,14 +245,14 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                                                 <FormControlLabel
                                                     value="yes"
                                                     control={<GreenRadio />}
-                    
+                                                    disabled={disabled}
                                                 />
                                             </div>
                                             <div className="radio-box">
                                                 <FormControlLabel
                                                     value="no"
                                                     control={<RedRadio />}
-                    
+                                                    disabled={disabled}
                                                 />
                                             </div>
                                         </div>
@@ -258,14 +280,14 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                                                     <FormControlLabel
                                                         value="yes"
                                                         control={<GreenRadio />}
-                        
+                                                        disabled={disabled}
                                                     />
                                                 </div>
                                                 <div className="radio-box">
                                                     <FormControlLabel
                                                         value="no"
                                                         control={<RedRadio />}
-                        
+                                                        disabled={disabled}
                                                     />
                                                 </div>
                                             </div>
@@ -286,7 +308,7 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                                     name="privBath"
                                     control={control}
                                     defaultValue={defaultValues.privBath}
-    
+                                    disabled={disabled}
                                     as={
                                         <RadioGroup aria-label="privBath">
                                             <div className="radios-wrapper">
@@ -294,14 +316,14 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
                                                     <FormControlLabel
                                                         value="yes"
                                                         control={<GreenRadio />}
-                        
+                                                        disabled={disabled}
                                                     />
                                                 </div>
                                                 <div className="radio-box">
                                                     <FormControlLabel
                                                         value="no"
                                                         control={<RedRadio />}
-                        
+                                                        disabled={disabled}
                                                     />
                                                 </div>
                                             </div>
@@ -329,4 +351,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, { setRegisteredUser })(NewRoomForm);
+export default connect(mapStateToProps, { setRegisteredUser })(EditRoomForm);

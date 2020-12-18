@@ -28,7 +28,7 @@ const JammersOverview = ({
             { showChart && (
                 userRole === 'Admin' ? 
                 <TenantsChart
-                    jammersList={jammersList}
+                    jammersList={roomInfo}
                 />
                 : (
                     <div className="guest-jammers-section">

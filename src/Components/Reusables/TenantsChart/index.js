@@ -15,8 +15,7 @@ const TenantsChart = ({
     subSection,
     setDocType,
     setSection,
-    setDocId,
-    // setEditable,
+    setDocId
 }) => {
     
     const [ activeTab, setActiveTab ] = useState('current');
@@ -30,7 +29,6 @@ const TenantsChart = ({
     };
 
     const showRoomNr = section === 'Tenants' || (section === 'Rooms' && subSection === '');
-
 
     const renderTenantsRow = () => {
         
@@ -48,8 +46,8 @@ const TenantsChart = ({
                 filteredTenants = jammersList.formerTenants;
                 break;
             default:
-                if (!isEmpty(jammersList.currentTenants)) {
-                    filteredTenants = jammersList.currentTenants;
+                if (!isEmpty(jammersList.currentTenant)) {
+                    filteredTenants = jammersList.currentTenant;
                 }
         }
         

@@ -6,7 +6,7 @@ import PersonalInfoBlock from '../../UI/PersonalInfoBlock';
 // CSS
 // import './index.scss';
 
-const JammerContractInfo = ({ contractInfo}) => {
+const JammerContractInfo = ({ contractInfo, showRoomNr }) => {
 
     const { checkIn, checkOut, roomNr, rent, deposit } = contractInfo;
     
@@ -31,11 +31,13 @@ const JammerContractInfo = ({ contractInfo}) => {
                 data={moment(checkOut).format('DD-MMM-YYYY')}
                 backColor={'checkOut'}
             />
-            <PersonalInfoBlock
-                info={'Room Nr'}
-                data={roomNr}
-                backColor={'secondary'}
-            />
+            { showRoomNr && (
+                <PersonalInfoBlock
+                    info={'Room Nr'}
+                    data={roomNr}
+                    backColor={'secondary'}
+                />
+            )}
             <PersonalInfoBlock
                 info={'Rent'}
                 data={rent}

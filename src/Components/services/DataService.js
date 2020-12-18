@@ -820,47 +820,47 @@ export default class DataService {
         });
     }
 
-    static updateBookingSummary(jamId, roomId, bookingInfo) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams')
-                .doc(jamId)
-                .collection('rooms')
-                .doc(roomId)
-                .set({
-                    bookingInfo,
-                }, { merge: true })
-                .then((docRef) => {
-                    console.log('Document updated with ID: ', docRef);
-                    resolve(docRef);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                // console.log('Message could not be sent: ', errorCode);
-                });
-        });
-    }
+    // static updateBookingSummary(jamId, roomId, bookingInfo) {
+    //     return new Promise((resolve, reject) => {
+    //         firebase.firestore().collection('jams')
+    //             .doc(jamId)
+    //             .collection('rooms')
+    //             .doc(roomId)
+    //             .set({
+    //                 bookingInfo,
+    //             }, { merge: true })
+    //             .then((docRef) => {
+    //                 console.log('Document updated with ID: ', docRef);
+    //                 resolve(docRef);
+    //             })
+    //             .catch((error) => {
+    //                 const errorCode = error.code;
+    //             // console.log('Message could not be sent: ', errorCode);
+    //             });
+    //     });
+    // }
 
-    static updateBooking(jamId, roomId, bookingId, field, newValue) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams')
-                .doc(jamId)
-                .collection('rooms')
-                .doc(roomId)
-                .collection('bookings')
-                .doc(bookingId)
-                .update(
-                    { [field]: newValue },
-                )
-                .then((docRef) => {
-                    console.log('Document successfully updated: ', docRef.id);
-                    resolve(docRef);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                // console.log('Message could not be sent: ', errorCode);
-                });
-        });
-    }
+    // static updateBooking(jamId, roomId, bookingId, field, newValue) {
+    //     return new Promise((resolve, reject) => {
+    //         firebase.firestore().collection('jams')
+    //             .doc(jamId)
+    //             .collection('rooms')
+    //             .doc(roomId)
+    //             .collection('bookings')
+    //             .doc(bookingId)
+    //             .update(
+    //                 { [field]: newValue },
+    //             )
+    //             .then((docRef) => {
+    //                 console.log('Document successfully updated: ', docRef.id);
+    //                 resolve(docRef);
+    //             })
+    //             .catch((error) => {
+    //                 const errorCode = error.code;
+    //             // console.log('Message could not be sent: ', errorCode);
+    //             });
+    //     });
+    // }
 
     static getRoomBookings(jamId, roomId) {
         return new Promise((resolve, reject) => {
@@ -902,40 +902,50 @@ export default class DataService {
         });
     }
 
-    static updateRoomInfo(jamId, roomId, field, newValue) {
+    static getRoomInfo(jamId, roomNr) {
+        console.log('roomId: ', roomNr);
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
                 .doc(jamId)
                 .collection('rooms')
-                .doc(roomId)
-                .update(
-                    { [field]: newValue },
-                )
-                .then((docRef) => {
-                    console.log('Room successfully updated: ', docRef.id);
-                    resolve(docRef);
+                .where('roomNr', '==', roomNr)
+                .get()
+                .then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+                        const res = doc.data();
+                        res.roomId = doc.id;
+                        resolve(res);
+                    });
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
-                // console.log('Message could not be sent: ', errorCode);
+                    console.log('error: ', error);
                 });
         });
     }
-
-    static getRoomInfo(jamId, roomId) {
+    static updateRoomInfo(jamId, roomId, data) {
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
                 .doc(jamId)
                 .collection('rooms')
                 .doc(roomId)
-                .get()
-                .then(result => {
-                    const roomInfo = result.data();
-                    resolve(roomInfo);
+                .update({
+                    "rent": data.rent,
+                    "deposit": data.deposit,
+                    "expenses": data.expenses,
+                    "sqm": data.sqm,
+                    "exterior": data.exterior,
+                    "balcony": data.balcony,
+                    "privBath": data.privBath,
+                    "roomNr": data.roomNr,
                 })
-
-                .catch((error) => {
-                    console.log('error: ', error);
+                .then(function() {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function(error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
                 });
         });
     }

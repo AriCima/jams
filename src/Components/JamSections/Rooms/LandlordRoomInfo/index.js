@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
+
 import Calculations from '../../../services/Calculations';
+import DataService from '../../../services/DataService';
+
+import EditRoomForm from '../../../Forms/EditRoomForm';
 import InviteJammerButton from '../../../UI/Buttons/InviteJammerButton';
 import CurrentTenant from './CurrentTenant';
 import TenantsChart from '../../../Reusables/TenantsChart';
@@ -13,16 +17,10 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.scss';
 
-const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomDetails, subSection}) => {
+const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomInfo, subSection}) => {
 
-    const roomJammers = roomsTenants[subSection];
+    const noCurrentTenant = isEmpty(roomInfo.currentTenant);
 
-    const editedJammers = Calculations.removeAmdinFromJammers(jammers);
-    const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-    const editedTenants = Calculations.getOrganizedTenants(tenantsByRooms)
-    const currentTenant = editedTenants[subSection].currentTenants;
-    const noCurrentTenant = isEmpty(currentTenant);
-    
     const roomNr = subSection + 1;
     roomNr.toString();
 
@@ -54,14 +52,20 @@ const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomDetails
                 { !noCurrentTenant && (
                     <div className="room-section">
                         <CurrentTenant
-                            currentTenant={currentTenant}
+                            currentTenant={roomInfo.currentTenant}
                         />
                     </div>
                 )}
 
                 <div className="room-section">
                     <TenantsChart
-                        jammersList={editedTenants[subSection]}
+                        jammersList={roomInfo}
+                    />
+                </div>
+
+                <div className="editRoomForm-wrapper">
+                    <EditRoomForm
+                        roomInfo={roomInfo}
                     />
                 </div>
 

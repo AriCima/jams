@@ -8,11 +8,16 @@ import Calculations from '../../services/Calculations';
 import './index.scss';
 
 const BookingsGraphic = ({ jammers, subSection, nrOfRooms }) => {
-    
+
     const editedJammers = Calculations.removeAmdinFromJammers(jammers);
     const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-    const allTenants = tenantsByRooms[subSection]
-   
+
+    let allTenants = [];
+
+    if (subSection < tenantsByRooms.length ) {
+        allTenants = tenantsByRooms[subSection]
+    };
+
     const generateGraphicsMonths = () => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -51,6 +56,8 @@ const BookingsGraphic = ({ jammers, subSection, nrOfRooms }) => {
 
 
     const generateDays = (mm, yy) => { // x = 'Mes' y = yyyy
+        if(allTenants.length === 0) return;
+
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         const oneMonthArray = [];

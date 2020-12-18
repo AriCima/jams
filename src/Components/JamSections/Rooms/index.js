@@ -13,58 +13,67 @@ import RoomsOverview from './RoomsOverview';
 // CSS
 import './index.scss';
 
-const Rooms = ({ jamId, nrOfRooms, subSection, jammers}) => {
-    const [rooms, setRooms] = useState([]);
+const Rooms = ({ jamId, nrOfRooms, subSection, jammers, rooms }) => {
+
     const [roomInfo, setRoomInfo] = useState({});
-    const [roomsTenants, setRoomsTenants] = useState([]);
-
-    useEffect(() => {
-        const editedJammers = Calculations.removeAmdinFromJammers(jammers);
-        const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms)
-        setRoomsTenants(organizedTenantsByRoom);
-
-        if (subSection === '') {
-            getAllRoomsInfo(jamId);
-        } else {
-            getOneRoomInfo(jamId);
-        }
-    }, [subSection, jamId]);
-
-    const getOneRoomInfo = async (jamId) => {
-        const stringRoomNr = toString(subSection);
-        const res = await DataService.getSingleRoomInfo(jamId, stringRoomNr);
-        setRoomInfo(res);
-    };
+    // const [roomsTenants, setRoomsTenants] = useState([]);
+    // const [roomsFullInfo, setRoomsFullInfo ] = useState([]);
     
-    const getAllRoomsInfo = async (jamId) => {
-        const res = await DataService.getJamRooms(jamId);
-        console.log('res: ', res);
-        setRooms(res)
-        const roomsInfoStatus = Calculations.missingRoomsInfo(res);   // PARA CUANDO FALTE INFO DE LA HAB
-    };
+    useEffect(() => {
+        // const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+        // const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+        // const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, rooms);
+        // setRoomsTenants(organizedTenantsByRoom);
+        
+        // const oTL = organizedTenantsByRoom.length; 
+
+        // if(oTL > 0) {
+        //     for (let i = 0; i < rooms.length; i++) {
+        //         if(i <= oTL-1) {
+        //             const oT = organizedTenantsByRoom[i];
+        //             rooms[i].currentTenant = oT.currentTenants;
+        //             rooms[i].formerTenants = oT.formerTenants;
+        //             rooms[i].futureTenants = oT.futureTenants;
+        //         } else {
+        //             rooms[i].currentTenant = [];
+        //             rooms[i].formerTenants = [];
+        //             rooms[i].futureTenants = [];
+        //         }
+        //     }
+        //     setRoomsFullInfo(rooms);
+        // }
+
+        if (subSection !== '') {
+            setRoomInfo(rooms[subSection]);
+        }
+
+    }, [subSection, jamId ]);
 
     const showOverview = subSection === '';
-    const bookingsAlreadyOrdered = roomsTenants.length > 0;
-    const showRoomInfo = roomsTenants.length > 0;
+    // const bookingsAlreadyOrdered = roomsTenants.length > 0;
+    // const showRoomInfo = roomsTenants.length > 0;
+
     return (
         <div className="landlord-rooms">
 
             <div className="landlord-room-info">
 
                 {showOverview ?
-                    bookingsAlreadyOrdered ?
-                        <RoomsOverview roomsTenants={roomsTenants} rooms={rooms}/>
-                        :
-                        <p>Loading</p>
+                    // bookingsAlreadyOrdered ?
+                        <RoomsOverview
+                            roomsTenants={roomsTenants}
+                            rooms={roomsFullInfo}
+                        />
+                        // :
+                        // <p>Loading</p>
                     :
-                    showRoomInfo ?
+                    // showRoomInfo ?
                         <LandlordRoomInfo
                             roomInfo={roomInfo}
                             roomsTenants={roomsTenants}
                         />
-                        :
-                        <p>Loading Room Info</p>
+                        // :
+                        // <p>Loading Room Info</p>
                 }
 
             </div>
@@ -78,9 +87,9 @@ const Rooms = ({ jamId, nrOfRooms, subSection, jammers}) => {
 const mapStateToProps = (state) => {
     const { jamId, subSection } = state.nav;
     const { nrOfRooms } = state.jamInfo.jamDetails;
-    const { jammers } = state.jamInfo;
+    const { jammers, rooms } = state.jamInfo;
 
-    return { jamId, subSection, nrOfRooms, jammers }
+    return { jamId, subSection, nrOfRooms, jammers, rooms }
     
 };
 export default connect(mapStateToProps, null)(Rooms);

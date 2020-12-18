@@ -429,7 +429,7 @@ export default class Calculations {
         return tenantsByRooms
     }
 
-    static getOrganizedTenants = (tenantsByRooms) => { // Organiza los inquilinos de cada room
+    static getOrganizedTenants = (tenantsByRooms, rooms) => { // Organiza los inquilinos de cada room
         
         const result = [];
         const today = new Date();

@@ -1,56 +1,28 @@
 import React, { useState }from 'react';
 import { connect } from 'react-redux';
-import { useForm, Controller } from "react-hook-form";
 import moment from 'moment';
 
 import {setSubSection } from '../../../../redux/actions/navigateActions';
 import NewRoomForm from '../../../Forms/NewRoomForm';
-
-import { withStyles } from '@material-ui/core/styles';
-import { green, red } from '@material-ui/core/colors';
-import {
-    RadioGroup,
-    FormControlLabel,
-    Radio,
-} from "@material-ui/core";
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './index.scss';
 
-
-const GreenRadio = withStyles({
-    root: {
-      color: green[400],
-      '&$checked': {
-        color: green[600],
-      },
-    },
-    checked: {},
-})((props) => <Radio color="default" {...props} />);
-
-const RedRadio = withStyles({
-    root: {
-        color: red[400],
-        '&$checked': {
-        color: red[600],
-        },
-    },
-    checked: {},
-})((props) => <Radio color="default" {...props} />);
-
 const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {    
-
+    
     const [ showAddRoom, setShowAddRoom ] = useState(false);
-
-
+    
     const showRoomInfo = (roomNr) => {
         setSubSection(roomNr)
     };
-
-    const renderRoomsChart = () => roomsTenants.map((jj, i) => {
-        const currentTenant = jj.currentTenants;
+    
+    const renderRoomsChart = () => rooms.map((room, i) => {
+        const currentTenant = room.currentTenant;
         const roomNr =i+1;
         const stringNr = roomNr.toString();
         const isVacant = currentTenant.length === 0;
+
         return(
             <tr
                 onClick={() => {
@@ -80,8 +52,6 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
         )
     }
     );
-
-
   
     return (
 
@@ -111,7 +81,11 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
                         className="addRoom-button"
                         onClick={(e) => {e.preventDefault(); setShowAddRoom(true)}}
                     >
-                        Add Room
+                        <FontAwesomeIcon
+                            className="addRoomIcon"
+                            icon={faPlus}
+                        />
+                        <p>Add a new Room</p>
                     </div>
                 </div>
             )}
@@ -124,22 +98,10 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
                 />
             </div>
 
-            {/* {showAddRoom &&
-                <NewRoomForm
-                    rooms={rooms}
-                    showForm={setShowAddRoom}
-                    roomNr=''
-                />
-            } */}
-
         </div>
 
     );
 };
-const mapStateToProps = (state) => {
-    const { jamId } = state.nav;
 
-    return { jamId }
-};
 
-export default connect(mapStateToProps, { setSubSection })(RoomsOverview);
+export default connect(null, { setSubSection })(RoomsOverview);

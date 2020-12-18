@@ -33,6 +33,7 @@ const JammerOverview = ({ jamName, jamId, jamDesc, userId, firstName, lastName, 
 
             <JammerContractInfo
                 contractInfo={contractInfo}
+                showRoomNr={true}
             />
 
             <JammerHouseRules />

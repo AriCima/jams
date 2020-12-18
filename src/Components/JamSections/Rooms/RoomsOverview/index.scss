@@ -1,13 +1,14 @@
 @import '../../../../variables.scss';
 
 .rooms-overview-wrapper{
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+
     .rooms-overview-header{
-        width: 80%;
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -21,45 +22,15 @@
                 margin: 0;
             };
         };
-
-        .rooms-overview-header-buttonsArea{
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin: 0;
-            position: absolute;
-            top: 25px;
-            right: 30px;
-
-            .addRoom-button{
-                background: $buttonPrimary;
-                color: white;
-                text-transform: uppercase;
-                border: none;
-                padding: 10px;
-                font-size: 16px;
-                font-weight: 100;
-                letter-spacing: 5px;
-                border-radius: 5px;
-                p{ 
-                    color: white;
-                    margin: 0;
-                }
-                
-                &:hover{
-                    cursor: pointer;
-                    background-color: $buttonPrimary-hover;
-                }
-            }
-        }
     };
 
     #rooms-info-chart{
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
-        width: 80%;
+        width: 100%;
         box-shadow: $shadow;
         border-radius: 15px;
+        margin-bottom: 20px;
     
         th {
             padding-top: 12px;
@@ -91,8 +62,45 @@
     
     }
 
+    .rooms-overview-header-buttonsArea{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0;
+
+
+        .addRoom-button{
+            color: white;
+            text-transform: uppercase;
+            border: 1px solid $buttonPrimary;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            &:hover{
+                cursor: pointer;
+                box-shadow: $shadow;
+            }
+
+            p{ 
+                color: $buttonPrimary;
+                font-weight: 500;
+                font-size: $smallFont;
+                margin: 0 0 0 20px;
+            }
+            .addRoomIcon{
+                color: $buttonPrimary;
+            }
+        }
+    }
+
     .newRoomForm-wrapper{
+        width: 100%;
         height: auto;
+        display: flex;
+        justify-content: center;
         overflow: hidden;
         transform: scaleY(0);
         transform-origin: top;

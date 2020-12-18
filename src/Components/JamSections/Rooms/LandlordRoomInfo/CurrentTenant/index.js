@@ -56,7 +56,7 @@ const CurrentTenant = ({
 
             </div>
 
-            <JammerContractInfo contractInfo={currentTenant} />
+            <JammerContractInfo contractInfo={currentTenant} showRoomNr={false}/>
 
         </div>
 

@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
+import Calculations from '../services/Calculations';
 import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
 // import ContractEN from '../Common/ContractEN';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
-import { setJamName, setJamType, setJammers, setJamAdminId, setJamAdminName, setJamDesc, setJamCode, setJamDetails } from '../../redux/actions/jamActions.js';
+import { setJamName, setJamType, setJammers, setJamRooms, setJamAdminId, setJamAdminName, setJamDesc, setJamCode, setJamDetails } from '../../redux/actions/jamActions.js';
 import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
 const Dashboard = ({ 
@@ -21,6 +22,7 @@ const Dashboard = ({
     setJamDesc,
     setJamDetails,
     setJammers,
+    setJamRooms,
     setJamName,
     setJamType,
     setUserJams,
@@ -59,9 +61,34 @@ const Dashboard = ({
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
         const jammers = await DataService.getJammers(jamId);
+        const rooms = await DataService.getJamRooms(jamId);
+
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
+        const nrOfRooms = jamDetails.nrOfRooms;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
-       
+        
+        const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+        const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, rooms);
+        
+        const oTL = organizedTenantsByRoom.length; 
+        
+        if(oTL > 0) {
+            for (let i = 0; i < rooms.length; i++) {
+                if(i <= oTL-1) {
+                    const oT = organizedTenantsByRoom[i];
+                    rooms[i].currentTenant = oT.currentTenants;
+                    rooms[i].formerTenants = oT.formerTenants;
+                    rooms[i].futureTenants = oT.futureTenants;
+                } else {
+                    rooms[i].currentTenant = [];
+                    rooms[i].formerTenants = [];
+                    rooms[i].futureTenants = [];
+                }
+            }
+            setJamRooms(rooms);
+        }
+
         // Info en el state
         setJamInfo(res);
 
@@ -75,6 +102,7 @@ const Dashboard = ({
         setJamDetails(jamDetails)
         setJamCode(jamCode)
         setJammers(jammers)
+        // setJamRooms(rooms)
     };
 
     const renderJam = jamId && !isEmpty(jamInfo);
@@ -129,6 +157,7 @@ export default connect(mapStateToProps, {
     setUserJams,
     setUserRole,
     setJamCode,
-    setJammers
+    setJammers,
+    setJamRooms
 }) (Dashboard);
 
