@@ -90,5 +90,17 @@
         }
     
     }
+
+    .newRoomForm-wrapper{
+        height: auto;
+        overflow: hidden;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition:transform 0.3s ease-out; 
+    }
+
+    .newRoomActive{
+        transform:scaleY(1);
+    }
 }
 

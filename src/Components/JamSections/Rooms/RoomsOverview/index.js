@@ -91,16 +91,6 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
                 <div className="rooms-overview-header-title">
                     <h4>Roons list</h4>
                 </div>
-                { !showAddRoom && (
-                    <div className="rooms-overview-header-buttonsArea">
-                        <div 
-                            className="addRoom-button"
-                            onClick={(e) => {e.preventDefault(); setShowAddRoom(true)}}
-                        >
-                            Add Room
-                        </div>
-                    </div>
-                )}
             </div>
 
             <table id="rooms-info-chart">
@@ -115,13 +105,32 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
                 {roomsTenants.length !== 0 && renderRoomsChart()}
             </table>
 
-            {showAddRoom &&
+            { !showAddRoom && (
+                <div className="rooms-overview-header-buttonsArea">
+                    <div 
+                        className="addRoom-button"
+                        onClick={(e) => {e.preventDefault(); setShowAddRoom(true)}}
+                    >
+                        Add Room
+                    </div>
+                </div>
+            )}
+
+            <div className={`newRoomForm-wrapper ${showAddRoom ? 'newRoomActive' : ''}`}>
                 <NewRoomForm
                     rooms={rooms}
                     showForm={setShowAddRoom}
                     roomNr=''
                 />
-            }
+            </div>
+
+            {/* {showAddRoom &&
+                <NewRoomForm
+                    rooms={rooms}
+                    showForm={setShowAddRoom}
+                    roomNr=''
+                />
+            } */}
 
         </div>
 
