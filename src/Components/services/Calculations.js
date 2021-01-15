@@ -427,7 +427,7 @@ export default class Calculations {
         };
 
         return tenantsByRooms
-    }
+    };
 
     static getOrganizedTenants = (tenantsByRooms, rooms) => { // Organiza los inquilinos de cada room
         
@@ -529,10 +529,8 @@ export default class Calculations {
                 result.futureTenants.push(tenant);
             }
         }
-        
         return result  // Array length = nro habs 
-
-    }
+    };
     
     // - - - - - - - - STATISTICS - - - - - - - - 
     
@@ -668,7 +666,6 @@ export default class Calculations {
         return roomsOccupancy
     };
 
-
     static getAllTenantsInOneRoom = (tenants) => {
 
         let allTenants = [tenants.currentTenant];
@@ -691,7 +688,7 @@ export default class Calculations {
         }
 
         return allTenants
-    }
+    };
 
     // * * * * * ** * * ** *  to visualize tenants
     static organizeAdminTenants = (tenants) => {
@@ -717,6 +714,16 @@ export default class Calculations {
 
         return result
     };
+
+    static fitlerTenantsByRoomNr = (tenants, roomNr) => {
+        const roomString = (roomNr+1).toString()
+
+        for (let elem in tenants) {
+            const filteredTenants = tenants[elem].filter(i => i.roomNr === roomString);
+            tenants[elem] = filteredTenants;
+        }
+        return tenants;
+    }
 
     static organizeFlatmates = (tenants, userId) => {
 
@@ -770,8 +777,6 @@ export default class Calculations {
         return validationResult
        
     };
-    
-    
     
     // - - - - - - - - ROOMS  - - - - - - - - - - - 
 

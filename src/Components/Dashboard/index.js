@@ -33,7 +33,7 @@ const Dashboard = ({
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({});
 
-    // Use an effect hook to subscribe to the grocery list item stream and
+    // Use an effect hook to subscribe to the jams list item stream and
     // automatically unsubscribe when the component unmounts.
     useEffect(() => {
         if(userId) {
@@ -101,7 +101,7 @@ const Dashboard = ({
         setJamType(jamType)
         setJamDetails(jamDetails)
         setJamCode(jamCode)
-        setJammers(jammers)
+        setJammers(editedJammers)
         // setJamRooms(rooms)
     };
 

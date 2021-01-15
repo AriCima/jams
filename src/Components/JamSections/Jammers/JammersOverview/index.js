@@ -14,34 +14,26 @@ import './index.scss';
 
 const JammersOverview = ({
     jammers,
-    userRole,
-    userId,
+    userRole
 }) => {
-
-    const editedJammers = Calculations.removeAmdinFromJammers(jammers);
-    const jammersList = Calculations.getAllTenantsOrganized(editedJammers)
-    
-    const showChart = !isEmpty(jammersList);
     
     return (
         <>
-            { showChart && (
-                userRole === 'Admin' ? 
-                <TenantsChart
-                    jammersList={roomInfo}
-                />
-                : (
-                    <div className="guest-jammers-section">
-                        <div className="guest-jammers-board">
-                            <Board section={'Flatmates'} />
-                        </div>
 
-                        <div className="guest-jammers-list">
-                            {/* <JammersList jammersList={jammers} /> */}
-                        </div>
+            {userRole === 'Admin' ? 
+            <TenantsChart />
+            : (
+                <div className="guest-jammers-section">
+                    <div className="guest-jammers-board">
+                        <Board section={'Flatmates'} />
                     </div>
-                )
-            ) }
+
+                    <div className="guest-jammers-list">
+                        <JammersList jammersList={jammers} />
+                    </div>
+                </div>
+            )}
+
         </>
     );
 };

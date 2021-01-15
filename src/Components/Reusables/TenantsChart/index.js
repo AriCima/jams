@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
@@ -10,16 +10,20 @@ import Calculations from '../../services/Calculations';
 import './index.scss';
 
 const TenantsChart = ({
-    jammersList,
     section,
     subSection,
     setDocType,
     setSection,
-    setDocId
+    setDocId,
+    jammers
 }) => {
-    
-    const [ activeTab, setActiveTab ] = useState('current');
-    
+    const [ activeTab, setActiveTab ] = useState(`${section !== 'Rooms' ? 'current' : 'future'}`);
+    const [ jammersList, setJammersList ] = useState({});
+
+    useEffect(() => {
+       jammers && getJammersByTime()
+    }, [jammers])
+
     const takeMeToTenantInfo = (e, userId) => {
         e.preventDefault();
         setSection('Tenants')
@@ -28,7 +32,17 @@ const TenantsChart = ({
         // setEditable('true');
     };
 
+    const getJammersByTime = async () => {
+        const res = await Calculations.getAllTenantsOrganized(jammers);
+        let filteredRes = res;
+        if( subSection !== '') {
+            filteredRes = Calculations.fitlerTenantsByRoomNr(res, subSection)
+        } 
+        setJammersList(filteredRes);
+    };
+
     const showRoomNr = section === 'Tenants' || (section === 'Rooms' && subSection === '');
+    const showCurrentTenants = section !== 'Rooms';
 
     const renderTenantsRow = () => {
         
@@ -37,17 +51,20 @@ const TenantsChart = ({
         switch (activeTab) {
             case 'future':
                 let orderedFut = [];
-                if(jammersList.futureTenants.length > 0) {
+                if(!isEmpty(jammersList.futureTenants)) {
                     orderedFut = Calculations.sortByCheckInAsc(jammersList.futureTenants)
                 };
                 filteredTenants = orderedFut;
                 break;
             case 'former':
-                filteredTenants = jammersList.formerTenants;
+                if (!isEmpty(jammersList.formerTenants)) {
+                    filteredTenants = jammersList.formerTenants;
+                }
                 break;
             default:
-                if (!isEmpty(jammersList.currentTenant)) {
-                    filteredTenants = jammersList.currentTenant;
+
+                if (!isEmpty(jammersList.currentTenants)) {
+                    filteredTenants = jammersList.currentTenants;
                 }
         }
         
@@ -79,55 +96,57 @@ const TenantsChart = ({
 
     }
     
+
     return(
     
     <div className="tenants-chart-wrapper">
-        
-                <table id="tenants-chart">
+        <table id="tenants-chart">
+            <tr id="tabs-row">
 
-                    <tr id="tabs-row">
-                        <td
-                            onClick={(e) => {e.preventDefault(); setActiveTab('current')}}
-                            className={`tab-value ${activeTab === 'current' ? "activeTab" : ""}`}
-                            
-                        >
-                            <p>Current Tenants</p>
-                        </td>
-                        <td
-                            onClick={(e) => {e.preventDefault(); setActiveTab('future')}}
-                            className={`tab-value ${activeTab === 'future' ? "activeTab" : ""}`}>
-                            <p>Future Tenants</p>
-                        </td>
-                        <td 
-                            onClick={(e) => {e.preventDefault(); setActiveTab('former')}}
-                            className={`tab-value ${activeTab === 'former' ? "activeTab" : ""}`}>
-                            <p>Former Tenants</p>
-                        </td>
-                    </tr>
-                </table>
-                <table id="tenants-rows-table">
-                    <tr id="titles-row">
-                        <th className="row-title firstTitle" ><p>Name</p></th>
-                        {showRoomNr && <th className="row-title"><p>Room Nr</p></th>}
-                        <th className="row-title"><p>Check-In</p></th>
-                        <th className="row-title"><p>Check-Out</p></th>
-                        <th className="row-title"><p>Rent</p></th>
-                        <th className="row-title lastTitle"><p>Deposit</p></th>
-                    </tr>
+                {showCurrentTenants && (
+                    <td
+                        onClick={(e) => {e.preventDefault(); setActiveTab('current')}}
+                        className={`tab-value ${activeTab === 'current' ? "activeTab" : ""}`}
+                        
+                    >
+                        <p>Current Tenants</p>
+                    </td>
+                )}
+                <td
+                    onClick={(e) => {e.preventDefault(); setActiveTab('future')}}
+                    className={`tab-value ${activeTab === 'future' ? "activeTab" : ""}`}>
+                    <p>Future Tenants</p>
+                </td>
+                <td 
+                    onClick={(e) => {e.preventDefault(); setActiveTab('former')}}
+                    className={`tab-value ${activeTab === 'former' ? "activeTab" : ""}`}>
+                    <p>Former Tenants</p>
+                </td>
+            </tr>
+        </table>
+        <table id="tenants-rows-table">
+            <tr id="titles-row">
+                <th className="row-title firstTitle" ><p>Name</p></th>
+                {showRoomNr && <th className="row-title"><p>Room Nr</p></th>}
+                <th className="row-title"><p>Check-In</p></th>
+                <th className="row-title"><p>Check-Out</p></th>
+                <th className="row-title"><p>Rent</p></th>
+                <th className="row-title lastTitle"><p>Deposit</p></th>
+            </tr>
 
-                    {renderTenantsRow()}
+            {renderTenantsRow()}
 
-                </table>
+        </table>
     </div>
-
   )
 }
 
 const mapStateToProps = (state) => {
     const { jamId, section, subSection } = state.nav;
+    const { jammers } = state.jamInfo;
     const { nrOfRooms } = state.jamInfo.jamDetails;
 
-    return { jamId, section, subSection, nrOfRooms }
+    return { jamId, section, subSection, nrOfRooms, jammers }
     
 };
 

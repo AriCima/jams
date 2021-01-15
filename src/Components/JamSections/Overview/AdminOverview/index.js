@@ -128,7 +128,7 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
 const mapStateToProps = state => {
     const jamId = state.nav.jamId;
     const { userId } = state.userInfo;
-    const { jamDetails } = state.jamInfo
+    const { jamDetails, jammers } = state.jamInfo
 
     return { jamId, jamDetails, userId };
 };

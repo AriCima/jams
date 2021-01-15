@@ -56,11 +56,11 @@ const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
                 return <Rooms />;
             case 'Tenants':
                 return <Jammers />;
-            case 'Flatmates':
-                return <Jammers />;
-            case 'Settings':
-                return <Settings />;
-            case 'rent':
+            // case 'Flatmates':
+            //     return <Jammers />;
+            // case 'Settings':
+            //     return <Settings />;
+            // case 'rent':
             default:
                 return ;
         }

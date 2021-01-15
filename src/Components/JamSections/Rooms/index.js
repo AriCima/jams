@@ -13,45 +13,17 @@ import RoomsOverview from './RoomsOverview';
 // CSS
 import './index.scss';
 
-const Rooms = ({ jamId, nrOfRooms, subSection, jammers, rooms }) => {
+const Rooms = ({ jamId, subSection, jammers, rooms }) => {
 
     const [roomInfo, setRoomInfo] = useState({});
-    // const [roomsTenants, setRoomsTenants] = useState([]);
-    // const [roomsFullInfo, setRoomsFullInfo ] = useState([]);
     
     useEffect(() => {
-        // const editedJammers = Calculations.removeAmdinFromJammers(jammers);
-        // const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-        // const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, rooms);
-        // setRoomsTenants(organizedTenantsByRoom);
-        
-        // const oTL = organizedTenantsByRoom.length; 
-
-        // if(oTL > 0) {
-        //     for (let i = 0; i < rooms.length; i++) {
-        //         if(i <= oTL-1) {
-        //             const oT = organizedTenantsByRoom[i];
-        //             rooms[i].currentTenant = oT.currentTenants;
-        //             rooms[i].formerTenants = oT.formerTenants;
-        //             rooms[i].futureTenants = oT.futureTenants;
-        //         } else {
-        //             rooms[i].currentTenant = [];
-        //             rooms[i].formerTenants = [];
-        //             rooms[i].futureTenants = [];
-        //         }
-        //     }
-        //     setRoomsFullInfo(rooms);
-        // }
-
         if (subSection !== '') {
             setRoomInfo(rooms[subSection]);
         }
-
     }, [subSection, jamId ]);
 
     const showOverview = subSection === '';
-    // const bookingsAlreadyOrdered = roomsTenants.length > 0;
-    // const showRoomInfo = roomsTenants.length > 0;
 
     return (
         <div className="landlord-rooms">
@@ -59,21 +31,16 @@ const Rooms = ({ jamId, nrOfRooms, subSection, jammers, rooms }) => {
             <div className="landlord-room-info">
 
                 {showOverview ?
-                    // bookingsAlreadyOrdered ?
-                        <RoomsOverview
-                            roomsTenants={roomsTenants}
-                            rooms={roomsFullInfo}
-                        />
-                        // :
-                        // <p>Loading</p>
+
+                    <RoomsOverview
+                        roomsTenants={jammers}
+                        rooms={rooms}
+                    />
                     :
-                    // showRoomInfo ?
-                        <LandlordRoomInfo
-                            roomInfo={roomInfo}
-                            roomsTenants={roomsTenants}
-                        />
-                        // :
-                        // <p>Loading Room Info</p>
+                    <LandlordRoomInfo
+                        roomInfo={roomInfo}
+                        roomsTenants={rooms}
+                    />
                 }
 
             </div>
