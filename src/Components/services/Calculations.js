@@ -410,27 +410,23 @@ export default class Calculations {
         const numberOfRooms = parseInt(rooms);
         
         for (let i = 1; i <= numberOfRooms; i++) {
-            
             const roomNr = i;
             let tenantsInOneRoom = [];
 
             for (let j = 0; j < tenants.length; j++){
                 const tenantsRoom = parseInt(tenants[j].roomNr);
-                
                 if (tenantsRoom === roomNr) {
                     tenantsInOneRoom.push(tenants[j]);
                 }
-
             };
 
             tenantsByRooms.push(tenantsInOneRoom);
         };
-
         return tenantsByRooms
     };
 
-    static getOrganizedTenants = (tenantsByRooms, rooms) => { // Organiza los inquilinos de cada room
-        
+    static getOrganizedTenants = (tenantsByRooms) => { // Organiza los inquilinos de cada room
+    
         const result = [];
         const today = new Date();
         const tRL = tenantsByRooms.length;

@@ -544,6 +544,19 @@ export default class DataService {
             .catch(error => reject(error));
         });
     };
+    static updateRoomNrInJam(jamId, newRoomNr) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .update({ 
+                "jamDetails.nrOfRooms": newRoomNr,
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+        });
+    };
 
     // MESSAGES
 
@@ -925,6 +938,9 @@ export default class DataService {
         });
     }
     static updateRoomInfo(jamId, roomId, data) {
+        console.log('data: ', data);
+        console.log('roomId: ', roomId);
+        console.log('jamId: ', jamId);
         return new Promise((resolve, reject) => {
             firebase.firestore().collection('jams')
                 .doc(jamId)

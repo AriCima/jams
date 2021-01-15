@@ -17,12 +17,13 @@ import BookingsGraphic from '../../../Bookings/BkgsGraphic';
 // CSS
 import './index.scss';
 
-const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomInfo, subSection}) => {
+const LandlordRoomInfo = ({ jamId, rooms, subSection}) => {
 
-    const noCurrentTenant = isEmpty(roomInfo.currentTenant);
+    const roomSelected = rooms.filter(e => e.roomNr === subSection)
+    console.log('roomSelected: ', roomSelected);
+    const noCurrentTenant = isEmpty(roomSelected .currentTenant);
 
-    const roomNr = subSection + 1;
-    roomNr.toString();
+    const roomNr = subSection;
 
     return (
         <div className="room-info-wrapper">
@@ -52,20 +53,20 @@ const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomInfo, s
                 { !noCurrentTenant && (
                     <div className="room-section">
                         <CurrentTenant
-                            currentTenant={roomInfo.currentTenant}
+                            currentTenant={roomSelected.currentTenant}
                         />
                     </div>
                 )}
 
                 <div className="room-section">
                     <TenantsChart
-                        jammersList={roomInfo}
+                        jammersList={roomSelected}
                     />
                 </div>
 
                 <div className="editRoomForm-wrapper">
                     <EditRoomForm
-                        roomInfo={roomInfo}
+                        roomInfo={roomSelected}
                     />
                 </div>
 
@@ -78,10 +79,10 @@ const LandlordRoomInfo = ({ roomsTenants, nrOfRooms, jamId, jammers, roomInfo, s
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
     const { subSection } = state.nav;
-    const { jammers } = state.jamInfo;
+    const { jammers, rooms } = state.jamInfo;
     const { nrOfRooms } = state.jamInfo.jamDetails;
 
-    return { jamId, jammers, subSection, nrOfRooms }
+    return { jamId, jammers, rooms, subSection, nrOfRooms }
     
 };
 export default connect(mapStateToProps, null)(LandlordRoomInfo);

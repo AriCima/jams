@@ -13,50 +13,26 @@ import RoomsOverview from './RoomsOverview';
 // CSS
 import './index.scss';
 
-const Rooms = ({ jamId, subSection, jammers, rooms }) => {
+const Rooms = ({ subSection }) => {
 
-    const [roomInfo, setRoomInfo] = useState({});
-    
-    useEffect(() => {
-        if (subSection !== '') {
-            setRoomInfo(rooms[subSection]);
-        }
-    }, [subSection, jamId ]);
 
     const showOverview = subSection === '';
 
     return (
         <div className="landlord-rooms">
+            {/* <div className="landlord-room-info"> */}
 
-            <div className="landlord-room-info">
+                {showOverview ? <RoomsOverview/> : <LandlordRoomInfo/>}
 
-                {showOverview ?
-
-                    <RoomsOverview
-                        roomsTenants={jammers}
-                        rooms={rooms}
-                    />
-                    :
-                    <LandlordRoomInfo
-                        roomInfo={roomInfo}
-                        roomsTenants={rooms}
-                    />
-                }
-
-            </div>
-
+            {/* </div> */}
         </div>
     );
 };
 
 
-
 const mapStateToProps = (state) => {
-    const { jamId, subSection } = state.nav;
-    const { nrOfRooms } = state.jamInfo.jamDetails;
-    const { jammers, rooms } = state.jamInfo;
-
-    return { jamId, subSection, nrOfRooms, jammers, rooms }
-    
+    const { subSection } = state.nav;
+    return { subSection }
 };
+
 export default connect(mapStateToProps, null)(Rooms);

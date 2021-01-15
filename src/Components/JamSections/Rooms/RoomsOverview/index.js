@@ -9,11 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './index.scss';
 
-const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {    
+const RoomsOverview = ({ rooms, roomsTenants, setSubSection }) => {    
     
     const [ showAddRoom, setShowAddRoom ] = useState(false);
     
-    const showRoomInfo = (roomNr) => {
+    const showRoomInfo = (i) => {
+        const roomNr = (i+1).toString();
         setSubSection(roomNr)
     };
     
@@ -72,7 +73,7 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
                     <th>Rent</th>
                     <th>Deposit</th>
                 </tr>
-                {roomsTenants.length !== 0 && renderRoomsChart()}
+                {rooms.length !== 0 && renderRoomsChart()}
             </table>
 
             { !showAddRoom && (
@@ -103,5 +104,9 @@ const RoomsOverview = ({ jamId, rooms, roomsTenants, setSubSection }) => {
     );
 };
 
+const mapStateToProps = (state) => {
+    const { jammers, rooms } = state.jamInfo;
+    return { jammers, rooms }
+};
 
-export default connect(null, { setSubSection })(RoomsOverview);
+export default connect(mapStateToProps, { setSubSection })(RoomsOverview);

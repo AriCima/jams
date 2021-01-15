@@ -9,6 +9,7 @@ export const JAM_CODE = 'JAM_CODE';
 export const JAM_JAMMERS = 'JAM_JAMMERS'
 export const JAMMERS = 'JAMMERS'
 export const JAM_ROOMS = 'ROOMS'
+export const JAM_NR_OF_ROOMS = 'JAM_NR_OF_ROOMS'
 
 export const setJamName = (jamName) => {
   return {
@@ -89,6 +90,13 @@ export const setJamDetails = (jamDetails = {}) => ({
   type: JAM_DETAILS,
   payload: {
     jamDetails
+  }
+});
+
+export const setNumberOfRooms = (nrOfRooms = {}) => ({
+  type: JAM_NR_OF_ROOMS,
+  payload: {
+    nrOfRooms
   }
 });
 

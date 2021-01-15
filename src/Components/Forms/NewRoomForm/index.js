@@ -37,45 +37,16 @@ const RedRadio = withStyles({
     checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
+const NewRoomForm = ({ jamId, showForm, nrOfRooms }) => {
 
-    const [nextRoomNr, setNextRoomNr] = useState('');
+    // const [nextRoomNr, setNextRoomNr] = useState('');
 
-    
     // useEffect(() => {
-    //     if (roomNr === '') {
-    //         const roomsNr = rooms.length;
-    //         setNextRoomNr(roomsNr+1);
-    //         setDisabled(false);
-    //     } else {
-    //         const r = rooms[roomNr];
-    //         setSqm(r.sqm);
-    //         setBalcony(r.balcony);
-    //         setPrivBath(r.privBath);
-    //         setExterior(r.exterior);
-    //         setNextRoomNr(roomNr);
-    //         setRent(r.rent);
-    //         setDeposit(r.deposit);
-    //         setExpenses(r.expenses);
-    //         console.log('rooms -> : ', rooms)
-    //         if (!isEmpty(rooms)) {
-    //             setSqm(rooms.sqm);
-    //             setBalcony(rooms.balcony);
-    //             setPrivBath(rooms.privBath);
-    //             setExterior(rooms.exterior);
-    //             setNextRoomNr(roomNr);
-    //             setRent(rooms.rent);
-    //             setDeposit(rooms.deposit);
-    //             setExpenses(rooms.expenses);
-    //         }
-    //     };
-    // },[roomNr, rooms])
+    //     const roomsNr = rooms.length;
+    //     setNextRoomNr(roomsNr+1);
+    // },[rooms])
 
-    useEffect(() => {
-        const roomsNr = rooms.length;
-        setNextRoomNr(roomsNr+1);
-    },[rooms])
-
+    const nextRoomNr = (parseInt(nrOfRooms)+1).toString();
 
     const defaultValues = {
         roomNr: nextRoomNr,
@@ -86,18 +57,15 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
         deposit: '',
         rent: '',
         expenses: ''
-    }
+    };
 
     const { register, errors, handleSubmit, control } = useForm({defaultValues});
     
-   
     const onSubmit = (data) => {
         // data.roomNr = defaultValues.roomNr;
         DataService.addRoomToJam(jamId, data);
         showForm(false)
     };
-
-   
 
     return ( 
         <div className="roomInfo-wrapper">
@@ -321,11 +289,11 @@ const NewRoomForm = ({ jamId, rooms, roomNr, showForm }) => {
 
 const mapStateToProps = state => {
     const { section } = state.nav;
-    const { jamName, jamDesc, jamType } = state.jamInfo;
+    const { jamName, jamDesc, jamType, nrOfRooms } = state.jamInfo;
     const { jamId } = state.nav;
     const { userId, firstName, lastName, email } = state.userInfo;
 
-    return { jamId, userId, firstName, lastName, email, section, jamName, jamDesc, jamType };
+    return { jamId, userId, firstName, nrOfRooms, lastName, email, section, jamName, jamDesc, jamType };
 };
 
 

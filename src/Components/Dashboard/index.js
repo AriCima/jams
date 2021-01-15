@@ -11,7 +11,7 @@ import Jam from '../Jam';
 
 import './index.scss'; 
 import { setJamId } from '../../redux/actions/navigateActions.js';
-import { setJamName, setJamType, setJammers, setJamRooms, setJamAdminId, setJamAdminName, setJamDesc, setJamCode, setJamDetails } from '../../redux/actions/jamActions.js';
+import { setJamName, setNumberOfRooms, setJamType, setJammers, setJamRooms, setJamAdminId, setJamAdminName, setJamDesc, setJamCode, setJamDetails } from '../../redux/actions/jamActions.js';
 import {  setUserRole, setUserJams } from '../../redux/actions/userActions';
 
 const Dashboard = ({ 
@@ -27,6 +27,7 @@ const Dashboard = ({
     setJamType,
     setUserJams,
     setUserRole,
+    setNumberOfRooms,
     userId,
     userJams,
 }) => {
@@ -64,12 +65,13 @@ const Dashboard = ({
         const rooms = await DataService.getJamRooms(jamId);
 
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
-        const nrOfRooms = jamDetails.nrOfRooms;
+
+        const nrOfRooms = rooms.length.toString()
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
         
         const editedJammers = Calculations.removeAmdinFromJammers(jammers);
         const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, rooms);
+        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms);
         
         const oTL = organizedTenantsByRoom.length; 
         
@@ -93,15 +95,16 @@ const Dashboard = ({
         setJamInfo(res);
 
         // Info en Redux
-        setUserRole(userRole)
-        setJamName(jamName)
+        setUserRole(userRole);
+        setJamName(jamName);
         setJamAdminId(adminId);
         setJamDesc(jamDesc);
         setJamAdminName(adminName);
-        setJamType(jamType)
-        setJamDetails(jamDetails)
-        setJamCode(jamCode)
-        setJammers(editedJammers)
+        setJamType(jamType);
+        setJamDetails(jamDetails);
+        setJamCode(jamCode);
+        setNumberOfRooms(nrOfRooms);
+        setJammers(editedJammers);
         // setJamRooms(rooms)
     };
 
@@ -131,10 +134,7 @@ const Dashboard = ({
                     }
                 </div>
                 </>
-            )
-
-            }
-            
+            )}
         </div>
     );
 }
@@ -158,6 +158,7 @@ export default connect(mapStateToProps, {
     setUserRole,
     setJamCode,
     setJammers,
-    setJamRooms
+    setJamRooms,
+    setNumberOfRooms
 }) (Dashboard);
 

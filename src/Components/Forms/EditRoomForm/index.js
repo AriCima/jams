@@ -39,45 +39,6 @@ const RedRadio = withStyles({
 const EditRoomForm = ({ jamId, roomInfo }) => {
 
     const [disabled, setDisabled] = useState(true);
-    // const [sqm, setSqm] = useState('');
-    // const [exterior, setExterior] = useState('no');
-    // const [balcony, setBalcony] = useState('no');
-    // const [privBath, setPrivBath] = useState('no');
-    // const [nextRoomNr, setNextRoomNr] = useState('');
-    // const [rent, setRent] = useState('');
-    // const [expenses, setExpenses] = useState('');
-    // const [deposit, setDeposit] = useState('');
-
-    
-    // useEffect(() => {
-    //     if (roomNr === '') {
-    //         const roomsNr = rooms.length;
-    //         setNextRoomNr(roomsNr+1);
-    //         setDisabled(false);
-    //     } else {
-    //         // const r = rooms[roomNr];
-    //         // setSqm(r.sqm);
-    //         // setBalcony(r.balcony);
-    //         // setPrivBath(r.privBath);
-    //         // setExterior(r.exterior);
-    //         // setNextRoomNr(roomNr);
-    //         // setRent(r.rent);
-    //         // setDeposit(r.deposit);
-    //         // setExpenses(r.expenses);
-    //         console.log('rooms -> : ', rooms)
-    //         if (!isEmpty(rooms)) {
-    //             setSqm(rooms.sqm);
-    //             setBalcony(rooms.balcony);
-    //             setPrivBath(rooms.privBath);
-    //             setExterior(rooms.exterior);
-    //             setNextRoomNr(roomNr);
-    //             setRent(rooms.rent);
-    //             setDeposit(rooms.deposit);
-    //             setExpenses(rooms.expenses);
-    //         }
-    //     };
-    // },[roomNr, rooms])
-
 
     const defaultValues = {
         roomNr: roomInfo.roomNr,
@@ -89,7 +50,7 @@ const EditRoomForm = ({ jamId, roomInfo }) => {
         rent: roomInfo.rent,
         expenses: roomInfo.expenses
     }
-
+    
     const enableEditForm = (x) => {
         setDisabled(!x)
     };
@@ -98,12 +59,11 @@ const EditRoomForm = ({ jamId, roomInfo }) => {
     
    
     const onSubmit = (data) => {
-        data.roomNr = defaultValues.roomNr;
+        data.roomNr = defaultValues.roomNr.toString();
         console.log(data);
 
         const roomId = roomInfo.roomId;
         DataService.updateRoomInfo(jamId, roomId, data)
-
     };
 
     return ( 
