@@ -37,7 +37,7 @@ const CurrentTenant = ({
                 <div className="current-tenant-name"
                     onClick={(e)  => {takeMeToTenantInfo(e)}}
                 >
-                    <p>{currentTenant[0].firstName} {currentTenant[0].lastName}</p>
+                    <p>{currentTenant.firstName} {currentTenant.lastName}</p>
                     
                 </div>
 
@@ -46,8 +46,8 @@ const CurrentTenant = ({
                         user1Name={firstName}
                         user1LastName={lastName}
                         user1Id={userId}
-                        user2Name={currentTenant[0].firstName}
-                        user2LastName={currentTenant[0].lastName}
+                        user2Name={currentTenant.firstName}
+                        user2LastName={currentTenant.lastName}
                         user2Id={docId}
                         jamName={jamName}
                     />

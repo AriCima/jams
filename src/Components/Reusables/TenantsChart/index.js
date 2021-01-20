@@ -15,14 +15,16 @@ const TenantsChart = ({
     setDocType,
     setSection,
     setDocId,
-    jammers
+    formerTenants = [],
+    futureTenants = [],
+    currentTenants = [],
 }) => {
     const [ activeTab, setActiveTab ] = useState(`${section !== 'Rooms' ? 'current' : 'future'}`);
-    const [ jammersList, setJammersList ] = useState({});
+    // const [ jammersList, setJammersList ] = useState({});
 
-    useEffect(() => {
-       jammers && getJammersByTime()
-    }, [jammers])
+    // useEffect(() => {
+    //    jammers && getJammersByTime()
+    // }, [jammers])
 
     const takeMeToTenantInfo = (e, userId) => {
         e.preventDefault();
@@ -32,14 +34,14 @@ const TenantsChart = ({
         // setEditable('true');
     };
 
-    const getJammersByTime = async () => {
-        const res = await Calculations.getAllTenantsOrganized(jammers);
-        let filteredRes = res;
-        if( subSection !== '') {
-            filteredRes = Calculations.fitlerTenantsByRoomNr(res, subSection)
-        } 
-        setJammersList(filteredRes);
-    };
+    // const getJammersByTime = async () => {
+    //     const res = await Calculations.getAllTenantsOrganized(jammers);
+    //     let filteredRes = res;
+    //     if( subSection !== '') {
+    //         filteredRes = Calculations.fitlerTenantsByRoomNr(res, subSection)
+    //     } 
+    //     setJammersList(filteredRes);
+    // };
 
     const showRoomNr = section === 'Tenants' || (section === 'Rooms' && subSection === '');
     const showCurrentTenants = section !== 'Rooms';
@@ -51,20 +53,20 @@ const TenantsChart = ({
         switch (activeTab) {
             case 'future':
                 let orderedFut = [];
-                if(!isEmpty(jammersList.futureTenants)) {
-                    orderedFut = Calculations.sortByCheckInAsc(jammersList.futureTenants)
+                if(!isEmpty(futureTenants)) {
+                    orderedFut = Calculations.sortByCheckInAsc(futureTenants)
                 };
                 filteredTenants = orderedFut;
                 break;
             case 'former':
-                if (!isEmpty(jammersList.formerTenants)) {
-                    filteredTenants = jammersList.formerTenants;
+                if (!isEmpty(formerTenants)) {
+                    filteredTenants = formerTenants;
                 }
                 break;
             default:
 
-                if (!isEmpty(jammersList.currentTenants)) {
-                    filteredTenants = jammersList.currentTenants;
+                if (!isEmpty(currentTenants)) {
+                    filteredTenants = currentTenants;
                 }
         }
         
@@ -143,7 +145,7 @@ const TenantsChart = ({
 
 const mapStateToProps = (state) => {
     const { jamId, section, subSection } = state.nav;
-    const { jammers } = state.jamInfo;
+    const { jammers, rooms } = state.jamInfo;
     const { nrOfRooms } = state.jamInfo.jamDetails;
 
     return { jamId, section, subSection, nrOfRooms, jammers }

@@ -19,9 +19,10 @@ import './index.scss';
 
 const LandlordRoomInfo = ({ jamId, rooms, subSection}) => {
 
-    const roomSelected = rooms.filter(e => e.roomNr === subSection)
+    const roomSelected = rooms.filter(e => e.roomNr === subSection)[0];
     console.log('roomSelected: ', roomSelected);
-    const noCurrentTenant = isEmpty(roomSelected .currentTenant);
+
+    const noCurrentTenant = isEmpty(roomSelected.currentTenant);
 
     const roomNr = subSection;
 
@@ -32,7 +33,10 @@ const LandlordRoomInfo = ({ jamId, rooms, subSection}) => {
                 <div className="room-header">
                     <div className="room-buttons-area">
                         <div className="jammers-button">
-                            <InviteJammerButton jamId={jamId} roomNr={roomNr}/>                
+                            <InviteJammerButton
+                                jamId={jamId}
+                                roomNr={roomNr}
+                            />                
                         </div>
                     </div>
                     <div className="room-header-title">
@@ -60,7 +64,8 @@ const LandlordRoomInfo = ({ jamId, rooms, subSection}) => {
 
                 <div className="room-section">
                     <TenantsChart
-                        jammersList={roomSelected}
+                        formerTenants={roomSelected.formerTenants}
+                        futureTenants={roomSelected.futureTenants}
                     />
                 </div>
 
