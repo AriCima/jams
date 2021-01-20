@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './index.scss';
 
-const RoomsOverview = ({ rooms, roomsTenants, setSubSection }) => {    
+const RoomsOverview = ({ rooms, setSubSection }) => {    
+    // console.log('rooms: ', rooms);
     
     const [ showAddRoom, setShowAddRoom ] = useState(false);
     

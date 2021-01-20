@@ -405,39 +405,30 @@ export default class Calculations {
         return currentTenants;
     };
 
-    static getTenantsByRooms = (tenants, rooms) => { // separa los tenants por habitaciones
-        const tenantsByRooms = [];
-        const numberOfRooms = parseInt(rooms);
-        
-        for (let i = 1; i <= numberOfRooms; i++) {
-            const roomNr = i;
-            let tenantsInOneRoom = [];
+    static getTenantsByRooms = (tenants, nrOfRooms) => { // separa los tenants por habitaciones
+        let tenantsByRooms = {};
 
-            for (let j = 0; j < tenants.length; j++){
-                const tenantsRoom = parseInt(tenants[j].roomNr);
-                if (tenantsRoom === roomNr) {
-                    tenantsInOneRoom.push(tenants[j]);
-                }
-            };
+        for (let i = 1; i <= nrOfRooms; i++) {
+            const roomNr = i.toString();
+            const tenantsInOneRoom = tenants.filter(e => e.roomNr === roomNr );
+            tenantsByRooms[`${roomNr}`] = tenantsInOneRoom;
 
-            tenantsByRooms.push(tenantsInOneRoom);
         };
+        // FORNAT --> tenantsByRooms = {1:[{..}, {..}], 2:[{..} . . . {..}],  . . }
         return tenantsByRooms
     };
 
-    static getOrganizedTenants = (tenantsByRooms) => { // Organiza los inquilinos de cada room
+    static getOrganizedTenants = (tenantsByRooms, nrOfRooms) => { // Organiza los inquilinos de cada room
     
         const result = [];
         const today = new Date();
-        const tRL = tenantsByRooms.length;
-        
-        for (let i = 0; i < tRL; i++) {
 
+        for (let i = 1; i <= nrOfRooms; i++) {
             const tenants = tenantsByRooms[i];
             const tL = tenants.length;
 
             let organizedTenants = {
-                currentTenants: [],
+                currentTenant: [],
                 // nextTenant: {},
                 formerTenants: [],
                 futureTenants: [],
@@ -451,7 +442,7 @@ export default class Calculations {
                 const cIn = new Date (tenant.checkIn)
     
                 if (cIn < today && cOut > today) {
-                    organizedTenants.currentTenants.push(tenant);
+                    organizedTenants.currentTenant.push(tenant);
                 } else if ( cIn < today && cOut < today) {
                     organizedTenants.formerTenants.push(tenant);
                 } else if (cIn > today) {
@@ -462,14 +453,31 @@ export default class Calculations {
 
             result.push(organizedTenants);
         }
-        
-        return result  // Array length = nro habs 
+        // FORNAT --> tenantsByRooms = {1:[{..}, {..}], 2:[{..} . . . {..}],  . . }
+        return result
     };
 
     static sortByCheckInAsc(x){
         function compare(a,b){
             const varA = new Date(a.checkIn);
             const varB = new Date(b.checkIn);
+        
+            let comparison = 0;
+            if (varA < varB) {
+            comparison = -1;
+            } else if (varA > varB) {
+            comparison = 1;
+            }
+            return comparison;
+        }
+
+        return x.sort(compare)
+    };
+
+    static sortByRoomNr(x){
+        function compare(a,b){
+            const varA = new Date(a.roomNr);
+            const varB = new Date(b.roomNr);
         
             let comparison = 0;
             if (varA < varB) {

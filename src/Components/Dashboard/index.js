@@ -62,7 +62,7 @@ const Dashboard = ({
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
         const jammers = await DataService.getJammers(jamId);
-        const rooms = await DataService.getJamRooms(jamId);
+        let rooms = await DataService.getJamRooms(jamId);
 
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
 
@@ -71,24 +71,40 @@ const Dashboard = ({
         
         const editedJammers = Calculations.removeAmdinFromJammers(jammers);
         const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms);
+        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, nrOfRooms);
+        console.log('organizedTenantsByRoom: ', organizedTenantsByRoom);
         
         const oTL = organizedTenantsByRoom.length; 
         
         if(oTL > 0) {
             for (let i = 0; i < rooms.length; i++) {
-                if(i <= oTL-1) {
-                    const oT = organizedTenantsByRoom[i];
-                    rooms[i].currentTenant = oT.currentTenants;
-                    rooms[i].formerTenants = oT.formerTenants;
-                    rooms[i].futureTenants = oT.futureTenants;
-                } else {
-                    rooms[i].currentTenant = [];
-                    rooms[i].formerTenants = [];
-                    rooms[i].futureTenants = [];
-                }
+                rooms[i].currentTenant = [];
+                rooms[i].formerTenants = [];
+                rooms[i].futureTenants = [];
+                // if(i <= oTL-1) {
+                //     const oT = organizedTenantsByRoom[i];
+                //     rooms[i].currentTenant = oT.currentTenant;
+                //     rooms[i].formerTenants = oT.formerTenants;
+                //     rooms[i].futureTenants = oT.futureTenants;
+                // } else {
+                //     rooms[i].currentTenant = [];
+                //     rooms[i].formerTenants = [];
+                //     rooms[i].futureTenants = [];
+                // }
+                const oT = organizedTenantsByRoom[i];
+                console.log(' room ', i+1)
+                console.log('oT: ', oT);
+                console.log('currentTenant: ', oT.currentTenant[0]);
+                const elem = oT.currentTenant[0];
+                rooms[i].currentTenant.push(elem);
+                rooms[i].formerTenants = oT.formerTenants;
+                rooms[i].futureTenants = oT.futureTenants;
+                console.log('rooms = ', rooms);
             }
-            setJamRooms(rooms);
+            console.log('rooms: ', rooms);
+            const sortedRooms = Calculations.sortByRoomNr(rooms)
+            console.log('sortedRooms: ', sortedRooms);
+            setJamRooms(sortedRooms);
         }
 
         // Info en el state
