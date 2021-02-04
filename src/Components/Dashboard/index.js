@@ -28,8 +28,7 @@ const Dashboard = ({
     setUserJams,
     setUserRole,
     setNumberOfRooms,
-    userId,
-    userJams,
+    userId
 }) => {
     const [jamsList, setJamsList] = useState([]);
     const [jamInfo, setJamInfo] = useState({});
@@ -72,45 +71,23 @@ const Dashboard = ({
         const editedJammers = Calculations.removeAmdinFromJammers(jammers);
         const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
         const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, nrOfRooms);
-        console.log('organizedTenantsByRoom: ', organizedTenantsByRoom);
+        const sortedRooms = Calculations.sortByRoomNr(rooms)
         
-        const oTL = organizedTenantsByRoom.length; 
-        
-        if(oTL > 0) {
+        if (rooms.length > 0) {
             for (let i = 0; i < rooms.length; i++) {
-                rooms[i].currentTenant = [];
-                rooms[i].formerTenants = [];
-                rooms[i].futureTenants = [];
-                // if(i <= oTL-1) {
-                //     const oT = organizedTenantsByRoom[i];
-                //     rooms[i].currentTenant = oT.currentTenant;
-                //     rooms[i].formerTenants = oT.formerTenants;
-                //     rooms[i].futureTenants = oT.futureTenants;
-                // } else {
-                //     rooms[i].currentTenant = [];
-                //     rooms[i].formerTenants = [];
-                //     rooms[i].futureTenants = [];
-                // }
                 const oT = organizedTenantsByRoom[i];
-                console.log(' room ', i+1)
-                console.log('oT: ', oT);
-                console.log('currentTenant: ', oT.currentTenant[0]);
-                const elem = oT.currentTenant[0];
-                rooms[i].currentTenant.push(elem);
-                rooms[i].formerTenants = oT.formerTenants;
-                rooms[i].futureTenants = oT.futureTenants;
-                console.log('rooms = ', rooms);
+                sortedRooms[i].currentTenant = oT.currentTenant;
+                sortedRooms[i].formerTenants = oT.formerTenants;
+                sortedRooms[i].futureTenants = oT.futureTenants;
             }
-            console.log('rooms: ', rooms);
-            const sortedRooms = Calculations.sortByRoomNr(rooms)
-            console.log('sortedRooms: ', sortedRooms);
-            setJamRooms(sortedRooms);
         }
-
+        
+        
         // Info en el state
         setJamInfo(res);
-
+        
         // Info en Redux
+        setJamRooms(sortedRooms);
         setUserRole(userRole);
         setJamName(jamName);
         setJamAdminId(adminId);

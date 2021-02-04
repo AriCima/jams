@@ -12,16 +12,18 @@ import './index.scss';
 const CurrentTenant = ({
     jamName,
     docId,
-    userId,
-    firstName,
-    lastName,
+    adminId,
+    adminName,
+    adminLastName,
     currentTenant,
     setDocType,
     setSection,
     setDocId,
     setEditable,
 }) => {
-        const takeMeToTenantInfo = (e) => {
+    
+    console.log('currentTenant: ', currentTenant);
+    const takeMeToTenantInfo = (e) => {
         e.preventDefault();
         setSection('Tenants')
         setDocType('TENANT-FORM');
@@ -43,9 +45,9 @@ const CurrentTenant = ({
 
                 <div className="start-chatButton">
                     <StartChatButton 
-                        user1Name={firstName}
-                        user1LastName={lastName}
-                        user1Id={userId}
+                        user1Name={adminName}
+                        user1LastName={adminLastName}
+                        user1Id={adminId}
                         user2Name={currentTenant.firstName}
                         user2LastName={currentTenant.lastName}
                         user2Id={docId}
@@ -68,7 +70,7 @@ const mapStateToProps = (state) => {
     const { jamName } = state.jamInfo;
     const { docId } = state.doc;
 
-    return { jamName, userId, firstName, lastName, docId }
+    return { jamName, adminId: userId, adminName: firstName, adminLastName: lastName, docId }
     
 };
 export default connect(mapStateToProps, { setDocType, setSection, setDocId, setEditable })(CurrentTenant);

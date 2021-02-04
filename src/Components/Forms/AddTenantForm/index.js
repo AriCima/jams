@@ -84,10 +84,10 @@ const useAddTenantForm = ({ tenantInfo, docId, jamId }) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Passport Nr</label>
-                            {errors.passportNr && <div className="field-error">Required</div>}
+                            {errors.passport && <div className="field-error">Required</div>}
                         </div>
                         <input
-                            name="passportNr"
+                            name="passport"
                             ref={register({
                                 required: true,
                             })}

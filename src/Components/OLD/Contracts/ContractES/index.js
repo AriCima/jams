@@ -45,7 +45,7 @@ const ContractES = ({
                     <span>{tenantInfo.firstName} {tenantInfo.lastName}</span>, 
                     mayor de edad, con domicilio en 
                     <span>{tenantInfo.homeAddress},</span>
-                    provisto de <span>pasaporte nº {tenantInfo.passportNr} </span>, email {tenantInfo.email}, teléfono {tenantInfo.homeTel} y teléfono móvil {tenantInfo.mobile} actuando en su propio nombre e interés.<br/></p>
+                    provisto de <span>pasaporte nº {tenantInfo.passport} </span>, email {tenantInfo.email}, teléfono {tenantInfo.homeTel} y teléfono móvil {tenantInfo.mobile} actuando en su propio nombre e interés.<br/></p>
                     {/* {jammerCondition === 'student' ?
                         (
                             <p>estudiante de {jammerCourse} en {jammerSchool}.</p>

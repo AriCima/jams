@@ -20,8 +20,6 @@ import './index.scss';
 const LandlordRoomInfo = ({ jamId, rooms, subSection}) => {
 
     const roomSelected = rooms.filter(e => e.roomNr === subSection)[0];
-    console.log('roomSelected: ', roomSelected);
-
     const noCurrentTenant = isEmpty(roomSelected.currentTenant);
 
     const roomNr = subSection;
@@ -57,7 +55,7 @@ const LandlordRoomInfo = ({ jamId, rooms, subSection}) => {
                 { !noCurrentTenant && (
                     <div className="room-section">
                         <CurrentTenant
-                            currentTenant={roomSelected.currentTenant}
+                            currentTenant={roomSelected.currentTenant[0]}
                         />
                     </div>
                 )}

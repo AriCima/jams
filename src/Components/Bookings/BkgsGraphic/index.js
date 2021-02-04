@@ -7,16 +7,9 @@ import Calculations from '../../services/Calculations';
 // CSS
 import './index.scss';
 
-const BookingsGraphic = ({ jammers, subSection, nrOfRooms }) => {
-
-    const editedJammers = Calculations.removeAmdinFromJammers(jammers);
-    const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-
-    let allTenants = [];
-
-    if (subSection < tenantsByRooms.length ) {
-        allTenants = tenantsByRooms[subSection]
-    };
+const BookingsGraphic = ({ jammers, rooms, subSection, nrOfRooms }) => {
+    
+    const allTenants = jammers.filter(x => x.roomNr === subSection);
 
     const generateGraphicsMonths = () => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -132,10 +125,10 @@ const BookingsGraphic = ({ jammers, subSection, nrOfRooms }) => {
 const mapStateToProps = (state) => {
 
     const { subSection } = state.nav;
-    const { jammers } = state.jamInfo;
+    const { jammers, rooms } = state.jamInfo;
     const { nrOfRooms } = state.jamInfo.jamDetails;
 
-    return { jammers, subSection, nrOfRooms }
+    return { jammers, subSection, nrOfRooms, rooms }
     
 };
 export default connect(mapStateToProps, null)(BookingsGraphic);

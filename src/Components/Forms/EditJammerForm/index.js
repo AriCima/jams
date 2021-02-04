@@ -29,7 +29,7 @@ const useEditJammerForm = ({ tenantInfo, docId, jamId }) => {
         zipCode,
         city,
         country,
-        passportNr,
+        passport,
         study,
         school,
         rent,
@@ -57,7 +57,7 @@ const useEditJammerForm = ({ tenantInfo, docId, jamId }) => {
             zipCode: zipCode,
             city: city,
             country: country,
-            passportNr: passportNr,
+            passport: passport,
             study: study,
             school: school,
             rent: rent,
@@ -165,10 +165,10 @@ const useEditJammerForm = ({ tenantInfo, docId, jamId }) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Passport Nr</label>
-                            {errors.passportNr && <div className="field-error">Required</div>}
+                            {errors.passport && <div className="field-error">Required</div>}
                         </div>
                         <input
-                            name="passportNr"
+                            name="passport"
                             ref={register({
                                 required: true,
                             })}

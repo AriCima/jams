@@ -14,7 +14,7 @@ const JammerContractInfo = ({ personalInfo }) => {
         houseNr,
         lastName, 
         mobile,
-        passportNr, 
+        passport, 
         street, 
         homeTel, 
         zipCode, 
@@ -51,7 +51,7 @@ const JammerContractInfo = ({ personalInfo }) => {
             />
             <PersonalInfoBlock
                 info={'Passport'}
-                data={passportNr}
+                data={passport}
                 backColor={'buttonPrimary'}
             />
             <PersonalInfoBlock
