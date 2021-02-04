@@ -15,16 +15,17 @@ const TenantsChart = ({
     setDocType,
     setSection,
     setDocId,
-    formerTenants = [],
-    futureTenants = [],
-    currentTenants = [],
+    rooms,
+    jammers
 }) => {
     const [ activeTab, setActiveTab ] = useState(`${section !== 'Rooms' ? 'current' : 'future'}`);
-    // const [ jammersList, setJammersList ] = useState({});
+    
+    const tenants = Calculations.getAllTenantsOrganized(jammers);
+    
+    const formerTenants = tenants.formerTenants;
+    const futureTenants = tenants.futureTenants;
+    const currentTenants = tenants.currentTenants;
 
-    // useEffect(() => {
-    //    jammers && getJammersByTime()
-    // }, [jammers])
 
     const takeMeToTenantInfo = (e, userId) => {
         e.preventDefault();
@@ -34,14 +35,6 @@ const TenantsChart = ({
         // setEditable('true');
     };
 
-    // const getJammersByTime = async () => {
-    //     const res = await Calculations.getAllTenantsOrganized(jammers);
-    //     let filteredRes = res;
-    //     if( subSection !== '') {
-    //         filteredRes = Calculations.fitlerTenantsByRoomNr(res, subSection)
-    //     } 
-    //     setJammersList(filteredRes);
-    // };
 
     const showRoomNr = section === 'Tenants' || (section === 'Rooms' && subSection === '');
     const showCurrentTenants = section !== 'Rooms';

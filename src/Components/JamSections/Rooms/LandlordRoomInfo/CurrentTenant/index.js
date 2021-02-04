@@ -22,7 +22,6 @@ const CurrentTenant = ({
     setEditable,
 }) => {
     
-    console.log('currentTenant: ', currentTenant);
     const takeMeToTenantInfo = (e) => {
         e.preventDefault();
         setSection('Tenants')
