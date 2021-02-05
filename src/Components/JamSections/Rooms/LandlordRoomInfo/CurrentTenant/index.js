@@ -10,16 +10,16 @@ import { setSection } from '../../../../../redux/actions/navigateActions';
 import './index.scss';
 
 const CurrentTenant = ({
-    jamName,
-    docId,
-    adminId,
-    adminName,
-    adminLastName,
     currentTenant,
-    setDocType,
-    setSection,
+    firstName,
+    jamId,
+    jamName,
+    lastName,
     setDocId,
+    setDocType,
     setEditable,
+    setSection,
+    userId,
 }) => {
     
     const takeMeToTenantInfo = (e) => {
@@ -44,13 +44,12 @@ const CurrentTenant = ({
 
                 <div className="start-chatButton">
                     <StartChatButton 
-                        user1Name={adminName}
-                        user1LastName={adminLastName}
-                        user1Id={adminId}
-                        user2Name={currentTenant.firstName}
-                        user2LastName={currentTenant.lastName}
-                        user2Id={docId}
-                        jamName={jamName}
+                        adminId={userId}
+                        adminName={firstName}
+                        adminLastName={lastName}
+                        jammers={[{userId: currentTenant.userId, firstName: currentTenant.firstName, lastName: currentTenant.lastName}]}
+                        jamDesc={jamName}
+                        originJamId={jamId}
                     />
                 </div>
 
@@ -65,11 +64,12 @@ const CurrentTenant = ({
 };
 
 const mapStateToProps = (state) => {
+    const { jamId } = state.nav
     const { userId, firstName, lastName } = state.userInfo;
     const { jamName } = state.jamInfo;
     const { docId } = state.doc;
 
-    return { jamName, adminId: userId, adminName: firstName, adminLastName: lastName, docId }
+    return { jamId, jamName, userId, firstName, lastName, docId }
     
 };
 export default connect(mapStateToProps, { setDocType, setSection, setDocId, setEditable })(CurrentTenant);

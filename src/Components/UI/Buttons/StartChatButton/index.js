@@ -11,53 +11,54 @@ import { setJamId } from '../../../../redux/actions/navigateActions.js';
 import "./index.scss";
 
 const StartChatButton = ({
+  adminId,
+  adminName,
+  adminLastName,
+  jammers,
+  jamDesc,
+  originJamId,
+  setJamId,
   userJams,
-  user1Name,
-  user1Id,
-  user2Name,
-  user2LastName,
-  user2Id,
-  jamName,
-  setJamId
 }) => {
 
   const launchChat = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    console.log('launchChat: ', user1Id, ' / ', user2Id);
+    const jammerId = jammers[0].userId;
 
-    const chatId = user1Id + user2Id;
-    const reverseChatId = user2Id + user1Id;
+    const chatId = adminId + jammerId;
+    const reverseChatId = jammerId + adminId;
 
     const existChat = findIndex(userJams, {'jamId': chatId}) !== -1;
     const existReverseChat = findIndex(userJams, {'jamId': reverseChatId}) !== -1;
     
     
     if(existChat){
-      console.log('existChat: ', existChat);
       return setJamId(chatId)
     };
     
     if(existReverseChat){
-      console.log('existReverseChat: ', existReverseChat);
       return setJamId(reverseChatId)
     }
 
     const chatInfo = { 
-        createdAt: new Date(), 
-        adminId: user1Id,
-        adminName: user1Name, 
-        user2Id: user2Id,
-        user2Name: user2Name,
-        user2LastName: user2LastName,
-        jamId: chatId, 
-        jamType: 'chat', 
-        jamName: jamName,
+      createdAt: new Date(), 
+      adminId,
+      adminName, 
+      adminLastName,
+      jammers,
+      jamId: chatId, 
+      jamType: 'chat', 
+      jamDesc,
+      originJamId,
     }
-
-    console.log('justo antes 1 / 2: ', user1Id, ' / ', user2Id)
-    DataService.startChat(chatId, chatInfo, user1Id, user2Id);
+    console.log('chatInfo: ', chatInfo);
+    
+    DataService.startChat(chatId, chatInfo, adminId, jammerId)
+    .then(
+      setJamId(chatId)
+    );
   };
 
   return (
@@ -77,9 +78,10 @@ const StartChatButton = ({
 
 const mapStateToProps = state => {
 
-    const { userJams } = state.userInfo
+    const { userJams } = state.userInfo;
+    const { jamName } = state.jamInfo;
 
-    return { userJams }
+    return { userJams, jamName }
 };
 
 export default connect (mapStateToProps, { setJamId })(StartChatButton);

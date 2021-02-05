@@ -22,9 +22,17 @@ const TenantsChart = ({
     
     const tenants = Calculations.getAllTenantsOrganized(jammers);
     
-    const formerTenants = tenants.formerTenants;
-    const futureTenants = tenants.futureTenants;
-    const currentTenants = tenants.currentTenants;
+    let formerTenants = tenants.formerTenants;
+    let futureTenants = tenants.futureTenants;
+    let currentTenants = tenants.currentTenants;
+
+    if ( subSection !== '') {
+        const filteredTenants = jammers.filter(e => e.roomNr === subSection);
+        const roomTenants = Calculations.getAllTenantsOrganized(filteredTenants)
+        formerTenants = roomTenants.formerTenants;
+        futureTenants = roomTenants.futureTenants;
+        currentTenants = roomTenants.currentTenants;
+    }
 
 
     const takeMeToTenantInfo = (e, userId) => {

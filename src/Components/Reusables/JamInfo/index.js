@@ -49,14 +49,12 @@ const JamInfo = ({
                     <p>The administrator of this jam is:  <span>{adminName} {adminLastName}</span></p>
                 </div>
                 <StartChatButton
-                    user1Name={firstName}
-                    user1LastName={lastName}
-                    user1Id={userId}
-                    user2Name={adminName}
-                    user2LastName={adminLastName}
-                    user2Id={adminId}
-                    jamName={jamName}
-                    jamId={jamId}
+                    adminId={userId}
+                    adminName={firstName}
+                    adminLastName={lastName}
+                    jammers={[{userId: adminId, firstName:adminName, lastName: adminLastName}]}
+                    jamDesc={jamName}
+                    originJamId={jamId}
                 />
             </div>
 

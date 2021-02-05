@@ -91,6 +91,25 @@ export default class Calculations {
        return sections;
     };
 
+    static getJamGuestSections(type){
+        //console.log('get Jam Sections launched')
+        let sections = [];
+        switch (type) {
+            case 'accommodation':
+              sections = ['Board', 'Jammers', 'MyJam', 'Settings']
+              break;
+            case 'rooms-rental':
+                sections = ['Overview', 'Board', 'Flatmates']
+                break;
+            case 'chat': 
+                sections = ['Chat']
+                break;
+            default:
+              //console.log('no reconoce tipo')
+        }
+       return sections;
+    };
+
     static getIcon(info){
 
         let icon; 
@@ -136,25 +155,6 @@ export default class Calculations {
         };
         return icon;
     }
-
-    static getJamGuestSections(type){
-        //console.log('get Jam Sections launched')
-        let sections = [];
-        switch (type) {
-            case 'accommodation':
-              sections = ['Board', 'Jammers', 'MyJam', 'Settings']
-              break;
-            case 'rooms-rental':
-                sections = ['Overview', 'Board', 'Flatmates']
-                break;
-            case 'chat': 
-                sections = ['Chat']
-                break;
-            default:
-              //console.log('no reconoce tipo')
-        }
-       return sections;
-    };
 
     static validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

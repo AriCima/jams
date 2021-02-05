@@ -1,14 +1,16 @@
 import React from 'react';
-import Calculations from '../../../services/Calculations';
+import { connect } from 'react-redux';
 
+import Calculations from '../../../services/Calculations';
 import moment from 'moment';
 
 import './index.scss';
 
-const ChatContent = ({ chatContent}) => {
+const ChatContent = ({ chatContent, userId }) => {
 
 
     const messageTime = Calculations.getMessageDate(chatContent.createdAt)
+    const myMessage = chatContent.userId === userId
 
     const renderMessage = (messageType) => { 
         switch (messageType){
@@ -32,7 +34,7 @@ const ChatContent = ({ chatContent}) => {
                 )
             default:
                 return (
-                    <div className="board-message-item">
+                    <div className={`board-message-item ${myMessage ? 'myMessage' : ''}`}>
                         <div className="board-message">
                             <p>{chatContent.messageText}</p>
                         </div>
@@ -43,7 +45,6 @@ const ChatContent = ({ chatContent}) => {
                         </div>
                     </div>
                 )
-                //console.log('no navbar item matched')
         };
 
     }
@@ -54,4 +55,11 @@ const ChatContent = ({ chatContent}) => {
         </>
     );   
 };
-export default ChatContent;
+
+const mapStateToProps = state => {
+    const { userId } = state.userInfo;
+
+    return { userId };
+}
+
+export default connect(mapStateToProps, null)(ChatContent);

@@ -10,15 +10,19 @@ const JamsList = ({ userJams }) => {
   
   const _renderJams = () => {
     return userJams.map((jam, j) => {
+      const {jamName, jamDesc, jamCode, jamId, jamType, jammers, adminId, adminName, adminLastName } = jam;
       return (
         <div className="jamCover-wrapper" key={j}>
           <JamCover 
-            jamName={jam.jamName} 
-            jamDesc={jam.jamDesc}
-            jamCode={jam.jamCode}
-            jamId={jam.id}
-            jamType={jam.jamType}
-            user2Name={jam.user2Name}
+            jamName={jamName}
+            jamDesc={jamDesc}
+            jamCode={jamCode}
+            jamId={jamId}
+            jamType={jamType}
+            jammers={jammers}
+            adminId={adminId}
+            adminName={adminName}
+            adminLastName={adminLastName}
             />
         </div>
       )

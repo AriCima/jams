@@ -8,7 +8,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 
 import "./index.scss";
-const JammerCard = ({ userId, userRole, firstName, lastName, jamName, tL, setDocType, setDocId, setEditable }) => {
+const JammerCard = ({ userId, jamId, userRole, firstName, lastName, jamName, tL, setDocType, setDocId, setEditable }) => {
 
   const showJammerForm = (e) => {
     e.preventDefault();
@@ -36,13 +36,12 @@ const JammerCard = ({ userId, userRole, firstName, lastName, jamName, tL, setDoc
           </div>
           <div className="landlord-tenant-contact">
             <StartChatButton 
-              user1Name={firstName}
-              user1LastName={lastName}
-              user1Id={userId}
-              user2Name={tL.firstName}
-              user2LastName={tL.lastName}
-              user2Id={tL.userId}
-              jamName={jamName}
+              adminId={userId}
+              adminName={firstName}
+              adminLastName={lastName}
+              jammers={[{userId: tL.userId, firstName: tL.firstName, lastName: tL.lastName}]}
+              jamDesc={jamName}
+              originJamId={jamId}
             />
           </div>
         </div>
@@ -69,13 +68,12 @@ const JammerCard = ({ userId, userRole, firstName, lastName, jamName, tL, setDoc
           </div>
           <div className="tenant-tenant-contact">
             <StartChatButton 
-              user1Name={firstName}
-              user1LastName={lastName}
-              user1Id={userId}
-              user2Name={tL.firstName}
-              user2LastName={tL.lastName}
-              user2Id={tL.userId}
-              jamName={jamName}
+              adminId={userId}
+              adminName={firstName}
+              adminLastName={lastName}
+              jammers={[{userId: tL.userId, firstName: tL.firstName, lastName: tL.lastName}]}
+              jamDesc={jamName}
+              originJamId={jamId}
             />
           </div>
         </div>

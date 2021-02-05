@@ -20,7 +20,7 @@ export default class DataService {
                     console.log('User NOT added: ', errorCode);
                 });
         });
-    }
+    };
 
     static checkIfEmialExists(email) {
         return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ export default class DataService {
                 const errorCode = error.code;
                 // console.log('Usuario No Existe : ', errorCode);
             });
-    }
+    };
 
     static getUserInfo(userId) {
         // console.log('user info called with: ', userId)
@@ -51,7 +51,7 @@ export default class DataService {
                     reject('Usuario no existe');
                 });
         });
-    }
+    };
 
     static getUserInfoById(userId) {
         return new Promise((resolve, reject) => {
@@ -65,32 +65,7 @@ export default class DataService {
                 const errorCode = error.code;
                 // console.log('Usuario No Existe : ', errorCode);
             });
-    }
-
-    // static getUserJams(userId) {
-    //     return new Promise((resolve, reject) => {
-    //         firebase.firestore()
-    //         .collection('users')
-    //         .doc(userId)
-    //         .collection('userJams')
-    //         .get()
-    //         .then(result => {
-    //             const jams = [];
-    //             result.docs.forEach(d => {
-    //                 const j = d.data();
-    //                 j.id = d.id;
-    //                 jams.push(j);
-    //             });
-
-    //             resolve(jams);
-    //         });
-    //     })
-    //         .catch((error) => {
-    //             const errorCode = error.code;
-    //             // console.log('Usuario No Existe : ', errorCode);
-    //         });
-    // }
-
+    };
 
     static getUserJams = (userId, userJams) => {
         return new Promise((resolve, reject) => {
@@ -104,8 +79,8 @@ export default class DataService {
     }
 
 
-    // JAMS
-    // Create
+    //  * * * * * * * * * JAMS * * * * * * * * * 
+
     static createJam(jamInfo, userId, email, firstName, lastName) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
@@ -143,6 +118,23 @@ export default class DataService {
                 });
         });
     };
+    static startChat(chatId, chatInfo, user1Id, jammerId) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('jams')
+                .doc(chatId)
+                .set(chatInfo)
+                .then(() => {
+                    this.addJamToUser(chatId, user1Id, chatInfo);
+                    this.addJamToUser(chatId, jammerId, chatInfo);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log('Chat could not be created: ', errorCode, ' / ', errorMessage);
+                });
+        });
+    };
     static editJamMainInfo(jamId, info) {
         return new Promise(() => {
             firebase.firestore()
@@ -156,6 +148,22 @@ export default class DataService {
                 // The document probably doesn't exist.
                 console.error("Error updating document: ", error);
             });
+        });
+    };  
+    static updateJamInfo(jamId, jamField, newInfo) {
+        return new Promise((resolve, reject) => {
+            // //console.log('inputs en el dataservice ', jamCode, jammers);
+
+            firebase.firestore().collection('jams').doc(jamId).update({ jamField: newInfo })
+
+                .then((result) => {
+                    // console.log("jamInfo succesfully UPDATED")
+                    resolve(result);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    // console.log('ERROR jamInfo could NOT be updated: ', errorCode);
+                });
         });
     };
     static editJamDetails(jamId, info) {
@@ -229,25 +237,8 @@ export default class DataService {
             });
         });
     };
-    static startChat(chatId, chatInfo, user1Id, user2Id) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore()
-                .collection('jams')
-                .doc(chatId)
-                .set(chatInfo)
-                .then(() => {
-                    this.addJamToUser(chatId, user1Id, chatInfo);
-                    this.addJamToUser(chatId, user2Id, chatInfo);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log('Chat could not be created: ', errorCode, ' / ', errorMessage);
-                });
-        });
-    };
-    static addJamToUser(jamId, userId, jamInfo) {
 
+    static addJamToUser(jamId, userId, jamInfo) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('users')
@@ -365,80 +356,52 @@ export default class DataService {
         });
     };
 
-    // static getBoardInfo(jamId, section) {
-    //     return new Promise((resolve, reject) => {
-    //         // //console.log('jamInfoBIS  ID de la jam = ', jamId)
-    //         firebase.firestore().collection('jams')
-    //             .doc(jamId)
-    //             .collection(section)
-    //             .orderBy('createdAt', 'asc')
-    //             .get()
-    //             .then((querySnapshot) => {
-    //                 const result = [];
-    //                 querySnapshot.forEach((doc) => {
-    //                     // //console.log(doc.data())
-    //                     const info = doc.data();
-    //                     result.push(info);
-    //                     // resolve({id: doc.id, data: doc.data()});
-    //                 });
-    //                 // console.log(`${section} content = `,result)
-    //                 resolve(result);
-    //             })
-    //             .catch((error) => {
-    //                 const errorCode = error.code;
-    //                 const errorMessage = error.message;
-    //                 // console.log('Error al cargar la info de ', section, errorMessage);
-    //             });
-    //     });
-    // }
-
-    static getBoardInfo = (jamId, section) => {
-        return firebase.firestore()
-            .collection('jams')
-            .doc(jamId)
-            .collection('board')
-            .orderBy('createdAt', 'asc')
-            .onSnapshot(section)
-    };
 
     /* * * * * * * *  CHAT * * * * * * * * * * * * * * * */
 
-    static getChatInfo(jamId) {
-        return new Promise((resolve, reject) => {
-            // //console.log('jamInfoBIS  ID de la jam = ', jamId)
-            firebase.firestore()
-                .collection('jams')
-                .doc(jamId)
-                .get()
-                .then((doc) => {
-                    resolve(doc.data());
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // console.log('Error al cargar la info de ', section, errorMessage);
-                });
-        });
-    };
-    static saveChatMessage(jamId, messageInfo) {
+    static saveBoardMessage(jamId, section, messageInfo) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
                 .collection('jams')
                 .doc(jamId)
-                .collection('messages')
+                .collection(section)
                 .add(messageInfo)
                 .then((result) => {
-                // console.log("message succesfully sent !")
                     resolve(result);
                 })
 
                 .catch((error) => {
                     const errorCode = error.code;
-                // console.log('Message could not be sent: ', errorCode);
+                    console.log('Message could not be sent: ', errorCode);
                 });
         });
     };
-    static getChatMessages(jamId) {
+    static getBoardInfo = (jamId, x) => {
+        return firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .collection('board')
+            .orderBy('createdAt', 'asc')
+            .onSnapshot(x)
+    };
+    static saveChatMessage(jamId, section, messageInfo) {
+        return new Promise((resolve, reject) => {
+            firebase.firestore()
+                .collection('jams')
+                .doc(jamId)
+                .collection(section)
+                .add(messageInfo)
+                .then((result) => {
+                    resolve(result);
+                })
+
+                .catch((error) => {
+                    const errorCode = error.code;
+                    console.log('Message could not be sent: ', errorCode);
+                });
+        });
+    };
+    static getChatInfo(jamId, section) {
         return new Promise((resolve, reject) => {
             // //console.log('jamInfoBIS  ID de la jam = ', jamId)
             firebase.firestore()
@@ -446,41 +409,10 @@ export default class DataService {
                 .doc(jamId)
                 .collection('messages')
                 .orderBy('createdAt', 'asc')
-                .get()
-                .then((querySnapshot) => {
-                    const result = [];
-                    querySnapshot.forEach((doc) => {
-                        // //console.log(doc.data())
-                        const info = doc.data();
-                        result.push(info);
-                        // resolve({id: doc.id, data: doc.data()});
-                    });
-                    // console.log(`${section} content = `,result)
-                    resolve(result);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // console.log('Error al cargar la info de ', section, errorMessage);
-                });
+                .onSnapshot(section)
         });
     };
-    static updateJamInfo(jamId, jamField, newInfo) {
-        return new Promise((resolve, reject) => {
-            // //console.log('inputs en el dataservice ', jamCode, jammers);
 
-            firebase.firestore().collection('jams').doc(jamId).update({ jamField: newInfo })
-
-                .then((result) => {
-                    // console.log("jamInfo succesfully UPDATED")
-                    resolve(result);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    // console.log('ERROR jamInfo could NOT be updated: ', errorCode);
-                });
-        });
-    }
 
     /* * * * * * * *  ROOMS  * * * * * * * * * * * * * * * */
 
@@ -558,39 +490,6 @@ export default class DataService {
         });
     };
 
-    // MESSAGES
-
-    static saveMessage(jamId, section, messageInfo) {
-        return new Promise((resolve, reject) => {
-            firebase.firestore().collection('jams').doc(jamId).collection(section)
-                .add(messageInfo)
-                .then((result) => {
-                // console.log("message succesfully sent !")
-                    resolve(result);
-                })
-
-                .catch((error) => {
-                    const errorCode = error.code;
-                // console.log('Message could not be sent: ', errorCode);
-                });
-        });
-    };
-    static getBoardMessages(jamId) {
-        return new Promise((resolve, reject) => {
-            const boardMessagesResult = [];
-
-            firebase.firestore().collection('boardMessages').where('jamId', '==', jamId).orderBy('date')
-                .get() // Where me devuelve todos los mensajes que tengan ese jamId
-                .then(docs => {
-                    docs.forEach((d) => {
-                        boardMessagesResult.push(d.data());
-                    });
-                    resolve(boardMessagesResult);
-                })
-                .catch(error => reject(error));
-        });
-    };
-
     //  * * * * * * * JAMMERS  * * * * * * *
 
     static getJammers(jamId) {
@@ -612,6 +511,7 @@ export default class DataService {
                 });
         });
     };
+
     static getJammerInfo(jamId, jammerId) {
         return new Promise((resolve, reject) => {
             firebase.firestore()
@@ -634,6 +534,7 @@ export default class DataService {
                 });
         });
     };
+
     static editJammerInfo(jamId, jammerId, info) {
         return new Promise(() => {
             firebase.firestore()

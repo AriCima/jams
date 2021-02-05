@@ -8,12 +8,16 @@ import { setJamId, setSection, setSubSection } from '../../../../redux/actions/n
 import "./index.scss";
 
  const JamCover = ({
+   adminId,
+   adminName,
+   adminLastName,
+   jammers,
    jamName,
    jamId,
+   userId,
    currentJamId,
    jamType,
    jamDesc,
-   user2Name = '',
    setJamId,
    setSection,
    setSubSection
@@ -25,8 +29,13 @@ import "./index.scss";
     setSubSection('');
   };
 
-
   const itemIsActive = currentJamId === jamId;
+
+  let interlocutor = '';
+
+  if ( jamType === 'chat') {
+    interlocutor = userId === adminId ? `${jammers[0].firstName} ${jammers[0].lastName}` : `${adminName} ${adminLastName}`
+  };
 
   return (
 
@@ -36,21 +45,21 @@ import "./index.scss";
     >
       
       <div className="jams-list-container-line">
-        { jamType === 'chat' ?
+        { jamType === 'chat' ? (
           <Fragment>
-            <h4>{user2Name}</h4>
+            <h4>{interlocutor}</h4>
+            <p>{`jammed in ${jamDesc}`}</p>
           </Fragment>
-          :
+        ) : (
           <Fragment>
             <h4>{jamName}</h4>
+            <div className="jams-list-container-line">
+              <p>{jamDesc}</p>
+            </div>
           </Fragment>
-
-        }
+        )}
       </div>
 
-      <div className="jams-list-container-line">
-        <p>{jamDesc}</p>
-      </div>
 
     </div>
   )
@@ -59,7 +68,9 @@ import "./index.scss";
 
 const mapStateToProps = state => {
   const jamId = state.nav.jamId;
-  return { currentJamId: jamId };
+  const { userId, firstName, lastName } = state.userInfo;
+
+  return { currentJamId: jamId, userId, firstName, lastName };
 };
 
 export default connect(mapStateToProps, { setJamId, setSection, setSubSection })(JamCover)

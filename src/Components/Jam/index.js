@@ -15,22 +15,28 @@ import JamRegistrationForm from '../Forms/JamRegistrationForm';
 
 import './index.scss';
 
+
 const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
+    let timer = null;
 
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [invId, setInvId] = useState('')
     
-    useEffect(() => {
-        if(userRole && jamType !== 'chat') {
-            const isAdmin = userRole === 'Admin';
-            setShowRegisterForm(false);
-            if(!isAdmin) {
-                console.log('adminName :',  adminName);
-                console.log('entró en no es Admin');
+    useEffect(() => {     
+        if (userRole) {
+            console.log('userRole: ', userRole);
+            if (jamType === 'chat' || userRole === 'Admin') {
+                setShowRegisterForm(false);
+            };
+            
+            if(jamType !== 'chat' && userRole !== 'Admin') {    
                 getJammerInfo();
             };
-        };
-    }, [userRole]);
+        }   
+        return () => {
+            clearTimeout(timer)
+          }
+    }, [userRole, jamId]);
 
 
     const getJammerInfo = async () => {
@@ -41,7 +47,7 @@ const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
             if (!alreadyRegistered) {
                 const invitationId = res.invId;
                 setInvId(invitationId);
-                setTimeout(() => showForm(true), 3000);
+                timer = setTimeout(() => showForm(true), 2000);
             }
         })
     }
@@ -58,9 +64,9 @@ const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
                 return <Jammers />;
             // case 'Flatmates':
             //     return <Jammers />;
-            // case 'Settings':
-            //     return <Settings />;
-            // case 'rent':
+            case 'Settings':
+                return <Settings />;
+            case 'rent':
             default:
                 return ;
         }
@@ -106,7 +112,7 @@ const mapStateToProps = state => {
     const { jamId, section } = state.nav;
     const { userId, userRole } = state.userInfo;
     const {jamType, adminName } = state.jamInfo;
-
+    
     return { section, jamId, jamType, userId, adminName, userRole };
 };
 

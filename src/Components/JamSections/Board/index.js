@@ -73,7 +73,7 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
             createdAt: date,
             messageType: 'message'
         }
-        DataService.saveMessage(jamId, section, messageInfo);
+        DataService.saveBoardMessage(jamId, section, messageInfo);
         document.getElementById("board-message-form").reset();
     };
 

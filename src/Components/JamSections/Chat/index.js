@@ -10,20 +10,35 @@ import ChatContent from './ChatContent';
 // REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
-const Chat = ({ jamId, userId, adminName, userRole }) => {
+const Chat = ({ jamId, userId, adminName }) => {
 
-    const isAdmin = userRole === 'Admin';
     const [chatInfo, setChatInfo] = useState([]);
    
+
     useEffect(() => {
-        jamId && getChatContent(jamId)
+        if(jamId) {
+            const unsubscribe = DataService.getChatInfo(jamId, {
+                next: querySnapshot => {
+                    const messages = [];
+                    const result = querySnapshot.docs.map(docSnapshot => {
+                        const j = docSnapshot.data();
+                        j.id = docSnapshot.id;
+                        messages.push(j);
+                    });
+                    setChatInfo(messages)
+                },
+                error: () => console.log('failure')
+            })
+            return unsubscribe
+        }
+        // jamId && getChatContent(jamId)
     }, [jamId])
 
 
-    const getChatContent = async (jamId) => {
-        const res = await DataService.getChatMessages(jamId);
-        setChatInfo(res);
-    }
+    // const getChatContent = async (jamId) => {
+    //     const res = await DataService.getChatMessages(jamId);
+    //     setChatInfo(res);
+    // }
 
     const renderChatContent = () => {
         return chatInfo.map((bC, i) => {
@@ -50,7 +65,8 @@ const Chat = ({ jamId, userId, adminName, userRole }) => {
             messageType: 'message'
         }
 
-        DataService.saveChatMessage(jamId, messageInfo)
+        DataService.saveChatMessage(jamId, 'messages', messageInfo);
+        document.getElementById("chat-message-form").reset();
     };
 
     return (
@@ -62,6 +78,7 @@ const Chat = ({ jamId, userId, adminName, userRole }) => {
                 <form
                     className="chat-form"
                     onSubmit={handleSubmit(onSubmit)}
+                    id="chat-message-form"
                 >
                     <textarea
                         rows="1"
@@ -86,7 +103,7 @@ const Chat = ({ jamId, userId, adminName, userRole }) => {
 const mapStateToProps = state => {
     const { jamId } = state.nav;
     const { userId, userName, userRole } = state.userInfo;
-    const { adminName } = state.jamInfo
+    const { adminName  } = state.jamInfo
 
     return { jamId, userId, userName, userRole, adminName  };
 };

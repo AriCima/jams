@@ -225,12 +225,12 @@ const JamRegistrationForm = ({
             
             <div className="form-section">
                 <div className="form-section-title">
-                    <p>Home Address (Street, house nr, floor, door)</p>
+                    <p>Home Address</p>
                 </div>
                 <div className="form-line">
                     <div className="custom-input-block-street">
                         <div className="block-label">
-                            <label>Street</label>
+                            <label>Street, house nr, floor, door</label>
                             {errors.homeAddress && <div className="field-error">Non valid address</div>}
                         </div>
                         <input

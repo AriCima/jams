@@ -60,45 +60,58 @@ const Dashboard = ({
 
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
-        const jammers = await DataService.getJammers(jamId);
-        let rooms = await DataService.getJamRooms(jamId);
-
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
-
-        const nrOfRooms = rooms.length.toString()
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
-        
-        const editedJammers = Calculations.removeAmdinFromJammers(jammers);
-        const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
-        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, nrOfRooms);
-        const sortedRooms = Calculations.sortByRoomNr(rooms)
-        
-        if (rooms.length > 0) {
-            for (let i = 0; i < rooms.length; i++) {
-                const oT = organizedTenantsByRoom[i];
-                sortedRooms[i].currentTenant = oT.currentTenant;
-                sortedRooms[i].formerTenants = oT.formerTenants;
-                sortedRooms[i].futureTenants = oT.futureTenants;
-            }
+
+        switch (jamType) {
+            case 'rooms-rental':
+                const jammers = await DataService.getJammers(jamId);
+                let rooms = await DataService.getJamRooms(jamId);
+                const nrOfRooms = rooms.length.toString()
+                
+                const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+                const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+                const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, nrOfRooms);
+                const sortedRooms = Calculations.sortByRoomNr(rooms)
+                
+                if (rooms.length > 0) {
+                    for (let i = 0; i < rooms.length; i++) {
+                        const oT = organizedTenantsByRoom[i];
+                        sortedRooms[i].currentTenant = oT.currentTenant;
+                        sortedRooms[i].formerTenants = oT.formerTenants;
+                        sortedRooms[i].futureTenants = oT.futureTenants;
+                    }
+                }
+                setJammers(editedJammers);
+                setJamRooms(sortedRooms);
+                setNumberOfRooms(nrOfRooms);
+                setUserRole(userRole);
+            break;
+            case 'chat':
+                // Info en Redux
+                setJammers(res.jammers);
+                setJamRooms('');
+                setJamType('chat');
+                setNumberOfRooms('');
+                break;
+            default:
+                return;
+
         }
+
         
         
         // Info en el state
         setJamInfo(res);
-        
+
         // Info en Redux
-        setJamRooms(sortedRooms);
-        setUserRole(userRole);
-        setJamName(jamName);
         setJamAdminId(adminId);
-        setJamDesc(jamDesc);
         setJamAdminName(adminName);
-        setJamType(jamType);
-        setJamDetails(jamDetails);
         setJamCode(jamCode);
-        setNumberOfRooms(nrOfRooms);
-        setJammers(editedJammers);
-        // setJamRooms(rooms)
+        setJamDesc(jamDesc);
+        setJamDetails(jamDetails);
+        setJamName(jamName);
+        setJamType(jamType);
     };
 
     const renderJam = jamId && !isEmpty(jamInfo);

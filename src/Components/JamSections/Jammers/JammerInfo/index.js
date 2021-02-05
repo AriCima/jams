@@ -41,6 +41,7 @@ const JammerInfo = ({
     // }
     DataService.getJammerInfo(jamId, docId)
     .then(res => {
+      console.log('res: ', res);
       setTenantInfo(res)
     })
   }, [jamId, docId])
@@ -104,14 +105,14 @@ const JammerInfo = ({
                     </div>
 
                     <div className="start-chatButton">
+                      <p>HOLA</p>
                       <StartChatButton 
-                        user1Name={firstName}
-                        user1LastName={lastName}
-                        user1Id={userId}
-                        user2Name={tenantInfo.firstName}
-                        user2LastName={tenantInfo.lastName}
-                        user2Id={docId}
-                        jamName={jamName}
+                        adminId={userId}
+                        adminName={firstName}
+                        adminLastName={lastName}
+                        jammers={[{userId: tenantInfo.userId, firstName: tenantInfo.firstName, lastName: tenantInfo.lastName}]}
+                        jamDesc={jamName}
+                        originJamId={jamId}
                       />
                     </div>
 
