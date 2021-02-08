@@ -24,13 +24,16 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
     const [ third, setShowThird ] = useState(false);
     const [rent, setRent] = useState('');
     const [deposit, setDeposit] = useState('');
-
+    
+    
     const [defaultValues, setDefaultValues] = useState({
         nrOfTenants: 1,
         rent:"",
         deposit: ""
     });
 
+    const { register, errors, handleSubmit, control, setValue } = useForm({defaultValues});
+    
     useEffect(() => {
         if(jammers.length > 0) {
             const editedJammers = Calculations.organizeAdminTenants(jammers);
@@ -38,27 +41,15 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
         };
     }, [jamId]);
 
-
-    // useEffect(() => {
-    //     getJammersList(jamId)
-    // }, [jamId]);
-
-    // const getJammersList = async (jamId) => {
-    //     const res = await DataService.getJammers(jamId);
-    //     let organizedJammers = [];
-    //     if(res.length > 0) {
-    //         organizedJammers = Calculations.organizeAdminTenants(res);
-    //         setJammers(organizedJammers);
-    //     };
-    // };
-
     const getRoomInfo = async () => {
         const res = await DataService.getSingleRoomInfo(jamId, nrOfTheRoom);
         if(!isEmpty(res)) {
             setRoomsInfo(res)
-            console.log('res.rent: ', res.rent);
-            setRent(res.rent);
-            setDeposit(res.deposit);
+            // console.log('res.rent: ', res.rent);
+            // setRent(res.rent);
+            // setDeposit(res.deposit);
+            setValue('rent', res.rent)
+            setValue('deposit', res.deposit)
             setDefaultValues({ 
                 nrOfTenants: 1,
                 rent: res.rent,
@@ -69,11 +60,9 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
 
     let history = useHistory();
 
-    const { register, errors, handleSubmit, control, setValue, getValues } = useForm({defaultValues});
 
     const onSubmit = (data) => {
-        // console.log(data)
-
+        console.log('data: ', data);
         setInvitationInfo(data)
         const { checkIn, checkOut, firstName, lastName } = data;
         data.registeredUser = false;
@@ -99,31 +88,37 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
         }];
 
         if (nrOfTenants === 2) {
-            tenantsInfo[1] = {
+            tenantsInfo.push({
                 firstName: data.secondFirstName,
                 lastName: data.secondLastName,
                 emial: data.secondEmail,
-            };
+            });
         };
 
         if (nrOfTenants === 3) {
-            tenantsInfo[2] = {
+            tenantsInfo.push({
+                firstName: data.secondFirstName,
+                lastName: data.secondLastName,
+                emial: data.secondEmail,
+            });
+            tenantsInfo.push({
                 firstName: data.thirdFirstName, 
                 lastName: data.thirdLastName, 
                 email: data.thirdEmail,
-            };
+            });
         };
-
-        for (let i = 0; i < tenantsInfo.length; i++){
-            DataService.newTenantInvitation(jamId, data)
-            .then((res) => {
-                const invId = res.id;
+        
+        console.log('tenantsInfo: ', tenantsInfo);
+        // for (let i = 0; i < tenantsInfo.length; i++){
+        //     DataService.newTenantInvitation(jamId, data)
+        //     .then((res) => {
+        //         const invId = res.id;
                 
-                // CHAPUZA AQUI HAY QUE AUTOMATIZAR FUNCION DE INVITACION Y PASAR EL USER UN EMAIL CON EL LINK
-                const registrationURL = `/register/${jamId}/${jamName}/${adminName}/${firstName}/${lastName}/${invId}`
-                // history.push(`/register/${jamId}/${jamName}/${adminName}/${firstName}/${lastName}/${invId}`);
-            })
-        }
+        //         // CHAPUZA AQUI HAY QUE AUTOMATIZAR FUNCION DE INVITACION Y PASAR EL USER UN EMAIL CON EL LINK
+        //         const registrationURL = `/register/${jamId}/${jamName}/${adminName}/${firstName}/${lastName}/${invId}`
+        //         // history.push(`/register/${jamId}/${jamName}/${adminName}/${firstName}/${lastName}/${invId}`);
+        //     })
+        // }
     };
 
     useEffect(() => {
@@ -191,14 +186,8 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                         onChange={(e) => {
                             const nr = e.target.value 
                             setNrOfTheRoom(nr);
-                            setValue("rent", defaultValues.rent, {
-                                // shouldValidate: true,
-                                shouldDirty: true
-                            })
-                            // setValue("deposit", deposit, {
-                            //     // shouldValidate: true,
-                            //     shouldDirty: true
-                            // })
+                            setValue("rent", defaultValues.rent)
+                            setValue("deposit", defaultValues.deposit)
                         }}
                         ref={register({
                             required: true,
@@ -219,6 +208,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                             name="checkIn"
                             // className="input"
                             className="input"
+
                         />
                     </div>
 
@@ -231,7 +221,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                             as={ReactDatePicker}
                             control={control}
                             valueName="selected" // DateSelect value's name is selected
-                            onChange={([selected]) => selected}
+                            onChange={([checkOut]) => checkOut}
                             dateFormat="dd/MMM/yyyy"
                             name="checkOut"
                             className="input"
@@ -321,10 +311,10 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>First name</label>
-                            {errors.secondfirstName && <div className="field-error">Required</div>}
+                            {errors.secondFirstName && <div className="field-error">Required</div>}
                         </div>
                         <input
-                            name="secondfirstName"
+                            name="secondFirstName"
                             ref={register({
                                 required: true,
                             })}
@@ -333,10 +323,10 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Last name</label>
-                            {errors.secondlastName && <div className="field-error">Required</div>}
+                            {errors.secondLastName && <div className="field-error">Required</div>}
                         </div>
                         <input
-                            name="secondlastName"
+                            name="secondLastName"
                             ref={register({ 
                                 required: true,
                             })}
@@ -370,10 +360,10 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>First name</label>
-                            {errors.thirdfirstName && <div className="field-error">Required</div>}
+                            {errors.thirdFirstName && <div className="field-error">Required</div>}
                         </div>
                         <input
-                            name="thirdfirstName"
+                            name="thirdFirstName"
                             ref={register({
                                 required: true,
                             })}
@@ -382,10 +372,10 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Last name</label>
-                            {errors.thirdlastName && <div className="field-error">Required</div>}
+                            {errors.thirdLastName && <div className="field-error">Required</div>}
                         </div>
                         <input
-                            name="thirdlastName"
+                            name="thirdLastName"
                             ref={register({ 
                                 required: true,
                             })}

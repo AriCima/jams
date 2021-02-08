@@ -62,6 +62,18 @@ const Dashboard = ({
         const res = await DataService.getJamInfoById(jamId);
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
+        
+        // Info en el state
+        setJamInfo(res);
+        
+        // Info en Redux
+        setJamType(jamType);
+        setJamAdminId(adminId);
+        setJamAdminName(adminName);
+        setJamCode(jamCode);
+        setJamDesc(jamDesc);
+        setJamDetails(jamDetails);
+        setJamName(jamName);
 
         switch (jamType) {
             case 'rooms-rental':
@@ -91,27 +103,14 @@ const Dashboard = ({
                 // Info en Redux
                 setJammers(res.jammers);
                 setJamRooms('');
-                setJamType('chat');
                 setNumberOfRooms('');
+                setUserRole(userRole);
                 break;
             default:
                 return;
 
         }
 
-        
-        
-        // Info en el state
-        setJamInfo(res);
-
-        // Info en Redux
-        setJamAdminId(adminId);
-        setJamAdminName(adminName);
-        setJamCode(jamCode);
-        setJamDesc(jamDesc);
-        setJamDetails(jamDetails);
-        setJamName(jamName);
-        setJamType(jamType);
     };
 
     const renderJam = jamId && !isEmpty(jamInfo);
