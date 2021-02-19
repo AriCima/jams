@@ -56,7 +56,7 @@
                         margin-left: 10px;
                     }
                 }
-                input {
+                input{
                     display: block;
                     box-sizing: border-box;
                     width: 100%;
@@ -66,8 +66,9 @@
                     margin-bottom: 10px;
                     font-size: 14px;
                     width: 100%;
-                    // background-color: $backCream;
+                    color: black;
                 }
+
                 ::placeholder{
                     color: $lightGray;
                 }
@@ -75,9 +76,34 @@
                 &.shortBlock{
                     width: 10%;
                 }
-
                 .midWidth{
                     width: 30%;
+                }
+            }
+
+        }
+        .form-error-line{
+            width: 100%;
+            display:flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px;
+            margin: 1px solid red;
+            border-radius: 5px;
+            
+            .form-error-message{
+                h4{
+
+                    font-size: $subtitleFont
+                }
+            }
+            .form-error-desc{
+                width: 100%;
+                display:flex;
+                justify-content: flex-start;
+                align-items: center;
+                p{
+                    font-size: $midFont;
                 }
             }
 

@@ -14,32 +14,39 @@ import Calculations from '../../services/Calculations';
 import './index.scss';
 
 const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
-    const [ organizedJammers, setOrganizedJammers ] = useState([]);
-    const [ roomsInfo, setRoomsInfo ] = useState({})
-    const [ showModal, setShowModal ] = useState(false);
-    const [ invitationInfo, setInvitationInfo ] = useState({});
+    // const [ organizedJammers, setOrganizedJammers ] = useState([]);
+    // const [ roomsInfo, setRoomsInfo ] = useState({})
+    // const [ showModal, setShowModal ] = useState(false);
+    // const [ invitationInfo, setInvitationInfo ] = useState({});
     const [ nrOfTenants, setNrOfTenants ] = useState(1)
     const [ nrOfTheRoom, setNrOfTheRoom ] = useState('');
     const [ second, setShowSecond ] = useState(false);
     const [ third, setShowThird ] = useState(false);
-    const [rent, setRent] = useState('');
-    const [deposit, setDeposit] = useState('');
-    
-    
+    // const [rent, setRent] = useState('');
+    // const [deposit, setDeposit] = useState('');
+    const [checkIn, setCheckIn] = useState(new Date());
+    const [checkOut, setCheckOut] = useState(new Date()+1);
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [errorDesc, setErrorDesc] = useState('');
+
+
     const [defaultValues, setDefaultValues] = useState({
         nrOfTenants: 1,
         rent:"",
-        deposit: ""
+        deposit: "",
+        checkIn,
+        checkOut
     });
 
     const { register, errors, handleSubmit, control, setValue } = useForm({defaultValues});
     
-    useEffect(() => {
-        if(jammers.length > 0) {
-            const editedJammers = Calculations.organizeAdminTenants(jammers);
-            setOrganizedJammers(editedJammers);
-        };
-    }, [jamId]);
+    // useEffect(() => {
+    //     if(jammers.length > 0) {
+    //         const editedJammers = Calculations.organizeAdminTenants(jammers);
+    //         setOrganizedJammers(editedJammers);
+    //     };
+    // }, [jamId]);
 
     const getRoomInfo = async () => {
         const res = await DataService.getSingleRoomInfo(jamId, nrOfTheRoom);
@@ -62,16 +69,42 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
 
 
     const onSubmit = (data) => {
-        console.log('data: ', data);
-        setInvitationInfo(data)
-        const { checkIn, checkOut, firstName, lastName } = data;
+        setShowErrorMessage(false);
+        const cIn =checkIn;
+        const cOut = checkOut
+
+        const outLater = moment(cOut).isAfter(cIn);
+        if (!outLater) {
+            setErrorMessage('Check-out date must be greater than check-In date');
+            return;
+        } else {
+            console.log('rN type' = typeof data.roomNr);
+            const roomJammers = jammers.filter(e => e.roomNr === data.roomNr);
+
+            for (let i = 0; i < roomJammers.length; i ++) {
+                const inIsBetween = moment(cIn).isBetween(roomsJammers[i].checkIn, roomsJammers[i].checkOut);
+                const outIsBetween = moment(cOut).isBetween(roomsJammers.checkIn, roomsJammers.checkOut);
+                if (inIsBetween || outIsBetween) {
+                    const { firstName, lastName, roomNr, checkIn, checkOut } = roomJammers[i];
+                    setErrorMessage('There is dates overlapping with');
+                    setErrorDesc(`Tenant: ${firstName} ${lastName}, roomNr: ${roomNr}, check-In: ${checkIn}, check-out: ${checkOut}`);
+                    setShowErrorMessage(true);
+                    return;
+                }
+            }
+        }
+
         data.registeredUser = false;
         data.jamName = jamName;
         data.adminName = adminName;
         data.contractCode = Calculations.generateCode();
+        data.checkIn = moment(cIn).format('DD-MMM-YYYY');
+        data.checkOut = moment(cOut).format('DD-MMM-YYYY');
+        setInvitationInfo(data)
 
-        const overlapStatus = Calculations.checkOverlapping(checkIn, checkOut, organizedJammers)
-       
+        
+        const overlapStatus = Calculations.checkOverlapping(checkIn, checkOut, jammers)
+
         if(overlapStatus.error === true) {
             setShowModal(true);
         };
@@ -108,7 +141,6 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
             });
         };
         
-        console.log('tenantsInfo: ', tenantsInfo);
         // for (let i = 0; i < tenantsInfo.length; i++){
         //     DataService.newTenantInvitation(jamId, data)
         //     .then((res) => {
@@ -139,10 +171,11 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
         if(nrOfTheRoom !== '') {
             getRoomInfo();
         }
-    }, [nrOfTheRoom])
-
-    console.log('defaultValues.rent: ', defaultValues.rent);
-
+    }, [nrOfTheRoom]);
+    
+    const takeMeToJammerInfo = () => {
+        console.log('HELLO WORLD')
+    }
     return (
         <form
             autocomplete="off"
@@ -153,6 +186,24 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                 <div className="form-section-title">
                     <p>Contract Info</p>
                 </div>
+
+                { showErrorMessage && (
+                    <div className="form-error-line">
+                        <div className="form-error-message">
+                            <h4>{errorMessage}</h4>
+                        </div>
+                        <div
+                            className="form-error-desc"
+                            onCLick={(e) => {
+                                e.preventDefault();
+                                takeMeToJammerInfo()
+                            }}
+                        >
+                            <p>{errorDesc}</p>
+                        </div>
+                    </div>
+
+                )}
 
                 <div className="form-line">
                     <div className="custom-input-block">
@@ -196,36 +247,39 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     
                     <div className="custom-input-block midWidth">
                         <div className="block-label ">
-                        <label>Check In</label>
-                        {errors.checkIn && <div className="field-error">Required</div>}
+                            <label>Check In</label>
+                            {errors.checkIn && <div className="field-error">Required</div>}
                         </div>
                         <Controller
-                            as={ReactDatePicker}
                             control={control}
-                            valueName="checkIn" // DateSelect value's name is selected
-                            onChange={([checkIn]) => checkIn}
-                            dateFormat="dd/MMM/yyyy"
+                            dateFormat="dd-MMM-yyyy"
                             name="checkIn"
-                            // className="input"
-                            className="input"
-
+                            className={`input`}
+                            render={() => (
+                                <ReactDatePicker
+                                    selected={checkIn}
+                                    onChange={value => setCheckIn(value)}
+                                />
+                            )}
                         />
                     </div>
 
                     <div className="custom-input-block midWidth">
                         <div className="block-label ">
-                        <label>Check Out</label>
-                        {errors.checkOut && <div className="field-error">Required</div>}
+                            <label>Check Out</label>
+                            {errors.checkOut && <div className="field-error">Required</div>}
                         </div>        
                         <Controller
-                            as={ReactDatePicker}
                             control={control}
-                            valueName="selected" // DateSelect value's name is selected
-                            onChange={([checkOut]) => checkOut}
-                            dateFormat="dd/MMM/yyyy"
+                            dateFormat="dd-MMM-yyyy"
                             name="checkOut"
-                            className="input"
-                            // className="input"
+                            className={`input`}
+                            render={() => (
+                                <ReactDatePicker
+                                    selected={checkOut}
+                                    onChange={value => setCheckOut(value)}
+                                />
+                            )}
                         />
                     </div>
 
