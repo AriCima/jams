@@ -1,72 +1,92 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ReactSelect from "react-select";
 
 import DataService from '../../services/DataService';
 import Calculations from '../../services/Calculations';
 
-
 import './index.scss';
 
-const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
+const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms }) => {
     // const [ organizedJammers, setOrganizedJammers ] = useState([]);
-    // const [ roomsInfo, setRoomsInfo ] = useState({})
     // const [ showModal, setShowModal ] = useState(false);
-    // const [ invitationInfo, setInvitationInfo ] = useState({});
+    const [ deposit, setDeposit] = useState('');
+    const [ rent, setRent] = useState('');
+    const [ checkIn, setCheckIn] = useState(new Date());
+    const [ checkOut, setCheckOut] = useState(new Date(new Date().setMonth(new Date().getMonth()+1)));
+    const [ errorDesc, setErrorDesc] = useState('');
+    const [ errorMessage, setErrorMessage] = useState('');
+    const [ invitationInfo, setInvitationInfo ] = useState({});
     const [ nrOfTenants, setNrOfTenants ] = useState(1)
     const [ nrOfTheRoom, setNrOfTheRoom ] = useState('');
+    const [ room, setRoomInfo ] = useState({})
     const [ second, setShowSecond ] = useState(false);
+    const [ showErrorMessage, setShowErrorMessage] = useState(false);
     const [ third, setShowThird ] = useState(false);
-    // const [rent, setRent] = useState('');
-    // const [deposit, setDeposit] = useState('');
-    const [checkIn, setCheckIn] = useState(new Date());
-    const [checkOut, setCheckOut] = useState(new Date()+1);
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [errorDesc, setErrorDesc] = useState('');
+    const [ options, setOptions ] = useState([]);
 
 
     const [defaultValues, setDefaultValues] = useState({
+        checkIn,
+        checkOut,
+        deposit: "",
         nrOfTenants: 1,
         rent:"",
-        deposit: "",
-        checkIn,
-        checkOut
     });
 
     const { register, errors, handleSubmit, control, setValue } = useForm({defaultValues});
-    
-    // useEffect(() => {
-    //     if(jammers.length > 0) {
-    //         const editedJammers = Calculations.organizeAdminTenants(jammers);
-    //         setOrganizedJammers(editedJammers);
-    //     };
-    // }, [jamId]);
 
-    const getRoomInfo = async () => {
-        const res = await DataService.getSingleRoomInfo(jamId, nrOfTheRoom);
-        if(!isEmpty(res)) {
-            setRoomsInfo(res)
-            // console.log('res.rent: ', res.rent);
-            // setRent(res.rent);
-            // setDeposit(res.deposit);
-            setValue('rent', res.rent)
-            setValue('deposit', res.deposit)
-            setDefaultValues({ 
-                nrOfTenants: 1,
-                rent: res.rent,
-                deposit: res.deposit
-            })
-        };
-    }
+    useEffect(() => {
+        const rL = rooms.length;
+        let newOptions = []
+
+        for (let j=0; j < rL; j ++) {
+            const val = j + 1;
+            const sVal = val.toString();
+            let obj = {value: sVal, label: sVal};
+            newOptions.push(obj);
+        }
+
+        setOptions(newOptions);
+
+    }, [])
+
+    useEffect(() => {
+        if(nrOfTenants === '1') {
+            setShowSecond(false);
+            setShowThird(false)
+        }
+        if(nrOfTenants === '2') {
+            setShowSecond(true);
+        }
+        if(nrOfTenants === '3') {
+            setShowSecond(true);
+            setShowThird(true)
+        }
+    }, [nrOfTenants]);
+
+    useEffect(() => {
+        console.log('launched');
+        const nrOfRooms = rooms.length;
+        const nr = parseInt(nrOfTheRoom);
+        const validNr = nr > 0 && nr < nrOfRooms
+        if(nrOfTheRoom !== '' && validNr) {
+            const room = rooms.filter((e) => e.roomNr === nrOfTheRoom);
+            setRoomInfo(room);
+            setRent(room[0].rent)
+            setDeposit(room[0].deposit)
+            setValue('rent', room[0].rent);
+            setValue('deposit', room[0].deposit);
+        }
+    }, [nrOfTheRoom]);
 
     let history = useHistory();
-
 
     const onSubmit = (data) => {
         setShowErrorMessage(false);
@@ -78,12 +98,11 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
             setErrorMessage('Check-out date must be greater than check-In date');
             return;
         } else {
-            console.log('rN type' = typeof data.roomNr);
             const roomJammers = jammers.filter(e => e.roomNr === data.roomNr);
 
             for (let i = 0; i < roomJammers.length; i ++) {
-                const inIsBetween = moment(cIn).isBetween(roomsJammers[i].checkIn, roomsJammers[i].checkOut);
-                const outIsBetween = moment(cOut).isBetween(roomsJammers.checkIn, roomsJammers.checkOut);
+                const inIsBetween = moment(cIn).isBetween(roomJammers[i].checkIn, roomJammers[i].checkOut);
+                const outIsBetween = moment(cOut).isBetween(roomJammers[i].checkIn, roomJammers[i].checkOut);
                 if (inIsBetween || outIsBetween) {
                     const { firstName, lastName, roomNr, checkIn, checkOut } = roomJammers[i];
                     setErrorMessage('There is dates overlapping with');
@@ -92,7 +111,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     return;
                 }
             }
-        }
+        };
 
         data.registeredUser = false;
         data.jamName = jamName;
@@ -100,17 +119,16 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
         data.contractCode = Calculations.generateCode();
         data.checkIn = moment(cIn).format('DD-MMM-YYYY');
         data.checkOut = moment(cOut).format('DD-MMM-YYYY');
+        data.roomNr = data.roomObj.label;
+        delete data.roomObj;
+        console.log('data: ', data);
+        
         setInvitationInfo(data)
 
-        
-        const overlapStatus = Calculations.checkOverlapping(checkIn, checkOut, jammers)
-
-        if(overlapStatus.error === true) {
-            setShowModal(true);
-        };
 
         let contractType = 'single';
         const nrOfTenants = parseInt(data.nrOfTenants);
+        
         if(nrOfTenants > 1) contractType = 'multiple';
         data.contractType = contractType;
 
@@ -153,29 +171,11 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
         // }
     };
 
-    useEffect(() => {
-        if(nrOfTenants === '1') {
-            setShowSecond(false);
-            setShowThird(false)
-        }
-        if(nrOfTenants === '2') {
-            setShowSecond(true);
-        }
-        if(nrOfTenants === '3') {
-            setShowSecond(true);
-            setShowThird(true)
-        }
-    }, [nrOfTenants]);
-
-    useEffect(() => {
-        if(nrOfTheRoom !== '') {
-            getRoomInfo();
-        }
-    }, [nrOfTheRoom]);
     
     const takeMeToJammerInfo = () => {
         console.log('HELLO WORLD')
-    }
+    };
+
     return (
         <form
             autocomplete="off"
@@ -196,7 +196,7 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                             className="form-error-desc"
                             onCLick={(e) => {
                                 e.preventDefault();
-                                takeMeToJammerInfo()
+                                takeMeToJammerInfo(room.roomId)
                             }}
                         >
                             <p>{errorDesc}</p>
@@ -230,19 +230,20 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
                     <div className="custom-input-block">
                         <div className="block-label">
                             <label>Room Nr</label>
-                            {errors.roomNr && <div className="field-error">Required</div>}
+                            {errors.roomNr && <div className="field-error">{`nr between 0 and ${rooms.length-1}`}</div>}
                         </div>
-                        <input
-                        name="roomNr"
-                        onChange={(e) => {
-                            const nr = e.target.value 
-                            setNrOfTheRoom(nr);
-                            setValue("rent", defaultValues.rent)
-                            setValue("deposit", defaultValues.deposit)
-                        }}
-                        ref={register({
-                            required: true,
-                        })} />
+                        <Controller
+                            as={ReactSelect}
+                            options={options}
+                            defaultValue={options[0]}
+                            name="roomObj"
+                            isClearable
+                            control={control}
+                            // onChange={(e) => {
+                            //     const nr = e.target.value 
+                            //     setNrOfTheRoom(nr);
+                            // }}
+                        />
                     </div>
                     
                     <div className="custom-input-block midWidth">
@@ -463,8 +464,8 @@ const useInviteJammerForm = ({jamId, jamName, adminName, jammers}) => {
 
 const mapStateToProps = (state) => {
     const jamId = state.nav.jamId;
-    const {jamName, adminName, jammers} = state.jamInfo
-    return { jamId, jamName, adminName, jammers }
+    const {jamName, adminName, jammers, rooms} = state.jamInfo;
+    return { jamId, jamName, adminName, jammers, rooms }
 };
 
 export default connect(mapStateToProps, null)(useInviteJammerForm);
