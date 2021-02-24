@@ -16,20 +16,18 @@ import JamRegistrationForm from '../Forms/JamRegistrationForm';
 import './index.scss';
 
 
-const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
+const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } ) => {
     let timer = null;
-
     const [showRegisterForm, setShowRegisterForm] = useState(false);
-    const [invId, setInvId] = useState('')
-    
+    const [invId, setInvId] = useState('');
+
     useEffect(() => {     
         if (userRole) {
-            console.log('userRole: ', userRole);
             if (jamType === 'chat' || userRole === 'Admin') {
                 setShowRegisterForm(false);
             };
             
-            if(jamType !== 'chat' && userRole !== 'Admin') {    
+            if(jamType !== 'chat' && userRole === 'Guest') {    
                 getJammerInfo();
             };
         }   
@@ -111,9 +109,9 @@ const Jam = ({ jamId, jamType, userId, section, adminName, userRole } ) => {
 const mapStateToProps = state => {
     const { jamId, section } = state.nav;
     const { userId, userRole } = state.userInfo;
-    const {jamType, adminName } = state.jamInfo;
+    const {jamType, adminName, adminId } = state.jamInfo;
     
-    return { section, jamId, jamType, userId, adminName, userRole };
+    return { section, jamId, jamType, userId, adminName, adminId, userRole };
 };
 
 export default connect(mapStateToProps)(Jam);

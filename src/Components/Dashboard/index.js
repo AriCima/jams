@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Login from '../Auth/Login'
 import DataService from '../services/DataService';
 import Calculations from '../services/Calculations';
+import { EventEmitter } from '../services/utils/EventEmitter'
 import JamsList from '../Lists/JamsList';
 import Jam from '../Jam';
 // import ContractEN from '../Common/ContractEN';
@@ -56,17 +57,50 @@ const Dashboard = ({
 
     useEffect(() => {
         jamId && getJamInfo(jamId, userId);
+        
+        EventEmitter.removeListener('newRoomAdded');
+    
+        EventEmitter.on('newRoomAdded', (() => {
+            getRoomsInfo(jamId);
+        }));
+    
+        return () => {
+          EventEmitter.removeListener('newRoomAdded');
+        }
+
     }, [jamId]);
+
+    const getRoomsInfo = async (jamId) => {
+        const jammers = await DataService.getJammers(jamId);
+        let rooms = await DataService.getJamRooms(jamId);
+        const nrOfRooms = rooms.length.toString()
+        
+        const editedJammers = Calculations.removeAmdinFromJammers(jammers);
+        const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);
+        const organizedTenantsByRoom = Calculations.getOrganizedTenants(tenantsByRooms, nrOfRooms);
+        const sortedRooms = Calculations.sortByRoomNr(rooms)
+        
+        if (rooms.length > 0) {
+            for (let i = 0; i < rooms.length; i++) {
+                const oT = organizedTenantsByRoom[i];
+                sortedRooms[i].currentTenant = oT.currentTenant;
+                sortedRooms[i].formerTenants = oT.formerTenants;
+                sortedRooms[i].futureTenants = oT.futureTenants;
+            }
+        }
+        setJammers(editedJammers);
+        setJamRooms(sortedRooms);
+        setNumberOfRooms(nrOfRooms);
+        // setUserRole(userRole);
+    }
 
     const getJamInfo = async (jamId) => {
         const res = await DataService.getJamInfoById(jamId);
+        setJamInfo(res); // Info en el state
         const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
-        
-        // Info en el state
-        setJamInfo(res);
-        
         // Info en Redux
+        setUserRole(userRole);
         setJamType(jamType);
         setJamAdminId(adminId);
         setJamAdminName(adminName);
@@ -97,14 +131,12 @@ const Dashboard = ({
                 setJammers(editedJammers);
                 setJamRooms(sortedRooms);
                 setNumberOfRooms(nrOfRooms);
-                setUserRole(userRole);
             break;
             case 'chat':
                 // Info en Redux
                 setJammers(res.jammers);
                 setJamRooms('');
                 setNumberOfRooms('');
-                setUserRole(userRole);
                 break;
             default:
                 return;

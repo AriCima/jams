@@ -10,7 +10,7 @@ import BoardContent from './BoardContent';
 // REAL TIME DATABASE https://www.youtube.com/watch?v=noB98K6A0TY
 import './index.scss';
 
-const Board = ({ jamId, userId, adminName, userRole, section }) => {
+const Board = ({ jamId, userId, adminName, adminId, userRole, section }) => {
 
     const [boardInfo, setBoardInfo] = useState([]);
     const messagesEndRef = useRef(null);
@@ -120,9 +120,9 @@ const Board = ({ jamId, userId, adminName, userRole, section }) => {
 const mapStateToProps = state => {
     const { jamId } = state.nav;
     const { userId, userName, userRole } = state.userInfo;
-    const { adminName } = state.jamInfo
+    const { adminName, adminId } = state.jamInfo
 
-    return { jamId, userId, userName, userRole, adminName  };
+    return { jamId, userId, userName, userRole, adminName, adminId  };
 };
 
 export default connect(mapStateToProps)(Board);

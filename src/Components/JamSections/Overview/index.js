@@ -12,7 +12,7 @@ import InviteJammerButton from '../../UI/Buttons/InviteJammerButton';
 
 import './index.scss';
 
-const Overview = ({ jamId, userRole, userId }) => {
+const Overview = ({ jamId, userRole }) => {
     const [roomsFullInfo, setRoomsFullInfo] = useState([]);
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const Overview = ({ jamId, userRole, userId }) => {
 
     return (
         <>
-            { renderOverview() }
+            { userRole !== '' && renderOverview() }
         </>
     );
 };
@@ -66,7 +66,8 @@ const Overview = ({ jamId, userRole, userId }) => {
 const mapStateToProps = (state) => {
     const { jamId } = state.nav;
     const { userId, userRole } = state.userInfo;
+    const { adminId } = state.jamInfo;
 
-    return {jamId, userId, userRole};
+    return { jamId, userId, userRole, adminId };
 };
 export default connect(mapStateToProps, null)(Overview);

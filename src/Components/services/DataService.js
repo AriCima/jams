@@ -422,30 +422,17 @@ export default class DataService {
                 .collection('jams')
                 .doc(jamId)
                 .collection('rooms')
-                // .get()
-                // .then(result => {
-                //     let rooms = [];
-                //     result.docs.forEach(d => {
-                //       let j = d.data();
-                //       j.id = d.id;
-                //       rooms.push(j);
-                //     });
-                //     resolve(rooms);
-                // })
-                .onSnapshot((result) => {
-                    const rooms = [];
-                    result.docs.forEach(d => {
-                        const j = d.data();
-                        j.id = d.id;
-                        rooms.push(j);
-                    });
-                    resolve(rooms);
+                .get()
+                .then((result) => {
+                    resolve(result.data());
+                })
+
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // console.log('Error al cargar la JamInfo: ', errorCode, errorMessage);
                 });
         })
-            .catch((error) => {
-                const errorCode = error.code;
-                console.log('Jam Rooms error : ', error);
-            });
     };
     static getSingleRoomInfo(jamId, roomNr) {
         return new Promise((resolve, reject) => {

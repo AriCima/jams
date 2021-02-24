@@ -8,6 +8,7 @@ import DataService from '../../services/DataService';
 import isEmpty from 'lodash/isEmpty';
 import { withStyles } from '@material-ui/core/styles';
 import { green, red } from '@material-ui/core/colors';
+import { EventEmitter } from '../../services//utils/EventEmitter';
 
 import {
     RadioGroup,
@@ -62,9 +63,11 @@ const NewRoomForm = ({ jamId, showForm, nrOfRooms }) => {
     const { register, errors, handleSubmit, control } = useForm({defaultValues});
     
     const onSubmit = (data) => {
-        // data.roomNr = defaultValues.roomNr;
+        // console.log('data: ', data);
+        data.roomNr = defaultValues.roomNr;
         DataService.addRoomToJam(jamId, data);
         showForm(false)
+        EventEmitter.emit('newRoomAdded', null );
     };
 
     return ( 
@@ -76,7 +79,7 @@ const NewRoomForm = ({ jamId, showForm, nrOfRooms }) => {
             >
                 <div className="roomInfo-form-header">
                     <div className="roomInfo-header-title">
-                        <h4>Room info</h4>
+                        <h4>Room info jelou</h4>
                     </div>
 
                     <div className="roomInfo-buttonArea">
@@ -101,10 +104,10 @@ const NewRoomForm = ({ jamId, showForm, nrOfRooms }) => {
                         </div>
                         <input
                             className="inputDisabled"
+                            name="roomNr"
                             ref={register({required: true})}
                             disabled={true}
                             defaultValue={defaultValues.roomNr}
-
                         />
                     </div>
 

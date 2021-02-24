@@ -1,7 +1,8 @@
-import React, { useState }from 'react';
+import React, { useEffect, useState }from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import DataService from '../../../services/DataService';
 import {setSubSection } from '../../../../redux/actions/navigateActions';
 import NewRoomForm from '../../../Forms/NewRoomForm';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -9,15 +10,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './index.scss';
 
-const RoomsOverview = ({ rooms, setSubSection }) => {        
+const RoomsOverview = ({ jamId, rooms, setSubSection }) => {        
     const [ showAddRoom, setShowAddRoom ] = useState(false);
-    
+    const [ updatedRooms, setUpdatedRooms ] = useState(rooms)
+   
+
+
     const showRoomInfo = (i) => {
         const roomNr = (i+1).toString();
         setSubSection(roomNr)
     };
     
-    const renderRoomsChart = () => rooms.map((room, i) => {
+    const renderRoomsChart = () => updatedRooms.map((room, i) => {
         const currentTenant = room.currentTenant;
         const roomNr =i+1;
         const stringNr = roomNr.toString();
@@ -104,8 +108,9 @@ const RoomsOverview = ({ rooms, setSubSection }) => {
 };
 
 const mapStateToProps = (state) => {
+    const { jamId } = state.nav;
     const { jammers, rooms } = state.jamInfo;
-    return { jammers, rooms }
+    return { jamId, jammers, rooms }
 };
 
 export default connect(mapStateToProps, { setSubSection })(RoomsOverview);
