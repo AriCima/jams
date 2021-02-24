@@ -11,17 +11,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './index.scss';
 
 const RoomsOverview = ({ jamId, rooms, setSubSection }) => {        
+    console.log('rooms: ', rooms);
     const [ showAddRoom, setShowAddRoom ] = useState(false);
     const [ updatedRooms, setUpdatedRooms ] = useState(rooms)
    
-
 
     const showRoomInfo = (i) => {
         const roomNr = (i+1).toString();
         setSubSection(roomNr)
     };
     
-    const renderRoomsChart = () => updatedRooms.map((room, i) => {
+    const renderRoomsChart = () => rooms.map((room, i) => {
         const currentTenant = room.currentTenant;
         const roomNr =i+1;
         const stringNr = roomNr.toString();

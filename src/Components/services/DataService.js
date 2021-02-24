@@ -55,7 +55,10 @@ export default class DataService {
 
     static getUserInfoById(userId) {
         return new Promise((resolve, reject) => {
-            firebase.firestore().collection('users').doc(userId).onSnapshot((doc) => {
+            firebase.firestore()
+            .collection('users')
+            .doc(userId)
+            .onSnapshot((doc) => {
                 const userInfo = doc.data();
                 // console.log("Current data: ", doc.data());
                 resolve(userInfo);
@@ -424,7 +427,13 @@ export default class DataService {
                 .collection('rooms')
                 .get()
                 .then((result) => {
-                    resolve(result.data());
+                    const rooms = [];
+                    result.docs.forEach((d) => {
+                        const j = d.data();
+                        j.roomId = d.id;
+                        rooms.push(j);
+                    });
+                    resolve(rooms);
                 })
 
                 .catch((error) => {
