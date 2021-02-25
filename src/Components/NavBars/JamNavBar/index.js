@@ -76,9 +76,9 @@ const JamNavBar = ({
     };
 
     let interlocutor = '';
-    
+    const jammersLodaded = jammers.lemngth > 0
     if ( jamType === 'chat') {
-        interlocutor = userId === adminId ? `${jammers[0].firstName} ${jammers[0].lastName}` : `${adminName} ${adminLastName}`
+        interlocutor = userId === adminId ? `${ jammersLodaded && jammers[0].firstName} ${jammersLodaded && jammers[0].lastName}` : `${adminName} ${adminLastName}`
     };
 
     return ( 

@@ -21,6 +21,11 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [invId, setInvId] = useState('');
 
+
+    useEffect(() => {
+
+    }, [])
+
     useEffect(() => {     
         if (userRole) {
             if (jamType === 'chat' || userRole === 'Admin') {
@@ -33,7 +38,7 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
         return () => {
             clearTimeout(timer)
           }
-    }, [userRole, jamId, jamType]);
+    }, [userRole, jamType]);
 
 
     const getJammerInfo = async () => {
@@ -59,8 +64,8 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
                 return <Rooms />;
             case 'Tenants':
                 return <Jammers />;
-            // case 'Flatmates':
-            //     return <Jammers />;
+            case 'Flatmates':
+                return <Jammers />;
             case 'Settings':
                 return <Settings />;
             case 'rent':
@@ -73,15 +78,15 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
         setShowRegisterForm(x);
     };
 
-    console.log('jamType: ', jamType);
   return (
     <>
+        
         <div className="jam-navBar">
             <JamNavBar/>
         </div>
 
         <div className="jam-body">
-            { jamType && jamType === 'chat' ? (
+            { jamType === 'chat' ? (
                 <Chat />
             ): (
                 renderSection(section))
@@ -106,6 +111,7 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
 
 
 const mapStateToProps = state => {
+    console.log('state: ', state);
     const { jamId, section } = state.nav;
     const { userId, userRole } = state.userInfo;
     const {jamType, adminName, adminId } = state.jamInfo;
