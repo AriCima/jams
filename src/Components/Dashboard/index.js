@@ -63,24 +63,13 @@ const Dashboard = ({
         const res = await DataService.getJamInfoById(jamId);
         console.log('res: ', res);
         setJamInfo(res); // Info en el state
-        const {jamName, adminId, adminName, jamType ,jamDesc, jamDetails, jamCode } = res;
+        const {jamName = '', adminId, adminName, jamType ,jamDesc, jamDetails = {}, jamCode = ''} = res;
         const userRole = userId === res.adminId ? 'Admin' : 'Guest';
-        // Info en Redux
-        setUserRole(userRole);
-        setJamType(jamType);
-        setJamAdminId(adminId);
-        setJamAdminName(adminName);
-        setJamCode(jamCode);
-        setJamDesc(jamDesc);
-        setJamDetails(jamDetails);
-        setJamName(jamName);
 
         switch (jamType) {
             case 'rooms-rental':
                 const jammers = await DataService.getJammers(jamId);
-                console.log('jammers: ', jammers);
                 let rooms = await DataService.getJamRooms(jamId);
-                console.log('rooms: ', rooms);
                 const nrOfRooms = rooms.length.toString()
                 
                 const editedJammers = Calculations.removeAmdinFromJammers(jammers);
@@ -95,17 +84,34 @@ const Dashboard = ({
                         sortedRooms[i].formerTenants = oT.formerTenants;
                         sortedRooms[i].futureTenants = oT.futureTenants;
                     }
-                }
-                console.log('sortedRooms: ', sortedRooms);
+                }        
+                // Info en Redux
+                setUserRole(userRole);
+                setJamType(jamType);
+                setJamAdminId(adminId);
+                setJamAdminName(adminName);
                 setJammers(editedJammers);
                 setJamRooms(sortedRooms);
                 setNumberOfRooms(nrOfRooms);
+
+                setJamCode(jamCode);
+                setJamDesc(jamDesc);
+                setJamDetails(jamDetails);
+                setJamName(jamName);
             break;
             case 'chat':
                 // Info en Redux
+                setUserRole(userRole);
+                setJamType(jamType);
+                setJamAdminId(adminId);
+                setJamAdminName(adminName);
                 setJammers(res.jammers);
                 setJamRooms('');
                 setNumberOfRooms('');
+                setJamCode('');
+                setJamDesc('');
+                setJamDetails({});
+                setJamName('');
                 break;
             default:
                 return;

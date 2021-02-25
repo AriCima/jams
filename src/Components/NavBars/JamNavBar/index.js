@@ -75,7 +75,8 @@ const JamNavBar = ({
         });
     };
 
-    let interlocutor = ''
+    let interlocutor = '';
+    
     if ( jamType === 'chat') {
         interlocutor = userId === adminId ? `${jammers[0].firstName} ${jammers[0].lastName}` : `${adminName} ${adminLastName}`
     };

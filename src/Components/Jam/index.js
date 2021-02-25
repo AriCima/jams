@@ -26,7 +26,6 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
             if (jamType === 'chat' || userRole === 'Admin') {
                 setShowRegisterForm(false);
             };
-            
             if(jamType !== 'chat' && userRole === 'Guest') {    
                 getJammerInfo();
             };
@@ -34,7 +33,7 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
         return () => {
             clearTimeout(timer)
           }
-    }, [userRole, jamId]);
+    }, [userRole, jamId, jamType]);
 
 
     const getJammerInfo = async () => {
@@ -74,15 +73,15 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
         setShowRegisterForm(x);
     };
 
+    console.log('jamType: ', jamType);
   return (
     <>
-        
         <div className="jam-navBar">
             <JamNavBar/>
         </div>
 
         <div className="jam-body">
-            { jamType === 'chat' ? (
+            { jamType && jamType === 'chat' ? (
                 <Chat />
             ): (
                 renderSection(section))
