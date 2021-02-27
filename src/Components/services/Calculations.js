@@ -567,26 +567,26 @@ export default class Calculations {
                 
         }
 
-        let rentsArray = [{month: months[inM], rent: inRent}];
+        let rentsArray = [{month: months[inM], rent: inRent, paid: false, difOK: false}];
 
         if (inYY === outYY) {
             for (let s = inM+1; s < outM; s++) {
-                const pay = {month: months[s], rent: parseInt(rent)}
+                const pay = {month: months[s], rent: parseInt(rent), paid: false, difOK: false}
                 rentsArray.push(pay);
             }
         } else {
             for (let s = inM; s <= 11; s++) {
-                const pay = {month: months[s], rent: parseInt(rent)}
+                const pay = {month: months[s], rent: parseInt(rent), paid: false, difOK: false}
                 rentsArray.push(pay);
             }
     
             for (let s = 0; s < outM; s++) {
-                const pay = {month: months[s], rent: parseInt(rent)}
+                const pay = {month: months[s], rent: parseInt(rent), paid: false, difOK: false}
                 rentsArray.push(pay);
             }
         }
 
-        rentsArray.push({month: months[outM], rent: outRent});
+        rentsArray.push({month: months[outM], rent: outRent, paid: false, difOK: false});
 
         return rentsArray;
     };
@@ -605,6 +605,14 @@ export default class Calculations {
             }
         }
         return newArray;
+    };
+
+    static getCurrentTenants = (rooms) => {
+        let cJammers = []
+        for(let i = 0; i < rooms.length; i++) {
+            cJammers.push(rooms[i].currentTenant[0]);
+        }
+        return cJammers;
     };
 
     static getCurrentOccupancy = (tenants, rooms) => {

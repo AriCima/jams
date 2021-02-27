@@ -11,33 +11,46 @@ import CustomDialog from '../../../Modal/CustomDialog';
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 import { setSection } from '../../../../redux/actions/navigateActions';
 import './index.scss';
+import { DayPicker } from 'react-dates';
 
-const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, setEditable }) => {    
+const AdminOverview = ({ jamId, rooms, jammers, jamDetails, setSection, setDocType, setDocId, setEditable }) => {    
     
     const [occupancy, setOccupancy ] = useState(0);
     const [incomes, setIncomes ] = useState(0);
     const [activity, setActivity ] = useState([]);
     const [showMissingInfo, setShowMissingInfo ] = useState(false);
     const [missingInfoArr, setMissingInfoArr] = useState([]);
+    const [pendingRents, setPendingRents] = useState([]);
 
     useEffect(() => {
         const nrOfRooms = jamDetails.nrOfRooms;
         DataService.getJammers(jamId)
         .then((res) => {
-            const jammers = Calculations.removeAmdinFromJammers(res);
+            const jammersBis = Calculations.removeAmdinFromJammers(res);  // CHAPUZA --> reemplazar jammerBis por Jammers de Redux
             
-            const currentOccupancy = Calculations.getCurrentOccupancy(jammers, nrOfRooms);
+            const currentOccupancy = Calculations.getCurrentOccupancy(jammersBis, nrOfRooms);
             setOccupancy(currentOccupancy);
 
-            const currentIncomes = Calculations.getCurrentIncomes(jammers);
+            const currentIncomes = Calculations.getCurrentIncomes(jammersBis);
             setIncomes( currentIncomes)
 
-            const futureChecks = Calculations.getFutureChecks(jammers);
+            const futureChecks = Calculations.getFutureChecks(jammersBis);
             setActivity(futureChecks)
         })
 
         // TO CHECK IF ALL ROOMS INFO HAS BEEN FILLED
         getAllRoomsInfo(jamId);
+
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const cTenants = Calculations.getCurrentTenants(rooms);
+        const today = new Date();
+        const cM = Number(today.getMonth()); // current Month in numbers
+        const currentMonth = months[cM];
+        let currentPayments = [];
+        for (let i = 0; i < cTenants.length; i++) {
+            const { userId, rentsArray, firstName, lastName, roomNr } = cTenants[i];
+            
+        } 
 
     }, [jamId, jamDetails])
 
@@ -47,6 +60,12 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
         setDocType('TENANT-FORM');
         setDocId(userId); // tenant's userId
         setEditable('true');
+    };
+
+    
+    
+    const renderPayments = () => {
+        currentJammers.map(())
     };
 
     const getAllRoomsInfo = async (jamId) => {
@@ -86,9 +105,20 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
     };
 
     const showActivity = activity.length !== 0;
+    const showPendingRents = pendingRents.length > 0;
     return (
         <div className="admin-overview-wrapper">
 
+            <div className="overview-rent-payments">
+               <div className="overview-section-title">
+                   <h2>Pending rent payments</h2>
+               </div>
+               <div className="overview-section-activity">
+                    {showPendingRents ? renderPayments() : (
+                        <p>There are no pending rent's payments</p>
+                    )}
+               </div>
+           </div>
            <div className="overview-activity">
                <div className="overview-section-title">
                    <h2>Ins &amp; Outs</h2>
@@ -128,8 +158,8 @@ const AdminOverview = ({ jamId, jamDetails, setSection, setDocType, setDocId, se
 const mapStateToProps = state => {
     const jamId = state.nav.jamId;
     const { userId } = state.userInfo;
-    const { jamDetails, jammers } = state.jamInfo
+    const { jamDetails, jammers, rooms } = state.jamInfo
 
-    return { jamId, jamDetails, userId };
+    return { jamId, jamDetails, userId, jammers, rooms };
 };
 export default connect(mapStateToProps, { setDocType, setSection, setDocId, setEditable })(AdminOverview);
