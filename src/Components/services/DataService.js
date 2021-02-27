@@ -170,16 +170,17 @@ export default class DataService {
         });
     };
     static editJamDetails(jamId, info) {
+        console.log('Jaminfo: ', info);
         return new Promise(() => {
             firebase.firestore()
             .collection('jams')
             .doc(jamId)
             .update({ 
-                'jamDetails.roomNr': info.roomNr,
                 'jamDetails.address': info.address,
                 'jamDetails.city': info.city,
                 'jamDetails.zipCode': info.zipCode,
-                'jamDetails.country': info.country
+                'jamDetails.country': info.country,
+                'jamDetails.contractMode': info.contractMode
             })
             .then(function() {
                 console.log("Document successfully updated!");
@@ -191,6 +192,7 @@ export default class DataService {
         });
     };
     static editLandlordInfo(jamId, info) {
+        console.log('Admininfo: ', info);
         return new Promise(() => {
             firebase.firestore()
             .collection('jams')

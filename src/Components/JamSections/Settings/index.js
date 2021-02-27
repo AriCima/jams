@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm, Controller } from "react-hook-form";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 import { withStyles } from '@material-ui/core/styles';
 import { green, red } from '@material-ui/core/colors';
@@ -49,6 +47,8 @@ const Settings = ({
     adminName,
     adminLastName,
 }) => {
+    console.log('jamDetails: ', jamDetails);
+    console.log('jamId: ', jamId);
 
     const [disabled, setDisabled] = useState(true);
 
@@ -68,12 +68,13 @@ const Settings = ({
         landlordCity: jamDetails.landlordInfo.city,
         landlordZipCode: jamDetails.landlordInfo.zipCode,
         landlordCountry: jamDetails.landlordInfo.country,
-        title: jamDetails.landlordInfo.title,
+        landlordtitle: jamDetails.landlordInfo.title,
         checkInProcess: jamDetails.houseRules.checkInProcess,
         checkOutProcess: jamDetails.houseRules.checkOutProcess,
         checkInFrom: jamDetails.houseRules.checkInFrom,
         checkInTo: jamDetails.houseRules.checkInTo,
         checkOutBefore: jamDetails.houseRules.checkOutBefore,
+        contractMode: jamDetails.contractMode ,
         pets: jamDetails.houseRules.pets,
         smoking: jamDetails.houseRules.smoking,
         smokingBalcony: jamDetails.houseRules.smokingBalcony,
@@ -101,7 +102,8 @@ const Settings = ({
             checkInTo,
             checkOutBefore,
             checkOutProcess,
-            title,
+            contractMode,
+            landlordTitle,
             landlordFirstName,
             landlordLastName,
             landlordDocType,
@@ -120,8 +122,11 @@ const Settings = ({
             inviteFriends
         } = data;
 
-        const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc;
-        const editLandlordInfo = landlordFirstName !== defaultValues.landlordFirstName || landlordLastName !== defaultValues.landlordLastName || landlordDocType !== defaultValues.landlordDocType || landlordDocNr !== defaultValues.landlordDocNr || landlordAddress !== defaultValues.landlordAddress || landlordCity !== defaultValues.landlordCity || landlordZipCode !== defaultValues.landlordZipCode || landlordCountry !== defaultValues.landlordCountry;
+        data.jamCode = jamCode;
+        console.log('data: ', data);
+
+        const editJamMainInfo = jamName !== defaultValues.jamName || jamDesc !== defaultValues.jamDesc || contractMode !== defaultValues.contractMode;
+        const editLandlordInfo = landlordFirstName !== defaultValues.landlordFirstName || landlordLastName !== defaultValues.landlordLastName || landlordDocType !== defaultValues.landlordDocType || landlordDocNr !== defaultValues.landlordDocNr || landlordAddress !== defaultValues.landlordAddress || landlordCity !== defaultValues.landlordCity || landlordZipCode !== defaultValues.landlordZipCode || landlordCountry !== defaultValues.landlordCountry || landlordTitle !== defaultValues.landlordTitle;
         const editJamDetails = address !== defaultValues.address || city !== defaultValues.city || zipCode !== defaultValues.zipCode || country !== defaultValues.country;
 
 
@@ -136,7 +141,7 @@ const Settings = ({
 
         if(editLandlordInfo) {
             const info = {
-                title: title,
+                title: landlordTitle,
                 name: landlordFirstName,
                 lastName: landlordLastName,
                 docType: landlordDocType,
@@ -144,7 +149,7 @@ const Settings = ({
                 address: landlordAddress,
                 city: landlordCity,
                 zipCode: landlordZipCode,
-                coutnry: landlordCountry,
+                country: landlordCountry,
             };
             DataService.editLandlordInfo(jamId, info);
         };
@@ -153,7 +158,7 @@ const Settings = ({
             DataService.editJamMainInfo(jamId, info);
         };
         if(editJamDetails) {
-            const info = {address, city, zipCode, country};
+            const info = {address, city, zipCode, country, contractMode};
             DataService.editJamDetails(jamId, info);
         };
         if(editHouseRules) {
@@ -172,8 +177,6 @@ const Settings = ({
             };
             DataService.editJamHouseRules(jamId, info);
         };
-        
-        
     };
         
     return(
@@ -350,6 +353,16 @@ const Settings = ({
                                 disabled={disabled}
                             />
                         </div>
+                        <div className="rules-custom-input-block shortWidth">
+                            <div className="block-label">
+                                <label>ContractMode</label>
+                            </div>
+                            <select className="input-styled" name="contractMode" ref={register} disabled={disabled}>
+                                <option value="daily">daily</option>
+                                <option value="fortnightly">fortnightly</option>
+                                <option value="monhtly">monhtly</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -368,9 +381,9 @@ const Settings = ({
                         <div className="rules-custom-input-block midWidth">
                             <div className="block-label">
                                 <label>Title</label>
-                                {errors.title && <div className="field-error">Required</div>}
+                                {errors.landlordTitle && <div className="field-error">Required</div>}
                             </div>
-                            <select className="input-styled" name="title" ref={register} disabled={disabled}>
+                            <select className="input-styled" name="landlordTitle" ref={register} disabled={disabled}>
                                 <option value="Mr">Don</option>
                                 <option value="Mrs">Doña</option>
                             </select>
@@ -393,13 +406,12 @@ const Settings = ({
                             <input name="landlordLastName" ref={register({required: true})} disabled={disabled} />
                         </div>
 
-
                         <div className="rules-custom-input-block midWidth">
                             <div className="block-label">
                                 <label>Doc Type</label>
                                 {errors.title && <div className="field-error">Required</div>}
                             </div>
-                            <select className="input-styled" name="title" ref={register} disabled={disabled}>
+                            <select className="input-styled" name="landlordDocType" ref={register} disabled={disabled}>
                                 <option value="passport">Passport</option>
                                 <option value="dni">DNI</option>
                                 <option value="dni">NIE</option>

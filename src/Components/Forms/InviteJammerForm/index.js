@@ -13,7 +13,7 @@ import Calculations from '../../services/Calculations';
 
 import './index.scss';
 
-const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms }) => {
+const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms, jamDetails }) => {
     // const [ organizedJammers, setOrganizedJammers ] = useState([]);
     // const [ showModal, setShowModal ] = useState(false);
     const [ deposit, setDeposit] = useState('');
@@ -38,6 +38,7 @@ const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms }) => {
         deposit: "",
         nrOfTenants: 1,
         rent:"",
+        contractMode: jamDetails.contractMode
     });
 
     const { register, errors, handleSubmit, control, setValue } = useForm({defaultValues});
@@ -94,25 +95,29 @@ const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms }) => {
         const cOut = checkOut
 
         const outLater = moment(cOut).isAfter(cIn);
-        if (!outLater) {
-            setErrorMessage('Check-out date must be greater than check-In date');
-            return;
-        } else {
-            const roomJammers = jammers.filter(e => e.roomNr === data.roomNr);
+        // if (!outLater) {
+        //     setErrorMessage('Check-out date must be greater than check-In date');
+        //     return;
+        // } else {
+        //     const roomJammers = jammers.filter(e => e.roomNr === data.roomNr);
 
-            for (let i = 0; i < roomJammers.length; i ++) {
-                const inIsBetween = moment(cIn).isBetween(roomJammers[i].checkIn, roomJammers[i].checkOut);
-                const outIsBetween = moment(cOut).isBetween(roomJammers[i].checkIn, roomJammers[i].checkOut);
-                if (inIsBetween || outIsBetween) {
-                    const { firstName, lastName, roomNr, checkIn, checkOut } = roomJammers[i];
-                    setErrorMessage('There is dates overlapping with');
-                    setErrorDesc(`Tenant: ${firstName} ${lastName}, roomNr: ${roomNr}, check-In: ${checkIn}, check-out: ${checkOut}`);
-                    setShowErrorMessage(true);
-                    return;
-                }
-            }
-        };
+        //     for (let i = 0; i < roomJammers.length; i ++) {
+        //         const inIsBetween = moment(cIn).isBetween(roomJammers[i].checkIn, roomJammers[i].checkOut);
+        //         const outIsBetween = moment(cOut).isBetween(roomJammers[i].checkIn, roomJammers[i].checkOut);
+        //         if (inIsBetween || outIsBetween) {
+        //             const { firstName, lastName, roomNr, checkIn, checkOut } = roomJammers[i];
+        //             setErrorMessage('There is dates overlapping with');
+        //             setErrorDesc(`Tenant: ${firstName} ${lastName}, roomNr: ${roomNr}, check-In: ${checkIn}, check-out: ${checkOut}`);
+        //             setShowErrorMessage(true);
+        //             return;
+        //         }
+        //     }
+        // };
 
+        const rentsArray  = Calculations.getTenantPayments(data.rent, data.contractMode, cIn, cOut);
+        console.log('rentsArray: ', rentsArray);
+
+        data.rentsArray = rentsArray;        
         data.registeredUser = false;
         data.jamName = jamName;
         data.adminName = adminName;
@@ -245,6 +250,18 @@ const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms }) => {
                             // }}
                         />
                     </div>
+
+                    <div className="rules-custom-input-block midWidth">
+                        <div className="block-label">
+                            <label>ContractMode</label>
+                        </div>
+                        <select className="input-styled" name="contractMode" ref={register} >
+                            <option value="daily">daily</option>
+                            <option value="fortnightly">fortnightly</option>
+                            <option value="monhtly">monhtly</option>
+                        </select>
+                    </div>
+                    
                     
                     <div className="custom-input-block midWidth">
                         <div className="block-label ">
@@ -464,8 +481,8 @@ const useInviteJammerForm = ({ jamId, jamName, adminName, jammers, rooms }) => {
 
 const mapStateToProps = (state) => {
     const jamId = state.nav.jamId;
-    const {jamName, adminName, jammers, rooms} = state.jamInfo;
-    return { jamId, jamName, adminName, jammers, rooms }
+    const { jamName, adminName, jammers, rooms, jamDetails } = state.jamInfo;
+    return { jamId, jamName, adminName, jammers, rooms, jamDetails }
 };
 
 export default connect(mapStateToProps, null)(useInviteJammerForm);

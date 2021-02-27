@@ -111,7 +111,6 @@ const Jam = ({ jamId, jamType, userId, section, adminName, adminId, userRole } )
 
 
 const mapStateToProps = state => {
-    console.log('state: ', state);
     const { jamId, section } = state.nav;
     const { userId, userRole } = state.userInfo;
     const {jamType, adminName, adminId } = state.jamInfo;

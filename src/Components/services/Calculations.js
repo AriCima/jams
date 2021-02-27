@@ -68,7 +68,6 @@ export default class Calculations {
 
      codeArray[3] = '-'
      let code = codeArray.join("");
-     console.log('code = ', code)
      return code
     };
 
@@ -536,6 +535,62 @@ export default class Calculations {
         return result  // Array length = nro habs 
     };
     
+    static getTenantPayments = (rent, cMode, cIn, cOut) => {
+
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        const chIn = cIn;
+        const inYY = Number(chIn.getFullYear());
+        const inM = Number(chIn.getMonth()); // CheckIn Month in numbers
+        const inDays = moment(cIn).date();
+
+        const chOut =cOut;
+        const outYY = Number(chOut.getFullYear());
+        const outM = Number(chOut.getMonth()); // CheckOut Month in numbers
+        const outDays = moment(cOut).date();
+
+        let inRent = parseInt(rent);
+        let outRent = parseInt(rent);
+
+        switch (cMode) {
+            case 'daily':
+                inRent = (parseInt(rent)/30) * (30 - inDays);
+                outRent = (parseInt(rent)/30) * outDays
+            break;
+            case 'fortnightly':
+                if (inDays > 15) {
+                    inRent = parseInt(rent)/2
+                }
+                if (outDays <= 15) {
+                    outRent = parseInt(rent)/2
+                }
+                
+        }
+
+        let rentsArray = [{month: months[inM], rent: inRent}];
+
+        if (inYY === outYY) {
+            for (let s = inM+1; s < outM; s++) {
+                const pay = {month: months[s], rent: parseInt(rent)}
+                rentsArray.push(pay);
+            }
+        } else {
+            for (let s = inM; s <= 11; s++) {
+                const pay = {month: months[s], rent: parseInt(rent)}
+                rentsArray.push(pay);
+            }
+    
+            for (let s = 0; s < outM; s++) {
+                const pay = {month: months[s], rent: parseInt(rent)}
+                rentsArray.push(pay);
+            }
+        }
+
+        rentsArray.push({month: months[outM], rent: outRent});
+
+        return rentsArray;
+    };
+
     // - - - - - - - - STATISTICS - - - - - - - - 
     
     static getCurrentAndFutureTenants = (tenants) => {
