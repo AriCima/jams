@@ -8,6 +8,7 @@ import OccupancyGraph from './OccupancyGraph';
 import DataService from '../../../services/DataService';
 import Calculations from '../../../services/Calculations';
 import CustomDialog from '../../../Modal/CustomDialog';
+import RentPaymentsInfo from './RentPayments';
 import { setDocType, setDocId, setEditable } from "../../../../redux/actions/docsActions";
 import { setSection } from '../../../../redux/actions/navigateActions';
 import './index.scss';
@@ -41,16 +42,6 @@ const AdminOverview = ({ jamId, rooms, jammers, jamDetails, setSection, setDocTy
         // TO CHECK IF ALL ROOMS INFO HAS BEEN FILLED
         getAllRoomsInfo(jamId);
 
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const cTenants = Calculations.getCurrentTenants(rooms);
-        const today = new Date();
-        const cM = Number(today.getMonth()); // current Month in numbers
-        const currentMonth = months[cM];
-        let currentPayments = [];
-        for (let i = 0; i < cTenants.length; i++) {
-            const { userId, rentsArray, firstName, lastName, roomNr } = cTenants[i];
-            
-        } 
 
     }, [jamId, jamDetails])
 
@@ -62,11 +53,6 @@ const AdminOverview = ({ jamId, rooms, jammers, jamDetails, setSection, setDocTy
         setEditable('true');
     };
 
-    
-    
-    const renderPayments = () => {
-        currentJammers.map(())
-    };
 
     const getAllRoomsInfo = async (jamId) => {
         const res = await DataService.getJamRooms(jamId);
@@ -109,7 +95,7 @@ const AdminOverview = ({ jamId, rooms, jammers, jamDetails, setSection, setDocTy
     return (
         <div className="admin-overview-wrapper">
 
-            <div className="overview-rent-payments">
+            {/* <div className="overview-rent-payments">
                <div className="overview-section-title">
                    <h2>Pending rent payments</h2>
                </div>
@@ -118,7 +104,10 @@ const AdminOverview = ({ jamId, rooms, jammers, jamDetails, setSection, setDocTy
                         <p>There are no pending rent's payments</p>
                     )}
                </div>
-           </div>
+           </div> */}
+
+            {/* <RentPaymentsInfo /> */}
+
            <div className="overview-activity">
                <div className="overview-section-title">
                    <h2>Ins &amp; Outs</h2>

@@ -70,7 +70,7 @@ const Dashboard = ({
             console.log('entró a rooms-rental')
             const jammers = await DataService.getJammers(jamId);
             let rooms = await DataService.getJamRooms(jamId);
-            const nrOfRooms = rooms.length.toString()
+            const nrOfRooms = rooms.length.toString();
             
             const editedJammers = Calculations.removeAmdinFromJammers(jammers);
             const tenantsByRooms = Calculations.getTenantsByRooms(editedJammers, nrOfRooms);

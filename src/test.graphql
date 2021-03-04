@@ -1,0 +1,82 @@
+type User {
+    userId: String!,
+    firstName: String!,
+    lastName: String!
+    email: String!
+}
+
+type Jam {
+    jamId: String!,
+    jamType: String!,
+    jamCode: String!,
+    adminId: User.userId!
+    createdAt: Timestamp!,
+    jamDetails: {
+        address: String!,
+        city: String!,
+        country: String!,
+        zipCode: String!,
+        jamName: String!,
+        jamDesc: String!,
+        houseRules: {
+            checkInFrom: String!,
+            checkInProcess: String!,
+            checkInTo: String!,
+            checkOutBefore: String!,
+            checkOutProcess: String!,
+            inviteFriends: String!,
+            overnight: String!,
+            parties: String!,
+            pets: String!,
+            smoking: String!,
+            smokingBalcony: String!,
+        },
+        landlordInfo: {
+            address: String!,
+            city: String!,
+            country: String!,
+            zipCode: String!,
+            docNr: String!,
+            docType: String!,
+            fistName: String!,
+            lastName: String!,
+        },
+    }
+}
+
+type Room {
+    roomId: String!,
+    roomNr: String!,
+    jamId: String!,
+    sqm: String!,
+    exterior: Boolean!,
+    balcony: Boolean!,
+    privBath: Boolean!,
+    rent: Int!,
+    expenses: Int!,
+    deposit: Int!,
+
+}
+
+type Tenant {
+    User: {
+        userId: String!,
+        firstName: String!,
+        lastName: String!
+        email: String!
+    },
+    checkIn: String!,
+    checkOut: String!,
+    rent: Int!,
+    expenses: Int!,
+    deposit: Int!,
+    roomNr: String!,
+    address: String!,
+    city: String!,
+    country: String!,
+    zipCode: String!,
+    mobile: String!,
+    docType: String!,
+    docNr: String!,
+    registeredUser: Boolean,
+}
