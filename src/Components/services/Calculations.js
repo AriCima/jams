@@ -607,14 +607,6 @@ export default class Calculations {
         return newArray;
     };
 
-    // static getCurrentTenants = (rooms) => {
-    //     let cJammers = []
-    //     for(let i = 0; i < rooms.length; i++) {
-    //         cJammers.push(rooms[i].currentTenant[0]);
-    //     }
-    //     return cJammers;
-    // };
-
     static getCurrentOccupancy = (tenants, rooms) => {
         
         const currentTenants = this.getCurrentTenants(tenants)

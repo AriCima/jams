@@ -11,19 +11,19 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 const RentPaymentsInfo = ({ jamId, rooms, jammers, jamDetails }) => {    
     
-    // const cTenants = Calculations.getCurrentTenants(rooms);
-    // const today = new Date();
-    // const cM = Number(today.getMonth()); // current Month in numbers
-    // const currentMonth = months[cM];
-    // let currentPayments = [];
+    const cTenants = Calculations.getCurrentTenants(jammers);
+    const today = new Date();
+    const cM = Number(today.getMonth()); // current Month in numbers
+    const currentMonth = months[cM];
+    let currentPayments = [];
 
 
-    // for (let i = 0; i < cTenants.length; i++) {
-    //     const { userId, rentsArray, firstName, lastName, roomNr } = cTenants[i];
-    //     const currentMonthRent = rentsArray[cM];
-    //     const tenantPayment = {firstName, lastName, roomNr, userId, currentMonthRent}
-    //     currentPayments.push(tenantPayment);
-    // };
+    for (let i = 0; i < cTenants.length; i++) {
+        const { userId, rentsArray, firstName, lastName, roomNr } = cTenants[i];
+        const currentMonthRent = rentsArray[cM];
+        const tenantPayment = {firstName, lastName, roomNr, userId, currentMonthRent}
+        currentPayments.push(tenantPayment);
+    };
 
     return (
         <div className="rent-payments-wrapper">

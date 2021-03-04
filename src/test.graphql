@@ -3,13 +3,13 @@ type User {
     firstName: String!,
     lastName: String!
     email: String!
-}
+};
 
 type Jam {
     jamId: String!,
     jamType: String!,
     jamCode: String!,
-    adminId: User.userId!
+    adminInfo: User!
     createdAt: Timestamp!,
     jamDetails: {
         address: String!,
@@ -30,6 +30,7 @@ type Jam {
             pets: String!,
             smoking: String!,
             smokingBalcony: String!,
+            contractType: String!
         },
         landlordInfo: {
             address: String!,
@@ -42,7 +43,7 @@ type Jam {
             lastName: String!,
         },
     }
-}
+};
 
 type Room {
     roomId: String!,
@@ -56,7 +57,18 @@ type Room {
     expenses: Int!,
     deposit: Int!,
 
-}
+};
+type Invitation {
+    Jam: Jam!
+
+    checkIn: String!,
+    checkOut: String!,
+    rent: Int!,
+    expenses: Int!,
+    deposit: Int!,
+    roomNr: String!,
+    rentsArray: [month: String!, rent: Int!, paid: Boolean!, difOK: Boolean!]
+};
 
 type Tenant {
     User: {
@@ -65,12 +77,8 @@ type Tenant {
         lastName: String!
         email: String!
     },
-    checkIn: String!,
-    checkOut: String!,
-    rent: Int!,
-    expenses: Int!,
-    deposit: Int!,
-    roomNr: String!,
+    Invitation: Invitation!
+
     address: String!,
     city: String!,
     country: String!,
@@ -79,4 +87,13 @@ type Tenant {
     docType: String!,
     docNr: String!,
     registeredUser: Boolean,
-}
+};
+
+type Messages {
+    Jam: Jam!,
+    createdAt: Timestamp!,
+    text: String!
+    messageType: String!
+};
+
+
