@@ -191,6 +191,27 @@ export default class DataService {
             });
         });
     };
+    static editMontRentPaymnet(jamId, tenantId, rentInfo) {
+        console.log('Jaminfo: ', info);
+        return new Promise(() => {
+            firebase.firestore()
+            .collection('jams')
+            .doc(jamId)
+            .collection(jammers)
+            .doc(tenantId)
+            .update({ 
+                'monht': rentInfo.momth,
+                'paidRent': rentInfo.paidRent,
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        });
+    };
     static editLandlordInfo(jamId, info) {
         console.log('Admininfo: ', info);
         return new Promise(() => {

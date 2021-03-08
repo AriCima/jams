@@ -91,22 +91,10 @@ const AdminOverview = ({ jamId, rooms, jammers, jamDetails, setSection, setDocTy
     };
 
     const showActivity = activity.length !== 0;
-    const showPendingRents = pendingRents.length > 0;
+
     return (
         <div className="admin-overview-wrapper">
 
-            {/* <div className="overview-rent-payments">
-               <div className="overview-section-title">
-                   <h2>Pending rent payments</h2>
-               </div>
-               <div className="overview-section-activity">
-                    {showPendingRents ? renderPayments() : (
-                        <p>There are no pending rent's payments</p>
-                    )}
-               </div>
-           </div> */}
-
-            {/* <RentPaymentsInfo /> */}
 
            <div className="overview-activity">
                <div className="overview-section-title">

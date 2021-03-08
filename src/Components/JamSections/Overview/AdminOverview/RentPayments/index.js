@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import moment from 'moment';
 
+import { useForm, Controller } from "react-hook-form";
+
 import DataService from '../../../../services/DataService';
 import Calculations from '../../../../services/Calculations';
 import './index.scss';
@@ -11,6 +13,10 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 const RentPaymentsInfo = ({ jamId, rooms, jammers, jamDetails }) => {    
     
+    const [showRentInput, setShowRentInput] = useState(false);
+   
+    const { register, errors, handleSubmit, control, setValue } = useForm();
+
     const cTenants = Calculations.getCurrentTenants(jammers);
     const today = new Date();
     const cM = Number(today.getMonth()); // current Month in numbers
@@ -28,34 +34,66 @@ const RentPaymentsInfo = ({ jamId, rooms, jammers, jamDetails }) => {
 
     const takeMeToTenantInfo
 
-    const renderTenantsPayments = () => currentPayments.map(((cP, userId) => {
-        
-        if (cp.currentMonthRent.paid) return;
 
-        return (
-            <div
-                className="rent-payment-line"
-                key={userId}
-                onCLick={takeMeToTenantInfo(cp.userId)}
-            >
-                <div className="rent-payment-block">
-                    {cP.firstName} {cP.lastName}
-                </div>
-                <div className="rent-payment-block">
-                    {cp.roomNr}
-                </div>
-                <div className="rent-payment-block">
-                    {cp.currentMonthRent.rent}
-                </div>
-            </div>
-        )
+    onSubmit = (data) => {
+        const rentInfo = {month: currentMonth, paidRent: paidRent};
+        DataService.editMontRentPaymnet(jamId, tenantId, rentInfo);
     }
-    )
+
+    const renderTenantsPayments = () => {
+        
+        // if (cp.currentMonthRent.paid) return;
+
+        return  currentPayments.map((cP, userId) => {
+            
+            if (cP.paid === true) return;
+        
+            return (
+                <div
+                    className="rent-payment-line"
+                    key={userId}
+                    onCLick={takeMeToTenantInfo(cp.userId)}
+                >
+                    <div className="rent-payment-block">
+                        {cP.firstName} {cP.lastName}
+                    </div>
+                    <div className="rent-payment-block">
+                        {cp.roomNr}
+                    </div>
+                    <div className="rent-payment-block">
+                        {cp.currentMonthRent.rent}
+                    </div>
+                    <button>send reminder</button>
+                    <button
+                        onClick={setShowRentInput(true)}
+                    >
+                        already paid
+                    </button>
+                    {showRentInput && (
+                        <form
+                         autocomplete="off"
+                         className="hook-form"
+                         onSubmit={handleSubmit(onSubmit)}
+                        >
+                            <div className="custom-input-block">
+                                <div className="block-label">
+                                    <label>Amount paid</label>
+                                    {errors.paidRent && <div className="field-error">Required</div>}
+                                </div>
+                                <input name="paidRent" ref={register({required: true})}/>
+                            </div>
+                        </form>
+                            
+                    )}
+                </div>
+            )
+        }
+    )}
 
     return (
         <div className="rent-payments-wrapper">
 
-
+        {renderTenantsPayments()}
 
         </div>
     );

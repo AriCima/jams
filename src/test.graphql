@@ -67,7 +67,14 @@ type Invitation {
     expenses: Int!,
     deposit: Int!,
     roomNr: String!,
-    rentsArray: [month: String!, rent: Int!, paid: Boolean!, difOK: Boolean!]
+    rentsArray: [
+        {
+            month: String!, 
+            rent: Int!, 
+            paidRent: Int!,
+            difOK: Boolean!
+        }
+    ]
 };
 
 type Tenant {

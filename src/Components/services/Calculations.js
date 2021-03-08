@@ -567,26 +567,26 @@ export default class Calculations {
                 
         }
 
-        let rentsArray = [{month: months[inM], rent: inRent, paid: false, difOK: false}];
+        let rentsArray = [{month: months[inM], rent: inRent, paidRent: 0, difOK: false}];
 
         if (inYY === outYY) {
             for (let s = inM+1; s < outM; s++) {
-                const pay = {month: months[s], rent: parseInt(rent), paid: false, difOK: false}
+                const pay = {month: months[s], rent: parseInt(rent), paidRent: 0, difOK: false}
                 rentsArray.push(pay);
             }
         } else {
             for (let s = inM; s <= 11; s++) {
-                const pay = {month: months[s], rent: parseInt(rent), paid: false, difOK: false}
+                const pay = {month: months[s], rent: parseInt(rent), paidRent: 0, difOK: false}
                 rentsArray.push(pay);
             }
     
             for (let s = 0; s < outM; s++) {
-                const pay = {month: months[s], rent: parseInt(rent), paid: false, difOK: false}
+                const pay = {month: months[s], rent: parseInt(rent), paidRent: 0, difOK: false}
                 rentsArray.push(pay);
             }
         }
 
-        rentsArray.push({month: months[outM], rent: outRent, paid: false, difOK: false});
+        rentsArray.push({month: months[outM], rent: outRent, paidRent: 0, difOK: false});
 
         return rentsArray;
     };
